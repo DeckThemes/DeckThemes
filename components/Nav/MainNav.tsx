@@ -1,0 +1,77 @@
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useContext } from "react";
+import { authContext } from "../../pages/_app";
+import { themeContext } from "../../styles";
+import { fetchDiscordUrl } from "../../api";
+import { AudioIcon } from "./AudioIcon";
+import { CSSIcon } from "./CSSIcon";
+
+import { FaRegMoon, FaRegSun } from "react-icons/fa";
+
+export function MainNav() {
+  const router = useRouter();
+
+  const { accountInfo } = useContext(authContext);
+  const { theme, setTheme } = useContext(themeContext);
+
+  return (
+    <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
+      <div className="ml-4">
+        {/* {router.route.includes("/css") && <CSSIcon /> } */}
+        {/* {router.route.includes("/audio") && <AudioIcon />} */}
+        {router.route.includes("/audio") ? <AudioIcon /> : <CSSIcon />}
+      </div>
+      <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
+        {accountInfo?.username ? (
+          <>
+            <div
+              className="flex bg-bgLight dark:bg-bgDark rounded-full w-fit"
+              // className="flex items-center rounded-full"
+            >
+              <Link href="/me" className="flex items-center">
+                <span className="ml-4 mr-2">{accountInfo.username}</span>
+
+                <Image
+                  src={`${accountInfo.avatar}`}
+                  alt="Your Discord Profile Picture"
+                  width="48"
+                  height="48"
+                  className="rounded-full"
+                />
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <button
+              className="bg-discordColor px-2 h-full rounded-md flex items-center justify-center text-slate-800"
+              onClick={fetchDiscordUrl}
+            >
+              <span>
+                Login <br />
+                With Discord
+              </span>
+            </button>
+          </>
+        )}
+        <button
+          className="pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+          onClick={() => {
+            if (theme === "light") {
+              setTheme("dark");
+              localStorage.theme = "dark";
+              return;
+            }
+            setTheme("light");
+            localStorage.theme = "light";
+            return;
+          }}
+        >
+          {theme === "light" ? <FaRegSun className="w-8 h-8" /> : <FaRegMoon className="w-8 h-8" />}
+        </button>
+      </div>
+    </nav>
+  );
+}
