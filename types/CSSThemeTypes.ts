@@ -1,5 +1,5 @@
 import { Url } from "url";
-import { AccountData, FullAccountData } from "./AccountData";
+import { AccountData } from "./AccountData";
 import { APIBlob } from "./BlobTypes";
 
 export interface UserInfo {
@@ -53,15 +53,29 @@ export interface ThemeSubmissionQueryResponse extends QueryResponseShell {
   items: ThemeSubmissionInfo[];
 }
 
+export type SubmissionIntent = "NewTheme" | "UpdateTheme" | "UpdateMeta";
+export enum FormattedSubmissionIntent {
+  "NewTheme" = "New Theme",
+  "UpdateTheme" = "Theme Update",
+  "UpdateMeta" = "Theme Meta Update",
+}
+export type SubmissionStatus = "AwaitingApproval" | "Approved" | "Denied" | "Dead";
+export enum FormattedSubmissionStatus {
+  "AwaitingApproval" = "Awaiting Review",
+  "Approved" = "Approved",
+  "Denied" = "Denied",
+  "Dead" = "Dead",
+}
+
 export interface ThemeSubmissionInfo {
   id: string;
-  intent: number;
+  intent: SubmissionIntent;
   message: string | null;
-  new: FullCSSThemeInfo;
-  old: MinimalCSSThemeInfo | null;
-  owner: FullAccountData;
-  reviewedBy: AccountData | null;
-  status: number;
+  newTheme: FullCSSThemeInfo;
+  oldTheme: MinimalCSSThemeInfo | null;
+  owner: UserInfo;
+  reviewedBy: UserInfo | null;
+  status: SubmissionStatus;
   submitted: Date;
 }
 

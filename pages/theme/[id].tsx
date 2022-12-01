@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FiArrowDown } from "react-icons/fi";
-import { getThemeById } from "../../api";
+import { genericGET, getThemeById } from "../../api";
+import { ThemeImageCarousel } from "../../components";
 import { FullCSSThemeInfo } from "../../types";
 
 export default function FullThemeViewPage() {
@@ -21,12 +22,12 @@ export default function FullThemeViewPage() {
 
     // Actual useful code starts here
     async function getThemeData() {
-      const data = await getThemeById(parsedId);
+      const data = await genericGET(`/css_themes/${parsedId}`, "Theme Fetch Failed!");
+      // const data = await getThemeById(parsedId);
       setThemeData(data);
     }
     getThemeData();
   }, [id]);
-
   return (
     <main>
       {themeData !== undefined ? (
@@ -35,6 +36,7 @@ export default function FullThemeViewPage() {
           <h3>{themeData.target}</h3>
           <h3>{themeData.specifiedAuthor}</h3>
           <h3>{themeData.version}</h3>
+          {themeData.images !== undefined && <ThemeImageCarousel data={themeData} />}
           {themeData.download !== undefined ? (
             <>
               <button

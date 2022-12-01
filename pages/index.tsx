@@ -1,7 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import { genericGET, getPaginatedThemes } from "../api";
+import { genericGET } from "../api";
 import { CSSMiniThemeCard } from "../components";
 import { ThemeQueryResponse } from "../types";
 

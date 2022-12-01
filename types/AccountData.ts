@@ -7,16 +7,6 @@ export type AccountData = {
   username: string;
 };
 
-export interface FullAccountData {
-  active: boolean;
-  apiToken: any; // ?????
-  avatarToken: string;
-  id: string;
-  lastLoginDate: Date;
-  permissions: number;
-  username: string;
-}
-
 export interface AuthContextContents {
   accountInfo: AccountData | undefined;
   setAccountInfo:

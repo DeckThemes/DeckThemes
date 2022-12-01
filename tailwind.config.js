@@ -18,7 +18,9 @@ module.exports = {
         borderDark: "#0e0e0e",
         borderLight: "#a2a2a2",
         textLight: "#000",
+        textFadedLight: "#333",
         textDark: "#fff",
+        textFadedDark: "#aaa",
       },
     },
     fontFamily: {

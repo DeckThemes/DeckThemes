@@ -9,7 +9,12 @@ import {
   ThemeQueryResponse,
   ThemeSubmissionQueryResponse,
 } from "../../types";
-import { CSSMiniSubmissionCard, CSSMiniThemeCard, FilterSelectorCard } from "../../components";
+import {
+  CSSMiniSubmissionCard,
+  CSSMiniThemeCard,
+  FilterSelectorCard,
+  PfpDisplay,
+} from "../../components";
 import { generateParamStr } from "../../api";
 
 export default function Account() {
@@ -119,16 +124,7 @@ export default function Account() {
 
   return (
     <main className="flex flex-col items-center w-full">
-      <div className="flex flex-col md:flex-row-reverse gap-2 items-center md:bg-cardLight md:dark:bg-cardDark rounded-full md:pl-4 mt-10">
-        <Image
-          src={accountInfo.avatar}
-          width="142"
-          height="142"
-          alt="Your Discord Profile Picture"
-          className="rounded-full border-8 border-borderLight dark:border-borderDark"
-        />
-        <h1 className="text-3xl font-semibold">{accountInfo.username}</h1>
-      </div>
+      <PfpDisplay avatar={accountInfo.avatar} username={accountInfo.username} id={accountInfo.id} />
       <h3 className="my-4 font-medium text-2xl">Your Saved Themes</h3>
 
       {submissions.total > 0 || approvedThemes.total > 0 ? <></> : null}
@@ -175,9 +171,10 @@ export default function Account() {
               setSubSearchOpts({ ...submissionSearchOpts, search: e.target.value });
             }}
           />
-          <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
+          <div className="flex md:flex-row w-full justify-center items-center md:items-start flex-wrap gap-4">
             {submissions.items.map((e, i) => {
-              return <CSSMiniSubmissionCard data={e.new} key={`Theme Submission ${i}`} />;
+              console.log(e);
+              return <CSSMiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
             })}
           </div>
         </div>

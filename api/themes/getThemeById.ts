@@ -1,6 +1,6 @@
 import { FullCSSThemeInfo } from "../../types";
 
-export function getThemeById(id: string) {
+export async function getThemeById(id: string) {
   const themeData: Promise<FullCSSThemeInfo> = fetch(`${process.env.API_URL}/css_themes/${id}`, {
     method: "GET",
     credentials: "include",
@@ -14,5 +14,6 @@ export function getThemeById(id: string) {
     .catch((err) => {
       console.error("CSS Theme Fetch Failed!", err);
     });
+  console.log("jhson", await themeData);
   return themeData;
 }

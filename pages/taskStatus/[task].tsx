@@ -73,7 +73,7 @@ export default function TaskView() {
                       </div>
                     ) : (
                       <div className="flex items-center text-5xl gap-2">
-                        <BsXCircleFill className="text-red-500" size={48} />
+                        <BsXCircleFill className="text-red-500" />
                         <span>Failed</span>
                       </div>
                     )}

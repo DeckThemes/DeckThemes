@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Url } from "url";
 import { PartialCSSThemeInfo } from "../../types";
 
 export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
