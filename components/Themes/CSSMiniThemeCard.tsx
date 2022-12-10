@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { PartialCSSThemeInfo } from "../../types";
 
-export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
+export function CSSMiniThemeCard({
+  data,
+  submissionId = "",
+}: {
+  data: PartialCSSThemeInfo;
+  submissionId?: string;
+}) {
   function imageURLCreator(): string {
     if (data?.images[0]?.id) {
       return `url(${process.env.API_URL}/blobs/${data?.images[0]?.id})`;
@@ -11,11 +17,11 @@ export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
   }
 
   return (
-    <div className="text-textDark hover:translate-y-1 transition-all">
-      <Link href={`/themes/${data.id}`}>
+    <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
+      <Link href={submissionId ? `/submissions/${submissionId}` : `/themes/${data.id}`}>
         <article
           key={`Theme_${data.name}`}
-          className="ThemeBrowserItem_BgImg w-[260px]"
+          className="ThemeBrowserItem_BgImg"
           style={{
             backgroundImage: imageURLCreator(),
             backgroundSize: "cover",
@@ -101,6 +107,9 @@ export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
                   marginRight: "auto",
                   fontSize: "1em",
                   textShadow: "rgb(48, 48, 48) 0px 0 10px",
+                  whiteSpace: "nowrap",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
                 }}
               >
                 {data.specifiedAuthor}

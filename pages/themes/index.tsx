@@ -2,16 +2,15 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import {
-  CSSMiniSubmissionCard,
   CSSMiniThemeCard,
   FilterSelectorCard,
   LoadingSpinner,
   PageSelector,
 } from "../../components";
-import { FilterQueryResponse, ThemeQueryRequest, ThemeSubmissionQueryResponse } from "../../types";
+import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
 
-export default function Submissions() {
-  const [themeArr, setThemeArr] = useState<ThemeSubmissionQueryResponse>({ total: 0, items: [] });
+export default function Themes() {
+  const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
@@ -33,7 +32,7 @@ export default function Submissions() {
         chosenSearchOpts.filters !== "All" ? chosenSearchOpts : { ...chosenSearchOpts, filters: "" }
       );
       const data = await genericGET(
-        `/css_submissions${searchOpts}`,
+        `/css_themes${searchOpts}`,
         "Error Fetching Submissions!",
         true
       );
@@ -47,10 +46,7 @@ export default function Submissions() {
 
   useEffect(() => {
     async function getFilters() {
-      const filterData = await genericGET(
-        "/css_submissions/filters",
-        "Error Fetching Submission Filters!"
-      );
+      const filterData = await genericGET("/css_themes/filters", "Error Fetching Theme Filters!");
       if (filterData) {
         setServerSearchOpts(filterData);
       }
@@ -66,7 +62,7 @@ export default function Submissions() {
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-5xl pt-8 pb-4 text-glow-mdDark">Submissions</h2>
+          <h2 className="font-bold text-3xl md:text-5xl pt-4 text-glow-mdDark">Theme Viewer</h2>
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
@@ -84,14 +80,8 @@ export default function Submissions() {
           {themeArr.total > 0 ? (
             <>
               <div className="flex gap-4 flex-wrap items-center justify-center px-10">
-                {themeArr.items.map((e, i) => {
-                  if (
-                    e.status === "AwaitingApproval" ||
-                    (new Date().valueOf() - new Date(e.submitted).valueOf()) /
-                      (1000 * 60 * 60 * 24) <
-                      7
-                  )
-                    return <CSSMiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
+                {themeArr.items.map((e) => {
+                  return <CSSMiniThemeCard data={e} key={`ThemeCard ${e.id}`} />;
                 })}
               </div>
               <div className="mt-4 mx-4">

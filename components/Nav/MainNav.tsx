@@ -12,6 +12,7 @@ import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { TbUpload } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
+import { MiniPfpDisplay } from "../Users";
 
 export function MainNav() {
   const router = useRouter();
@@ -24,27 +25,15 @@ export function MainNav() {
       <div className="ml-4">
         {/* {router.route.includes("/css") && <CSSIcon /> } */}
         {/* {router.route.includes("/audio") && <AudioIcon />} */}
-        {router.route.includes("/audio") ? <AudioIcon /> : <CSSIcon />}
+        <>
+          <CSSIcon />
+        </>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
         {accountInfo?.username ? (
           <>
-            <div
-              className="flex bg-bgLight dark:bg-bgDark rounded-full w-fit"
-              // className="flex items-center rounded-full"
-            >
-              <Link href="/users/me" className="flex items-center">
-                <span className="ml-4 mr-2">{accountInfo.username}</span>
-
-                <Image
-                  src={`${accountInfo.avatar}`}
-                  alt="Your Discord Profile Picture"
-                  width="48"
-                  height="48"
-                  className="rounded-full"
-                />
-              </Link>
-            </div>
+            {/* @ts-ignore */}
+            <MiniPfpDisplay accountInfo={accountInfo} goToMe />
             {accountInfo.permissions.includes(Permissions.viewSubs) && (
               <Link
                 href="/submissions"

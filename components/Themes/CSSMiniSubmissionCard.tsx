@@ -10,9 +10,12 @@ import { CSSMiniThemeCard } from "./CSSMiniThemeCard";
 
 export function CSSMiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
   return (
-    <div className="flex flex-col items-center transition-all hover:translate-y-1 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-3xl w-[300px] text-center">
+    <Link
+      href={`/submissions/${data.id}`}
+      className="flex flex-col items-center transition-all hover:translate-y-1 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-3xl w-[300px] text-center"
+    >
       <span className="text-xl mb-2">{FormattedSubmissionIntent[data.intent]}</span>
-      <CSSMiniThemeCard data={data.newTheme} />
+      <CSSMiniThemeCard data={data.newTheme} submissionId={data.id} />
       {
         (() => {
           switch (data.status) {
@@ -80,6 +83,6 @@ export function CSSMiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
           }
         })() // I LOOOOOOOOOOOOOOOOVE self-invoking anonymous functions!
       }
-    </div>
+    </Link>
   );
 }

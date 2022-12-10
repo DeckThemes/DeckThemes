@@ -3,13 +3,13 @@ import { CSSFullThemeCard } from "../../components";
 
 export default function FullThemeViewPage() {
   const router = useRouter();
-  let { id } = router.query;
+  let { themeId } = router.query;
   let parsedId: string = "";
   // this is here because for some reason @types/next thinks that router.query can be an array of strings
-  if (Array.isArray(id)) {
-    parsedId = id[0];
+  if (Array.isArray(themeId)) {
+    parsedId = themeId[0];
   } else {
-    parsedId = id || "";
+    parsedId = themeId || "";
   }
 
   return (

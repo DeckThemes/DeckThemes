@@ -10,13 +10,14 @@ export function CSSIcon({}) {
   const { theme, setTheme } = useContext(themeContext);
 
   return (
-    <Link href="/">
+    <Link href="/" className="flex items-center">
       <Image
         src={theme === "light" ? lightImg : darkImg}
         height="48"
         width="48"
         alt="CSSLoader Logo"
       />
+      <span className="hidden md:flex font-semibold text-3xl pl-4">CSSLoader</span>
     </Link>
   );
 }
