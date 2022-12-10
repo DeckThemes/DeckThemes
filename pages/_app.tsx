@@ -3,13 +3,19 @@ import type { AppProps } from "next/app";
 import { Footer, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { Theme, themeContext } from "../styles";
-import { AccountData, AuthContextContents } from "../types";
-import { getMeDataOnInit } from "../api";
+import { AccountData, AuthContextContents, StarContextContents, StarredThemeList } from "../types";
+import { genericGET, getMeDataOnInit } from "../api";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
   setAccountInfo: () => {},
 });
+
+// Probably is shelved
+// export const starsContext = createContext<StarContextContents>({
+//   starredThemes: undefined,
+//   setStarredThemes: () => {},
+// });
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("light");

@@ -8,7 +8,7 @@ import {
   BsCloudUploadFill,
   BsXLg,
 } from "react-icons/bs";
-import { genericGET } from "../../api";
+import { genericGET } from "../api";
 
 import {
   BlobUploadResponse,
@@ -16,7 +16,7 @@ import {
   GitSubmissionInfo,
   MetaInfo,
   ZipSubmissionInfo,
-} from "../../types";
+} from "../types";
 
 const sectionContainerClasses = "flex flex-col w-full items-center gap-4";
 
@@ -71,7 +71,7 @@ export default function Submit() {
       description: metaInfo.description || null,
       target: metaInfo.target || null,
     };
-
+    console.log(data());
     fetch(`${process.env.API_URL}/css_submissions/${uploadMethod}`, {
       method: "POST",
       credentials: "include",
@@ -202,8 +202,6 @@ function MetaPanel({
     } else {
       alert("No Image Attached");
     }
-    // TODO: Allow multiple images (clear the old thing once upload is successful)
-    // TODO: add the image blob to info.imageBlobs upon completion
   }
 
   function deleteImage(i: number) {
@@ -420,7 +418,120 @@ function ZipSubmitPanel({
   info: ZipSubmissionInfo;
   setInfo: Dispatch<SetStateAction<ZipSubmissionInfo>>;
 }) {
-  return <span>Zip</span>;
+  const [file, setFile] = useState<File>();
+  const [uploadedFile, setUploadedFile] = useState<File>();
+
+  function onFileSelect(event: any) {
+    setFile(event?.target?.files[0] || undefined);
+  }
+
+  function uploadFile() {
+    if (file) {
+      if (file.type !== "application/x-zip-compressed") {
+        alert("Must be a ZIP file");
+        return;
+      }
+      if (file.size >= 510000) {
+        alert("File must be smaller than 10MB");
+        return;
+      }
+
+      // The blob upload takes a formData object as it's body
+      const formData = new FormData();
+      formData.append("File", file);
+
+      fetch(`${process.env.API_URL}/blobs`, {
+        method: "POST",
+        body: formData,
+        credentials: "include",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((json: BlobUploadResponse) => {
+          if (json?.token) {
+            setInfo({ ...info, blob: json.token });
+            setUploadedFile(file);
+            setFile(undefined);
+          }
+        });
+    } else {
+      alert("No Image Attached");
+    }
+  }
+
+  function deleteFile() {
+    setInfo({ blob: "" });
+    setUploadedFile(undefined);
+  }
+
+  return (
+    <>
+      <div className="flex flex-col items-center w-full justify-center">
+        {!uploadedFile ? (
+          <>
+            {!!file ? (
+              <>
+                {/* Idk why but keeping this outer-div helps stretch the things height-wise, so I'ma leave it */}
+                <div className="flex w-[80vw] lg:w-[640px] justify-center">
+                  <button
+                    onClick={uploadFile}
+                    className="flex items-center text-xl w-1/2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl"
+                  >
+                    <BsCloudUploadFill className="mx-2 w-12" />
+                    <span className="w-64 truncate">
+                      <span className="text-blue-500">Upload </span>
+                      {file.name}
+                    </span>
+                  </button>
+                  <button
+                    className="flex items-center text-xl px-2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl gap-2"
+                    onClick={() => {
+                      setFile(undefined);
+                    }}
+                  >
+                    <BsXLg className="text-red-700" />
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <label
+                  htmlFor="zip-upload"
+                  className="cursor-pointer flex items-center text-xl gap-2 bg-bgLight dark:bg-bgDark p-1 px-2 rounded-2xl"
+                >
+                  <BsFolderFill />
+                  <span className="font-medium">Pick File</span>
+                </label>
+                <input
+                  id="zip-upload"
+                  type="file"
+                  accept=".zip"
+                  onChange={onFileSelect}
+                  className="hidden"
+                />
+              </>
+            )}
+          </>
+        ) : (
+          <>
+            <div className="flex items-center">
+              <span className="text-xl font-semibold mr-2">Chosen Zip: </span>
+              <span className="text-xl truncate w-64">{uploadedFile.name}</span>
+              <button
+                className="ml-auto"
+                onClick={() => {
+                  deleteFile();
+                }}
+              >
+                <BsFillTrashFill size={25} className="text-red-700" />
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </>
+  );
 }
 
 function CSSSubmitPanel({

@@ -11,11 +11,11 @@ export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
   }
 
   return (
-    <div className="text-textDark">
-      <Link href={`/theme/${data.id}`}>
+    <div className="text-textDark hover:translate-y-1 transition-all">
+      <Link href={`/themes/${data.id}`}>
         <article
           key={`Theme_${data.name}`}
-          className="CssLoader_ThemeBrowser_SingleItem_BgImage w-[260px]"
+          className="ThemeBrowserItem_BgImg w-[260px]"
           style={{
             backgroundImage: imageURLCreator(),
             backgroundSize: "cover",
@@ -24,13 +24,23 @@ export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
             borderRadius: "5px",
           }}
         >
+          <style>
+            {`
+              .ThemeBrowserItem_BgColor:hover {
+                background: #000f;
+              }
+              .ThemeBrowserItem_BgColor {
+                background: #000c;
+                transition: background 0.2s;
+              }
+            `}
+          </style>
           <div
-            className="CssLoader_ThemeBrowser_SingleItem_BgOverlay"
+            className="ThemeBrowserItem_BgColor"
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              background: "RGBA(0,0,0,0.8)",
               backdropFilter: "blur(5px)",
               width: "100%",
               height: "100%",
@@ -69,6 +79,7 @@ export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
                 width: "240px",
                 backgroundImage: imageURLCreator(),
                 backgroundSize: "cover",
+                backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
                 height: "150px",
                 display: "flex",

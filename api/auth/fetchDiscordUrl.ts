@@ -1,5 +1,5 @@
 export async function fetchDiscordUrl() {
-  fetch(`${process.env.API_URL}/auth/oauth_redirect?redirect=http://localhost:3000/auth/`)
+  fetch(`${process.env.API_URL}/auth/oauth_redirect?redirect=${process.env.CLIENT_URL}/auth/`)
     .then((res) => {
       if (res.status < 200 || res.status >= 300 || !res.ok) {
         throw new Error("Response Not OK");

@@ -23,6 +23,7 @@ export interface PartialCSSThemeInfo extends MinimalCSSThemeInfo {
   author: UserInfo;
   submitted: Date;
   updated: Date;
+  starCount: number;
 }
 
 export interface FullCSSThemeInfo extends PartialCSSThemeInfo {

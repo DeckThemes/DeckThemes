@@ -9,6 +9,9 @@ import { AudioIcon } from "./AudioIcon";
 import { CSSIcon } from "./CSSIcon";
 
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
+import { TbUpload } from "react-icons/tb";
+import { RiAdminFill } from "react-icons/ri";
+import { Permissions } from "../../types";
 
 export function MainNav() {
   const router = useRouter();
@@ -30,7 +33,7 @@ export function MainNav() {
               className="flex bg-bgLight dark:bg-bgDark rounded-full w-fit"
               // className="flex items-center rounded-full"
             >
-              <Link href="/me" className="flex items-center">
+              <Link href="/users/me" className="flex items-center">
                 <span className="ml-4 mr-2">{accountInfo.username}</span>
 
                 <Image
@@ -42,6 +45,21 @@ export function MainNav() {
                 />
               </Link>
             </div>
+            {accountInfo.permissions.includes(Permissions.viewSubs) && (
+              <Link
+                href="/submissions"
+                className="ml-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+              >
+                <RiAdminFill size={34} />
+              </Link>
+            )}
+            <Link
+              href="/submit"
+              className="ml-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+            >
+              <TbUpload size={36} className="scale-x-105" />
+            </Link>
+            <div className="w-1 h-full bg-borderLight dark:bg-borderDark rounded-full ml-3" />
           </>
         ) : (
           <>

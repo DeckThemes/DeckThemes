@@ -79,7 +79,7 @@ export default function TaskView() {
                     )}
                   </div>
                   <span className="text-lg">
-                    Completed In{" "}
+                    {apiStatus?.success ? "Completed " : "Failed "}In{" "}
                     <b>
                       {(new Date(apiStatus.completed).valueOf() -
                         new Date(apiStatus.started).valueOf()) /

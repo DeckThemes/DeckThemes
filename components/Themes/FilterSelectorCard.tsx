@@ -32,7 +32,7 @@ export function FilterSelectorCard({
                 {filterOpts.map((e) => {
                   return (
                     <option value={e} key={`Your Themes Filter ${e}`}>
-                      {e}
+                      {e !== "AwaitingApproval" ? e : "Awaiting Approval"}
                     </option>
                   );
                 })}

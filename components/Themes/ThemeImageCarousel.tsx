@@ -19,37 +19,61 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
     }
     setSelected(selectedImage - 1);
   }
-
   return (
-    <div className="flex relative w-[320px] h-[180px] md:w-[640px] md:h-[360px] border-8 border-borderLight dark:border-borderDark bg-cardLight dark:bg-cardDark">
-      <button className="absolute left-0 top-1/2 -translate-y-1/2 z-50" onClick={decrementImg}>
-        <BsArrowLeft size={48} />
-      </button>
-      <button className="absolute right-0 top-1/2 -translate-y-1/2 z-50" onClick={incrementImg}>
-        <BsArrowRight size={48} />
-      </button>
-      <div className="w-full relative" key={`Theme Image ${selectedImage}`}>
-        <Image
-          src={`${process.env.API_URL}/blobs/${data.images[selectedImage].id}`}
-          fill
-          alt={`Theme Image ${selectedImage}`}
-          objectFit="contain"
-        />
-      </div>
-      <div className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 text-5xl">
-        {data.images.map((_, i) => {
-          return (
+    <>
+      {data.images?.length > 0 ? (
+        <div
+          className="bg-cover"
+          style={{
+            width: "100%",
+            aspectRatio: "1.72 / 1",
+            position: "relative",
+            borderRadius: "1em",
+            backgroundSize: "cover !important",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+            // DONT make this just 'background', because it overwrites all of the above
+            backgroundImage: `url(${process.env.API_URL}/blobs/${data.images[selectedImage].id})`,
+          }}
+        >
+          {data.images?.length > 1 && (
             <>
               <button
-                onClick={() => setSelected(i)}
-                className={`w-3 h-2 md:w-6 md:h-3 rounded-full border-b-2 border-r-2 border-[#0005] ${
-                  selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
-                } `}
-              />
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-50"
+                onClick={decrementImg}
+              >
+                <BsArrowLeft size={48} />
+              </button>
+              <button
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-50"
+                onClick={incrementImg}
+              >
+                <BsArrowRight size={48} />
+              </button>
+              <div className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 text-5xl">
+                {data.images.map((_, i) => {
+                  return (
+                    <>
+                      <button
+                        onClick={() => setSelected(i)}
+                        className={`w-3 h-2 lg:w-6 lg:h-3 rounded-full border-b-2 border-r-2 border-[#0005] ${
+                          selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
+                        } `}
+                      />
+                    </>
+                  );
+                })}
+              </div>
             </>
-          );
-        })}
-      </div>
-    </div>
+          )}
+        </div>
+      ) : (
+        <div className="flex items-center justify-center w-full text-center">
+          <span className="text-3xl lg:text-5xl">No Images Provided</span>
+        </div>
+      )}
+    </>
+
+    // </div>
   );
 }

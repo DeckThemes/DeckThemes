@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
-import { generateAuthCookie, getMeDataFromToken } from "../../api";
-import { authContext } from "../_app";
+import { generateAuthCookie, getMeDataFromToken } from "../api";
+import { authContext } from "./_app";
 
 export default function Auth() {
   const router = useRouter();
@@ -15,14 +15,14 @@ export default function Auth() {
   }
 
   function validateCode(token: string) {
-    fetch("http://localhost:5102/auth/authenticate_discord", {
+    fetch(`${process.env.API_URL}/auth/authenticate_discord`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         code: token,
-        redirectUrl: "http://localhost:3000/auth/",
+        redirectUrl: `${process.env.CLIENT_URL}/auth/`,
       }),
     })
       .then((res) => {
