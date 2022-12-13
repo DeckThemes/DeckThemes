@@ -202,10 +202,12 @@ export default function Account() {
             onFilterChange={(e) => {
               setStarSearchOpts({ ...starredThemeSearchOpts, filters: e.target.value });
             }}
+            filterValue={starredThemeSearchOpts.filters}
             orderOpts={serverStarSearchOpts.order}
             onOrderChange={(e) => {
               setStarSearchOpts({ ...starredThemeSearchOpts, order: e.target.value });
             }}
+            orderValue={starredThemeSearchOpts.order}
             searchValue={starredThemeSearchOpts.search}
             onSearchChange={(e) => {
               setStarSearchOpts({ ...starredThemeSearchOpts, search: e.target.value });
@@ -229,6 +231,7 @@ export default function Account() {
           </div>
         </div>
       ) : null}
+      <BigDivider />
       {approvedThemes.total >= 0 ? (
         <div className="flex flex-col w-full items-center px-4">
           <h4 className="text-2xl font-medium">Your Themes</h4>
@@ -237,10 +240,12 @@ export default function Account() {
             onFilterChange={(e) => {
               setApprSearchOpt({ ...approvedThemeSearchOpts, filters: e.target.value });
             }}
+            filterValue={approvedThemeSearchOpts.filters}
             orderOpts={serverSearchOpts.order}
             onOrderChange={(e) => {
               setApprSearchOpt({ ...approvedThemeSearchOpts, order: e.target.value });
             }}
+            orderValue={approvedThemeSearchOpts.order}
             searchValue={approvedThemeSearchOpts.search}
             onSearchChange={(e) => {
               setApprSearchOpt({ ...approvedThemeSearchOpts, search: e.target.value });
@@ -273,10 +278,12 @@ export default function Account() {
             onFilterChange={(e) => {
               setSubSearchOpts({ ...submissionSearchOpts, filters: e.target.value });
             }}
+            filterValue={submissionSearchOpts.filters}
             orderOpts={serverSubSearchOpts.order}
             onOrderChange={(e) => {
               setSubSearchOpts({ ...submissionSearchOpts, order: e.target.value });
             }}
+            orderValue={submissionSearchOpts.order}
             searchValue={submissionSearchOpts.search}
             onSearchChange={(e) => {
               setSubSearchOpts({ ...submissionSearchOpts, search: e.target.value });

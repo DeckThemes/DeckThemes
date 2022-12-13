@@ -8,7 +8,7 @@ import {
   BsCloudUploadFill,
   BsXLg,
 } from "react-icons/bs";
-import { genericGET } from "../api";
+import { checkAndRefreshToken, genericGET } from "../api";
 
 import {
   BlobUploadResponse,
@@ -55,7 +55,7 @@ export default function Submit() {
     target: "",
   });
 
-  function submitTheme() {
+  async function submitTheme() {
     const data = () => {
       switch (uploadMethod) {
         case "git":
@@ -71,33 +71,35 @@ export default function Submit() {
       description: metaInfo.description || null,
       target: metaInfo.target || null,
     };
-    console.log(data());
-    fetch(`${process.env.API_URL}/css_submissions/${uploadMethod}`, {
-      method: "POST",
-      credentials: "include",
-      body: JSON.stringify({ ...data(), meta: formattedMeta }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status < 200 || res.status >= 300 || !res.ok) {
-          throw new Error("Response Not OK");
-        }
-        return res.json();
+    const waitForRefresh = await checkAndRefreshToken();
+    if (waitForRefresh) {
+      fetch(`${process.env.API_URL}/css_submissions/${uploadMethod}`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify({ ...data(), meta: formattedMeta }),
+        headers: {
+          "Content-Type": "application/json",
+        },
       })
-      .then((json) => {
-        console.log(json);
-        if (json?.task) {
-          router.push(`/taskStatus/${json.task}`);
-        } else {
-          throw new Error("No task in response");
-        }
-      })
-      .catch((err) => {
-        console.error("Error Submitting Theme!", err);
-      });
+        .then((res) => {
+          console.log(res);
+          if (res.status < 200 || res.status >= 300 || !res.ok) {
+            throw new Error("Response Not OK");
+          }
+          return res.json();
+        })
+        .then((json) => {
+          console.log(json);
+          if (json?.task) {
+            router.push(`/taskStatus/${json.task}`);
+          } else {
+            throw new Error("No task in response");
+          }
+        })
+        .catch((err) => {
+          console.error("Error Submitting Theme!", err);
+        });
+    }
   }
 
   const [uploadMethod, setUploadMethod] = useState<string>("zip");
@@ -168,7 +170,7 @@ function MetaPanel({
     setImage(event?.target?.files[0] || undefined);
   }
 
-  function uploadImage() {
+  async function uploadImage() {
     if (image) {
       if (image.type !== "image/jpeg") {
         alert("Image must be a JPEG file");
@@ -183,22 +185,25 @@ function MetaPanel({
       const formData = new FormData();
       formData.append("File", image);
 
-      fetch(`${process.env.API_URL}/blobs`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      })
-        .then((res) => {
-          console.log(res);
-          return res.json();
+      const waitForRefresh = await checkAndRefreshToken();
+      if (waitForRefresh) {
+        fetch(`${process.env.API_URL}/blobs`, {
+          method: "POST",
+          body: formData,
+          credentials: "include",
         })
-        .then((json: BlobUploadResponse) => {
-          if (json?.token) {
-            setInfo({ ...info, imageBlobs: [...info.imageBlobs, json.token] });
-            setCompImageInfo([...complimentaryImageInfo, image]);
-            setImage(undefined);
-          }
-        });
+          .then((res) => {
+            console.log(res);
+            return res.json();
+          })
+          .then((json: BlobUploadResponse) => {
+            if (json?.token) {
+              setInfo({ ...info, imageBlobs: [...info.imageBlobs, json.token] });
+              setCompImageInfo([...complimentaryImageInfo, image]);
+              setImage(undefined);
+            }
+          });
+      }
     } else {
       alert("No Image Attached");
     }
@@ -425,7 +430,7 @@ function ZipSubmitPanel({
     setFile(event?.target?.files[0] || undefined);
   }
 
-  function uploadFile() {
+  async function uploadFile() {
     if (file) {
       if (file.type !== "application/x-zip-compressed") {
         alert("Must be a ZIP file");
@@ -440,21 +445,24 @@ function ZipSubmitPanel({
       const formData = new FormData();
       formData.append("File", file);
 
-      fetch(`${process.env.API_URL}/blobs`, {
-        method: "POST",
-        body: formData,
-        credentials: "include",
-      })
-        .then((res) => {
-          return res.json();
+      const waitForRefresh = await checkAndRefreshToken();
+      if (waitForRefresh) {
+        fetch(`${process.env.API_URL}/blobs`, {
+          method: "POST",
+          body: formData,
+          credentials: "include",
         })
-        .then((json: BlobUploadResponse) => {
-          if (json?.token) {
-            setInfo({ ...info, blob: json.token });
-            setUploadedFile(file);
-            setFile(undefined);
-          }
-        });
+          .then((res) => {
+            return res.json();
+          })
+          .then((json: BlobUploadResponse) => {
+            if (json?.token) {
+              setInfo({ ...info, blob: json.token });
+              setUploadedFile(file);
+              setFile(undefined);
+            }
+          });
+      }
     } else {
       alert("No Image Attached");
     }

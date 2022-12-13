@@ -66,16 +66,18 @@ export default function Submissions() {
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-5xl pt-8 pb-4 text-glow-mdDark">Submissions</h2>
+          <h2 className="font-bold text-5xl pt-8 pb-4">Submissions</h2>
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, filters: e.target.value });
             }}
+            filterValue={chosenSearchOpts.filters}
             orderOpts={serverSearchOpts.order}
             onOrderChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, order: e.target.value });
             }}
+            orderValue={chosenSearchOpts.order}
             searchValue={chosenSearchOpts.search}
             onSearchChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, search: e.target.value });

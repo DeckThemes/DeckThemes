@@ -19,9 +19,9 @@ export function MiniPfpDisplay({
       // className="flex items-center rounded-full"
     >
       <Link href={goToMe ? "/users/me" : `/users/${accountInfo.id}`} className="flex items-center">
-        <span className="ml-4 mr-2">{accountInfo.username}</span>
+        <span className="ml-4 mr-2 hidden md:flex">{accountInfo.username}</span>
         <Image
-          src={`${accountInfo.avatar}`}
+          src={`${accountInfo.avatar || "/question_mark.png"}`}
           alt="Your Discord Profile Picture"
           width="48"
           height="48"

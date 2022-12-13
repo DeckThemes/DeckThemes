@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
-import { genericGET } from "../../api";
+import { checkAndRefreshToken, genericGET } from "../../api";
 import { CSSFullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
 import { ThemeSubmissionInfo } from "../../types";
 
@@ -18,27 +18,30 @@ export default function FullSubmissionViewPage() {
 
   async function submitReview() {
     if (action) {
-      fetch(`${process.env.API_URL}/css_submissions/${parsedId}/${action}`, {
-        method: "PUT",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: message,
-        }),
-      })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
-            setReviewSubmitted(true);
-            return;
-          }
-          throw new Error("Res Not OK!");
+      const waitForRefresh = await checkAndRefreshToken();
+      if (waitForRefresh) {
+        fetch(`${process.env.API_URL}/css_submissions/${parsedId}/${action}`, {
+          method: "PUT",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: message,
+          }),
         })
-        .catch((err) => {
-          console.error("Error Submitting Theme Review!", err);
-          alert("Error Submitting Theme Review");
-        });
+          .then((res) => {
+            if (res.ok && res.status === 200) {
+              setReviewSubmitted(true);
+              return;
+            }
+            throw new Error("Res Not OK!");
+          })
+          .catch((err) => {
+            console.error("Error Submitting Theme Review!", err);
+            alert("Error Submitting Theme Review");
+          });
+      }
     }
   }
 
@@ -142,8 +145,8 @@ export default function FullSubmissionViewPage() {
                       </div>
                     )}
                     <div className="flex flex-col mb-2 items-center">
-                      <span className="text-2xl font-medium pt-2">Message</span>
-                      <span>{submissionData.message}</span>
+                      {/* <span className="text-2xl font-medium pt-2">Message</span> */}
+                      <span className="text-xl py-2">{submissionData.message}</span>
                     </div>
                     {submissionData?.reviewedBy ? (
                       <div className="flex items-center gap-2">

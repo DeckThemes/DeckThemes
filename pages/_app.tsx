@@ -11,12 +11,6 @@ export const authContext = createContext<AuthContextContents>({
   setAccountInfo: () => {},
 });
 
-// Probably is shelved
-// export const starsContext = createContext<StarContextContents>({
-//   starredThemes: undefined,
-//   setStarredThemes: () => {},
-// });
-
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("light");
 

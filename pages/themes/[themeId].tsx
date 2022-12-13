@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { CSSFullThemeCard } from "../../components";
+import { CSSFullThemeCard, LoadingSpinner } from "../../components";
 
 export default function FullThemeViewPage() {
   const router = useRouter();
@@ -10,6 +10,14 @@ export default function FullThemeViewPage() {
     parsedId = themeId[0];
   } else {
     parsedId = themeId || "";
+  }
+
+  if (!parsedId) {
+    return (
+      <main className="w-full flex-grow flex items-center justify-center">
+        <span className="text-3xl">No Theme Found</span>
+      </main>
+    );
   }
 
   return (

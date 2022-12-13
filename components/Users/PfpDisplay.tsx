@@ -12,7 +12,7 @@ export function PfpDisplay({
   return (
     <div className="flex flex-col md:flex-row-reverse gap-2 items-center text-center md:bg-cardLight md:dark:bg-cardDark rounded-full md:pl-8 md:gap-6 mt-10">
       <Image
-        src={avatar}
+        src={avatar || "/question_mark.png"}
         width="142"
         height="142"
         alt="Your Discord Profile Picture"

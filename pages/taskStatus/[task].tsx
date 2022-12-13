@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
+import { checkAndRefreshToken } from "../../api";
 import { TaskQueryResponse } from "../../types";
 
 export default function TaskView() {
@@ -11,23 +12,26 @@ export default function TaskView() {
   const [apiStatus, setStatus] = useState<TaskQueryResponse | null>(null);
   async function getStatus() {
     if (task) {
-      fetch(`${process.env.API_URL}/tasks/${task}`, {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((res) => {
-          console.log(res);
-          if (res.status < 200 || res.status >= 300 || !res.ok) {
-            throw new Error("Response Not OK");
-          }
-          return res.json();
+      const waitForRefresh = await checkAndRefreshToken();
+      if (waitForRefresh) {
+        fetch(`${process.env.API_URL}/tasks/${task}`, {
+          method: "GET",
+          credentials: "include",
         })
-        .then((json) => {
-          setStatus(json);
-        })
-        .catch((err) => {
-          console.error("Error Submitting Theme!", err);
-        });
+          .then((res) => {
+            console.log(res);
+            if (res.status < 200 || res.status >= 300 || !res.ok) {
+              throw new Error("Response Not OK");
+            }
+            return res.json();
+          })
+          .then((json) => {
+            setStatus(json);
+          })
+          .catch((err) => {
+            console.error("Error Submitting Theme!", err);
+          });
+      }
     }
   }
   useEffect(() => {

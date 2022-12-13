@@ -1,4 +1,5 @@
 import { AccountData } from "../../types";
+import { checkAndRefreshToken } from "../genericFetches";
 
 export async function getMeDataOnInit(): Promise<AccountData | undefined> {
   const cookieStr = document.cookie;
@@ -11,20 +12,23 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
         return acc;
       }, {});
     if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
-      const meJson = await fetch(`${process.env.API_URL}/auth/me`, {
-        method: "GET",
-        credentials: "include",
-      })
-        .then((res) => {
-          if (res.status < 200 || res.status >= 300 || !res.ok) {
-            throw new Error("Response Not OK");
-          }
-          return res.json();
+      const waitForRefresh = await checkAndRefreshToken();
+      if (waitForRefresh) {
+        const meJson = await fetch(`${process.env.API_URL}/auth/me`, {
+          method: "GET",
+          credentials: "include",
         })
-        .catch((err) => {
-          console.error("Error Fetching User Data!", err);
-        });
-      return meJson;
+          .then((res) => {
+            if (res.status < 200 || res.status >= 300 || !res.ok) {
+              throw new Error("Response Not OK");
+            }
+            return res.json();
+          })
+          .catch((err) => {
+            console.error("Error Fetching User Data!", err);
+          });
+        return meJson;
+      }
     }
   }
   return undefined;

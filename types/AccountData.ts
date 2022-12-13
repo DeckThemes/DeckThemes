@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { PartialCSSThemeInfo } from "./CSSThemeTypes";
 
 export enum Permissions {
-  "editAny" = "EditAnyPosts",
+  "editAny" = "EditAnyPost",
   "approveSubs" = "ApproveThemeSubmissions",
   "viewSubs" = "ViewThemeSubmissions",
   "admin" = "ManageApi",

@@ -10,7 +10,7 @@ export default function Auth() {
     const meJson = await getMeDataFromToken(token);
     if (meJson?.username) {
       setAccountInfo(meJson);
-      router.push("/me");
+      router.push("/users/me");
     }
   }
 

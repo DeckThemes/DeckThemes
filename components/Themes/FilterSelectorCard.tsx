@@ -7,10 +7,14 @@ export function FilterSelectorCard({
   onFilterChange,
   onOrderChange,
   onSearchChange,
+  filterValue,
+  orderValue,
   searchOnly = false,
 }: {
   filterOpts?: string[];
+  filterValue: string;
   orderOpts?: string[];
+  orderValue: string;
   searchValue: string;
   onFilterChange?: (e: any) => void;
   onOrderChange?: (e: any) => void;
@@ -27,6 +31,7 @@ export function FilterSelectorCard({
               <select
                 className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
                 onChange={onFilterChange}
+                value={filterValue}
               >
                 <option value="All">All</option>
                 {filterOpts.map((e) => {
@@ -38,12 +43,13 @@ export function FilterSelectorCard({
                 })}
               </select>
             </div>
-            <div
-              className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2"
-              onChange={onOrderChange}
-            >
+            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
               <span>Order</span>
-              <select className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4">
+              <select
+                className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
+                onChange={onOrderChange}
+                value={orderValue}
+              >
                 {orderOpts.map((e) => {
                   return (
                     <option value={e} key={`Your Themes Filter ${e}`}>

@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import {
@@ -10,6 +11,8 @@ import {
 import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
 
 export default function Themes() {
+  const router = useRouter();
+
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
@@ -24,7 +27,6 @@ export default function Themes() {
     order: "",
     search: "",
   });
-
   useEffect(() => {
     async function getAndSetThemes() {
       // This just changes "All" to "", as that is what the backend looks for
@@ -42,6 +44,26 @@ export default function Themes() {
       setLoaded(true);
     }
     getAndSetThemes();
+    if (loaded) {
+      let stateObj = { id: "100" };
+      window.history.pushState(
+        stateObj,
+        "unused",
+        `/themes${
+          chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
+            ? `?filters=${chosenSearchOpts.filters}${
+                chosenSearchOpts.order !== "Alphabetical (A to Z)"
+                  ? `&order=${chosenSearchOpts.order}`
+                  : ""
+              }`
+            : `${
+                chosenSearchOpts.order !== "Alphabetical (A to Z)"
+                  ? `?order=${chosenSearchOpts.order}`
+                  : ""
+              }`
+        }`
+      );
+    }
   }, [chosenSearchOpts]);
 
   useEffect(() => {
@@ -52,7 +74,16 @@ export default function Themes() {
       }
     }
     getFilters();
-  }, []);
+
+    let urlFilters, urlOrder;
+    if (typeof router.query?.filters === "string") {
+      urlFilters = router.query.filters;
+    }
+    if (typeof router.query?.order === "string") {
+      urlOrder = router.query.order;
+    }
+    setChosenSearchOpts({ ...chosenSearchOpts, filters: urlFilters || "", order: urlOrder || "" });
+  }, [router.query]);
 
   return (
     <>
@@ -62,16 +93,18 @@ export default function Themes() {
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-3xl md:text-5xl pt-4 text-glow-mdDark">Theme Viewer</h2>
+          <h2 className="font-bold text-3xl md:text-5xl pt-4">Theme Viewer</h2>
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, filters: e.target.value });
             }}
+            filterValue={chosenSearchOpts.filters}
             orderOpts={serverSearchOpts.order}
             onOrderChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, order: e.target.value });
             }}
+            orderValue={chosenSearchOpts.order}
             searchValue={chosenSearchOpts.search}
             onSearchChange={(e) => {
               setChosenSearchOpts({ ...chosenSearchOpts, search: e.target.value });
