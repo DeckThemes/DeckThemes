@@ -30,10 +30,13 @@ export default function Submissions() {
     async function getAndSetThemes() {
       // This just changes "All" to "", as that is what the backend looks for
       const searchOpts = generateParamStr(
-        chosenSearchOpts.filters !== "All" ? chosenSearchOpts : { ...chosenSearchOpts, filters: "" }
+        chosenSearchOpts.filters !== "All"
+          ? chosenSearchOpts
+          : { ...chosenSearchOpts, filters: "" },
+        "CSS."
       );
       const data = await genericGET(
-        `/css_submissions${searchOpts}`,
+        `/submissions${searchOpts}`,
         "Error Fetching Submissions!",
         true
       );
@@ -48,7 +51,7 @@ export default function Submissions() {
   useEffect(() => {
     async function getFilters() {
       const filterData = await genericGET(
-        "/css_submissions/filters",
+        "/submissions/filters",
         "Error Fetching Submission Filters!"
       );
       if (filterData) {

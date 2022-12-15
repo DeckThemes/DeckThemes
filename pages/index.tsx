@@ -12,7 +12,7 @@ export default function Home() {
     async function getAndSetThemes() {
       // This just changes "All" to "", as that is what the backend looks for
       const mostDownloaded = await genericGET(
-        `/css_themes?order=Most Downloaded&perPage=7`,
+        `/themes?order=Most Downloaded&filter=CSS&perPage=7`,
         "Error Fetching Most Downloaded Themes!",
         true
       );
@@ -20,7 +20,7 @@ export default function Home() {
         setMostDownloaded(mostDownloaded);
       }
       const mostRecent = await genericGET(
-        `/css_themes?order=Last Updated&perPage=7`,
+        `/themes?order=Last Updated&filter=CSS&perPage=7`,
         "Error Fetching Most Recent Themes!",
         true
       );

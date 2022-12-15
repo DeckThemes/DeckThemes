@@ -16,9 +16,9 @@ export function CSSMiniThemeCard({
     }
   }
 
-  return (
-    <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
-      <Link href={submissionId ? `/submissions/${submissionId}` : `/themes/${data.id}`}>
+  function InnerContent() {
+    return (
+      <>
         <article
           key={`Theme_${data.name}`}
           className="ThemeBrowserItem_BgImg"
@@ -127,6 +127,23 @@ export function CSSMiniThemeCard({
             </div>
           </div>
         </article>
+      </>
+    );
+  }
+  if (submissionId) {
+    return (
+      <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
+        <div>
+          <InnerContent />
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
+      <Link href={`/themes/${data.id}`}>
+        <InnerContent />
       </Link>
     </div>
   );

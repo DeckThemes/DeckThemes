@@ -14,6 +14,7 @@ import {
   CSSMiniSubmissionCard,
   CSSMiniThemeCard,
   FilterSelectorCard,
+  LoadingSpinner,
   PageSelector,
   PfpDisplay,
 } from "../../components";
@@ -36,6 +37,7 @@ export default function Account() {
     parsedId = userId || "";
   }
 
+  const [loaded, setLoaded] = useState<boolean>(false);
   const { accountInfo, setAccountInfo } = useContext(authContext);
   const [userInfo, setUserInfo] = useState<AccountData | undefined>();
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
@@ -86,7 +88,7 @@ export default function Account() {
 
   async function getAdminFilters() {
     const submissionData = await genericGET(
-      `/users/${parsedId}/css_submissions/filters`,
+      `/users/${parsedId}/submissions/filters`,
       "Error Fetching User Submission Filters!"
     );
     if (submissionData) {
@@ -94,7 +96,7 @@ export default function Account() {
     }
 
     const starredData = await genericGET(
-      `/users/${parsedId}/css_stars/filters`,
+      `/users/${parsedId}/stars/filters`,
       "Error Fetching User Starred Theme Filters!",
       true
     );
@@ -105,7 +107,7 @@ export default function Account() {
 
   useEffect(() => {
     if (parsedId) {
-      genericGET(`/users/${parsedId}/css_themes/filters`, "Error Fetching User Filters!").then(
+      genericGET(`/users/${parsedId}/themes/filters`, "Error Fetching User Filters!").then(
         (data) => {
           if (data) {
             setServerSearchOpts(data);
@@ -124,10 +126,11 @@ export default function Account() {
         // This just changes "All" to "", as that is what the backend looks for
         submissionSearchOpts.filters !== "All"
           ? submissionSearchOpts
-          : { ...submissionSearchOpts, filters: "" }
+          : { ...submissionSearchOpts, filters: "" },
+        "CSS."
       );
       genericGET(
-        `/users/${parsedId}/css_submissions${searchOpts}`,
+        `/users/${parsedId}/submissions${searchOpts}`,
         "Error Fetching Submissions!",
         true
       ).then((data) => {
@@ -144,11 +147,13 @@ export default function Account() {
       const searchOpts = generateParamStr(
         approvedThemeSearchOpts.filters !== "All"
           ? approvedThemeSearchOpts
-          : { ...approvedThemeSearchOpts, filters: "" }
+          : { ...approvedThemeSearchOpts, filters: "" },
+        "CSS."
       );
       const data = await genericGET(
-        `/users/${parsedId}/css_themes${searchOpts}`,
-        "Error Fetching Submissions!"
+        `/users/${parsedId}/themes${searchOpts}`,
+        "Error Fetching Submissions!",
+        true
       );
       if (data) {
         setApprThemes(data);
@@ -165,16 +170,16 @@ export default function Account() {
       const searchOpts = generateParamStr(
         starredThemeSearchOpts.filters !== "All"
           ? starredThemeSearchOpts
-          : { ...starredThemeSearchOpts, filters: "" }
+          : { ...starredThemeSearchOpts, filters: "" },
+        "CSS."
       );
-      genericGET(
-        `/users/${parsedId}/css_stars${searchOpts}`,
-        "Error Fetching Starred Themes!"
-      ).then((data) => {
-        if (data) {
-          setStarredThemes(data);
+      genericGET(`/users/${parsedId}/stars${searchOpts}`, "Error Fetching Starred Themes!").then(
+        (data) => {
+          if (data) {
+            setStarredThemes(data);
+          }
         }
-      });
+      );
     }
   }, [starredThemeSearchOpts, userInfo, accountInfo]);
 
@@ -182,9 +187,10 @@ export default function Account() {
     if (parsedId) {
       genericGET(`/users/${parsedId}`, "Error Fetching User Data!", true).then((data) => {
         if (data) {
-          console.log(data);
           setUserInfo(data);
         }
+        setLoaded(true);
+        return;
       });
     }
   }, [parsedId]);
@@ -195,13 +201,23 @@ export default function Account() {
     document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
   }
 
-  if (!userInfo?.username) {
+  if (!loaded) {
     return (
-      <main className="flex flex-col items-center text-center px-5">
-        <h1 className="text-4xl font-semibold pt-20">Invalid User Id</h1>
+      <main className="flex justify-center flex-grow items-center text-center px-5">
+        <LoadingSpinner />
+        <h1 className="text-4xl font-semibold">Loading</h1>
       </main>
     );
   }
+
+  if (!userInfo?.username) {
+    return (
+      <main className="flex justify-center flex-grow items-center text-center px-5">
+        <h1 className="text-4xl font-semibold pt-20">Error! Invalid User ID</h1>
+      </main>
+    );
+  }
+
   const calcDisplayName = () => {
     const slicedName = userInfo.username.slice(0, userInfo.username.lastIndexOf("#"));
     if (slicedName.slice(-1) === "s" || slicedName.slice(-1) === "S") {

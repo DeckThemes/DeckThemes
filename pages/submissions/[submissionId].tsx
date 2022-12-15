@@ -20,7 +20,7 @@ export default function FullSubmissionViewPage() {
     if (action) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.API_URL}/css_submissions/${parsedId}/${action}`, {
+        fetch(`${process.env.API_URL}/submissions/${parsedId}/${action}`, {
           method: "PUT",
           credentials: "include",
           headers: {
@@ -54,11 +54,7 @@ export default function FullSubmissionViewPage() {
 
   useEffect(() => {
     async function getData() {
-      const data = await genericGET(
-        `/css_submissions/${parsedId}`,
-        "Submission Fetch Failed!",
-        true
-      );
+      const data = await genericGET(`/submissions/${parsedId}`, "Submission Fetch Failed!", true);
       setSubData(data);
     }
     if (parsedId) {

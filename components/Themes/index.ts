@@ -4,3 +4,4 @@ export * from "./FilterSelectorCard";
 export * from "./ThemeImageCarousel";
 export * from "./PageSelector";
 export * from "./CSSFullThemeCard";
+export * from "./ThemeAdminPanel";

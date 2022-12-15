@@ -58,9 +58,9 @@ export default function Submit() {
   async function submitTheme() {
     const data = () => {
       switch (uploadMethod) {
-        case "git":
+        case "css_git":
           return gitUploadInfo;
-        case "css":
+        case "css_css":
           return cssUploadInfo;
         default:
           return zipUploadInfo;
@@ -73,7 +73,7 @@ export default function Submit() {
     };
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.API_URL}/css_submissions/${uploadMethod}`, {
+      fetch(`${process.env.API_URL}/submissions/${uploadMethod}`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ ...data(), meta: formattedMeta }),
@@ -102,7 +102,7 @@ export default function Submit() {
     }
   }
 
-  const [uploadMethod, setUploadMethod] = useState<string>("zip");
+  const [uploadMethod, setUploadMethod] = useState<string>("css_zip");
   return (
     <div className="flex flex-col items-center w-full grow text-center">
       <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
@@ -118,18 +118,18 @@ export default function Submit() {
                 setUploadMethod(value);
               }}
             >
-              <option value="zip">Via File</option>
-              <option value="git">Via Git</option>
-              <option value="css">Via CSS</option>
+              <option value="css_zip">Via File</option>
+              <option value="css_git">Via Git</option>
+              <option value="css_css">Via CSS</option>
             </select>
           </div>
-          {uploadMethod === "zip" && (
+          {uploadMethod === "css_zip" && (
             <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
           )}
-          {uploadMethod === "git" && (
+          {uploadMethod === "css_git" && (
             <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
           )}
-          {uploadMethod === "css" && (
+          {uploadMethod === "css_css" && (
             <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
           )}
         </section>
@@ -232,7 +232,7 @@ function MetaPanel({
 
   const [targetOptions, setTargetOptions] = useState<string[]>(["System-Wide"]);
   async function getTargets() {
-    const data = await genericGET("/css_themes/filters", "Error Fetching Theme Targets!");
+    const data = await genericGET("/themes/filters", "Error Fetching Theme Targets!");
     if (data?.filters) {
       setTargetOptions(data.filters);
     }

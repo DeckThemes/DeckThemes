@@ -75,7 +75,7 @@ export default function Account() {
 
   async function getFilters() {
     const data = await genericGET(
-      `/users/${accountInfo?.id}/css_themes/filters`,
+      `/users/${accountInfo?.id}/themes/filters`,
       "Error Fetching User Filters!"
     );
     if (data) {
@@ -83,7 +83,7 @@ export default function Account() {
     }
 
     const submissionData = await genericGET(
-      `/users/${accountInfo?.id}/css_submissions/filters`,
+      `/users/${accountInfo?.id}/submissions/filters`,
       "Error Fetching User Submission Filters!"
     );
     if (submissionData) {
@@ -91,7 +91,7 @@ export default function Account() {
     }
 
     const starredData = await genericGET(
-      `/users/${accountInfo?.id}/css_stars/filters`,
+      `/users/${accountInfo?.id}/stars/filters`,
       "Error Fetching User Starred Theme Filters!",
       true
     );
@@ -112,10 +112,11 @@ export default function Account() {
         // This just changes "All" to "", as that is what the backend looks for
         submissionSearchOpts.filters !== "All"
           ? submissionSearchOpts
-          : { ...submissionSearchOpts, filters: "" }
+          : { ...submissionSearchOpts, filters: "" },
+        "CSS."
       );
       const data = await genericGET(
-        `/users/me/css_submissions${searchOpts}`,
+        `/users/me/submissions${searchOpts}`,
         "Error Fetching Submissions!",
         true
       );
@@ -134,12 +135,10 @@ export default function Account() {
       const searchOpts = generateParamStr(
         approvedThemeSearchOpts.filters !== "All"
           ? approvedThemeSearchOpts
-          : { ...approvedThemeSearchOpts, filters: "" }
+          : { ...approvedThemeSearchOpts, filters: "" },
+        "CSS."
       );
-      const data = await genericGET(
-        `/users/me/css_themes${searchOpts}`,
-        "Error Fetching Submissions!"
-      );
+      const data = await genericGET(`/users/me/themes${searchOpts}`, "Error Fetching Submissions!");
       if (data) {
         setApprThemes(data);
       }
@@ -155,10 +154,11 @@ export default function Account() {
       const searchOpts = generateParamStr(
         starredThemeSearchOpts.filters !== "All"
           ? starredThemeSearchOpts
-          : { ...starredThemeSearchOpts, filters: "" }
+          : { ...starredThemeSearchOpts, filters: "" },
+        "CSS."
       );
       const data = await genericGET(
-        `/users/me/css_stars${searchOpts}`,
+        `/users/me/stars${searchOpts}`,
         "Error Fetching Starred Themes!"
       );
       if (data) {
