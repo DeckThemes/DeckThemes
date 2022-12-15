@@ -73,7 +73,7 @@ export default function Submit() {
     };
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.API_URL}/submissions/${uploadMethod}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/submissions/${uploadMethod}`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ ...data(), meta: formattedMeta }),
@@ -187,7 +187,7 @@ function MetaPanel({
 
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.API_URL}/blobs`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/blobs`, {
           method: "POST",
           body: formData,
           credentials: "include",
@@ -447,7 +447,7 @@ function ZipSubmitPanel({
 
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.API_URL}/blobs`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/blobs`, {
           method: "POST",
           body: formData,
           credentials: "include",

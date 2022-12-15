@@ -15,14 +15,14 @@ export default function Auth() {
   }
 
   function validateCode(token: string) {
-    fetch(`${process.env.API_URL}/auth/authenticate_discord`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/authenticate_discord`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
         code: token,
-        redirectUrl: `${process.env.CLIENT_URL}/auth/`,
+        redirectUrl: `${process.env.NEXT_PUBLIC_CLIENT_URL}/auth/`,
       }),
     })
       .then((res) => {

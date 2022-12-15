@@ -10,7 +10,7 @@ export function CSSMiniThemeCard({
 }) {
   function imageURLCreator(): string {
     if (data?.images[0]?.id) {
-      return `url(${process.env.API_URL}/blobs/${data?.images[0]?.id})`;
+      return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id})`;
     } else {
       return `url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/258.png)`;
     }

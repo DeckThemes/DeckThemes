@@ -33,7 +33,7 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
             // DONT make this just 'background', because it overwrites all of the above
-            backgroundImage: `url(${process.env.API_URL}/blobs/${data.images[selectedImage].id})`,
+            backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[selectedImage].id})`,
           }}
         >
           {data.images?.length > 1 && (

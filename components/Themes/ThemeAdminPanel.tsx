@@ -16,7 +16,7 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
       );
       if (enteredName === themeData.name) {
         console.log("test");
-        fetch(`${process.env.API_URL}/themes/${themeData.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData.id}`, {
           method: "DELETE",
           credentials: "include",
         })
@@ -49,7 +49,7 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
     }
 
     console.log("test", description, author, target);
-    fetch(`${process.env.API_URL}/themes/${themeData?.id}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData?.id}`, {
       method: "PATCH",
       credentials: "include",
       headers: {

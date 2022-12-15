@@ -14,7 +14,7 @@ export default function TaskView() {
     if (task) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.API_URL}/tasks/${task}`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${task}`, {
           method: "GET",
           credentials: "include",
         })

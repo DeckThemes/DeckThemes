@@ -1,7 +1,7 @@
 import { AccountData } from "../../types";
 
 export async function getMeDataFromToken(token: string): Promise<AccountData> {
-  const meJson = fetch(`${process.env.API_URL}/auth/me`, {
+  const meJson = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
     method: "GET",
     credentials: "include",
     headers: token

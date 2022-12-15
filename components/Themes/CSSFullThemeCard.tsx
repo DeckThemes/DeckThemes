@@ -34,7 +34,7 @@ export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
   async function toggleStar() {
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.API_URL}/users/me/stars/${parsedId}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/stars/${parsedId}`, {
         method: isStarred ? "DELETE" : "POST",
         credentials: "include",
       })
@@ -117,7 +117,9 @@ export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
                     className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-3xl rounded-full justify-between mt-4"
                     onClick={() => {
                       themeData !== undefined &&
-                        location.assign(`${process.env.API_URL}/blobs/${themeData.download.id}`);
+                        location.assign(
+                          `${process.env.NEXT_PUBLIC_API_URL}/blobs/${themeData.download.id}`
+                        );
                     }}
                   >
                     <div className="bg-lightenerLight dark:bg-lightenerDark p-2 rounded-full">

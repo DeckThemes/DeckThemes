@@ -14,7 +14,7 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
     if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        const meJson = await fetch(`${process.env.API_URL}/auth/me`, {
+        const meJson = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
           method: "GET",
           credentials: "include",
         })

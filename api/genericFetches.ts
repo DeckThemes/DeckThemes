@@ -10,7 +10,7 @@ export async function checkAndRefreshToken() {
     return true;
   } else {
     console.log("REFRESHING TOKEN");
-    return await fetch(`${process.env.API_URL}/auth/refresh_token`, {
+    return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh_token`, {
       method: "POST",
       credentials: "include",
     })
@@ -41,7 +41,7 @@ export async function genericGET(subPath: string, errMessage: string, debug: boo
   const waitForRefresh = await checkAndRefreshToken();
   if (waitForRefresh) {
     console.log("refresh yes", waitForRefresh);
-    return await fetch(`${process.env.API_URL}${subPath}`, {
+    return await fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, {
       method: "GET",
       credentials: "include",
     })

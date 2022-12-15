@@ -20,7 +20,7 @@ export default function FullSubmissionViewPage() {
     if (action) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.API_URL}/submissions/${parsedId}/${action}`, {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/submissions/${parsedId}/${action}`, {
           method: "PUT",
           credentials: "include",
           headers: {

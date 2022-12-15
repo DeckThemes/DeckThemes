@@ -3,8 +3,8 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   // env: {
-  //   API_URL: "http://localhost:1337",
-  //   CLIENT_URL: "http://localhost:3000",
+  //   NEXT_PUBLIC_API_URL: "http://localhost:1337",
+  //   NEXT_PUBLIC_CLIENT_URL: "http://localhost:3000",
   // },
   images: {
     remotePatterns: [
