@@ -7,6 +7,7 @@ const nextConfig = {
   //   NEXT_PUBLIC_CLIENT_URL: "http://localhost:3000",
   // },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "http",

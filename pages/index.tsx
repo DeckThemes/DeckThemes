@@ -35,6 +35,9 @@ export default function Home() {
   return (
     <>
       <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
+        <div className="w-full h-screen">
+          <h1>CSSLoader</h1>
+        </div>
         <Link href="/themes">
           <span className="text-3xl font-semibold">View Themes</span>
         </Link>
