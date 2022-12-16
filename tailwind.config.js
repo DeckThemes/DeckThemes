@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      height: {
+        screenMinusHeader: "calc(100vh - 4rem)",
+      },
       colors: {
         cssPurple: "#de2cf7",
         audioBlue: "rgb(26,159,255)",
