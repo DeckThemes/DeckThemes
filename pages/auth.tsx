@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { generateAuthCookie, getMeDataFromToken } from "../api";
+import { LoadingSpinner } from "../components";
 import { authContext } from "./_app";
 
 export default function Auth() {
@@ -58,9 +59,10 @@ export default function Auth() {
       <Head>
         <title>DeckThemes | Authenticating</title>
       </Head>
-      <div>
-        <h1>Loading</h1>
-      </div>
+      <main className="w-full flex-grow h-full flex items-center justify-center gap-2">
+        <LoadingSpinner />
+        <h1 className="text-4xl font-semibold">Loading</h1>
+      </main>
     </>
   );
 }
