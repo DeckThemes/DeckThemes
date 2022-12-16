@@ -32,7 +32,7 @@ module.exports = {
       },
     },
     fontFamily: {
-      sans: ["Montserrat", "Raleway", "sans-serif"],
+      sans: ["Montserrat", "sans-serif"],
       serif: ["serif"],
     },
   },

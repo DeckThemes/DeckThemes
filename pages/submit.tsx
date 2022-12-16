@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import {
@@ -243,132 +244,137 @@ function MetaPanel({
   }, []);
 
   return (
-    <div className={`${sectionContainerClasses}`}>
-      <div className={`${fieldContainerClasses}`}>
-        <span className={`${fieldTitleClasses}`}>Target</span>
-        <div className="flex justify-center w-full">
-          <select
-            className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
-            onChange={({ target: { value } }) => {
-              setInfo({ ...info, target: value });
-            }}
-          >
-            {targetOptions.map((e) => (
-              <option value={e} key={e}>
-                {e}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
-      <MiniDivider />
-      <div className={`${fieldContainerClasses}`}>
-        <span className={`${fieldTitleClasses}`}>Images</span>
-
-        <div className="flex flex-col w-full relative">
-          <div className="flex items-center w-full justify-center">
-            {!!image ? (
-              <>
-                {/* Idk why but keeping this outer-div helps stretch the things height-wise, so I'ma leave it */}
-                <div className="flex w-full justify-center">
-                  <button
-                    onClick={uploadImage}
-                    className="flex items-center text-xl w-1/2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl"
-                  >
-                    <BsCloudUploadFill className="mx-2 w-12" />
-                    <span className="w-64 truncate">
-                      <span className="text-blue-500">Upload </span>
-                      {image.name}
-                    </span>
-                  </button>
-                  <button
-                    className="flex items-center text-xl px-2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl gap-2"
-                    onClick={() => {
-                      setImage(undefined);
-                    }}
-                  >
-                    <BsXLg className="text-red-700" />
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                <label
-                  htmlFor="img-upload"
-                  className="cursor-pointer flex items-center text-xl gap-2 bg-bgLight dark:bg-bgDark p-1 px-2 rounded-2xl"
-                >
-                  <BsFolderFill />
-                  <span className="font-medium">Pick Image</span>
-                </label>
-                <input
-                  id="img-upload"
-                  type="file"
-                  accept="image/jpeg"
-                  onChange={onImageSelect}
-                  className="hidden"
-                />
-              </>
-            )}
+    <>
+      <Head>
+        <title>DeckThemes | Submit</title>
+      </Head>
+      <div className={`${sectionContainerClasses}`}>
+        <div className={`${fieldContainerClasses}`}>
+          <span className={`${fieldTitleClasses}`}>Target</span>
+          <div className="flex justify-center w-full">
+            <select
+              className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
+              onChange={({ target: { value } }) => {
+                setInfo({ ...info, target: value });
+              }}
+            >
+              {targetOptions.map((e) => (
+                <option value={e} key={e}>
+                  {e}
+                </option>
+              ))}
+            </select>
           </div>
-          <ol className="flex flex-col w-full">
-            {complimentaryImageInfo.map((e, i, arr) => {
-              return (
-                <li className="flex items-center mt-4" key={`Image ${i}`}>
-                  <span
-                    className={`text-medium text-2xl w-4 ${arr.length === 1 ? "pb-1 mr-4" : ""}`}
-                  >
-                    {i + 1}
-                  </span>
-                  {arr.length > 1 && (
-                    <>
-                      <div className="border-4 rounded-2xl border-borderLight dark:border-borderDark pt-1 w-16 mx-4">
-                        {i < arr.length - 1 && (
-                          <button
-                            onClick={() => {
-                              moveImage(i, i + 1);
-                            }}
-                          >
-                            <BsArrowDown size={25} />
-                          </button>
-                        )}
+        </div>
+        <MiniDivider />
+        <div className={`${fieldContainerClasses}`}>
+          <span className={`${fieldTitleClasses}`}>Images</span>
 
-                        {i > 0 && (
-                          <button
-                            onClick={() => {
-                              moveImage(i, i - 1);
-                            }}
-                          >
-                            <BsArrowUp size={25} />
-                          </button>
-                        )}
-                      </div>
-                    </>
-                  )}
-                  <span className="text-xl truncate w-64">{e.name}</span>
-                  <button
-                    className="ml-auto"
-                    onClick={() => {
-                      deleteImage(i);
-                    }}
+          <div className="flex flex-col w-full relative">
+            <div className="flex items-center w-full justify-center">
+              {!!image ? (
+                <>
+                  {/* Idk why but keeping this outer-div helps stretch the things height-wise, so I'ma leave it */}
+                  <div className="flex w-full justify-center">
+                    <button
+                      onClick={uploadImage}
+                      className="flex items-center text-xl w-1/2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl"
+                    >
+                      <BsCloudUploadFill className="mx-2 w-12" />
+                      <span className="w-64 truncate">
+                        <span className="text-blue-500">Upload </span>
+                        {image.name}
+                      </span>
+                    </button>
+                    <button
+                      className="flex items-center text-xl px-2 p-1 bg-bgLight dark:bg-bgDark rounded-2xl gap-2"
+                      onClick={() => {
+                        setImage(undefined);
+                      }}
+                    >
+                      <BsXLg className="text-red-700" />
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <label
+                    htmlFor="img-upload"
+                    className="cursor-pointer flex items-center text-xl gap-2 bg-bgLight dark:bg-bgDark p-1 px-2 rounded-2xl"
                   >
-                    <BsFillTrashFill size={25} className="text-red-700" />
-                  </button>
-                </li>
-              );
-            })}
-          </ol>
+                    <BsFolderFill />
+                    <span className="font-medium">Pick Image</span>
+                  </label>
+                  <input
+                    id="img-upload"
+                    type="file"
+                    accept="image/jpeg"
+                    onChange={onImageSelect}
+                    className="hidden"
+                  />
+                </>
+              )}
+            </div>
+            <ol className="flex flex-col w-full">
+              {complimentaryImageInfo.map((e, i, arr) => {
+                return (
+                  <li className="flex items-center mt-4" key={`Image ${i}`}>
+                    <span
+                      className={`text-medium text-2xl w-4 ${arr.length === 1 ? "pb-1 mr-4" : ""}`}
+                    >
+                      {i + 1}
+                    </span>
+                    {arr.length > 1 && (
+                      <>
+                        <div className="border-4 rounded-2xl border-borderLight dark:border-borderDark pt-1 w-16 mx-4">
+                          {i < arr.length - 1 && (
+                            <button
+                              onClick={() => {
+                                moveImage(i, i + 1);
+                              }}
+                            >
+                              <BsArrowDown size={25} />
+                            </button>
+                          )}
+
+                          {i > 0 && (
+                            <button
+                              onClick={() => {
+                                moveImage(i, i - 1);
+                              }}
+                            >
+                              <BsArrowUp size={25} />
+                            </button>
+                          )}
+                        </div>
+                      </>
+                    )}
+                    <span className="text-xl truncate w-64">{e.name}</span>
+                    <button
+                      className="ml-auto"
+                      onClick={() => {
+                        deleteImage(i);
+                      }}
+                    >
+                      <BsFillTrashFill size={25} className="text-red-700" />
+                    </button>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </div>
+        <MiniDivider />
+        <div className={`${fieldContainerClasses}`}>
+          <span className={`${fieldTitleClasses}`}>Description</span>
+          <textarea
+            value={info.description}
+            onChange={(e) => setInfo({ ...info, description: e.target.value })}
+            className={`${fieldClasses} h-32`}
+          />
         </div>
       </div>
-      <MiniDivider />
-      <div className={`${fieldContainerClasses}`}>
-        <span className={`${fieldTitleClasses}`}>Description</span>
-        <textarea
-          value={info.description}
-          onChange={(e) => setInfo({ ...info, description: e.target.value })}
-          className={`${fieldClasses} h-32`}
-        />
-      </div>
-    </div>
+    </>
   );
 }
 

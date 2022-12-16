@@ -87,8 +87,7 @@ export default function Themes() {
   return (
     <>
       <Head>
-        <title>CSSLoader</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>DeckThemes | CSSLoader Themes</title>
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">

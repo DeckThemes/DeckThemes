@@ -1,12 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { useContext } from "react";
 import { authContext } from "../../pages/_app";
 import { themeContext } from "../../styles";
 import { fetchDiscordUrl } from "../../api";
-import { AudioIcon } from "./AudioIcon";
-import { CSSIcon } from "./CSSIcon";
+import { NavIcon } from "./NavIcon";
 
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { TbUpload } from "react-icons/tb";
@@ -15,7 +13,7 @@ import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 
 export function MainNav() {
-  const router = useRouter();
+  // const router = useRouter();
 
   const { accountInfo } = useContext(authContext);
   const { theme, setTheme } = useContext(themeContext);
@@ -23,10 +21,8 @@ export function MainNav() {
   return (
     <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
       <div className="ml-4">
-        {/* {router.route.includes("/css") && <CSSIcon /> } */}
-        {/* {router.route.includes("/audio") && <AudioIcon />} */}
         <>
-          <CSSIcon />
+          <NavIcon />
         </>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">

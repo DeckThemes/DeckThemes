@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
@@ -64,6 +65,9 @@ export default function FullSubmissionViewPage() {
 
   return (
     <>
+      <Head>
+        <title>DeckThemes | Submission Viewer</title>
+      </Head>
       {submissionData ? (
         <>
           <main className="w-full flex flex-col flex-grow items-center">

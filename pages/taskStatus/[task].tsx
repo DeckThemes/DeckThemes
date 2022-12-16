@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
@@ -56,61 +57,66 @@ export default function TaskView() {
   }
 
   return (
-    <main className="flex flex-col items-center p-4">
-      {typeof task === "string" ? (
-        <>
-          {apiStatus ? (
-            <div className="flex flex-col items-center text-center">
-              <div className="flex flex-col items-center mb-8">
-                <span className="text-2xl md:text-3xl font-semibold">
-                  {capitalizeSuchMemesShit(apiStatus.name)}
-                </span>
-                <span className="text-xl font-medium">Task {task?.split("-")[0]}</span>
-              </div>
-              {apiStatus.completed ? (
-                <>
-                  <div className="mb-4">
-                    {apiStatus.success ? (
-                      <div className="flex items-center text-5xl gap-2">
-                        <BsCheckCircleFill className="text-emerald-600" />
-                        <span>Success</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center text-5xl gap-2">
-                        <BsXCircleFill className="text-red-500" />
-                        <span>Failed</span>
-                      </div>
-                    )}
-                  </div>
-                  <span className="text-lg">
-                    {apiStatus?.success ? "Completed " : "Failed "}In{" "}
-                    <b>
-                      {(new Date(apiStatus.completed).valueOf() -
-                        new Date(apiStatus.started).valueOf()) /
-                        1000}{" "}
-                    </b>
-                    Seconds
+    <>
+      <Head>
+        <title>DeckThemes | Task Status</title>
+      </Head>
+      <main className="flex flex-col items-center p-4">
+        {typeof task === "string" ? (
+          <>
+            {apiStatus ? (
+              <div className="flex flex-col items-center text-center">
+                <div className="flex flex-col items-center mb-8">
+                  <span className="text-2xl md:text-3xl font-semibold">
+                    {capitalizeSuchMemesShit(apiStatus.name)}
                   </span>
-                  {!apiStatus.success && <span>{capitalizeSuchMemesShit(apiStatus.status)}</span>}
-                </>
-              ) : (
-                <>
-                  <div className="flex items-center text-5xl gap-2">
-                    <ImSpinner5 className="text-amber-600 animate-spin" />
-                    <span>Processing</span>
-                  </div>
-                </>
-              )}
-            </div>
-          ) : (
-            <>
-              <span>Loading</span>
-            </>
-          )}
-        </>
-      ) : (
-        <h1>Error! Task not a string</h1>
-      )}
-    </main>
+                  <span className="text-xl font-medium">Task {task?.split("-")[0]}</span>
+                </div>
+                {apiStatus.completed ? (
+                  <>
+                    <div className="mb-4">
+                      {apiStatus.success ? (
+                        <div className="flex items-center text-5xl gap-2">
+                          <BsCheckCircleFill className="text-emerald-600" />
+                          <span>Success</span>
+                        </div>
+                      ) : (
+                        <div className="flex items-center text-5xl gap-2">
+                          <BsXCircleFill className="text-red-500" />
+                          <span>Failed</span>
+                        </div>
+                      )}
+                    </div>
+                    <span className="text-lg">
+                      {apiStatus?.success ? "Completed " : "Failed "}In{" "}
+                      <b>
+                        {(new Date(apiStatus.completed).valueOf() -
+                          new Date(apiStatus.started).valueOf()) /
+                          1000}{" "}
+                      </b>
+                      Seconds
+                    </span>
+                    {!apiStatus.success && <span>{capitalizeSuchMemesShit(apiStatus.status)}</span>}
+                  </>
+                ) : (
+                  <>
+                    <div className="flex items-center text-5xl gap-2">
+                      <ImSpinner5 className="text-amber-600 animate-spin" />
+                      <span>Processing</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            ) : (
+              <>
+                <span>Loading</span>
+              </>
+            )}
+          </>
+        ) : (
+          <h1>Error! Task not a string</h1>
+        )}
+      </main>
+    </>
   );
 }

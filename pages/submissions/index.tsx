@@ -64,8 +64,7 @@ export default function Submissions() {
   return (
     <>
       <Head>
-        <title>CSSLoader</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>DeckThemes | Submissions</title>
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">

@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { CSSFullThemeCard, LoadingSpinner } from "../../components";
 
@@ -21,8 +22,10 @@ export default function FullThemeViewPage() {
   }
 
   return (
-    <main>
-      <CSSFullThemeCard parsedId={parsedId} />
-    </main>
+    <>
+      <main>
+        <CSSFullThemeCard parsedId={parsedId} />
+      </main>
+    </>
   );
 }

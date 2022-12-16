@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { themeContext } from "../../styles";
 import Image from "next/image";
 
-export function CSSIcon({}) {
-  const { theme, setTheme } = useContext(themeContext);
+export function NavIcon({}) {
+  const { theme } = useContext(themeContext);
 
   return (
     <Link href="/" className="flex items-center">
@@ -14,7 +14,7 @@ export function CSSIcon({}) {
         width="48"
         alt="CSSLoader Logo"
       />
-      <span className="hidden md:flex font-semibold text-3xl pl-4">CSSLoader</span>
+      <span className="hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
     </Link>
   );
 }

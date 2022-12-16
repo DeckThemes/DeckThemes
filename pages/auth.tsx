@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { generateAuthCookie, getMeDataFromToken } from "../api";
@@ -53,8 +54,13 @@ export default function Auth() {
   }, []);
 
   return (
-    <div>
-      <h1>Loading</h1>
-    </div>
+    <>
+      <Head>
+        <title>DeckThemes | Authenticating</title>
+      </Head>
+      <div>
+        <h1>Loading</h1>
+      </div>
+    </>
   );
 }

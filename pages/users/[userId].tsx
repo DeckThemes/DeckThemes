@@ -19,6 +19,7 @@ import {
   PfpDisplay,
 } from "../../components";
 import { generateParamStr } from "../../api";
+import Head from "next/head";
 
 function BigDivider() {
   return (
@@ -203,18 +204,28 @@ export default function Account() {
 
   if (!loaded) {
     return (
-      <main className="flex justify-center flex-grow items-center text-center px-5">
-        <LoadingSpinner />
-        <h1 className="text-4xl font-semibold">Loading</h1>
-      </main>
+      <>
+        <Head>
+          <title>DeckThemes | Loading</title>
+        </Head>
+        <main className="flex justify-center flex-grow items-center text-center px-5">
+          <LoadingSpinner />
+          <h1 className="text-4xl font-semibold">Loading</h1>
+        </main>
+      </>
     );
   }
 
   if (!userInfo?.username) {
     return (
-      <main className="flex justify-center flex-grow items-center text-center px-5">
-        <h1 className="text-4xl font-semibold pt-20">Error! Invalid User ID</h1>
-      </main>
+      <>
+        <Head>
+          <title>DeckThemes | Invalid User</title>
+        </Head>
+        <main className="flex justify-center flex-grow items-center text-center px-5">
+          <h1 className="text-4xl font-semibold pt-20">Error! Invalid User ID</h1>
+        </main>
+      </>
     );
   }
 
@@ -228,130 +239,135 @@ export default function Account() {
   };
 
   return (
-    <main className="flex flex-col items-center w-full">
-      <PfpDisplay avatar={userInfo.avatar} username={userInfo.username} id={userInfo.id} />
-      <div className="mt-4" />
-      {approvedThemes.total >= 0 ? (
-        <div className="flex flex-col w-full items-center px-4">
-          <h4 className="text-2xl font-medium">{calcDisplayName()} Themes</h4>
-          <FilterSelectorCard
-            filterOpts={serverSearchOpts.filters}
-            onFilterChange={(e) => {
-              setApprSearchOpt({ ...approvedThemeSearchOpts, filters: e.target.value });
-            }}
-            filterValue={approvedThemeSearchOpts.filters}
-            orderOpts={serverSearchOpts.order}
-            onOrderChange={(e) => {
-              setApprSearchOpt({ ...approvedThemeSearchOpts, order: e.target.value });
-            }}
-            orderValue={approvedThemeSearchOpts.order}
-            searchValue={approvedThemeSearchOpts.search}
-            onSearchChange={(e) => {
-              setApprSearchOpt({ ...approvedThemeSearchOpts, search: e.target.value });
-            }}
-          />
-          <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
-            {approvedThemes.total === 0 && <span>No Themes Found</span>}
-            {approvedThemes.items.map((e, i) => {
-              return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
-            })}
-          </div>
-          <div className="mt-4 mx-4">
-            <PageSelector
-              total={approvedThemes.total}
-              perPage={approvedThemeSearchOpts.perPage}
-              currentPage={approvedThemeSearchOpts.page}
-              onChoose={(page) => {
-                setApprSearchOpt({ ...approvedThemeSearchOpts, page: page });
+    <>
+      <Head>
+        <title>{userInfo.username} | DeckThemes</title>
+      </Head>
+      <main className="flex flex-col items-center w-full">
+        <PfpDisplay avatar={userInfo.avatar} username={userInfo.username} id={userInfo.id} />
+        <div className="mt-4" />
+        {approvedThemes.total >= 0 ? (
+          <div className="flex flex-col w-full items-center px-4">
+            <h4 className="text-2xl font-medium">{calcDisplayName()} Themes</h4>
+            <FilterSelectorCard
+              filterOpts={serverSearchOpts.filters}
+              onFilterChange={(e) => {
+                setApprSearchOpt({ ...approvedThemeSearchOpts, filters: e.target.value });
+              }}
+              filterValue={approvedThemeSearchOpts.filters}
+              orderOpts={serverSearchOpts.order}
+              onOrderChange={(e) => {
+                setApprSearchOpt({ ...approvedThemeSearchOpts, order: e.target.value });
+              }}
+              orderValue={approvedThemeSearchOpts.order}
+              searchValue={approvedThemeSearchOpts.search}
+              onSearchChange={(e) => {
+                setApprSearchOpt({ ...approvedThemeSearchOpts, search: e.target.value });
               }}
             />
-          </div>
-        </div>
-      ) : null}
-      {accountInfo?.permissions.includes(Permissions.admin) && (
-        <>
-          <BigDivider />
-          {starredThemes.total >= 0 ? (
-            <div className="flex flex-col w-full items-center px-4">
-              <h4 className="text-2xl font-medium">Starred Themes</h4>
-              <FilterSelectorCard
-                filterOpts={serverStarSearchOpts.filters}
-                onFilterChange={(e) => {
-                  setStarSearchOpts({ ...starredThemeSearchOpts, filters: e.target.value });
-                }}
-                filterValue={starredThemeSearchOpts.filters}
-                orderOpts={serverStarSearchOpts.order}
-                onOrderChange={(e) => {
-                  setStarSearchOpts({ ...starredThemeSearchOpts, order: e.target.value });
-                }}
-                orderValue={starredThemeSearchOpts.order}
-                searchValue={starredThemeSearchOpts.search}
-                onSearchChange={(e) => {
-                  setStarSearchOpts({ ...starredThemeSearchOpts, search: e.target.value });
+            <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
+              {approvedThemes.total === 0 && <span>No Themes Found</span>}
+              {approvedThemes.items.map((e, i) => {
+                return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
+              })}
+            </div>
+            <div className="mt-4 mx-4">
+              <PageSelector
+                total={approvedThemes.total}
+                perPage={approvedThemeSearchOpts.perPage}
+                currentPage={approvedThemeSearchOpts.page}
+                onChoose={(page) => {
+                  setApprSearchOpt({ ...approvedThemeSearchOpts, page: page });
                 }}
               />
-              <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
-                {starredThemes.total === 0 && <span>No Themes Found</span>}
-                {starredThemes.items.map((e, i) => {
-                  return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
-                })}
+            </div>
+          </div>
+        ) : null}
+        {accountInfo?.permissions.includes(Permissions.admin) && (
+          <>
+            <BigDivider />
+            {starredThemes.total >= 0 ? (
+              <div className="flex flex-col w-full items-center px-4">
+                <h4 className="text-2xl font-medium">Starred Themes</h4>
+                <FilterSelectorCard
+                  filterOpts={serverStarSearchOpts.filters}
+                  onFilterChange={(e) => {
+                    setStarSearchOpts({ ...starredThemeSearchOpts, filters: e.target.value });
+                  }}
+                  filterValue={starredThemeSearchOpts.filters}
+                  orderOpts={serverStarSearchOpts.order}
+                  onOrderChange={(e) => {
+                    setStarSearchOpts({ ...starredThemeSearchOpts, order: e.target.value });
+                  }}
+                  orderValue={starredThemeSearchOpts.order}
+                  searchValue={starredThemeSearchOpts.search}
+                  onSearchChange={(e) => {
+                    setStarSearchOpts({ ...starredThemeSearchOpts, search: e.target.value });
+                  }}
+                />
+                <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
+                  {starredThemes.total === 0 && <span>No Themes Found</span>}
+                  {starredThemes.items.map((e, i) => {
+                    return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
+                  })}
+                </div>
+                <div className="mt-4 mx-4">
+                  <PageSelector
+                    total={starredThemes.total}
+                    perPage={starredThemeSearchOpts.perPage}
+                    currentPage={starredThemeSearchOpts.page}
+                    onChoose={(page) => {
+                      setStarSearchOpts({ ...starredThemeSearchOpts, page: page });
+                    }}
+                  />
+                </div>
               </div>
-              <div className="mt-4 mx-4">
+            ) : null}
+            <BigDivider />
+            {submissions.total >= 0 ? (
+              <div className="flex flex-col w-full items-center px-4">
+                <h4 className="text-2xl font-medium">Your Submissions</h4>
+                <FilterSelectorCard
+                  filterOpts={serverSubSearchOpts.filters}
+                  onFilterChange={(e) => {
+                    setSubSearchOpts({ ...submissionSearchOpts, filters: e.target.value });
+                  }}
+                  filterValue={submissionSearchOpts.filters}
+                  orderOpts={serverSubSearchOpts.order}
+                  onOrderChange={(e) => {
+                    setSubSearchOpts({ ...submissionSearchOpts, order: e.target.value });
+                  }}
+                  orderValue={submissionSearchOpts.order}
+                  searchValue={submissionSearchOpts.search}
+                  onSearchChange={(e) => {
+                    setSubSearchOpts({ ...submissionSearchOpts, search: e.target.value });
+                  }}
+                />
+                <div className="flex md:flex-row w-full justify-center items-center md:items-start flex-wrap gap-4">
+                  {submissions.total === 0 && <span>No Submissions Found</span>}
+                  {submissions.items.map((e, i) => {
+                    if (
+                      e.status === "AwaitingApproval" ||
+                      (new Date().valueOf() - new Date(e.submitted).valueOf()) /
+                        (1000 * 60 * 60 * 24) <
+                        7
+                    )
+                      return <CSSMiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
+                  })}
+                </div>
                 <PageSelector
-                  total={starredThemes.total}
-                  perPage={starredThemeSearchOpts.perPage}
-                  currentPage={starredThemeSearchOpts.page}
+                  total={submissions.total}
+                  perPage={submissionSearchOpts.perPage}
+                  currentPage={submissionSearchOpts.page}
                   onChoose={(page) => {
-                    setStarSearchOpts({ ...starredThemeSearchOpts, page: page });
+                    setSubSearchOpts({ ...submissionSearchOpts, page: page });
                   }}
                 />
               </div>
-            </div>
-          ) : null}
-          <BigDivider />
-          {submissions.total >= 0 ? (
-            <div className="flex flex-col w-full items-center px-4">
-              <h4 className="text-2xl font-medium">Your Submissions</h4>
-              <FilterSelectorCard
-                filterOpts={serverSubSearchOpts.filters}
-                onFilterChange={(e) => {
-                  setSubSearchOpts({ ...submissionSearchOpts, filters: e.target.value });
-                }}
-                filterValue={submissionSearchOpts.filters}
-                orderOpts={serverSubSearchOpts.order}
-                onOrderChange={(e) => {
-                  setSubSearchOpts({ ...submissionSearchOpts, order: e.target.value });
-                }}
-                orderValue={submissionSearchOpts.order}
-                searchValue={submissionSearchOpts.search}
-                onSearchChange={(e) => {
-                  setSubSearchOpts({ ...submissionSearchOpts, search: e.target.value });
-                }}
-              />
-              <div className="flex md:flex-row w-full justify-center items-center md:items-start flex-wrap gap-4">
-                {submissions.total === 0 && <span>No Submissions Found</span>}
-                {submissions.items.map((e, i) => {
-                  if (
-                    e.status === "AwaitingApproval" ||
-                    (new Date().valueOf() - new Date(e.submitted).valueOf()) /
-                      (1000 * 60 * 60 * 24) <
-                      7
-                  )
-                    return <CSSMiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
-                })}
-              </div>
-              <PageSelector
-                total={submissions.total}
-                perPage={submissionSearchOpts.perPage}
-                currentPage={submissionSearchOpts.page}
-                onChoose={(page) => {
-                  setSubSearchOpts({ ...submissionSearchOpts, page: page });
-                }}
-              />
-            </div>
-          ) : null}
-        </>
-      )}
-    </main>
+            ) : null}
+          </>
+        )}
+      </main>
+    </>
   );
 }
