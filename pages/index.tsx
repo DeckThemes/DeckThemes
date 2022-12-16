@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <>
       <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
-        <div className="w-full h-screenMinusHeader flex items-center justify-center relative">
+        <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-30">
           <div className="w-full h-full bg-black">
             <div
               style={{
@@ -48,7 +48,7 @@ export default function Home() {
               className="w-full h-full bg-no-repeat bg-cover bg-center"
             />
           </div>
-          <div className="absolute text-zinc-300 top-[40%]">
+          <div className="absolute top-[40%]">
             <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
             <h2 className="text-2xl md:text-3xl font-medium">CSSLoader & AudioLoader</h2>
           </div>

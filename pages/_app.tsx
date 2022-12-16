@@ -12,7 +12,7 @@ export const authContext = createContext<AuthContextContents>({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState<Theme>("light");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   function initSetTheme(): void {
     //Sets dark theme based on browser preferences, but also allows for manual changing
@@ -29,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
       localStorage.theme = "dark";
       return;
     }
-    setTheme("light");
+    setTheme("dark");
     return;
   }
 
