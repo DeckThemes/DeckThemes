@@ -28,6 +28,7 @@ function BigDivider() {
 export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
   const router = useRouter();
+  const [loaded, setLoaded] = useState(true);
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
     filters: [],
     order: [],
