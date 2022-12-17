@@ -26,7 +26,7 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
           className="bg-cover"
           style={{
             width: "100%",
-            aspectRatio: "1.72 / 1",
+            aspectRatio: "1.6 / 1",
             position: "relative",
             borderRadius: "1em",
             backgroundSize: "cover !important",

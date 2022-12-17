@@ -4,20 +4,20 @@ export async function checkAndRefreshToken() {
   const expiryDate = localStorage.tokenExpiryDate;
   if (expiryDate === undefined) {
     // This is for a person who isn't logged in, so that the site still functions
-    console.log("No Cookie Expiry Date Value!");
+    process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("No Cookie Expiry Date Value!");
     return true;
   }
   if (new Date().valueOf() < expiryDate) {
     console.log("Cookie Is Up To Date");
     return true;
   } else {
-    console.log("REFRESHING TOKEN");
+    process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("REFRESHING TOKEN");
     return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh_token`, {
       method: "POST",
       credentials: "include",
     })
       .then((res) => {
-        console.log("New Token Fetch Res", res);
+        process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("New Token Fetch Res", res);
         if (res.status < 200 || res.status >= 300 || !res.ok) {
           throw new Error("Response Not OK");
         }
@@ -25,7 +25,7 @@ export async function checkAndRefreshToken() {
       })
       .then((json) => {
         if (json?.token) {
-          console.log("Setting New Cookie");
+          process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("Setting New Cookie");
           generateAuthCookie(json.token);
           return true;
         } else {
@@ -46,14 +46,18 @@ export async function genericGET(subPath: string, errMessage: string, debug: boo
       credentials: "include",
     })
       .then((res) => {
-        debug && console.log(`${subPath} Fetch Res: `, res);
+        process.env.NEXT_PUBLIC_DEV_MODE === "test" &&
+          debug &&
+          console.log(`${subPath} Fetch Res: `, res);
         if (res.status < 200 || res.status >= 300 || !res.ok) {
           throw new Error("Response Not OK");
         }
         return res.json();
       })
       .then((json) => {
-        debug && console.log(`${subPath} Fetch Json: `, json);
+        process.env.NEXT_PUBLIC_DEV_MODE === "test" &&
+          debug &&
+          console.log(`${subPath} Fetch Json: `, json);
         if (json) {
           return json;
         }
@@ -63,6 +67,6 @@ export async function genericGET(subPath: string, errMessage: string, debug: boo
         console.error(`${errMessage}`, err);
       });
   } else {
-    console.log("test test test", waitForRefresh);
+    console.log("COOKIE REFRESH FAILED!", waitForRefresh);
   }
 }

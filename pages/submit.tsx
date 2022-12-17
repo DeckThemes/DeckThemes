@@ -50,18 +50,35 @@ export default function Submit() {
     blob: "",
   });
 
+  const [uploadType, setUploadType] = useState<"css" | "audio">("css");
+
   const [metaInfo, setMetaInfo] = useState<MetaInfo>({
     imageBlobs: [],
     description: "",
     target: "",
   });
 
+  function checkIfReady() {
+    let ready = false;
+    switch (uploadMethod) {
+      case "git":
+        if (gitUploadInfo.url) ready = true;
+        break;
+      case "css":
+        if (cssUploadInfo.css && cssUploadInfo.name) ready = true;
+        break;
+      case "zip":
+        if (zipUploadInfo.blob) ready = true;
+    }
+    return ready;
+  }
+
   async function submitTheme() {
     const data = () => {
       switch (uploadMethod) {
-        case "css_git":
+        case "git":
           return gitUploadInfo;
-        case "css_css":
+        case "css":
           return cssUploadInfo;
         default:
           return zipUploadInfo;
@@ -70,11 +87,11 @@ export default function Submit() {
     const formattedMeta = {
       imageBlobs: metaInfo.imageBlobs,
       description: metaInfo.description || null,
-      target: metaInfo.target || null,
+      target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/submissions/${uploadMethod}`, {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/submissions/${uploadType}_${uploadMethod}`, {
         method: "POST",
         credentials: "include",
         body: JSON.stringify({ ...data(), meta: formattedMeta }),
@@ -83,14 +100,14 @@ export default function Submit() {
         },
       })
         .then((res) => {
-          console.log(res);
+          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
           if (res.status < 200 || res.status >= 300 || !res.ok) {
             throw new Error("Response Not OK");
           }
           return res.json();
         })
         .then((json) => {
-          console.log(json);
+          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
           if (json?.task) {
             router.push(`/taskStatus/${json.task}`);
           } else {
@@ -103,63 +120,117 @@ export default function Submit() {
     }
   }
 
-  const [uploadMethod, setUploadMethod] = useState<string>("css_zip");
+  const [uploadMethod, setUploadMethod] = useState<string>("zip");
   return (
-    <div className="flex flex-col items-center w-full grow text-center">
-      <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
-      <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
-        <section className="p-4 w-full flex flex-col items-center">
-          <div className="flex flex-col md:flex-row items-center gap-4 md:h-16 mb-4">
-            <span className="bg-bgLight dark:bg-bgDark p-4 text-2xl md:text-3xl font-medium h-full rounded-3xl">
-              Part 1: Upload Your Theme
+    <>
+      <Head>
+        <title>DeckThemes | Submit</title>
+      </Head>
+      <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
+        <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
+        <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
+          <section className="p-4 w-full flex flex-col items-center">
+            <div className="flex flex-col items-center gap-4 justify-center mb-4">
+              <span className="bg-bgLight dark:bg-bgDark p-4 text-2xl md:text-3xl font-medium h-full rounded-3xl">
+                Part 1: Upload Your Theme
+              </span>
+              <div className="flex flex-col md:flex-row gap-2">
+                <div className="flex flex-col h-20">
+                  <span>Upload Method</span>
+                  <select
+                    className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                    value={uploadMethod}
+                    onChange={({ target: { value } }) => {
+                      setUploadMethod(value);
+                      if (value === "css") {
+                        setUploadType("css");
+                      }
+                    }}
+                  >
+                    <option value="zip">Upload Zip</option>
+                    <option value="git">Link Git Repo</option>
+                    <option value="css">Paste CSS Snippet</option>
+                  </select>
+                </div>
+                <div className="flex flex-col h-20">
+                  <span>Target Plugin</span>
+                  <select
+                    className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                    value={uploadType}
+                    onChange={({ target: { value } }) => {
+                      if (value === "css" || value === "audio") {
+                        setUploadType(value);
+                      }
+                    }}
+                  >
+                    <option value="css">CSSLoader</option>
+                    <option value="audio" disabled={uploadMethod === "css"}>
+                      AudioLoader
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            {uploadMethod === "zip" && (
+              <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
+            )}
+            {uploadMethod === "git" && (
+              <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
+            )}
+            {uploadMethod === "css" && (
+              <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
+            )}
+          </section>
+          <BigDivider />
+          <section className="p-4 w-full flex flex-col items-center">
+            <span className="bg-bgLight dark:bg-bgDark p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+              Part 2: Add More Info
             </span>
-            <select
-              className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl"
-              onChange={({ target: { value } }) => {
-                setUploadMethod(value);
-              }}
-            >
-              <option value="css_zip">Via File</option>
-              <option value="css_git">Via Git</option>
-              <option value="css_css">Via CSS</option>
-            </select>
-          </div>
-          {uploadMethod === "css_zip" && (
-            <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
-          )}
-          {uploadMethod === "css_git" && (
-            <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
-          )}
-          {uploadMethod === "css_css" && (
-            <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
-          )}
-        </section>
-        <BigDivider />
-        <section className="p-4 w-full flex flex-col items-center">
-          <span className="bg-bgLight dark:bg-bgDark p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-            Part 2: Add More Info
-          </span>
-          <MetaPanel info={metaInfo} setInfo={setMetaInfo} />
-        </section>
-        <BigDivider />
-        <section className="p-4 w-full flex flex-col items-center">
-          <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-            <span className="text-textDark dark:text-textLight" onClick={() => submitTheme()}>
-              Submit
+            <MetaPanel info={metaInfo} setInfo={setMetaInfo} uploadType={uploadType} />
+          </section>
+          <BigDivider />
+          <section className="p-4 w-full flex flex-col items-center">
+            {checkIfReady() ? (
+              <>
+                <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                  <span className="text-textDark dark:text-textLight" onClick={() => submitTheme()}>
+                    Submit
+                  </span>
+                </button>
+              </>
+            ) : (
+              <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                <span>Add Info Before Submitting</span>
+              </div>
+            )}
+          </section>
+        </main>
+        <div className="w-fit px-4 flex justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl m-4 text-3xl">
+          <a
+            href="https://discord.gg/zSyf5GgdQY"
+            target="_blank"
+            rel="noreferrer"
+            className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
+          >
+            Join our Discord <br className="flex md:hidden" />
+            <span className="text-textLight dark:text-textDark">
+              to keep updated on your submission&apos;s status!
             </span>
-          </button>
-        </section>
-      </main>
-    </div>
+          </a>
+        </div>
+      </div>
+    </>
   );
 }
 
 function MetaPanel({
   info,
   setInfo,
+  uploadType,
 }: {
   info: MetaInfo;
   setInfo: Dispatch<SetStateAction<MetaInfo>>;
+  uploadType?: "css" | "audio";
 }) {
   const [image, setImage] = useState<File>();
 
@@ -235,7 +306,7 @@ function MetaPanel({
   async function getTargets() {
     const data = await genericGET("/themes/filters", "Error Fetching Theme Targets!");
     if (data?.filters) {
-      setTargetOptions(data.filters);
+      setTargetOptions(["None", ...data.filters]);
     }
   }
 
@@ -245,22 +316,20 @@ function MetaPanel({
 
   return (
     <>
-      <Head>
-        <title>DeckThemes | Submit</title>
-      </Head>
       <div className={`${sectionContainerClasses}`}>
         <div className={`${fieldContainerClasses}`}>
           <span className={`${fieldTitleClasses}`}>Target</span>
           <div className="flex justify-center w-full">
             <select
               className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
+              value={info.target}
               onChange={({ target: { value } }) => {
                 setInfo({ ...info, target: value });
               }}
             >
               {targetOptions.map((e) => (
                 <option value={e} key={e}>
-                  {e}
+                  {e !== "None" ? e : "Use JSON Value"}
                 </option>
               ))}
             </select>
@@ -369,6 +438,9 @@ function MetaPanel({
           <span className={`${fieldTitleClasses}`}>Description</span>
           <textarea
             value={info.description}
+            placeholder={`Leave empty to use ${
+              uploadType === "audio" ? "pack.json" : "theme.json"
+            } value.`}
             onChange={(e) => setInfo({ ...info, description: e.target.value })}
             className={`${fieldClasses} h-32`}
           />

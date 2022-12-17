@@ -17,16 +17,14 @@ export default function Home() {
       // This just changes "All" to "", as that is what the backend looks for
       const mostDownloaded = await genericGET(
         `/themes?order=Most Downloaded&filter=CSS&perPage=7`,
-        "Error Fetching Most Downloaded Themes!",
-        true
+        "Error Fetching Most Downloaded Themes!"
       );
       if (mostDownloaded) {
         setMostDownloaded(mostDownloaded);
       }
       const mostRecent = await genericGET(
         `/themes?order=Last Updated&filter=CSS&perPage=7`,
-        "Error Fetching Most Recent Themes!",
-        true
+        "Error Fetching Most Recent Themes!"
       );
       if (mostRecent) {
         setMostRecent(mostRecent);

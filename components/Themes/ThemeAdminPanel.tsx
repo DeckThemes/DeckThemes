@@ -15,7 +15,6 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
         `Are you sure you want to delete this theme? \nType "${themeData.name}" below to confirm.`
       );
       if (enteredName === themeData.name) {
-        console.log("test");
         fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData.id}`, {
           method: "DELETE",
           credentials: "include",

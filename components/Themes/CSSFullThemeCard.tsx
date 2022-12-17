@@ -87,13 +87,13 @@ export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
                 </h1>
                 <Link href={`/users/${themeData.author.id}`}>
                   <h3>
-                    Created By{" "}
+                    Created By <br className="flex md:hidden" />
                     <span className="text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700 underline transition-colors">
                       {themeData.specifiedAuthor}
                     </span>
                   </h3>
                 </Link>
-                <div className="flex justify-between w-full">
+                <div className="flex justify-between w-full px-3 md:px-0">
                   <h3>{themeData.target}</h3>
                   <h3>{themeData.version}</h3>
                 </div>

@@ -20,7 +20,7 @@ export default function TaskView() {
           credentials: "include",
         })
           .then((res) => {
-            console.log(res);
+            process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
             if (res.status < 200 || res.status >= 300 || !res.ok) {
               throw new Error("Response Not OK");
             }
