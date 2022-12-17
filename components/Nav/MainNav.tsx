@@ -64,13 +64,12 @@ export function MainNav() {
             >
               <TbUpload size={36} className="scale-x-105" />
             </Link>
-            <div className="w-1 h-full bg-borderLight dark:bg-borderDark rounded-full ml-3" />
           </>
         ) : (
           <>
             {hasCookie ? (
               <>
-                <LoadingSpinner />
+                <LoadingSpinner size={32} />
               </>
             ) : (
               <>
@@ -87,6 +86,7 @@ export function MainNav() {
             )}
           </>
         )}
+        <div className="w-1 h-full bg-borderLight dark:bg-borderDark rounded-full ml-3" />
         <button
           className="pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
           onClick={() => {
