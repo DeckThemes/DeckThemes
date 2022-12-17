@@ -36,7 +36,7 @@ export function MainNav() {
       }
     }
     setHasCookie(false);
-  }, []);
+  }, [accountInfo]);
 
   return (
     <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
