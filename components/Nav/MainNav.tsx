@@ -1,6 +1,5 @@
 import Link from "next/link";
-// import { useRouter } from "next/router";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import { authContext } from "../../pages/_app";
 import { themeContext } from "../../styles";
 import { fetchDiscordUrl } from "../../api";
@@ -11,12 +10,33 @@ import { TbUpload } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
+import { LoadingSpinner } from "../Generic";
 
 export function MainNav() {
   // const router = useRouter();
 
+  const [hasCookie, setHasCookie] = useState<boolean>(true);
   const { accountInfo } = useContext(authContext);
   const { theme, setTheme } = useContext(themeContext);
+
+  useEffect(() => {
+    const cookieStr = document.cookie;
+    if (cookieStr) {
+      const cookieObj = cookieStr
+        .split(";")
+        .map((v) => v.split("="))
+        .reduce((acc: any, v) => {
+          acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+          return acc;
+        }, {});
+      if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
+        console.log("hasCookie");
+        setHasCookie(true);
+        return;
+      }
+    }
+    setHasCookie(false);
+  }, []);
 
   return (
     <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
@@ -48,15 +68,23 @@ export function MainNav() {
           </>
         ) : (
           <>
-            <button
-              className="bg-discordColor px-2 h-full rounded-md flex items-center justify-center text-slate-800"
-              onClick={fetchDiscordUrl}
-            >
-              <span>
-                Login <br />
-                With Discord
-              </span>
-            </button>
+            {hasCookie ? (
+              <>
+                <LoadingSpinner />
+              </>
+            ) : (
+              <>
+                <button
+                  className="bg-discordColor px-2 h-full rounded-md flex items-center justify-center text-slate-800"
+                  onClick={fetchDiscordUrl}
+                >
+                  <span>
+                    Login <br />
+                    With Discord
+                  </span>
+                </button>
+              </>
+            )}
           </>
         )}
         <button
