@@ -3,10 +3,6 @@ const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
   swcMinify: true,
-  // env: {
-  //   NEXT_PUBLIC_API_URL: "http://localhost:1337",
-  //   NEXT_PUBLIC_CLIENT_URL: "http://localhost:3000",
-  // },
   images: {
     unoptimized: true,
     remotePatterns: [

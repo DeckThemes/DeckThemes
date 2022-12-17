@@ -4,9 +4,11 @@ export async function checkAndRefreshToken() {
   const expiryDate = localStorage.tokenExpiryDate;
   if (expiryDate === undefined) {
     // This is for a person who isn't logged in, so that the site still functions
+    console.log("No Cookie Expiry Date Value!");
     return true;
   }
   if (new Date().valueOf() < expiryDate) {
+    console.log("Cookie Is Up To Date");
     return true;
   } else {
     console.log("REFRESHING TOKEN");
@@ -22,10 +24,9 @@ export async function checkAndRefreshToken() {
         return res.json();
       })
       .then((json) => {
-        console.log(`New Token Fetch Json `, json);
         if (json?.token) {
+          console.log("Setting New Cookie");
           generateAuthCookie(json.token);
-          console.log("refresh returning now", json.token);
           return true;
         } else {
           throw new Error("Couldn't find token");
@@ -40,7 +41,6 @@ export async function checkAndRefreshToken() {
 export async function genericGET(subPath: string, errMessage: string, debug: boolean = false) {
   const waitForRefresh = await checkAndRefreshToken();
   if (waitForRefresh) {
-    console.log("refresh yes", waitForRefresh);
     return await fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, {
       method: "GET",
       credentials: "include",

@@ -12,7 +12,7 @@ import {
 import { checkAndRefreshToken, genericGET } from "../api";
 
 import {
-  BlobUploadResponse,
+  APIBlob,
   CSSSubmissionInfo,
   GitSubmissionInfo,
   MetaInfo,
@@ -197,9 +197,9 @@ function MetaPanel({
             console.log(res);
             return res.json();
           })
-          .then((json: BlobUploadResponse) => {
-            if (json?.token) {
-              setInfo({ ...info, imageBlobs: [...info.imageBlobs, json.token] });
+          .then((json: APIBlob) => {
+            if (json?.id) {
+              setInfo({ ...info, imageBlobs: [...info.imageBlobs, json.id] });
               setCompImageInfo([...complimentaryImageInfo, image]);
               setImage(undefined);
             }
@@ -461,9 +461,9 @@ function ZipSubmitPanel({
           .then((res) => {
             return res.json();
           })
-          .then((json: BlobUploadResponse) => {
-            if (json?.token) {
-              setInfo({ ...info, blob: json.token });
+          .then((json: APIBlob) => {
+            if (json?.id) {
+              setInfo({ ...info, blob: json.id });
               setUploadedFile(file);
               setFile(undefined);
             }

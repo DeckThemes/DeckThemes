@@ -6,7 +6,3 @@ export interface APIBlob {
   uploaded: Date;
   downloadCount: number;
 }
-
-export interface BlobUploadResponse {
-  token: string;
-}

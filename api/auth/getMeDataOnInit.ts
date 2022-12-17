@@ -3,6 +3,7 @@ import { checkAndRefreshToken } from "../genericFetches";
 
 export async function getMeDataOnInit(): Promise<AccountData | undefined> {
   const cookieStr = document.cookie;
+  console.log("cookies", cookieStr);
   if (cookieStr) {
     const cookieObj = cookieStr
       .split(";")
@@ -14,6 +15,7 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
     if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
+        console.log("test");
         const meJson = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
           method: "GET",
           credentials: "include",
