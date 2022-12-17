@@ -175,7 +175,11 @@ export default function Account() {
   function logOut() {
     setAccountInfo(undefined);
     // We do a little trolling
-    document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+    document.cookie = `authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax; path=/; ${
+      process.env.NEXT_PUBLIC_DEV_MODE === "true"
+        ? ""
+        : `domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`
+    } Secure`;
   }
 
   if (!accountInfo?.username) {
