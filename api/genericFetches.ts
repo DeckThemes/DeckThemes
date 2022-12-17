@@ -8,7 +8,7 @@ export async function checkAndRefreshToken() {
     return true;
   }
   if (new Date().valueOf() < expiryDate) {
-    console.log("Cookie Is Up To Date");
+    process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("Cookie Is Up To Date");
     return true;
   } else {
     process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("REFRESHING TOKEN");
