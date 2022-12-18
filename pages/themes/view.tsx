@@ -1,18 +1,6 @@
 import { useRouter } from "next/router";
 import { CSSFullThemeCard } from "../../components";
 
-// export async function getStaticPaths() {
-//   // const data = fetch("https://api.deckthemes.com/themes?perPage=1000")
-//   //   .then((res) => res.json())
-//   //   .then((json) => {
-//   //     return json.items.map((e) => e.id);
-//   //   });
-//   return {
-//     paths: [],
-//     fallback: "blocking",
-//   };
-// }
-
 export default function FullThemeViewPage() {
   const router = useRouter();
   let { themeId } = router.query;

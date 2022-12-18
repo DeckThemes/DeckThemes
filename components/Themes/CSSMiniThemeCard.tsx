@@ -142,7 +142,7 @@ export function CSSMiniThemeCard({
 
   return (
     <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
-      <Link href={`/themes/${data.id}`}>
+      <Link href={`/themes/view?themeId=${data.id}`}>
         <InnerContent />
       </Link>
     </div>

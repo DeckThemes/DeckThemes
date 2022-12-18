@@ -18,7 +18,10 @@ export function MiniPfpDisplay({
       } rounded-full w-fit`}
       // className="flex items-center rounded-full"
     >
-      <Link href={goToMe ? "/users/me" : `/users/${accountInfo.id}`} className="flex items-center">
+      <Link
+        href={goToMe ? "/users/me" : `/users/view?userId=${accountInfo.id}`}
+        className="flex items-center"
+      >
         <span className="ml-4 mr-2 hidden md:flex">{accountInfo.username}</span>
         <Image
           src={`${accountInfo.avatar || "/question_mark.png"}`}

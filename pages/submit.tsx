@@ -109,7 +109,7 @@ export default function Submit() {
         .then((json) => {
           process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
           if (json?.task) {
-            router.push(`/taskStatus/${json.task}`);
+            router.push(`/taskStatus/view?task=${json.task}`);
           } else {
             throw new Error("No task in response");
           }

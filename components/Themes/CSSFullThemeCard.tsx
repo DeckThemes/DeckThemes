@@ -85,7 +85,7 @@ export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
                 <h1 className="text-3xl md:text-5xl font-semibold mb-auto max-w-[640px]">
                   {themeData.name}
                 </h1>
-                <Link href={`/users/${themeData.author.id}`}>
+                <Link href={`/users/view?userId=${themeData.author.id}`}>
                   <h3>
                     Created By <br className="flex md:hidden" />
                     <span className="text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700 underline transition-colors">
