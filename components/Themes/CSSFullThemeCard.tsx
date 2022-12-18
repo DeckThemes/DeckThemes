@@ -62,7 +62,7 @@ export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
       <Head>
         <title>{themeData?.name ? `${themeData.name} | DeckThemes` : "DeckThemes"}</title>
       </Head>
-      <div className="flex-grow flex p-8 justify-center h-full mt-8 lg:mt-0 text-center lg:text-left">
+      <div className="flex-grow flex p-8 justify-center h-full w-full mt-8 lg:mt-0 text-center lg:text-left">
         {themeData !== undefined ? (
           <>
             <div className="flex flex-col lg:flex-row items-center lg:items-start lg:mx-16 xl:mx-32 h-fit w-full p-4 bg-cardLight dark:bg-cardDark rounded-3xl">
