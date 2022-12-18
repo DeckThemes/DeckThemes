@@ -237,7 +237,7 @@ function MetaPanel({
   info: MetaInfo;
   setInfo: Dispatch<SetStateAction<MetaInfo>>;
   uploadType?: "css" | "audio";
-  uploadMethod?: "css" | "zip" | "git";
+  uploadMethod?: string;
 }) {
   const [image, setImage] = useState<File>();
 
