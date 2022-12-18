@@ -76,9 +76,29 @@ export default function FullSubmissionViewPage() {
               <CSSFullThemeCard parsedId={submissionData.newTheme.id} />
             </div>
             <div className="flex flex-col w-full items-center">
-              <span className="text-3xl md:text-4xl font-semibold mt-4">Submission Info</span>
+              <span className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">
+                Submission Info
+              </span>
               {submissionData.status === "AwaitingApproval" ? (
                 <>
+                  <div className="flex flex-col items-center mb-4">
+                    {submissionData.errors ? (
+                      <>
+                        <span className="text-2xl">Errors:</span>
+                        <div className="flex flex-col items-center text-center">
+                          {submissionData.errors.map((e, i) => (
+                            <span key={`Submission Error ${i}`}>
+                              {i + 1}: {e}
+                            </span>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <span>No Errors</span>
+                      </>
+                    )}
+                  </div>
                   {!reviewSubmitted ? (
                     <div className="flex flex-col gap-2 items-center">
                       <div className="flex gap-2">

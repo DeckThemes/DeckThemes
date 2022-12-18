@@ -77,6 +77,7 @@ export interface ThemeSubmissionInfo {
   owner: UserInfo;
   reviewedBy: UserInfo | null;
   status: SubmissionStatus;
+  errors?: string[];
   submitted: Date;
 }
 

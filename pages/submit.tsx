@@ -128,6 +128,19 @@ export default function Submit() {
       </Head>
       <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
         <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
+        <div className="w-fit px-4 flex justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl mb-4 text-3xl">
+          <a
+            href="https://discord.gg/zSyf5GgdQY"
+            target="_blank"
+            rel="noreferrer"
+            className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
+          >
+            Join our Discord <br className="flex md:hidden" />
+            <span className="text-textLight dark:text-textDark">
+              to keep updated on your submission&apos;s status!
+            </span>
+          </a>
+        </div>
         <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
           <section className="p-4 w-full flex flex-col items-center">
             <div className="flex flex-col items-center gap-4 justify-center mb-4">
@@ -186,7 +199,12 @@ export default function Submit() {
             <span className="bg-bgLight dark:bg-bgDark p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
               Part 2: Add More Info
             </span>
-            <MetaPanel info={metaInfo} setInfo={setMetaInfo} uploadType={uploadType} />
+            <MetaPanel
+              info={metaInfo}
+              setInfo={setMetaInfo}
+              uploadType={uploadType}
+              uploadMethod={uploadMethod}
+            />
           </section>
           <BigDivider />
           <section className="p-4 w-full flex flex-col items-center">
@@ -205,19 +223,6 @@ export default function Submit() {
             )}
           </section>
         </main>
-        <div className="w-fit px-4 flex justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl m-4 text-3xl">
-          <a
-            href="https://discord.gg/zSyf5GgdQY"
-            target="_blank"
-            rel="noreferrer"
-            className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
-          >
-            Join our Discord <br className="flex md:hidden" />
-            <span className="text-textLight dark:text-textDark">
-              to keep updated on your submission&apos;s status!
-            </span>
-          </a>
-        </div>
       </div>
     </>
   );
@@ -227,10 +232,12 @@ function MetaPanel({
   info,
   setInfo,
   uploadType,
+  uploadMethod,
 }: {
   info: MetaInfo;
   setInfo: Dispatch<SetStateAction<MetaInfo>>;
   uploadType?: "css" | "audio";
+  uploadMethod?: "css" | "zip" | "git";
 }) {
   const [image, setImage] = useState<File>();
 
@@ -311,6 +318,12 @@ function MetaPanel({
   }
 
   useEffect(() => {
+    if (uploadMethod === "css" && info.target === "None") {
+      setInfo({ ...info, target: "Snippet" });
+    }
+  }, [uploadMethod]);
+
+  useEffect(() => {
     getTargets();
   }, []);
 
@@ -328,7 +341,7 @@ function MetaPanel({
               }}
             >
               {targetOptions.map((e) => (
-                <option value={e} key={e}>
+                <option value={e} key={e} disabled={e === "None" && uploadMethod === "css"}>
                   {e !== "None" ? e : "Use JSON Value"}
                 </option>
               ))}

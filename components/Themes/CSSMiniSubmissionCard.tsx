@@ -75,6 +75,15 @@ export function CSSMiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
                   <div className="flex flex-col items-center">
                     <span>Awaiting Review</span>
                     <span>Submitted On {new Date(data.submitted).toLocaleDateString()}</span>
+                    {data?.errors ? (
+                      <>
+                        <span>{data.errors.length} errors</span>
+                      </>
+                    ) : (
+                      <>
+                        <span>No Errors</span>
+                      </>
+                    )}
                   </div>
                 </>
               );
