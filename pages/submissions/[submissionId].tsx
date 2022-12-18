@@ -1,12 +1,14 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { checkAndRefreshToken, genericGET } from "../../api";
 import { CSSFullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
-import { ThemeSubmissionInfo } from "../../types";
+import { Permissions, ThemeSubmissionInfo } from "../../types";
+import { authContext } from "../_app";
 
 export default function FullSubmissionViewPage() {
+  const { accountInfo } = useContext(authContext);
   const router = useRouter();
   let { submissionId } = router.query;
   let parsedId: string = "";
@@ -82,13 +84,13 @@ export default function FullSubmissionViewPage() {
               {submissionData.status === "AwaitingApproval" ? (
                 <>
                   <div className="flex flex-col items-center mb-4">
-                    {submissionData.errors ? (
+                    {submissionData.errors && submissionData.errors.length > 0 ? (
                       <>
                         <span className="text-2xl">Errors:</span>
-                        <div className="flex flex-col items-center text-center">
+                        <div className="flex flex-col items-center text-center overflow-y-scroll max-h-64 border-4 border-borderLight dark:border-borderDark rounded-3xl px-8">
                           {submissionData.errors.map((e, i) => (
-                            <span key={`Submission Error ${i}`}>
-                              {i + 1}: {e}
+                            <span key={`Submission Error ${i}`} className="max-w-[60vw]">
+                              <b>{i + 1}:</b> {e}
                             </span>
                           ))}
                         </div>
@@ -99,54 +101,61 @@ export default function FullSubmissionViewPage() {
                       </>
                     )}
                   </div>
-                  {!reviewSubmitted ? (
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="flex gap-2">
-                        <button
-                          className={`${
-                            action === "approve"
-                              ? "bg-emerald-600"
-                              : "bg-cardLight dark:bg-cardDark"
-                          } p-2 flex items-center rounded-full transition-colors`}
-                          onClick={() => {
-                            action !== "approve" ? setAction("approve") : setAction(undefined);
-                          }}
-                        >
-                          <BsCheckCircleFill size={36} />
-                          <span className="text-xl font-medium ml-2 mr-1">Approve</span>
-                        </button>
-                        <button
-                          className={`${
-                            action === "deny" ? "bg-red-500" : "bg-cardLight dark:bg-cardDark"
-                          } p-2 flex items-center rounded-full transition-colors`}
-                          onClick={() => {
-                            action !== "deny" ? setAction("deny") : setAction(undefined);
-                          }}
-                        >
-                          <BsXCircleFill size={36} />
-                          <span className="text-xl font-medium ml-2 mr-1">Deny</span>
-                        </button>
-                      </div>
-                      {action && (
-                        <>
-                          <div className="flex flex-col gap-2 items-center border-4 border-borderLight dark:border-borderDark p-4 rounded-3xl">
-                            <span className="text-xl font-medium">
-                              {action === "deny" ? "Reason For Denial" : "Leave A Message"}
-                            </span>
-                            <textarea
-                              value={message}
-                              onChange={(e) => setMessage(e.target.value)}
-                              className="bg-cardLight dark:bg-cardDark p-2 rounded-3xl px-4"
-                            />
+                  {accountInfo?.permissions.includes(Permissions.approveSubs) && (
+                    <>
+                      {!reviewSubmitted ? (
+                        <div className="flex flex-col gap-2 items-center">
+                          <div className="flex gap-2">
+                            <button
+                              className={`${
+                                action === "approve"
+                                  ? "bg-emerald-600"
+                                  : "bg-cardLight dark:bg-cardDark"
+                              } p-2 flex items-center rounded-full transition-colors`}
+                              onClick={() => {
+                                action !== "approve" ? setAction("approve") : setAction(undefined);
+                              }}
+                            >
+                              <BsCheckCircleFill size={36} />
+                              <span className="text-xl font-medium ml-2 mr-1">Approve</span>
+                            </button>
+                            <button
+                              className={`${
+                                action === "deny" ? "bg-red-500" : "bg-cardLight dark:bg-cardDark"
+                              } p-2 flex items-center rounded-full transition-colors`}
+                              onClick={() => {
+                                action !== "deny" ? setAction("deny") : setAction(undefined);
+                              }}
+                            >
+                              <BsXCircleFill size={36} />
+                              <span className="text-xl font-medium ml-2 mr-1">Deny</span>
+                            </button>
                           </div>
-                          <button className="bg-amber-500 p-4 rounded-3xl" onClick={submitReview}>
-                            <span className="text-xl font-medium">Submit Review</span>
-                          </button>
-                        </>
+                          {action && (
+                            <>
+                              <div className="flex flex-col gap-2 items-center border-4 border-borderLight dark:border-borderDark p-4 rounded-3xl">
+                                <span className="text-xl font-medium">
+                                  {action === "deny" ? "Reason For Denial" : "Leave A Message"}
+                                </span>
+                                <textarea
+                                  value={message}
+                                  onChange={(e) => setMessage(e.target.value)}
+                                  className="bg-cardLight dark:bg-cardDark p-2 rounded-3xl px-4"
+                                />
+                              </div>
+                              <button
+                                className="bg-amber-500 p-4 rounded-3xl"
+                                onClick={submitReview}
+                              >
+                                <span className="text-xl font-medium">Submit Review</span>
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      ) : (
+                        <span>Review Submitted</span>
                       )}
-                    </div>
-                  ) : (
-                    <span>Review Submitted</span>
+                    </>
                   )}
                 </>
               ) : (

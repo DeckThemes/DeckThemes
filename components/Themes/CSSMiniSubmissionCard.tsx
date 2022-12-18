@@ -77,7 +77,9 @@ export function CSSMiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
                     <span>Submitted On {new Date(data.submitted).toLocaleDateString()}</span>
                     {data?.errors ? (
                       <>
-                        <span>{data.errors.length} errors</span>
+                        <span>
+                          {data.errors.length} Error{data.errors.length === 1 ? "" : "s"}
+                        </span>
                       </>
                     ) : (
                       <>
