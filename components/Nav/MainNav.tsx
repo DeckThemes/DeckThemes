@@ -30,7 +30,6 @@ export function MainNav() {
           return acc;
         }, {});
       if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
-        console.log("hasCookie");
         setHasCookie(true);
         return;
       }
