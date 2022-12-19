@@ -3,7 +3,7 @@ import { checkAndRefreshToken } from "../genericFetches";
 
 export async function getMeDataOnInit(): Promise<AccountData | undefined> {
   const cookieStr = document.cookie;
-  process.env.NEXT_PUBLIC_DEV_MODE === "test" && console.log("cookies:", cookieStr);
+  process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log("cookies:", cookieStr);
   if (cookieStr) {
     const cookieObj = cookieStr
       .split(";")

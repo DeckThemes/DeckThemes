@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^6.2.0",
     "@next/font": "^13.0.3",
     "@types/lodash": "^4.14.191",
     "@types/node": "18.11.9",

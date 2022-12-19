@@ -11,6 +11,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
+import { Discord } from "@icons-pack/react-simple-icons";
 
 export function MainNav() {
   // const router = useRouter();
@@ -18,6 +19,27 @@ export function MainNav() {
   const [hasCookie, setHasCookie] = useState<boolean>(true);
   const { accountInfo } = useContext(authContext);
   const { theme, setTheme } = useContext(themeContext);
+
+  const [discordApiInfo, setDiscordApiInfo] = useState<any>();
+
+  useEffect(() => {
+    fetch("https://discord.com/api/guilds/1051660079033745478/widget.json", {
+      method: "GET",
+    })
+      .then((res) => {
+        if (res.ok && res.status === 200) {
+          return res.json();
+        } else {
+          throw new Error(`Res not OK!, error code ${res.status}`);
+        }
+      })
+      .then((json) => {
+        setDiscordApiInfo(json);
+      })
+      .catch((err) => {
+        console.error("Error Fetching Discord Info!", err);
+      });
+  }, []);
 
   useEffect(() => {
     const cookieStr = document.cookie;
@@ -40,29 +62,38 @@ export function MainNav() {
   return (
     <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
       <div className="ml-4">
-        <>
-          <NavIcon />
-        </>
+        <NavIcon />
+      </div>
+      <div>
+        <a
+          href="https://discord.gg/HsU72Kfnpf"
+          target="_blank"
+          rel="noreferrer"
+          className="hidden ml-4 px-2 md:flex items-center gap-2 bg-bgLight dark:bg-bgDark p-1 rounded-2xl"
+        >
+          <Discord size={36} />
+          <span>Join The Discord!</span>
+        </a>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
         {accountInfo?.username ? (
           <>
-            {/* @ts-ignore */}
-            <MiniPfpDisplay accountInfo={accountInfo} goToMe />
             {accountInfo.permissions.includes(Permissions.viewSubs) && (
               <Link
                 href="/submissions"
-                className="ml-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+                className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
               >
                 <RiAdminFill size={34} />
               </Link>
             )}
             <Link
               href="/submit"
-              className="ml-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+              className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
             >
               <TbUpload size={36} className="scale-x-105" />
             </Link>
+            {/* @ts-ignore */}
+            <MiniPfpDisplay accountInfo={accountInfo} goToMe />
           </>
         ) : (
           <>
@@ -85,22 +116,6 @@ export function MainNav() {
             )}
           </>
         )}
-        <div className="w-1 h-full bg-borderLight dark:bg-borderDark rounded-full ml-3" />
-        <button
-          className="pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-          onClick={() => {
-            if (theme === "light") {
-              setTheme("dark");
-              localStorage.theme = "dark";
-              return;
-            }
-            setTheme("light");
-            localStorage.theme = "light";
-            return;
-          }}
-        >
-          {theme === "light" ? <FaRegSun className="w-8 h-8" /> : <FaRegMoon className="w-8 h-8" />}
-        </button>
       </div>
     </nav>
   );

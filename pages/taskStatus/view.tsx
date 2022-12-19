@@ -48,12 +48,11 @@ export default function TaskView() {
     // See above
   }, [task]);
 
-  function capitalizeSuchMemesShit(str: string) {
+  function convertToPascalCase(str: string) {
     return str
       .split(" ")
-      .map((e, i, arr) => e[0].toUpperCase() + e.slice(1) + " ")
-      .join("")
-      .slice(0, -1);
+      .map((e) => e[0].toUpperCase() + e.slice(1))
+      .join(" ");
   }
 
   return (
@@ -68,7 +67,7 @@ export default function TaskView() {
               <div className="flex flex-col items-center text-center">
                 <div className="flex flex-col items-center mb-8">
                   <span className="text-2xl md:text-3xl font-semibold">
-                    {capitalizeSuchMemesShit(apiStatus.name)}
+                    {convertToPascalCase(apiStatus.name)}
                   </span>
                   <span className="text-xl font-medium">Task {task?.split("-")[0]}</span>
                 </div>
@@ -96,7 +95,7 @@ export default function TaskView() {
                       </b>
                       Seconds
                     </span>
-                    {!apiStatus.success && <span>{capitalizeSuchMemesShit(apiStatus.status)}</span>}
+                    {!apiStatus.success && <span>{convertToPascalCase(apiStatus.status)}</span>}
                   </>
                 ) : (
                   <>
@@ -104,6 +103,7 @@ export default function TaskView() {
                       <ImSpinner5 className="text-amber-600 animate-spin" />
                       <span>Processing</span>
                     </div>
+                    <span>{apiStatus.status}</span>
                   </>
                 )}
               </div>

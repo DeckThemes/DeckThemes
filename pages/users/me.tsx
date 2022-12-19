@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
-import { fetchDiscordUrl, genericGET } from "../../api";
+import { clearCookie, fetchDiscordUrl, genericGET } from "../../api";
 import {
   FilterQueryResponse,
   ThemeQueryRequest,
@@ -19,6 +19,7 @@ import {
 } from "../../components";
 import { generateParamStr } from "../../api";
 import Head from "next/head";
+import Link from "next/link";
 
 function BigDivider() {
   return (
@@ -194,12 +195,7 @@ export default function Account() {
 
   function logOut() {
     setAccountInfo(undefined);
-    // We do a little trolling
-    document.cookie = `authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax; path=/; ${
-      process.env.NEXT_PUBLIC_DEV_MODE === "true"
-        ? ""
-        : `domain=${process.env.NEXT_PUBLIC_COOKIE_DOMAIN};`
-    } Secure`;
+    clearCookie();
   }
 
   if (accountInfo?.username) {
@@ -333,6 +329,12 @@ export default function Account() {
                   setSubSearchOpts({ ...submissionSearchOpts, page: page });
                 }}
               />
+              <Link
+                href="/submit"
+                className="bg-cardLight dark:bg-cardDark p-2 px-4 mt-4 rounded-3xl text-xl"
+              >
+                Submit A Theme
+              </Link>
             </div>
           ) : null}
           <div className="mt-5" />

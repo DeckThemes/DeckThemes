@@ -55,7 +55,7 @@ export default function Submit() {
   const [metaInfo, setMetaInfo] = useState<MetaInfo>({
     imageBlobs: [],
     description: "",
-    target: "",
+    target: "None",
   });
 
   function checkIfReady() {
@@ -102,7 +102,7 @@ export default function Submit() {
         .then((res) => {
           process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
           if (res.status < 200 || res.status >= 300 || !res.ok) {
-            throw new Error("Response Not OK");
+            console.log("Submission POST Not OK!, Error Code ", res.status);
           }
           return res.json();
         })
@@ -111,6 +111,7 @@ export default function Submit() {
           if (json?.task) {
             router.push(`/taskStatus/view?task=${json.task}`);
           } else {
+            alert(`Error Submitting Theme: ${json?.message || "Unknown Error"}`);
             throw new Error("No task in response");
           }
         })
@@ -309,7 +310,7 @@ function MetaPanel({
     setCompImageInfo(fileData);
   }
 
-  const [targetOptions, setTargetOptions] = useState<string[]>(["System-Wide"]);
+  const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
   async function getTargets() {
     const data = await genericGET("/themes/filters", "Error Fetching Theme Targets!");
     if (data?.filters) {
