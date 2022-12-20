@@ -9,10 +9,10 @@ export function AudioMiniThemeCard({
   submissionId?: string;
 }) {
   function imageURLCreator(): string {
-    if (data?.images[0]?.id) {
+    if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id})`;
     } else {
-      return `url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/258.png)`;
+      return `url(https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Steam_Deck_logo_%28blue_background%29.svg/2048px-Steam_Deck_logo_%28blue_background%29.svg.png)`;
     }
   }
 
@@ -183,7 +183,7 @@ export function AudioMiniThemeCard({
 
   return (
     <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
-      <Link href={`/themes/view?themeId=${data.id}`}>
+      <Link href={`/packs/view?themeId=${data.id}`}>
         <InnerContent />
       </Link>
     </div>

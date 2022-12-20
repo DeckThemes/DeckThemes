@@ -1,38 +1,19 @@
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
-import { genericGET } from "../api";
-import { LoadingSpinner, MiniThemeCardRoot } from "../components";
-import { ThemeQueryResponse } from "../types";
+import { useRef, ReactNode } from "react";
+import { HighlightReelView } from "../components";
 import { BsArrowDown } from "react-icons/bs";
 import Head from "next/head";
 
-export default function Home() {
-  const [mostDownloadedThemes, setMostDownloaded] = useState<ThemeQueryResponse>();
-  const [mostRecentThemes, setMostRecent] = useState<ThemeQueryResponse>();
-  const [loaded, setLoaded] = useState<boolean>();
+function ColorfulTitle({ children }: { children: ReactNode }) {
+  return (
+    <span className="text-3xl md:text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
+      {children}
+    </span>
+  );
+}
 
+export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    async function getAndSetThemes() {
-      // This just changes "All" to "", as that is what the backend looks for
-      const mostDownloaded = await genericGET(
-        `/themes?order=Most Downloaded&filters=&perPage=7`,
-        "Error Fetching Most Downloaded Themes!"
-      );
-      if (mostDownloaded) {
-        setMostDownloaded(mostDownloaded);
-      }
-      const mostRecent = await genericGET(
-        `/themes?order=Last Updated&filters=&perPage=7`,
-        "Error Fetching Most Recent Themes!"
-      );
-      if (mostRecent) {
-        setMostRecent(mostRecent);
-      }
-      setLoaded(true);
-    }
-    getAndSetThemes();
-  }, []);
 
   return (
     <>
@@ -50,7 +31,7 @@ export default function Home() {
               className="w-full h-full bg-no-repeat bg-cover bg-center"
             />
           </div>
-          <div className="absolute top-[40%]">
+          <div className="absolute top-[40%] items-center flex flex-col">
             <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
             <h2 className="text-2xl md:text-3xl font-medium">CSSLoader & AudioLoader</h2>
           </div>
@@ -63,72 +44,47 @@ export default function Home() {
             <BsArrowDown size={60} />
           </button>
         </div>
-        <div className="flex flex-col w-full items-center gap-8 pt-20" ref={contentRef}>
-          {loaded ? (
-            <>
-              <div className="flex flex-col w-10/12 items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 pt-4 pb-8">
-                <span className="text-3xl font-medium">Most Popular</span>
-                <div className="flex flex-wrap w-full justify-center gap-4 px-4">
-                  {mostDownloadedThemes?.total ? (
-                    <>
-                      {mostDownloadedThemes.items.map((e, i) => {
-                        return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
-                      })}
-                    </>
-                  ) : null}
-                  <Link
-                    href="/themes?order=Most Downloaded"
-                    className="bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark hover:translate-y-1 transition-all w-[260px] flex items-center justify-center rounded-3xl"
-                  >
-                    <span className="text-2xl p-4">View More</span>
-                  </Link>
-                </div>
-              </div>
-              <div className="flex flex-col w-10/12 items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 pt-4 pb-8">
-                <span className="text-3xl font-medium">Recent Themes</span>
-                <div className="flex flex-wrap w-full justify-center gap-4 px-4">
-                  {mostRecentThemes?.total ? (
-                    <>
-                      {mostRecentThemes.items.map((e, i) => {
-                        return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
-                      })}
-                    </>
-                  ) : null}
-                  <Link
-                    href="/themes?order=Last Updated"
-                    className="bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark hover:translate-y-1 transition-all w-[260px] flex items-center justify-center rounded-3xl"
-                  >
-                    <span className="text-2xl p-4">View More</span>
-                  </Link>
-                </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="flex items-center gap-2">
-                <LoadingSpinner />
-                <span className="text-3xl font-semibold">Loading Themes</span>
-              </div>
-            </>
-          )}
-          <Link href="/themes">
-            <span className="text-3xl md:text-5xl font-semibold">
-              View{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
-                CSS
-              </span>{" "}
-              Themes
-            </span>
-          </Link>
-          <Link href="/packs">
-            <span className="text-3xl md:text-5xl font-semibold">
-              View{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
-                Audio
-              </span>{" "}
-              Packs
-            </span>
-          </Link>
+        <div
+          // TODO: ADD THESE BACK TO CLASSNAME TO FIX AUDIO THEMES
+          // xl:w-11/12
+          // xl:flex-row
+          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative"
+          ref={contentRef}
+        >
+          <>
+            <div className="w-10/12 flex flex-col gap-8 items-center">
+              <Link href="/themes">
+                <ColorfulTitle>CSSLoader</ColorfulTitle>
+              </Link>
+              <HighlightReelView
+                apiURL="/themes?order=Most Downloaded&filters=CSS&perPage=7"
+                linkHref="/themes?order=Most Downloaded"
+                title="Popular CSS Themes"
+              />
+              <HighlightReelView
+                apiURL="/themes?order=Last Updated&filters=CSS&perPage=7"
+                linkHref="/themes?order=Last Updated"
+                title="Recent CSS Themes"
+              />
+            </div>
+            {/* <div className="w-1 rounded-3xl h-[90%] bg-borderLight dark:bg-borderDark absolute left-1/2 -translate-x-1/2 hidden xl:flex bottom-0" />
+            <div className="h-1 rounded-3xl w-full bg-borderLight dark:bg-borderDark xl:hidden" />
+            <div className="w-10/12 flex flex-col gap-8 items-center">
+              <Link href="/packs">
+                <ColorfulTitle>AudioLoader</ColorfulTitle>
+              </Link>
+              <HighlightReelView
+                apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=7"
+                linkHref="/packs?order=Most Downloaded"
+                title="Popular Audio Packs"
+              />
+              <HighlightReelView
+                apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=7"
+                linkHref="/packs?order=Last Updated"
+                title="Recent Audio Packs"
+              />
+            </div> */}
+          </>
         </div>
       </main>
     </>

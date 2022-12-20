@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../../pages/_app";
-import { themeContext } from "../../styles";
 import { fetchDiscordUrl } from "../../api";
 import { NavIcon } from "./NavIcon";
 
-import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { TbUpload } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
@@ -18,28 +16,27 @@ export function MainNav() {
 
   const [hasCookie, setHasCookie] = useState<boolean>(true);
   const { accountInfo } = useContext(authContext);
-  const { theme, setTheme } = useContext(themeContext);
 
-  const [discordApiInfo, setDiscordApiInfo] = useState<any>();
+  // const [discordApiInfo, setDiscordApiInfo] = useState<any>();
 
-  useEffect(() => {
-    fetch("https://discord.com/api/guilds/1051660079033745478/widget.json", {
-      method: "GET",
-    })
-      .then((res) => {
-        if (res.ok && res.status === 200) {
-          return res.json();
-        } else {
-          throw new Error(`Res not OK!, error code ${res.status}`);
-        }
-      })
-      .then((json) => {
-        setDiscordApiInfo(json);
-      })
-      .catch((err) => {
-        console.error("Error Fetching Discord Info!", err);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("https://discord.com/api/guilds/1051660079033745478/widget.json", {
+  //     method: "GET",
+  //   })
+  //     .then((res) => {
+  //       if (res.ok && res.status === 200) {
+  //         return res.json();
+  //       } else {
+  //         throw new Error(`Res not OK!, error code ${res.status}`);
+  //       }
+  //     })
+  //     .then((json) => {
+  //       setDiscordApiInfo(json);
+  //     })
+  //     .catch((err) => {
+  //       console.error("Error Fetching Discord Info!", err);
+  //     });
+  // }, []);
 
   useEffect(() => {
     const cookieStr = document.cookie;
