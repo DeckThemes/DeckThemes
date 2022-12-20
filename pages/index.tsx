@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
 import { genericGET } from "../api";
-import { CSSMiniThemeCard, LoadingSpinner } from "../components";
+import { LoadingSpinner, MiniThemeCardRoot } from "../components";
 import { ThemeQueryResponse } from "../types";
 import { BsArrowDown } from "react-icons/bs";
 import Head from "next/head";
@@ -16,14 +16,14 @@ export default function Home() {
     async function getAndSetThemes() {
       // This just changes "All" to "", as that is what the backend looks for
       const mostDownloaded = await genericGET(
-        `/themes?order=Most Downloaded&filter=CSS&perPage=7`,
+        `/themes?order=Most Downloaded&filters=&perPage=7`,
         "Error Fetching Most Downloaded Themes!"
       );
       if (mostDownloaded) {
         setMostDownloaded(mostDownloaded);
       }
       const mostRecent = await genericGET(
-        `/themes?order=Last Updated&filter=CSS&perPage=7`,
+        `/themes?order=Last Updated&filters=&perPage=7`,
         "Error Fetching Most Recent Themes!"
       );
       if (mostRecent) {
@@ -72,7 +72,7 @@ export default function Home() {
                   {mostDownloadedThemes?.total ? (
                     <>
                       {mostDownloadedThemes.items.map((e, i) => {
-                        return <CSSMiniThemeCard data={e} key={`Most download ${i}`} />;
+                        return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
                       })}
                     </>
                   ) : null}
@@ -90,7 +90,7 @@ export default function Home() {
                   {mostRecentThemes?.total ? (
                     <>
                       {mostRecentThemes.items.map((e, i) => {
-                        return <CSSMiniThemeCard data={e} key={`Most download ${i}`} />;
+                        return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
                       })}
                     </>
                   ) : null}
@@ -112,7 +112,22 @@ export default function Home() {
             </>
           )}
           <Link href="/themes">
-            <span className="text-3xl md:text-5xl font-semibold underline">View All Themes</span>
+            <span className="text-3xl md:text-5xl font-semibold">
+              View{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
+                CSS
+              </span>{" "}
+              Themes
+            </span>
+          </Link>
+          <Link href="/packs">
+            <span className="text-3xl md:text-5xl font-semibold">
+              View{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
+                Audio
+              </span>{" "}
+              Packs
+            </span>
           </Link>
         </div>
       </main>

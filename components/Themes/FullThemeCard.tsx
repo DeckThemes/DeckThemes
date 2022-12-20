@@ -4,14 +4,14 @@ import { useEffect, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { ThemeAdminPanel, ThemeImageCarousel } from "../../components";
+import { ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
 
 function MiniDivider() {
   return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
 }
 
-export function CSSFullThemeCard({ parsedId }: { parsedId: string }) {
+export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
   const [isStarred, setStarred] = useState<boolean>(false);
 

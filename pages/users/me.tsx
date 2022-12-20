@@ -10,10 +10,10 @@ import {
   ThemeSubmissionQueryResponse,
 } from "../../types";
 import {
-  CSSMiniSubmissionCard,
-  CSSMiniThemeCard,
+  MiniSubmissionCard,
   FilterSelectorCard,
   LoadingSpinner,
+  MiniThemeCardRoot,
   PageSelector,
   PfpDisplay,
 } from "../../components";
@@ -135,8 +135,7 @@ export default function Account() {
         // This just changes "All" to "", as that is what the backend looks for
         submissionSearchOpts.filters !== "All"
           ? submissionSearchOpts
-          : { ...submissionSearchOpts, filters: "" },
-        "CSS."
+          : { ...submissionSearchOpts, filters: "" }
       );
       const data = await genericGET(
         `/users/me/submissions${searchOpts}`,
@@ -236,7 +235,7 @@ export default function Account() {
               <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
                 {starredThemes.total === 0 && <span>No Themes Found</span>}
                 {starredThemes.items.map((e, i) => {
-                  return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
+                  return <MiniThemeCardRoot data={e} key={`Approved Theme ${i}`} />;
                 })}
               </div>
               <div className="mt-4 mx-4">
@@ -274,7 +273,7 @@ export default function Account() {
               <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
                 {approvedThemes.total === 0 && <span>No Themes Found</span>}
                 {approvedThemes.items.map((e, i) => {
-                  return <CSSMiniThemeCard data={e} key={`Approved Theme ${i}`} />;
+                  return <MiniThemeCardRoot data={e} key={`Approved Theme ${i}`} />;
                 })}
               </div>
               <div className="mt-4 mx-4">
@@ -309,7 +308,7 @@ export default function Account() {
                   setSubSearchOpts({ ...submissionSearchOpts, search: e.target.value });
                 }}
               />
-              <div className="flex md:flex-row w-full justify-center items-center md:items-start flex-wrap gap-4">
+              <div className="flex md:flex-row w-full justify-center items-center md:items-start flex-wrap gap-4 mb-2">
                 {submissions.total === 0 && <span>No Submissions Found</span>}
                 {submissions.items.map((e, i) => {
                   if (
@@ -318,7 +317,7 @@ export default function Account() {
                       (1000 * 60 * 60 * 24) <
                       7
                   )
-                    return <CSSMiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
+                    return <MiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
                 })}
               </div>
               <PageSelector

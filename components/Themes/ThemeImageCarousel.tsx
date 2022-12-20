@@ -26,7 +26,7 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
           className="bg-cover"
           style={{
             width: "100%",
-            aspectRatio: "1.6 / 1",
+            aspectRatio: data?.type === "Audio" ? "1 / 1" : "16 / 10",
             position: "relative",
             borderRadius: "1em",
             backgroundSize: "cover !important",

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { CSSFullThemeCard } from "../../components";
+import { FullThemeCard } from "../../components";
 
 export default function FullThemeViewPage() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function FullThemeViewPage() {
   return (
     <>
       <main>
-        <CSSFullThemeCard parsedId={parsedId} />
+        <FullThemeCard parsedId={parsedId} />
       </main>
     </>
   );

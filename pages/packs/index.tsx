@@ -1,16 +1,19 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import {
-  MiniSubmissionCard,
   FilterSelectorCard,
   LoadingSpinner,
+  MiniThemeCardRoot,
   PageSelector,
 } from "../../components";
-import { FilterQueryResponse, ThemeQueryRequest, ThemeSubmissionQueryResponse } from "../../types";
+import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
 
-export default function Submissions() {
-  const [themeArr, setThemeArr] = useState<ThemeSubmissionQueryResponse>({ total: 0, items: [] });
+export default function Themes() {
+  const router = useRouter();
+
+  const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
@@ -24,43 +27,74 @@ export default function Submissions() {
     order: "",
     search: "",
   });
-
   useEffect(() => {
     async function getAndSetThemes() {
       // This just changes "All" to "", as that is what the backend looks for
       const searchOpts = generateParamStr(
-        chosenSearchOpts.filters !== "All" ? chosenSearchOpts : { ...chosenSearchOpts, filters: "" }
+        chosenSearchOpts.filters !== "All"
+          ? chosenSearchOpts
+          : { ...chosenSearchOpts, filters: "" },
+        "AUDIO."
       );
-      const data = await genericGET(`/submissions${searchOpts}`, "Error Fetching Submissions!");
+      const data = await genericGET(`/themes${searchOpts}`, "Error Fetching Submissions!", true);
       if (data) {
         setThemeArr(data);
       }
       setLoaded(true);
     }
     getAndSetThemes();
+    if (loaded) {
+      let stateObj = { id: "100" };
+      window.history.pushState(
+        stateObj,
+        "unused",
+        `/packs${
+          chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
+            ? `?filters=${chosenSearchOpts.filters}${
+                chosenSearchOpts.order !== "Alphabetical (A to Z)"
+                  ? `&order=${chosenSearchOpts.order}`
+                  : ""
+              }`
+            : `${
+                chosenSearchOpts.order !== "Alphabetical (A to Z)"
+                  ? `?order=${chosenSearchOpts.order}`
+                  : ""
+              }`
+        }`
+      );
+    }
   }, [chosenSearchOpts]);
 
   useEffect(() => {
     async function getFilters() {
       const filterData = await genericGET(
-        "/submissions/filters",
-        "Error Fetching Submission Filters!"
+        "/themes/filters?target=AUDIO",
+        "Error Fetching Theme Filters!"
       );
       if (filterData) {
         setServerSearchOpts(filterData);
       }
     }
     getFilters();
-  }, []);
+
+    let urlFilters, urlOrder;
+    if (typeof router.query?.filters === "string") {
+      urlFilters = router.query.filters;
+    }
+    if (typeof router.query?.order === "string") {
+      urlOrder = router.query.order;
+    }
+    setChosenSearchOpts({ ...chosenSearchOpts, filters: urlFilters || "", order: urlOrder || "" });
+  }, [router.query]);
 
   return (
     <>
       <Head>
-        <title>DeckThemes | Submissions</title>
+        <title>DeckThemes | AudioLoader Packs</title>
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-5xl pt-8 pb-4">Submissions</h2>
+          <h2 className="font-bold text-3xl md:text-5xl pt-4">AudioLoader Packs</h2>
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
@@ -80,15 +114,8 @@ export default function Submissions() {
           {themeArr.total > 0 ? (
             <>
               <div className="flex gap-4 flex-wrap items-center justify-center px-10">
-                {themeArr.items.map((e, i) => {
-                  if (
-                    e.status === "AwaitingApproval" ||
-                    (new Date().valueOf() - new Date(e.submitted).valueOf()) /
-                      (1000 * 60 * 60 * 24) <
-                      7
-                  ) {
-                    return <MiniSubmissionCard data={e} key={`Theme Submission ${i}`} />;
-                  }
+                {themeArr.items.map((e) => {
+                  return <MiniThemeCardRoot data={e} key={`ThemeCard ${e.id}`} />;
                 })}
               </div>
               <div className="mt-4 mx-4">

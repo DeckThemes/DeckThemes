@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { CSSFullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
+import { FullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
 import { Permissions, ThemeSubmissionInfo } from "../../types";
 import { authContext } from "../_app";
 
@@ -75,7 +75,7 @@ export default function FullSubmissionViewPage() {
           <main className="w-full flex flex-col flex-grow items-center">
             <div className="flex flex-col w-full items-center">
               <span className="text-3xl md:text-4xl font-semibold mt-4 -mb-4">New Theme:</span>
-              <CSSFullThemeCard parsedId={submissionData.newTheme.id} />
+              <FullThemeCard parsedId={submissionData.newTheme.id} />
             </div>
             <div className="flex flex-col w-full items-center">
               <span className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">

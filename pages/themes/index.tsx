@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import {
-  CSSMiniThemeCard,
+  MiniThemeCardRoot,
   FilterSelectorCard,
   LoadingSpinner,
   PageSelector,
@@ -67,7 +67,10 @@ export default function Themes() {
 
   useEffect(() => {
     async function getFilters() {
-      const filterData = await genericGET("/themes/filters", "Error Fetching Theme Filters!");
+      const filterData = await genericGET(
+        "/themes/filters?target=CSS",
+        "Error Fetching Theme Filters!"
+      );
       if (filterData) {
         setServerSearchOpts(filterData);
       }
@@ -91,7 +94,7 @@ export default function Themes() {
       </Head>
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-3xl md:text-5xl pt-4">Theme Viewer</h2>
+          <h2 className="font-bold text-3xl md:text-5xl pt-4">CSS Themes</h2>
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
@@ -112,7 +115,7 @@ export default function Themes() {
             <>
               <div className="flex gap-4 flex-wrap items-center justify-center px-10">
                 {themeArr.items.map((e) => {
-                  return <CSSMiniThemeCard data={e} key={`ThemeCard ${e.id}`} />;
+                  return <MiniThemeCardRoot data={e} key={`ThemeCard ${e.id}`} />;
                 })}
               </div>
               <div className="mt-4 mx-4">

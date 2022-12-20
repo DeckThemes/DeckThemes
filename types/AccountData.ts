@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { PartialCSSThemeInfo } from "./CSSThemeTypes";
+import { PartialCSSThemeInfo, UserInfo } from "./CSSThemeTypes";
 
 export enum Permissions {
   "editAny" = "EditAnyPost",
@@ -8,12 +8,9 @@ export enum Permissions {
   "admin" = "ManageApi",
 }
 
-export type AccountData = {
-  avatar: string;
-  id: string;
+export interface AccountData extends UserInfo {
   permissions: Permissions[];
-  username: string;
-};
+}
 
 export interface AuthContextContents {
   accountInfo: AccountData | undefined;

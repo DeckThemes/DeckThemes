@@ -1,11 +1,10 @@
 import { Url } from "url";
-import { AccountData } from "./AccountData";
 import { APIBlob } from "./BlobTypes";
 
 export interface UserInfo {
   id: string;
   username: string;
-  avatar: Url;
+  avatar: string;
 }
 
 export interface MinimalCSSThemeInfo {
@@ -15,6 +14,7 @@ export interface MinimalCSSThemeInfo {
   target: string;
   manifestVersion: number;
   specifiedAuthor: string;
+  type: "Css" | "Audio";
 }
 
 export interface PartialCSSThemeInfo extends MinimalCSSThemeInfo {
