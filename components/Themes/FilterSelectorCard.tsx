@@ -7,6 +7,8 @@ export function FilterSelectorCard({
   onFilterChange,
   onOrderChange,
   onSearchChange,
+  cssOrAudioValue,
+  onCSSAudioChange,
   filterValue,
   orderValue,
   searchOnly = false,
@@ -19,6 +21,8 @@ export function FilterSelectorCard({
   onFilterChange?: (e: any) => void;
   onOrderChange?: (e: any) => void;
   onSearchChange?: (e: any) => void;
+  cssOrAudioValue?: "CSS" | "AUDIO" | undefined;
+  onCSSAudioChange?: (e: any) => void;
   searchOnly?: boolean;
 }) {
   return (
@@ -70,6 +74,21 @@ export function FilterSelectorCard({
             className="bg-bgLight dark:bg-bgDark p-2 rounded-3xl w-full"
           />
         </div>
+        {cssOrAudioValue && (
+          <>
+            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
+              <span>Type</span>
+              <select
+                className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
+                onChange={onCSSAudioChange}
+                value={cssOrAudioValue}
+              >
+                <option value="CSS">CSS Theme</option>
+                <option value="AUDIO">Audio Pack</option>
+              </select>
+            </div>
+          </>
+        )}
       </div>
     </>
   );
