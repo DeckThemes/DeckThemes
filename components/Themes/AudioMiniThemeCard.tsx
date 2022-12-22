@@ -16,7 +16,6 @@ export function AudioMiniThemeCard({
     }
   }
 
-  console.log(data);
   function InnerContent() {
     return (
       <>

@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import { authContext } from "../../pages/_app";
-
+import { debounce } from "lodash";
 import {
   FilterQueryResponse,
   ThemeQueryRequest,
@@ -46,35 +46,56 @@ export function UserThemeCategoryDisplay({
     addPluginChoice ? "" : undefined
   );
 
+  function fetchNewData() {
+    console.log("test3");
+    // Submissions should include both, which to the api is an empty string
+    const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
+
+    // This just changes "All" to "", as that is what the backend looks for
+    const searchOptStr = generateParamStr(
+      searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
+      prependValue
+    );
+    genericGET(`${themeDataApiPath}${searchOptStr}`, "Error Fetching Theme Data!").then((data) => {
+      if (data) {
+        console.log("test");
+        setThemeData(data);
+      }
+    });
+  }
+
   useEffect(() => {
     if (accountInfo?.username) {
-      // Submissions should include both, which to the api is an empty string
-      const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
-
-      // This just changes "All" to "", as that is what the backend looks for
-      const searchOptStr = generateParamStr(
-        searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
-        prependValue
-      );
-      genericGET(`${themeDataApiPath}${searchOptStr}`, "Error Fetching Theme Data!").then(
-        (data) => {
-          if (data) {
-            setThemeData(data);
-          }
-        }
-      );
+      fetchNewData();
     }
   }, [searchOpts, accountInfo, cssOrAudio]);
 
   useEffect(() => {
     if (accountInfo?.id) {
-      genericGET(`${filterDataApiPath}`, "Error Fetching Filters!").then((data) => {
+      genericGET(
+        `${filterDataApiPath}?target=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`,
+        "Error Fetching Filters!"
+      ).then((data) => {
         if (data) {
           setServerFilters(data);
         }
       });
     }
-  }, [accountInfo]);
+  }, [accountInfo, cssOrAudio]);
+
+  useEffect(() => {
+    // This ensures if you switch from themes to packs or vice versa, that it resets your filter so that you see all entries again
+    if (
+      cssOrAudio === "CSS" &&
+      (searchOpts.filters === "Music" || searchOpts.filters === "Audio")
+    ) {
+      setSearchOpts({ ...searchOpts, filters: "All" });
+    }
+
+    if (cssOrAudio === "AUDIO" && searchOpts.filters !== "All") {
+      setSearchOpts({ ...searchOpts, filters: "All" });
+    }
+  }, [cssOrAudio]);
 
   return (
     <>

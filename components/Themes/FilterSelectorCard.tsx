@@ -1,4 +1,4 @@
-import EventEmitter from "events";
+import { DebounceInput } from "react-debounce-input";
 
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
@@ -20,7 +20,7 @@ export function FilterSelectorCard({
   searchValue: string;
   onFilterChange?: (e: any) => void;
   onOrderChange?: (e: any) => void;
-  onSearchChange?: (e: any) => void;
+  onSearchChange?: (e: any) => any;
   cssOrAudioValue?: "CSS" | "AUDIO" | "" | undefined;
   onCSSAudioChange?: (e: any) => void;
   searchOnly?: boolean;
@@ -67,9 +67,10 @@ export function FilterSelectorCard({
         )}
         <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
           <span>Search</span>
-          <input
-            type="text"
-            value={searchValue}
+          <DebounceInput
+            minLength={1}
+            debounceTimeout={300}
+            // @ts-ignore
             onChange={onSearchChange}
             className="bg-bgLight dark:bg-bgDark p-2 rounded-3xl w-full"
           />
