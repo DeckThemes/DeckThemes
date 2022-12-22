@@ -15,11 +15,15 @@ export function UserThemeCategoryDisplay({
   filterDataApiPath,
   title,
   useSubmissionCards,
+  addPluginChoice,
+  themesPerPage = 5,
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
   title: string;
   useSubmissionCards?: boolean;
+  addPluginChoice?: boolean;
+  themesPerPage?: number;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -29,7 +33,7 @@ export function UserThemeCategoryDisplay({
   });
   const [searchOpts, setSearchOpts] = useState<ThemeQueryRequest>({
     page: 1,
-    perPage: 5,
+    perPage: themesPerPage,
     filters: "",
     order: "",
     search: "",
@@ -38,13 +42,19 @@ export function UserThemeCategoryDisplay({
     total: 0,
     items: [],
   });
+  const [cssOrAudio, setCSSAudio] = useState<"CSS" | "AUDIO" | "" | undefined>(
+    addPluginChoice ? "" : undefined
+  );
 
   useEffect(() => {
     if (accountInfo?.username) {
+      // Submissions should include both, which to the api is an empty string
+      const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
+
       // This just changes "All" to "", as that is what the backend looks for
       const searchOptStr = generateParamStr(
         searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
-        "CSS."
+        prependValue
       );
       genericGET(`${themeDataApiPath}${searchOptStr}`, "Error Fetching Theme Data!").then(
         (data) => {
@@ -54,7 +64,7 @@ export function UserThemeCategoryDisplay({
         }
       );
     }
-  }, [searchOpts, accountInfo]);
+  }, [searchOpts, accountInfo, cssOrAudio]);
 
   useEffect(() => {
     if (accountInfo?.id) {
@@ -86,9 +96,15 @@ export function UserThemeCategoryDisplay({
             onSearchChange={(e) => {
               setSearchOpts({ ...searchOpts, search: e.target.value });
             }}
+            cssOrAudioValue={cssOrAudio}
+            onCSSAudioChange={(e) => {
+              setCSSAudio(e.target.value);
+            }}
           />
           <div className="flex md:flex-row w-full justify-center items-center flex-wrap gap-4">
-            {themeData.total === 0 && <span>No Themes Found</span>}
+            {themeData.total === 0 && (
+              <span>No {cssOrAudio === "AUDIO" ? "Packs" : "Themes"} Found</span>
+            )}
             {useSubmissionCards ? (
               <>
                 {themeData.items.map((e, i) => {

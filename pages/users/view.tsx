@@ -2,24 +2,8 @@ import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
 import { genericGET } from "../../api";
-import {
-  AccountData,
-  FilterQueryResponse,
-  Permissions,
-  ThemeQueryRequest,
-  ThemeQueryResponse,
-  ThemeSubmissionQueryResponse,
-} from "../../types";
-import {
-  MiniSubmissionCard,
-  FilterSelectorCard,
-  LoadingSpinner,
-  MiniThemeCardRoot,
-  PageSelector,
-  PfpDisplay,
-  UserThemeCategoryDisplay,
-} from "../../components";
-import { generateParamStr } from "../../api";
+import { AccountData, Permissions } from "../../types";
+import { LoadingSpinner, PfpDisplay, UserThemeCategoryDisplay } from "../../components";
 import Head from "next/head";
 
 function BigDivider() {
@@ -103,6 +87,7 @@ export default function Account() {
           themeDataApiPath={`/users/${parsedId}/themes`}
           filterDataApiPath={`/users/${parsedId}/themes/filters`}
           title={`${calcDisplayName()} Themes`}
+          addPluginChoice
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (
           <>
@@ -111,6 +96,7 @@ export default function Account() {
               themeDataApiPath={`/users/${parsedId}/stars`}
               filterDataApiPath={`/users/${parsedId}/stars/filters`}
               title={`${calcDisplayName()} Stars`}
+              addPluginChoice
             />
             <BigDivider />
             <UserThemeCategoryDisplay
@@ -118,6 +104,7 @@ export default function Account() {
               filterDataApiPath={`/users/${parsedId}/submissions/filters`}
               title={`${calcDisplayName()} Submissions`}
               useSubmissionCards
+              addPluginChoice
             />
           </>
         )}

@@ -1,26 +1,8 @@
-import Image from "next/image";
-import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
 import { clearCookie, fetchDiscordUrl, genericGET } from "../../api";
-import {
-  FilterQueryResponse,
-  ThemeQueryRequest,
-  ThemeQueryResponse,
-  ThemeSubmissionQueryResponse,
-} from "../../types";
-import {
-  MiniSubmissionCard,
-  FilterSelectorCard,
-  LoadingSpinner,
-  MiniThemeCardRoot,
-  PageSelector,
-  PfpDisplay,
-  UserThemeCategoryDisplay,
-} from "../../components";
-import { generateParamStr } from "../../api";
+import { LoadingSpinner, PfpDisplay, UserThemeCategoryDisplay } from "../../components";
 import Head from "next/head";
-import Link from "next/link";
 
 function BigDivider() {
   return (
@@ -73,12 +55,14 @@ export default function Account() {
             themeDataApiPath="/users/me/stars"
             filterDataApiPath={`/users/${accountInfo?.id}/stars/filters`}
             title="Starred Themes"
+            addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/themes"
             filterDataApiPath={`/users/${accountInfo?.id}/themes/filters`}
             title="Your Approved Themes"
+            addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
@@ -86,6 +70,7 @@ export default function Account() {
             filterDataApiPath={`/users/${accountInfo?.id}/submissions/filters`}
             title="Your Submissions"
             useSubmissionCards
+            addPluginChoice
           />
           <div className="mt-5" />
           <button
