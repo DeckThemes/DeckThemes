@@ -36,7 +36,7 @@ export default function Themes() {
           : { ...chosenSearchOpts, filters: "" },
         "CSS."
       );
-      const data = await genericGET(`/themes${searchOpts}`, "Error Fetching Submissions!", true);
+      const data = await genericGET(`/themes${searchOpts}`, true);
       if (data) {
         setThemeArr(data);
       }
@@ -67,10 +67,7 @@ export default function Themes() {
 
   useEffect(() => {
     async function getFilters() {
-      const filterData = await genericGET(
-        "/themes/filters?target=CSS",
-        "Error Fetching Theme Filters!"
-      );
+      const filterData = await genericGET("/themes/filters?target=CSS");
       if (filterData) {
         setServerSearchOpts(filterData);
       }

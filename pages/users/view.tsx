@@ -29,7 +29,7 @@ export default function Account() {
 
   useEffect(() => {
     if (parsedId) {
-      genericGET(`/users/${parsedId}`, "Error Fetching User Data!", true).then((data) => {
+      genericGET(`/users/${parsedId}`, true).then((data) => {
         if (data) {
           setUserInfo(data);
         }

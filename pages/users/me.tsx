@@ -1,7 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
-import { clearCookie, fetchDiscordUrl, genericGET } from "../../api";
-import { LoadingSpinner, PfpDisplay, UserThemeCategoryDisplay } from "../../components";
+import { clearCookie, fetchDiscordUrl, fetchWithRefresh, genericGET } from "../../api";
+import {
+  DeckTokenDisplay,
+  LoadingSpinner,
+  PfpDisplay,
+  UserThemeCategoryDisplay,
+} from "../../components";
 import Head from "next/head";
 
 function BigDivider() {
@@ -12,7 +17,6 @@ function BigDivider() {
 
 export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
-  const [loaded, setLoaded] = useState(true);
 
   const [hasCookie, setHasCookie] = useState<boolean>(true);
   useEffect(() => {
@@ -72,6 +76,8 @@ export default function Account() {
             useSubmissionCards
             addPluginChoice
           />
+          <BigDivider />
+          <DeckTokenDisplay />
           <div className="mt-5" />
           <button
             onClick={logOut}

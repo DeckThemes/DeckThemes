@@ -36,7 +36,7 @@ export default function Themes() {
           : { ...chosenSearchOpts, filters: "" },
         "AUDIO."
       );
-      const data = await genericGET(`/themes${searchOpts}`, "Error Fetching Submissions!", true);
+      const data = await genericGET(`/themes${searchOpts}`, true);
       if (data) {
         setThemeArr(data);
       }
@@ -67,10 +67,7 @@ export default function Themes() {
 
   useEffect(() => {
     async function getFilters() {
-      const filterData = await genericGET(
-        "/themes/filters?target=AUDIO",
-        "Error Fetching Theme Filters!"
-      );
+      const filterData = await genericGET("/themes/filters?target=AUDIO");
       if (filterData) {
         setServerSearchOpts(filterData);
       }

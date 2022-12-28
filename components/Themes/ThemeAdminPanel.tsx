@@ -4,6 +4,7 @@ import Link from "next/link";
 import { authContext } from "../../pages/_app";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
+import { fetchWithRefresh } from "../../api";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
@@ -46,28 +47,29 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
     if (!target) {
       target = null;
     }
-
-    console.log("test", description, author, target);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData?.id}`, {
-      method: "PATCH",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        description: description,
-        target: target,
-        author: author,
-      }),
-    })
-      .then((res) => {
-        if (res.ok && res.status === 200) {
-          alert("Edited Successfully");
-        }
+    fetchWithRefresh(() => {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData?.id}`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          description: description,
+          target: target,
+          author: author,
+        }),
       })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then((res) => {
+          if (res.ok && res.status === 200) {
+            alert("Edited Successfully");
+            location.reload();
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    });
   }
 
   return (

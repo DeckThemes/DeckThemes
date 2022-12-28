@@ -47,7 +47,6 @@ export function UserThemeCategoryDisplay({
   );
 
   function fetchNewData() {
-    console.log("test3");
     // Submissions should include both, which to the api is an empty string
     const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
 
@@ -56,7 +55,7 @@ export function UserThemeCategoryDisplay({
       searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
       prependValue
     );
-    genericGET(`${themeDataApiPath}${searchOptStr}`, "Error Fetching Theme Data!").then((data) => {
+    genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
       if (data) {
         console.log("test");
         setThemeData(data);
@@ -73,8 +72,7 @@ export function UserThemeCategoryDisplay({
   useEffect(() => {
     if (accountInfo?.id) {
       genericGET(
-        `${filterDataApiPath}?target=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`,
-        "Error Fetching Filters!"
+        `${filterDataApiPath}?target=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`
       ).then((data) => {
         if (data) {
           setServerFilters(data);

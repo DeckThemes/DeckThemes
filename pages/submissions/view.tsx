@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
-import { checkAndRefreshToken, genericGET } from "../../api";
+import { checkAndRefreshToken, fetchWithRefresh, genericGET } from "../../api";
 import { FullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
 import { Permissions, ThemeSubmissionInfo } from "../../types";
 import { authContext } from "../_app";
@@ -57,7 +57,7 @@ export default function FullSubmissionViewPage() {
 
   useEffect(() => {
     async function getData() {
-      const data = await genericGET(`/submissions/${parsedId}`, "Submission Fetch Failed!", true);
+      const data = await genericGET(`/submissions/${parsedId}`, true);
       setSubData(data);
     }
     if (parsedId) {

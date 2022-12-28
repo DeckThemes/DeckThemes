@@ -18,7 +18,7 @@ export function HighlightReelView({
   const [loaded, setLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    genericGET(apiURL, `Error Fetching Data at ${apiURL}`).then((data) => {
+    genericGET(apiURL).then((data) => {
       if (data) {
         setData(data);
       }

@@ -41,7 +41,6 @@ export function MetaSubmitPanel({
   async function getTargets() {
     const data = await genericGET(
       `/themes/filters?target=${uploadType?.toUpperCase() || "CSS"}`,
-      "Error Fetching Theme Targets!",
       true
     );
     if (data?.filters) {

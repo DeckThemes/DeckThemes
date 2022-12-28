@@ -1,5 +1,13 @@
 import { clearCookie, generateAuthCookie } from "./auth";
 
+export async function fetchWithRefresh(fetchFunc: any) {
+  const waitForRefresh = await checkAndRefreshToken();
+  if (waitForRefresh) {
+    return await fetchFunc();
+  }
+  console.warn("Error Refreshing Token!");
+}
+
 export async function checkAndRefreshToken() {
   const expiryDate = localStorage.tokenExpiryDate;
   if (expiryDate === undefined) {
@@ -40,7 +48,7 @@ export async function checkAndRefreshToken() {
   }
 }
 
-export async function genericGET(subPath: string, errMessage: string, debug: boolean = false) {
+export async function genericGET(subPath: string, debug: boolean = false) {
   const waitForRefresh = await checkAndRefreshToken();
   if (waitForRefresh) {
     return await fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, {
@@ -66,7 +74,7 @@ export async function genericGET(subPath: string, errMessage: string, debug: boo
         throw new Error("Couldn't find data");
       })
       .catch((err) => {
-        console.error(`${errMessage}`, err);
+        console.error(`Error fetching from ${subPath}`, err);
       });
   } else {
     console.log("COOKIE REFRESH FAILED!", waitForRefresh);

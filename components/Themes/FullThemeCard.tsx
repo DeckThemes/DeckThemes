@@ -16,16 +16,13 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [isStarred, setStarred] = useState<boolean>(false);
 
   async function getStarredStatus() {
-    const isStarred = await genericGET(
-      `/users/me/stars/${parsedId}`,
-      "Starred Theme Fetch Failed!"
-    );
+    const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
     isStarred?.starred ? setStarred(true) : setStarred(false);
   }
 
   useEffect(() => {
     async function getThemeData() {
-      const data = await genericGET(`/themes/${parsedId}`, "Theme Fetch Failed!");
+      const data = await genericGET(`/themes/${parsedId}`);
       setThemeData(data);
       getStarredStatus();
     }
@@ -144,6 +141,18 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 ) : (
                   <span>Error! No Download Information</span>
                 )}
+                <div className="text-sm max-w-[640px]">
+                  {themeData.source ? (
+                    <span>
+                      <span className="text-textFadedLight dark:text-textFadedDark">Source:</span>{" "}
+                      {themeData.source}
+                    </span>
+                  ) : (
+                    <span className="text-textFadedLight dark:text-textFadedDark">
+                      <i>No Source Provided</i>
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           </>
