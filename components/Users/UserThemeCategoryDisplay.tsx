@@ -8,7 +8,13 @@ import {
   ThemeQueryResponse,
   ThemeSubmissionQueryResponse,
 } from "../../types";
-import { FilterSelectorCard, MiniSubmissionCard, MiniThemeCardRoot, PageSelector } from "../Themes";
+import {
+  FilterSelectorCard,
+  LoadMoreButton,
+  MiniSubmissionCard,
+  MiniThemeCardRoot,
+  PageSelector,
+} from "../Themes";
 
 export function UserThemeCategoryDisplay({
   themeDataApiPath,
@@ -17,6 +23,7 @@ export function UserThemeCategoryDisplay({
   useSubmissionCards,
   addPluginChoice,
   themesPerPage = 5,
+  defaultFilter = "",
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
@@ -24,6 +31,7 @@ export function UserThemeCategoryDisplay({
   useSubmissionCards?: boolean;
   addPluginChoice?: boolean;
   themesPerPage?: number;
+  defaultFilter?: string;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -34,7 +42,7 @@ export function UserThemeCategoryDisplay({
   const [searchOpts, setSearchOpts] = useState<ThemeQueryRequest>({
     page: 1,
     perPage: themesPerPage,
-    filters: "",
+    filters: defaultFilter,
     order: "",
     search: "",
   });
@@ -57,7 +65,6 @@ export function UserThemeCategoryDisplay({
     );
     genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
       if (data) {
-        console.log("test");
         setThemeData(data);
       }
     });
@@ -142,13 +149,14 @@ export function UserThemeCategoryDisplay({
             )}
           </div>
           <div className="mt-4 mx-4">
-            <PageSelector
-              total={themeData.total}
-              perPage={searchOpts.perPage}
-              currentPage={searchOpts.page}
-              onChoose={(page) => {
-                setSearchOpts({ ...searchOpts, page: page });
-              }}
+            <LoadMoreButton
+              themeArr={themeData}
+              setThemeArr={setThemeData}
+              fetchPath={themeDataApiPath}
+              paramStrFilterPrepend={
+                addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS."
+              }
+              origSearchOpts={searchOpts}
             />
           </div>
         </div>

@@ -105,6 +105,7 @@ export default function Account() {
               title={`${calcDisplayName()} Submissions`}
               useSubmissionCards
               addPluginChoice
+              defaultFilter="AwaitingApproval"
             />
           </>
         )}

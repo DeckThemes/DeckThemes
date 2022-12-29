@@ -7,6 +7,7 @@ import {
   FilterSelectorCard,
   LoadingSpinner,
   PageSelector,
+  LoadMoreButton,
 } from "../../components";
 import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
 
@@ -115,14 +116,14 @@ export default function Themes() {
                   return <MiniThemeCardRoot data={e} key={`ThemeCard ${e.id}`} />;
                 })}
               </div>
-              <div className="mt-4 mx-4">
-                <PageSelector
-                  total={themeArr.total}
-                  perPage={chosenSearchOpts.perPage}
-                  currentPage={chosenSearchOpts.page}
-                  onChoose={(page) => {
-                    setChosenSearchOpts({ ...chosenSearchOpts, page: page });
-                  }}
+
+              <div className="mt-4">
+                <LoadMoreButton
+                  themeArr={themeArr}
+                  setThemeArr={setThemeArr}
+                  paramStrFilterPrepend="CSS."
+                  fetchPath="/themes"
+                  origSearchOpts={chosenSearchOpts}
                 />
               </div>
             </>

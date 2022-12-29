@@ -7,3 +7,4 @@ export * from "./FullThemeCard";
 export * from "./ThemeAdminPanel";
 export * from "./AudioMiniThemeCard";
 export * from "./MiniThemeCardRoot";
+export * from "./LoadMoreButton";

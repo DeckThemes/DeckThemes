@@ -17,6 +17,7 @@ export default function Submissions() {
             useSubmissionCards
             themesPerPage={20}
             addPluginChoice
+            defaultFilter="AwaitingApproval"
           />
         </div>
       </main>

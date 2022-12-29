@@ -5,6 +5,7 @@ import { generateParamStr, genericGET } from "../../api";
 import {
   FilterSelectorCard,
   LoadingSpinner,
+  LoadMoreButton,
   MiniThemeCardRoot,
   PageSelector,
 } from "../../components";
@@ -116,13 +117,12 @@ export default function Themes() {
                 })}
               </div>
               <div className="mt-4 mx-4">
-                <PageSelector
-                  total={themeArr.total}
-                  perPage={chosenSearchOpts.perPage}
-                  currentPage={chosenSearchOpts.page}
-                  onChoose={(page) => {
-                    setChosenSearchOpts({ ...chosenSearchOpts, page: page });
-                  }}
+                <LoadMoreButton
+                  fetchPath="/themes"
+                  paramStrFilterPrepend="AUDIO."
+                  themeArr={themeArr}
+                  setThemeArr={setThemeArr}
+                  origSearchOpts={chosenSearchOpts}
                 />
               </div>
             </>

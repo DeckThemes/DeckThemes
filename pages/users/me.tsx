@@ -90,6 +90,7 @@ export default function Account() {
             title="Your Submissions"
             useSubmissionCards
             addPluginChoice
+            defaultFilter="AwaitingApproval"
           />
           <BigDivider />
           <DeckTokenDisplay />
