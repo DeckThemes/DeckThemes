@@ -18,6 +18,12 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
     isStarred?.starred ? setStarred(true) : setStarred(false);
+    if (isStarred && themeData?.starCount === 0) {
+      setThemeData({
+        ...themeData,
+        starCount: 1,
+      });
+    }
   }
 
   useEffect(() => {
@@ -41,7 +47,12 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
             if (themeData) {
               setThemeData({
                 ...themeData,
-                starCount: isStarred ? themeData.starCount - 1 : themeData.starCount + 1,
+                starCount: isStarred
+                  ? themeData.starCount === 0
+                    ? // This stops it from going below 0
+                      themeData.starCount
+                    : themeData.starCount - 1
+                  : themeData.starCount + 1,
               });
             }
             getStarredStatus();

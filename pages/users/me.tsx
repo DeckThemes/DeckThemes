@@ -42,6 +42,21 @@ export default function Account() {
     clearCookie();
   }
 
+  function logOutAll() {
+    const isSure = confirm("This will remove all signed in web browsers and Steam Deck");
+    if (isSure) {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/logout_all`, {
+        method: "POST",
+        credentials: "include",
+      }).then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          setAccountInfo(undefined);
+          clearCookie();
+        }
+      });
+    }
+  }
+
   if (accountInfo?.username) {
     return (
       <>
@@ -84,6 +99,12 @@ export default function Account() {
             className="mt-auto p-5 mb-5 font-medium text-xl bg-cardLight dark:bg-cardDark rounded-full"
           >
             Log Out
+          </button>
+          <button
+            onClick={logOutAll}
+            className="mt-auto p-5 mb-5 font-medium text-xl bg-cardLight dark:bg-cardDark rounded-full"
+          >
+            Log Out All Devices
           </button>
         </main>
       </>
