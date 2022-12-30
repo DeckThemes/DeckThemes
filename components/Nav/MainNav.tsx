@@ -56,7 +56,7 @@ export function MainNav() {
               href="https://docs.deckthemes.com"
               rel="noreferrer"
               target="_blank"
-              className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+              className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
             >
               <ImBook size={34} />
             </a>
