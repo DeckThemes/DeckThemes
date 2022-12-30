@@ -184,7 +184,16 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                         <span className="text-textFadedLight dark:text-textFadedDark">
                           Depends On:
                         </span>{" "}
-                        {themeData.dependencies.map((e) => e.name).join(", ")}
+                        {themeData.dependencies.map((e, i, arr) => (
+                          <Link
+                            key={`Dependency ${i}`}
+                            href={`/themes/view?themeId=${e.id}`}
+                            className="underline"
+                          >
+                            {e.name}
+                            {i < arr.length - 1 ? ", " : ""}
+                          </Link>
+                        ))}
                       </span>
                     </>
                   )}
