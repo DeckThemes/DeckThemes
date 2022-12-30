@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { LoadingPage, LoadingSpinner, ThemeAdminPanel, ThemeImageCarousel } from "..";
+import { LoadingPage, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
+import { authContext } from "../../pages/_app";
 
 function MiniDivider() {
   return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
@@ -16,9 +17,12 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
+  const { accountInfo } = useContext(authContext);
+
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
     isStarred?.starred ? setStarred(true) : setStarred(false);
+    // This is just a fix for when you've starred a theme, but the server hasn't updated and still displays 0 stars
     if (isStarred && themeData?.starCount === 0) {
       setThemeData({
         ...themeData,
@@ -28,15 +32,16 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   }
 
   useEffect(() => {
-    async function getThemeData() {
+    if (parsedId) {
       genericGET(`/themes/${parsedId}`).then((data) => {
         setThemeData(data);
         setLoaded(true);
       });
+    }
+    if (accountInfo?.username) {
       getStarredStatus();
     }
-    getThemeData();
-  }, [parsedId]);
+  }, [parsedId, accountInfo]);
 
   async function toggleStar() {
     const waitForRefresh = await checkAndRefreshToken();
@@ -115,8 +120,14 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 <div className="flex  w-full items-center gap-2">
                   <MiniDivider />
                   <button
-                    onClick={toggleStar}
-                    className="flex items-center gap-2 bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark pl-2 pr-3 transition-all rounded-2xl"
+                    onClick={() => {
+                      if (accountInfo?.username) toggleStar();
+                    }}
+                    className={`flex items-center gap-2 bg-borderLight dark:bg-borderDark ${
+                      accountInfo?.username
+                        ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
+                        : "cursor-auto"
+                    } pl-2 pr-3 transition-all rounded-2xl`}
                   >
                     {isStarred ? <BsStarFill /> : <BsStar />} <span>{themeData.starCount}</span>
                   </button>
