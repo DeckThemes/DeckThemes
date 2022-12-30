@@ -12,7 +12,7 @@ export function LoadMoreButton({
 }: {
   fetchPath: string;
   origSearchOpts: ThemeQueryRequest;
-  setThemeArr: Dispatch<SetStateAction<ThemeQueryResponse | ThemeSubmissionQueryResponse>>;
+  setThemeArr: Dispatch<SetStateAction<any>>;
   themeArr: ThemeQueryResponse | ThemeSubmissionQueryResponse;
   paramStrFilterPrepend: string;
 }) {
