@@ -44,7 +44,7 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
                       {deckToken}
                     </span>
                     <span
-                      className="w-full flex justify-center underline text-xl absolute left-1/2 -translate-x-1/2 top-[-0.15rem] text-blue-700 dark:text-blue-200 transition-opacity duration-75"
+                      className="w-full flex justify-center underline absolute left-1/2 -translate-x-1/2 top-[-0.15rem] text-blue-700 dark:text-blue-200 transition-opacity duration-75"
                       style={{ opacity: hover ? "100%" : "0%" }}
                       onClick={() => navigator.clipboard.writeText(deckToken)}
                       onMouseEnter={() => setHover(true)}

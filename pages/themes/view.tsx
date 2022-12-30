@@ -1,16 +1,22 @@
 import { useRouter } from "next/router";
-import { FullThemeCard } from "../../components";
+import { FullThemeCard, LoadingSpinner } from "../../components";
+import { useState, useEffect } from "react";
+import Head from "next/head";
 
 export default function FullThemeViewPage() {
   const router = useRouter();
   let { themeId } = router.query;
-  let parsedId: string = "";
-  // this is here because for some reason @types/next thinks that router.query can be an array of strings
-  if (Array.isArray(themeId)) {
-    parsedId = themeId[0];
-  } else {
-    parsedId = themeId || "";
-  }
+  const [parsedId, setParsedId] = useState<string>("");
+
+  useEffect(() => {
+    console.log(themeId);
+    // this is here because for some reason @types/next thinks that router.query can be an array of strings
+    if (Array.isArray(themeId)) {
+      setParsedId(themeId[0]);
+    } else {
+      setParsedId(themeId || "");
+    }
+  }, [themeId]);
 
   if (!parsedId) {
     return (

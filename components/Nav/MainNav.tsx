@@ -10,51 +10,13 @@ import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
 import { Discord } from "@icons-pack/react-simple-icons";
+import { useHasCookie } from "../../hooks";
 
 export function MainNav() {
   // const router = useRouter();
-
-  const [hasCookie, setHasCookie] = useState<boolean>(true);
   const { accountInfo } = useContext(authContext);
 
-  // const [discordApiInfo, setDiscordApiInfo] = useState<any>();
-
-  // useEffect(() => {
-  //   fetch("https://discord.com/api/guilds/1051660079033745478/widget.json", {
-  //     method: "GET",
-  //   })
-  //     .then((res) => {
-  //       if (res.ok && res.status === 200) {
-  //         return res.json();
-  //       } else {
-  //         throw new Error(`Res not OK!, error code ${res.status}`);
-  //       }
-  //     })
-  //     .then((json) => {
-  //       setDiscordApiInfo(json);
-  //     })
-  //     .catch((err) => {
-  //       console.error("Error Fetching Discord Info!", err);
-  //     });
-  // }, []);
-
-  useEffect(() => {
-    const cookieStr = document.cookie;
-    if (cookieStr) {
-      const cookieObj = cookieStr
-        .split(";")
-        .map((v) => v.split("="))
-        .reduce((acc: any, v) => {
-          acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
-          return acc;
-        }, {});
-      if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
-        setHasCookie(true);
-        return;
-      }
-    }
-    setHasCookie(false);
-  }, [accountInfo]);
+  const hasCookie = useHasCookie();
 
   return (
     <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">

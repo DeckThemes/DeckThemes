@@ -3,13 +3,20 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { checkAndRefreshToken, fetchWithRefresh, genericGET } from "../../api";
-import { FullThemeCard, MiniPfpDisplay, PfpDisplay } from "../../components";
+import {
+  FullThemeCard,
+  LoadingPage,
+  LoadingSpinner,
+  MiniPfpDisplay,
+  PfpDisplay,
+} from "../../components";
 import { Permissions, ThemeSubmissionInfo } from "../../types";
 import { authContext } from "../_app";
 
 export default function FullSubmissionViewPage() {
   const { accountInfo } = useContext(authContext);
   const router = useRouter();
+  const [loaded, setLoaded] = useState<boolean>(false);
   let { submissionId } = router.query;
   let parsedId: string = "";
   // this is here because for some reason @types/next thinks that router.query can be an array of strings
@@ -57,13 +64,19 @@ export default function FullSubmissionViewPage() {
 
   useEffect(() => {
     async function getData() {
-      const data = await genericGET(`/submissions/${parsedId}`, true);
-      setSubData(data);
+      genericGET(`/submissions/${parsedId}`, true).then((data) => {
+        setSubData(data);
+        setLoaded(true);
+      });
     }
     if (parsedId) {
       getData();
     }
   }, [parsedId]);
+
+  if (!loaded) {
+    return <LoadingPage />;
+  }
 
   return (
     <>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { ThemeAdminPanel, ThemeImageCarousel } from "..";
+import { LoadingPage, LoadingSpinner, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
 
 function MiniDivider() {
@@ -14,6 +14,7 @@ function MiniDivider() {
 export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
   const [isStarred, setStarred] = useState<boolean>(false);
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
@@ -28,8 +29,10 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
 
   useEffect(() => {
     async function getThemeData() {
-      const data = await genericGET(`/themes/${parsedId}`);
-      setThemeData(data);
+      genericGET(`/themes/${parsedId}`).then((data) => {
+        setThemeData(data);
+        setLoaded(true);
+      });
       getStarredStatus();
     }
     getThemeData();
@@ -65,6 +68,10 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
         });
     }
   }
+  if (!loaded) {
+    return <LoadingPage />;
+  }
+
   return (
     <>
       <Head>
@@ -162,6 +169,24 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                     <span className="text-textFadedLight dark:text-textFadedDark">
                       <i>No Source Provided</i>
                     </span>
+                  )}
+                  <br />
+                  <span>
+                    <span className="text-textFadedLight dark:text-textFadedDark">
+                      Last Updated:
+                    </span>{" "}
+                    {new Date(themeData.updated).toLocaleString()}
+                  </span>
+                  <br />
+                  {themeData.dependencies.length > 0 && (
+                    <>
+                      <span>
+                        <span className="text-textFadedLight dark:text-textFadedDark">
+                          Depends On:
+                        </span>{" "}
+                        {themeData.dependencies.map((e) => e.name).join(", ")}
+                      </span>
+                    </>
                   )}
                 </div>
               </div>

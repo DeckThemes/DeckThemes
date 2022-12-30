@@ -55,14 +55,13 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
               <div className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 text-5xl">
                 {data.images.map((_, i) => {
                   return (
-                    <>
-                      <button
-                        onClick={() => setSelected(i)}
-                        className={`w-3 h-2 lg:w-6 lg:h-3 rounded-full border-b-2 border-r-2 border-[#0005] ${
-                          selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
-                        } `}
-                      />
-                    </>
+                    <button
+                      key={`Theme Image Carousel Button ${i}`}
+                      onClick={() => setSelected(i)}
+                      className={`w-3 h-2 lg:w-6 lg:h-3 rounded-full border-b-2 border-r-2 border-[#0005] ${
+                        selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
+                      } `}
+                    />
                   );
                 })}
               </div>
@@ -75,7 +74,5 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
         </div>
       )}
     </>
-
-    // </div>
   );
 }
