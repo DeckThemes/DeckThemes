@@ -11,6 +11,7 @@ import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
 import { Discord } from "@icons-pack/react-simple-icons";
 import { useHasCookie } from "../../hooks";
+import { ImBook } from "react-icons/im";
 
 export function MainNav() {
   // const router = useRouter();
@@ -51,6 +52,14 @@ export function MainNav() {
             >
               <TbUpload size={36} className="scale-x-105" />
             </Link>
+            <a
+              href="https://docs.deckthemes.com"
+              rel="noreferrer"
+              target="_blank"
+              className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+            >
+              <ImBook size={34} />
+            </a>
             {/* @ts-ignore */}
             <MiniPfpDisplay accountInfo={accountInfo} goToMe />
           </>
