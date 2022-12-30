@@ -36,6 +36,14 @@ export function MainNav() {
         </a>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
+        <a
+          href="https://docs.deckthemes.com"
+          rel="noreferrer"
+          target="_blank"
+          className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+        >
+          <ImBook size={34} />
+        </a>
         {accountInfo?.username ? (
           <>
             {accountInfo.permissions.includes(Permissions.viewSubs) && (
@@ -52,14 +60,6 @@ export function MainNav() {
             >
               <TbUpload size={36} className="scale-x-105" />
             </Link>
-            <a
-              href="https://docs.deckthemes.com"
-              rel="noreferrer"
-              target="_blank"
-              className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-            >
-              <ImBook size={34} />
-            </a>
             {/* @ts-ignore */}
             <MiniPfpDisplay accountInfo={accountInfo} goToMe />
           </>

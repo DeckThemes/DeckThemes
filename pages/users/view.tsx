@@ -88,6 +88,7 @@ export default function Account() {
           filterDataApiPath={`/users/${parsedId}/themes/filters`}
           title={`${calcDisplayName()} Themes`}
           addPluginChoice
+          noAuthRequired
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (
           <>

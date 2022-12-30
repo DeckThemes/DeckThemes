@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext, useCallback } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import { authContext } from "../../pages/_app";
-import { debounce } from "lodash";
 import {
   FilterQueryResponse,
   ThemeQueryRequest,
@@ -13,7 +12,6 @@ import {
   LoadMoreButton,
   MiniSubmissionCard,
   MiniThemeCardRoot,
-  PageSelector,
 } from "../Themes";
 
 export function UserThemeCategoryDisplay({
@@ -24,6 +22,7 @@ export function UserThemeCategoryDisplay({
   addPluginChoice,
   themesPerPage = 5,
   defaultFilter = "",
+  noAuthRequired = false,
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
@@ -32,6 +31,7 @@ export function UserThemeCategoryDisplay({
   addPluginChoice?: boolean;
   themesPerPage?: number;
   defaultFilter?: string;
+  noAuthRequired?: boolean;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -57,7 +57,6 @@ export function UserThemeCategoryDisplay({
   function fetchNewData() {
     // Submissions should include both, which to the api is an empty string
     const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
-
     // This just changes "All" to "", as that is what the backend looks for
     const searchOptStr = generateParamStr(
       searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
@@ -71,7 +70,7 @@ export function UserThemeCategoryDisplay({
   }
 
   useEffect(() => {
-    if (accountInfo?.username) {
+    if (accountInfo?.username || noAuthRequired) {
       fetchNewData();
     }
   }, [searchOpts, accountInfo, cssOrAudio]);
