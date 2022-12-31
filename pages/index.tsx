@@ -45,10 +45,7 @@ export default function Home() {
           </button>
         </div>
         <div
-          // TODO: ADD THESE BACK TO CLASSNAME TO FIX AUDIO THEMES
-          // xl:w-11/12
-          // xl:flex-row
-          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative"
+          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row"
           ref={contentRef}
         >
           <>
@@ -67,7 +64,7 @@ export default function Home() {
                 title="Recent CSS Themes"
               />
             </div>
-            {/* <div className="w-1 rounded-3xl h-[90%] bg-borderLight dark:bg-borderDark absolute left-1/2 -translate-x-1/2 hidden xl:flex bottom-0" />
+            <div className="w-1 rounded-3xl h-[90%] bg-borderLight dark:bg-borderDark absolute left-1/2 -translate-x-1/2 hidden xl:flex bottom-0" />
             <div className="h-1 rounded-3xl w-full bg-borderLight dark:bg-borderDark xl:hidden" />
             <div className="w-10/12 flex flex-col gap-8 items-center">
               <Link href="/packs">
@@ -83,7 +80,7 @@ export default function Home() {
                 linkHref="/packs?order=Last Updated"
                 title="Recent Audio Packs"
               />
-            </div> */}
+            </div>
           </>
         </div>
       </main>
