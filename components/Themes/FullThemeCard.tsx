@@ -135,7 +135,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 </div>
                 <div className="text-md max-w-[640px]">
                   {themeData.description ? (
-                    <span>{themeData.description}</span>
+                    <span className="whitespace-pre-line break-words">{themeData.description}</span>
                   ) : (
                     <span className="text-textFadedLight dark:text-textFadedDark">
                       <i>No Description Provided</i>
