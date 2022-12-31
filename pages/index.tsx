@@ -45,7 +45,7 @@ export default function Home() {
           </button>
         </div>
         <div
-          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row"
+          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row xl:items-start"
           ref={contentRef}
         >
           <>

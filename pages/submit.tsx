@@ -106,7 +106,7 @@ export default function Submit() {
     }
   }
 
-  const [uploadMethod, setUploadMethod] = useState<string>("zip");
+  const [uploadMethod, setUploadMethod] = useState<string>("git");
   return (
     <>
       <Head>
@@ -168,8 +168,8 @@ export default function Submit() {
                       }
                     }}
                   >
-                    <option value="zip">Upload Zip</option>
                     <option value="git">Link Git Repo</option>
+                    <option value="zip">Upload Zip</option>
                     <option value="css">Paste CSS Snippet</option>
                   </select>
                 </div>

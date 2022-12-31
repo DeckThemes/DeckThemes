@@ -73,25 +73,29 @@ export function MetaSubmitPanel({
   return (
     <>
       <div className={`${sectionContainerClasses}`}>
-        <div className={`${metaFieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Target</span>
-          <div className="flex justify-center w-full">
-            <select
-              className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
-              value={info.target}
-              onChange={({ target: { value } }) => {
-                setInfo({ ...info, target: value });
-              }}
-            >
-              {targetOptions.map((e) => (
-                <option value={e} key={e} disabled={e === "None" && uploadMethod === "css"}>
-                  {e !== "None" ? e : "Use JSON Value"}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <MiniDivider />
+        {uploadType !== "audio" && (
+          <>
+            <div className={`${metaFieldContainerClasses}`}>
+              <span className={`${fieldTitleClasses}`}>Target</span>
+              <div className="flex justify-center w-full">
+                <select
+                  className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
+                  value={info.target}
+                  onChange={({ target: { value } }) => {
+                    setInfo({ ...info, target: value });
+                  }}
+                >
+                  {targetOptions.map((e) => (
+                    <option value={e} key={e} disabled={e === "None" && uploadMethod === "css"}>
+                      {e !== "None" ? e : "Use JSON Value"}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <MiniDivider />
+          </>
+        )}
         <div className={`${metaFieldContainerClasses}`}>
           <span className={`${fieldTitleClasses}`}>Images</span>
           <div className="flex flex-col w-full relative">

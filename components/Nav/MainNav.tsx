@@ -37,7 +37,7 @@ export function MainNav() {
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
         <a
-          href="https://docs.deckthemes.com"
+          href={process.env.NEXT_PUBLIC_DOCS_URL}
           rel="noreferrer"
           target="_blank"
           className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
