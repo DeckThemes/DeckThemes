@@ -6,7 +6,6 @@ import {
   MiniThemeCardRoot,
   FilterSelectorCard,
   LoadingSpinner,
-  PageSelector,
   LoadMoreButton,
 } from "../../components";
 import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
@@ -16,6 +15,8 @@ export default function Themes() {
 
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
+
+  const [init, setInit] = useState<boolean>(true);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
     filters: [],
@@ -29,41 +30,42 @@ export default function Themes() {
     search: "",
   });
   useEffect(() => {
-    async function getAndSetThemes() {
-      // This just changes "All" to "", as that is what the backend looks for
+    // This just changes "All" to "", as that is what the backend looks for
+    if (init) {
       const searchOpts = generateParamStr(
         chosenSearchOpts.filters !== "All"
           ? chosenSearchOpts
           : { ...chosenSearchOpts, filters: "" },
         "CSS."
       );
-      const data = await genericGET(`/themes${searchOpts}`, true);
-      if (data) {
-        setThemeArr(data);
-      }
-      setLoaded(true);
+      genericGET(`/themes${searchOpts}`).then((data) => {
+        if (data) {
+          setThemeArr(data);
+        }
+        setLoaded(true);
+      });
     }
-    getAndSetThemes();
-    if (loaded) {
-      let stateObj = { id: "100" };
-      window.history.pushState(
-        stateObj,
-        "unused",
-        `/themes${
-          chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
-            ? `?filters=${chosenSearchOpts.filters}${
-                chosenSearchOpts.order !== "Alphabetical (A to Z)"
-                  ? `&order=${chosenSearchOpts.order}`
-                  : ""
-              }`
-            : `${
-                chosenSearchOpts.order !== "Alphabetical (A to Z)"
-                  ? `?order=${chosenSearchOpts.order}`
-                  : ""
-              }`
-        }`
-      );
-    }
+
+    // if (loaded) {
+    // let stateObj = { id: "100" };
+    // window.history.pushState(
+    //   stateObj,
+    //   "unused",
+    //   `/themes${
+    //     chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
+    //       ? `?filters=${chosenSearchOpts.filters}${
+    //           chosenSearchOpts.order !== "Alphabetical (A to Z)"
+    //             ? `&order=${chosenSearchOpts.order}`
+    //             : ""
+    //         }`
+    //       : `${
+    //           chosenSearchOpts.order !== "Alphabetical (A to Z)"
+    //             ? `?order=${chosenSearchOpts.order}`
+    //             : ""
+    //         }`
+    //   }`
+    // );
+    // }
   }, [chosenSearchOpts]);
 
   useEffect(() => {
@@ -82,8 +84,10 @@ export default function Themes() {
     if (typeof router.query?.order === "string") {
       urlOrder = router.query.order;
     }
+
     setChosenSearchOpts({ ...chosenSearchOpts, filters: urlFilters || "", order: urlOrder || "" });
-  }, [router.query]);
+    setInit(true);
+  }, [router.query, router.pathname]);
 
   return (
     <>
