@@ -16,3 +16,10 @@ export function generateParamStr(origSearchOpts: any, filterPrepend: string = ""
   });
   return paramString;
 }
+
+export function generateThemeParamStr(origSearchOpts: any, filterPrepend: string = "") {
+  return generateParamStr(
+    origSearchOpts.filters !== "All" ? origSearchOpts : { ...origSearchOpts, filters: "" },
+    filterPrepend
+  );
+}

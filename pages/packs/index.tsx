@@ -1,13 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { generateParamStr, genericGET } from "../../api";
+import { generateThemeParamStr, genericGET } from "../../api";
 import {
   FilterSelectorCard,
   LoadingSpinner,
   LoadMoreButton,
   MiniThemeCardRoot,
-  PageSelector,
 } from "../../components";
 import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
 
@@ -16,6 +15,7 @@ export default function Themes() {
 
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
+  const [ready, setReady] = useState<boolean>(true);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
     filters: [],
@@ -29,61 +29,62 @@ export default function Themes() {
     search: "",
   });
   useEffect(() => {
-    async function getAndSetThemes() {
-      // This just changes "All" to "", as that is what the backend looks for
-      const searchOpts = generateParamStr(
-        chosenSearchOpts.filters !== "All"
-          ? chosenSearchOpts
-          : { ...chosenSearchOpts, filters: "" },
-        "AUDIO."
-      );
-      const data = await genericGET(`/themes${searchOpts}`, true);
-      if (data) {
-        setThemeArr(data);
-      }
-      setLoaded(true);
+    if (ready) {
+      const searchOpts = generateThemeParamStr(chosenSearchOpts, "AUDIO.");
+      genericGET(`/themes${searchOpts}`).then((data) => {
+        if (data) {
+          setThemeArr(data);
+        }
+        setLoaded(true);
+      });
     }
-    getAndSetThemes();
-    if (loaded) {
-      let stateObj = { id: "100" };
-      window.history.pushState(
-        stateObj,
-        "unused",
-        `/packs${
-          chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
-            ? `?filters=${chosenSearchOpts.filters}${
-                chosenSearchOpts.order !== "Alphabetical (A to Z)"
-                  ? `&order=${chosenSearchOpts.order}`
-                  : ""
-              }`
-            : `${
-                chosenSearchOpts.order !== "Alphabetical (A to Z)"
-                  ? `?order=${chosenSearchOpts.order}`
-                  : ""
-              }`
-        }`
-      );
-    }
+
+    // getAndSetThemes();
+    // if (loaded) {
+    //   let stateObj = { id: "100" };
+    //   window.history.pushState(
+    //     stateObj,
+    //     "unused",
+    //     `/packs${
+    //       chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
+    //         ? `?filters=${chosenSearchOpts.filters}${
+    //             chosenSearchOpts.order !== "Alphabetical (A to Z)"
+    //               ? `&order=${chosenSearchOpts.order}`
+    //               : ""
+    //           }`
+    //         : `${
+    //             chosenSearchOpts.order !== "Alphabetical (A to Z)"
+    //               ? `?order=${chosenSearchOpts.order}`
+    //               : ""
+    //           }`
+    //     }`
+    //   );
+    // }
   }, [chosenSearchOpts]);
 
   useEffect(() => {
-    async function getFilters() {
-      const filterData = await genericGET("/themes/filters?target=AUDIO");
+    genericGET("/themes/filters?target=AUDIO").then((filterData) => {
       if (filterData) {
         setServerSearchOpts(filterData);
       }
+    });
+    if (router.isReady) {
+      let urlFilters, urlOrder;
+      if (typeof router.query?.filters === "string") {
+        urlFilters = router.query.filters;
+      }
+      if (typeof router.query?.order === "string") {
+        urlOrder = router.query.order;
+      }
+      setChosenSearchOpts({
+        ...chosenSearchOpts,
+        filters: urlFilters || "",
+        order: urlOrder || "",
+      });
+      // This ready here makes sure that themes aren't fetched until the initial url values have been pre-filled
+      setReady(true);
     }
-    getFilters();
-
-    let urlFilters, urlOrder;
-    if (typeof router.query?.filters === "string") {
-      urlFilters = router.query.filters;
-    }
-    if (typeof router.query?.order === "string") {
-      urlOrder = router.query.order;
-    }
-    setChosenSearchOpts({ ...chosenSearchOpts, filters: urlFilters || "", order: urlOrder || "" });
-  }, [router.query]);
+  }, [router.query, router.pathname, router.isReady]);
 
   return (
     <>

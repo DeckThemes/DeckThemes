@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { generateParamStr, genericGET } from "../../api";
+import { generateThemeParamStr, genericGET } from "../../api";
 import {
   MiniThemeCardRoot,
   FilterSelectorCard,
@@ -16,7 +16,7 @@ export default function Themes() {
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
-  const [init, setInit] = useState<boolean>(true);
+  const [ready, setReady] = useState<boolean>(false);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
     filters: [],
@@ -30,15 +30,10 @@ export default function Themes() {
     search: "",
   });
   useEffect(() => {
-    // This just changes "All" to "", as that is what the backend looks for
-    if (init) {
-      const searchOpts = generateParamStr(
-        chosenSearchOpts.filters !== "All"
-          ? chosenSearchOpts
-          : { ...chosenSearchOpts, filters: "" },
-        "CSS."
-      );
-      genericGET(`/themes${searchOpts}`).then((data) => {
+    if (ready) {
+      // This just changes "All" to "", as that is what the backend looks for
+      const searchOpts = generateThemeParamStr(chosenSearchOpts, "CSS.");
+      genericGET(`/themes${searchOpts}`, true).then((data) => {
         if (data) {
           setThemeArr(data);
         }
@@ -66,7 +61,7 @@ export default function Themes() {
     //   }`
     // );
     // }
-  }, [chosenSearchOpts]);
+  }, [chosenSearchOpts, ready]);
 
   useEffect(() => {
     genericGET("/themes/filters?target=CSS").then((filterData) => {
@@ -74,24 +69,23 @@ export default function Themes() {
         setServerSearchOpts(filterData);
       }
     });
-
-    let urlFilters, urlOrder;
-    if (typeof router.query?.filters === "string") {
-      urlFilters = router.query.filters;
-    }
-    if (typeof router.query?.order === "string") {
-      urlOrder = router.query.order;
-    }
-
-    if (chosenSearchOpts.filters === "" || chosenSearchOpts.order === "") {
+    if (router.isReady) {
+      let urlFilters, urlOrder;
+      if (typeof router.query?.filters === "string") {
+        urlFilters = router.query.filters;
+      }
+      if (typeof router.query?.order === "string") {
+        urlOrder = router.query.order;
+      }
       setChosenSearchOpts({
         ...chosenSearchOpts,
         filters: urlFilters || "",
         order: urlOrder || "",
       });
+      // This ready here makes sure that themes aren't fetched until the initial url values have been pre-filled
+      setReady(true);
     }
-    setInit(true);
-  }, [router.query, router.pathname]);
+  }, [router.query, router.pathname, router.isReady]);
 
   return (
     <>
