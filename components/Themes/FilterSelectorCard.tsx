@@ -1,4 +1,6 @@
 import { DebounceInput } from "react-debounce-input";
+import Select from "react-select";
+import { ReactSelectCustomLabel, ReactSelectCustomClasses } from "../CustomDropdowns";
 
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
@@ -25,6 +27,44 @@ export function FilterSelectorCard({
   onCSSAudioChange?: (e: any) => void;
   searchOnly?: boolean;
 }) {
+  const formattedFilterOpts = [
+    {
+      value: "All",
+      label: (
+        <ReactSelectCustomLabel
+          mainText="All"
+          // bubbleValue={Object.values(filterOpts).reduce(
+          //   (prev, cur) => Number(prev) + Number(cur),
+          //   0
+          // )}
+        />
+      ),
+    },
+    ...Object.entries(filterOpts)
+      .filter(([_, itemCount]) => Number(itemCount) > 0)
+      .map(([filterName, itemCount]) => ({
+        value: filterName,
+        label: <ReactSelectCustomLabel mainText={filterName} bubbleValue={itemCount} />,
+      })),
+  ];
+  const formattedOrderOpts = orderOpts.map((orderName) => ({
+    value: orderName,
+    label: <ReactSelectCustomLabel mainText={orderName} />,
+  }));
+  const formattedCssAudioOpts = [
+    {
+      value: "",
+      label: <ReactSelectCustomLabel mainText="CSS & Audio" />,
+    },
+    {
+      value: "CSS",
+      label: <ReactSelectCustomLabel mainText="CSS" />,
+    },
+    {
+      value: "AUDIO",
+      label: <ReactSelectCustomLabel mainText="Audio" />,
+    },
+  ];
   return (
     <>
       <div className="flex flex-col md:flex-row gap-2 p-4 text-xl">
@@ -32,36 +72,33 @@ export function FilterSelectorCard({
           <>
             <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
               <span>Filter</span>
-              <select
-                className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
-                onChange={onFilterChange}
-                value={filterValue}
-              >
-                <option value="All">All</option>
-                {filterOpts.map((e) => {
-                  return (
-                    <option value={e} key={`Your Themes Filter ${e}`}>
-                      {e !== "AwaitingApproval" ? e : "Awaiting Approval"}
-                    </option>
-                  );
-                })}
-              </select>
+              <Select
+                // This sets initial value to "All" if not pre-set
+                value={
+                  formattedFilterOpts.find((e) => e.value === filterValue) || formattedFilterOpts[0]
+                }
+                onChange={(e) => {
+                  onFilterChange && onFilterChange({ target: e });
+                }}
+                {...ReactSelectCustomClasses}
+                isSearchable={false}
+                options={formattedFilterOpts}
+              />
             </div>
             <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
               <span>Order</span>
-              <select
-                className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
-                onChange={onOrderChange}
-                value={orderValue}
-              >
-                {orderOpts.map((e) => {
-                  return (
-                    <option value={e} key={`Your Themes Filter ${e}`}>
-                      {e}
-                    </option>
-                  );
-                })}
-              </select>
+              <Select
+                value={
+                  formattedOrderOpts.find((e) => e.value === orderValue) || formattedOrderOpts[0]
+                }
+                onChange={(e) => {
+                  onOrderChange && onOrderChange({ target: e });
+                }}
+                maxMenuHeight={400}
+                {...ReactSelectCustomClasses}
+                isSearchable={false}
+                options={formattedOrderOpts}
+              />
             </div>
           </>
         )}
@@ -79,15 +116,19 @@ export function FilterSelectorCard({
           <>
             <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
               <span>Type</span>
-              <select
-                className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4"
-                onChange={onCSSAudioChange}
-                value={cssOrAudioValue}
-              >
-                <option value="">CSS & Audio</option>
-                <option value="CSS">CSS Theme</option>
-                <option value="AUDIO">Audio Pack</option>
-              </select>
+              <Select
+                value={
+                  formattedCssAudioOpts.find((e) => e.value === cssOrAudioValue) ||
+                  formattedCssAudioOpts[0]
+                }
+                onChange={(e) => {
+                  onCSSAudioChange && onCSSAudioChange({ target: e });
+                }}
+                maxMenuHeight={400}
+                {...ReactSelectCustomClasses}
+                isSearchable={false}
+                options={formattedCssAudioOpts}
+              />
             </div>
           </>
         )}

@@ -77,13 +77,13 @@ export function UserThemeCategoryDisplay({
 
   useEffect(() => {
     if (accountInfo?.id) {
-      genericGET(
-        `${filterDataApiPath}?target=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`
-      ).then((data) => {
-        if (data) {
-          setServerFilters(data);
+      genericGET(`${filterDataApiPath}?type=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`).then(
+        (data) => {
+          if (data) {
+            setServerFilters(data);
+          }
         }
-      });
+      );
     }
   }, [accountInfo, cssOrAudio]);
 

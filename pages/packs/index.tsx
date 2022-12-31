@@ -63,7 +63,7 @@ export default function Themes() {
   }, [chosenSearchOpts]);
 
   useEffect(() => {
-    genericGET("/themes/filters?target=AUDIO").then((filterData) => {
+    genericGET("/themes/filters?type=AUDIO").then((filterData) => {
       if (filterData) {
         setServerSearchOpts(filterData);
       }
