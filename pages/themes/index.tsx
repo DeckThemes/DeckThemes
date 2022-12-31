@@ -69,13 +69,11 @@ export default function Themes() {
   }, [chosenSearchOpts]);
 
   useEffect(() => {
-    async function getFilters() {
-      const filterData = await genericGET("/themes/filters?target=CSS");
+    genericGET("/themes/filters?target=CSS").then((filterData) => {
       if (filterData) {
         setServerSearchOpts(filterData);
       }
-    }
-    getFilters();
+    });
 
     let urlFilters, urlOrder;
     if (typeof router.query?.filters === "string") {
@@ -85,7 +83,13 @@ export default function Themes() {
       urlOrder = router.query.order;
     }
 
-    setChosenSearchOpts({ ...chosenSearchOpts, filters: urlFilters || "", order: urlOrder || "" });
+    if (chosenSearchOpts.filters === "" || chosenSearchOpts.order === "") {
+      setChosenSearchOpts({
+        ...chosenSearchOpts,
+        filters: urlFilters || "",
+        order: urlOrder || "",
+      });
+    }
     setInit(true);
   }, [router.query, router.pathname]);
 
