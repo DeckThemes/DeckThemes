@@ -23,6 +23,7 @@ export function UserThemeCategoryDisplay({
   themesPerPage = 5,
   defaultFilter = "",
   noAuthRequired = false,
+  showFiltersWithZero = false,
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
@@ -32,6 +33,7 @@ export function UserThemeCategoryDisplay({
   themesPerPage?: number;
   defaultFilter?: string;
   noAuthRequired?: boolean;
+  showFiltersWithZero?: boolean;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -112,6 +114,7 @@ export function UserThemeCategoryDisplay({
               setSearchOpts({ ...searchOpts, filters: e.target.value });
             }}
             filterValue={searchOpts.filters}
+            showFiltersWithZero={showFiltersWithZero}
             orderOpts={serverFilters.order}
             onOrderChange={(e) => {
               setSearchOpts({ ...searchOpts, order: e.target.value });

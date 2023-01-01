@@ -23,6 +23,7 @@ export default function Submissions() {
               themeDataApiPath="/submissions"
               filterDataApiPath="/submissions/filters"
               title=""
+              showFiltersWithZero
               useSubmissionCards
               themesPerPage={20}
               addPluginChoice

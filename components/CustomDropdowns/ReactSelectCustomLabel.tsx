@@ -1,6 +1,6 @@
 export function ReactSelectCustomLabel({
   mainText,
-  bubbleValue,
+  bubbleValue = undefined,
 }: {
   mainText: string;
   bubbleValue?: string | number;
@@ -10,7 +10,7 @@ export function ReactSelectCustomLabel({
       <span className="w-fit">
         {mainText !== "AwaitingApproval" ? mainText : "Awaiting Approval"}
       </span>
-      {bubbleValue && (
+      {bubbleValue !== undefined && (
         <span className="bg-cardLight dark:bg-cardDark p-1 rounded-3xl w-8 h-8 flex items-center justify-center text-center">
           {bubbleValue}
         </span>

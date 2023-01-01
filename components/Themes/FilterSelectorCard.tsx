@@ -5,6 +5,7 @@ import { ReactSelectCustomLabel, ReactSelectCustomClasses } from "../CustomDropd
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
   orderOpts = ["ERROR"],
+  showFiltersWithZero = false,
   searchValue = "",
   onFilterChange,
   onOrderChange,
@@ -17,6 +18,7 @@ export function FilterSelectorCard({
 }: {
   filterOpts?: string[];
   filterValue: string;
+  showFiltersWithZero?: boolean;
   orderOpts?: string[];
   orderValue: string;
   searchValue: string;
@@ -41,7 +43,7 @@ export function FilterSelectorCard({
       ),
     },
     ...Object.entries(filterOpts)
-      .filter(([_, itemCount]) => Number(itemCount) > 0)
+      .filter(([_, itemCount]) => Number(itemCount) > 0 || showFiltersWithZero)
       .map(([filterName, itemCount]) => ({
         value: filterName,
         label: <ReactSelectCustomLabel mainText={filterName} bubbleValue={itemCount} />,
@@ -80,7 +82,30 @@ export function FilterSelectorCard({
                 onChange={(e) => {
                   onFilterChange && onFilterChange({ target: e });
                 }}
-                {...ReactSelectCustomClasses}
+                // {...ReactSelectCustomClasses}
+                classNames={{
+                  container() {
+                    return "relative";
+                  },
+                  menu() {
+                    return "!w-max flex flex-col border-borderLight dark:border-borderDark border-2 rounded-xl absolute right-1/2 translate-x-1/2";
+                  },
+                  menuList() {
+                    return "w-full bg-cardLight dark:bg-cardDark rounded-xl flex flex-col gap-1";
+                  },
+
+                  option() {
+                    return "bg-bgLight dark:bg-bgDark";
+                  },
+                  control() {
+                    return "bg-bgLight dark:bg-bgDark rounded-3xl";
+                  },
+                  singleValue() {
+                    return "translate-x-2";
+                  },
+                }}
+                unstyled={true}
+                // menuIsOpen
                 isSearchable={false}
                 options={formattedFilterOpts}
               />

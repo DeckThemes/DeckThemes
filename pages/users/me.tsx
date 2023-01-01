@@ -56,24 +56,25 @@ export default function Account() {
           <div className="mt-4" />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/stars"
-            filterDataApiPath={`/users/${accountInfo?.id}/stars/filters`}
+            filterDataApiPath={`/users/me/stars/filters`}
             title="Starred Themes"
             addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/themes"
-            filterDataApiPath={`/users/${accountInfo?.id}/themes/filters`}
+            filterDataApiPath={`/users/me/themes/filters`}
             title="Your Approved Themes"
             addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/submissions"
-            filterDataApiPath={`/users/${accountInfo?.id}/submissions/filters`}
+            filterDataApiPath={`/users/me/submissions/filters`}
             title="Your Submissions"
             useSubmissionCards
             addPluginChoice
+            showFiltersWithZero
             defaultFilter="AwaitingApproval"
           />
           <BigDivider />
