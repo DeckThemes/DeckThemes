@@ -13,6 +13,9 @@ export const ReactSelectCustomClasses = {
     control() {
       return "bg-bgLight dark:bg-bgDark rounded-3xl";
     },
+    singleValue() {
+      return "translate-x-2";
+    },
   },
   unstyled: true,
 };

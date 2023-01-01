@@ -112,7 +112,7 @@ export default function Themes() {
           />
           {themeArr.total > 0 ? (
             <>
-              <div className="flex gap-4 flex-wrap items-center justify-center px-10">
+              <div className="flex gap-4 flex-wrap items-center justify-center px-1 sm:px-10">
                 {themeArr.items.map((e) => {
                   return <MiniThemeCardRoot data={e} key={`ThemeCard ${e.id}`} />;
                 })}

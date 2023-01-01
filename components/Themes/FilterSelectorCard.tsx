@@ -33,10 +33,10 @@ export function FilterSelectorCard({
       label: (
         <ReactSelectCustomLabel
           mainText="All"
-          // bubbleValue={Object.values(filterOpts).reduce(
-          //   (prev, cur) => Number(prev) + Number(cur),
-          //   0
-          // )}
+          bubbleValue={Object.values(filterOpts).reduce(
+            (prev, cur) => Number(prev) + Number(cur),
+            0
+          )}
         />
       ),
     },
