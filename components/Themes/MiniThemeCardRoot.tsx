@@ -11,14 +11,6 @@ export function MiniThemeCardRoot({
   data: PartialCSSThemeInfo;
   submissionId?: string;
 }) {
-  function imageURLCreator(): string {
-    if (data?.images[0]?.id) {
-      return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id})`;
-    } else {
-      return `url(https://assets.pokemon.com/assets/cms2/img/pokedex/full/258.png)`;
-    }
-  }
-
   if (data.type === "Audio") {
     return <AudioMiniThemeCard data={data} submissionId={submissionId} />;
   }

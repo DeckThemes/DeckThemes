@@ -64,7 +64,7 @@ export default function Themes() {
   }, [chosenSearchOpts, ready]);
 
   useEffect(() => {
-    genericGET("/themes/filters?target=CSS").then((filterData) => {
+    genericGET("/themes/filters?type=CSS").then((filterData) => {
       if (filterData) {
         setServerSearchOpts(filterData);
       }

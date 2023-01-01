@@ -39,12 +39,9 @@ export function MetaSubmitPanel({
 
   const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
   async function getTargets() {
-    const data = await genericGET(
-      `/themes/filters?target=${uploadType?.toUpperCase() || "CSS"}`,
-      true
-    );
+    const data = await genericGET(`/themes/filters?type=CSS`, true);
     if (data?.filters) {
-      setTargetOptions(["None", ...data.filters]);
+      setTargetOptions(["None", ...Object.keys(data.filters)]);
     }
   }
   useEffect(() => {
