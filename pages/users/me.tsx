@@ -1,6 +1,6 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { authContext } from "../_app";
-import { clearCookie, fetchDiscordUrl, fetchWithRefresh, genericGET } from "../../api";
+import { clearCookie, fetchDiscordUrl } from "../../api";
 import {
   DeckTokenDisplay,
   LoadingSpinner,
@@ -27,7 +27,7 @@ export default function Account() {
   }
 
   function logOutAll() {
-    const isSure = confirm("This will remove all signed in web browsers and Steam Deck");
+    const isSure = confirm("This will remove all signed in web browsers and Steam Decks");
     if (isSure) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/logout_all`, {
         method: "POST",
