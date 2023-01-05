@@ -55,7 +55,13 @@ export function FilterSelectorCard({
           value: orderName,
           label: <ReactSelectCustomLabel mainText={orderName} />,
         }))
-      : [{ value: "Alphabetical (A to Z)", label: "Alphabetical (A to Z)" }];
+      : [
+          {
+            value: "Alphabetical (A to Z)",
+            label: <ReactSelectCustomLabel mainText="Alphabetical (A to Z)" />,
+          },
+        ];
+
   const formattedCssAudioOpts = [
     {
       value: "",
