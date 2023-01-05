@@ -49,10 +49,13 @@ export function FilterSelectorCard({
         label: <ReactSelectCustomLabel mainText={filterName} bubbleValue={itemCount} />,
       })),
   ];
-  const formattedOrderOpts = orderOpts.map((orderName) => ({
-    value: orderName,
-    label: <ReactSelectCustomLabel mainText={orderName} />,
-  }));
+  const formattedOrderOpts =
+    orderOpts.length > 0
+      ? orderOpts.map((orderName) => ({
+          value: orderName,
+          label: <ReactSelectCustomLabel mainText={orderName} />,
+        }))
+      : [{ value: "Alphabetical (A to Z)", label: "Alphabetical (A to Z)" }];
   const formattedCssAudioOpts = [
     {
       value: "",

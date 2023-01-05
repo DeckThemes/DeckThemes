@@ -9,12 +9,14 @@ export function LoadMoreButton({
   setThemeArr,
   themeArr,
   paramStrFilterPrepend = "",
+  cssOrAudio = "",
 }: {
   fetchPath: string;
   origSearchOpts: ThemeQueryRequest;
   setThemeArr: Dispatch<SetStateAction<any>>;
   themeArr: ThemeQueryResponse | ThemeSubmissionQueryResponse;
   paramStrFilterPrepend: string;
+  cssOrAudio?: string | undefined;
 }) {
   const [loadMoreCurPage, setLoadMorePage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,8 +40,9 @@ export function LoadMoreButton({
   }
 
   useEffect(() => {
+    console.log("resetting load more page");
     setLoadMorePage(1);
-  }, [origSearchOpts]);
+  }, [origSearchOpts, cssOrAudio]);
   return (
     <>
       {themeArr.items.length < themeArr.total ? (

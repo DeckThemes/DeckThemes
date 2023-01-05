@@ -159,6 +159,7 @@ export function UserThemeCategoryDisplay({
                 addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS."
               }
               origSearchOpts={searchOpts}
+              cssOrAudio={cssOrAudio}
             />
           </div>
         </div>

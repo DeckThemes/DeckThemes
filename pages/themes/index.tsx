@@ -15,7 +15,6 @@ export default function Themes() {
 
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
-
   const [ready, setReady] = useState<boolean>(false);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
@@ -31,7 +30,6 @@ export default function Themes() {
   });
   useEffect(() => {
     if (ready) {
-      // This just changes "All" to "", as that is what the backend looks for
       const searchOpts = generateThemeParamStr(chosenSearchOpts, "CSS.");
       genericGET(`/themes${searchOpts}`, true).then((data) => {
         if (data) {
