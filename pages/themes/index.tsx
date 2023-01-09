@@ -38,27 +38,6 @@ export default function Themes() {
         setLoaded(true);
       });
     }
-
-    // if (loaded) {
-    // let stateObj = { id: "100" };
-    // window.history.pushState(
-    //   stateObj,
-    //   "unused",
-    //   `/themes${
-    //     chosenSearchOpts.filters !== "All" && chosenSearchOpts.filters !== ""
-    //       ? `?filters=${chosenSearchOpts.filters}${
-    //           chosenSearchOpts.order !== "Alphabetical (A to Z)"
-    //             ? `&order=${chosenSearchOpts.order}`
-    //             : ""
-    //         }`
-    //       : `${
-    //           chosenSearchOpts.order !== "Alphabetical (A to Z)"
-    //             ? `?order=${chosenSearchOpts.order}`
-    //             : ""
-    //         }`
-    //   }`
-    // );
-    // }
   }, [chosenSearchOpts, ready]);
 
   useEffect(() => {
@@ -96,12 +75,30 @@ export default function Themes() {
           <FilterSelectorCard
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
-              setChosenSearchOpts({ ...chosenSearchOpts, filters: e.target.value });
+              const newFilters = e.target.value;
+              router.push(
+                {
+                  pathname: "/themes",
+                  query: { filters: newFilters, order: chosenSearchOpts.order },
+                },
+                undefined,
+                { shallow: true }
+              );
+              setChosenSearchOpts({ ...chosenSearchOpts, filters: newFilters });
             }}
             filterValue={chosenSearchOpts.filters}
             orderOpts={serverSearchOpts.order}
             onOrderChange={(e) => {
-              setChosenSearchOpts({ ...chosenSearchOpts, order: e.target.value });
+              const newOrder = e.target.value;
+              router.push(
+                {
+                  pathname: "/themes",
+                  query: { filters: chosenSearchOpts.filters, order: newOrder },
+                },
+                undefined,
+                { shallow: true }
+              );
+              setChosenSearchOpts({ ...chosenSearchOpts, order: newOrder });
             }}
             orderValue={chosenSearchOpts.order}
             searchValue={chosenSearchOpts.search}
