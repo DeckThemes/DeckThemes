@@ -1,17 +1,21 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState } from "react";
-import { checkAndRefreshToken } from "../api";
+import { useContext, useState } from "react";
+import { checkAndRefreshToken, fetchDiscordUrl } from "../api";
 
 import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 import {
   CSSSubmitPanel,
   GitSubmitPanel,
+  LoadingPage,
+  LogInPage,
   MetaSubmitPanel,
   partHeaderClasses,
   TosCheckboxes,
   ZipSubmitPanel,
 } from "../components";
+import { useHasCookie } from "../hooks";
+import { authContext } from "./_app";
 
 const BigDivider = () => {
   return <div className="h-2 w-full bg-borderLight dark:bg-borderDark my-2" />;
@@ -19,6 +23,10 @@ const BigDivider = () => {
 
 export default function Submit() {
   const router = useRouter();
+
+  const hasCookie = useHasCookie();
+  const { accountInfo } = useContext(authContext);
+
   // Having these all is mostly for type-safety, but it has the added bonus of allowing you to switch back and forth from types without losing data
   const [gitUploadInfo, setGitUploadInfo] = useState<GitSubmissionInfo>({
     url: "",
@@ -107,13 +115,14 @@ export default function Submit() {
   }
 
   const [uploadMethod, setUploadMethod] = useState<string>("git");
-  return (
-    <>
-      <Head>
-        <title>DeckThemes | Submit</title>
-      </Head>
-      <style>
-        {`
+  if (accountInfo?.username) {
+    return (
+      <>
+        <Head>
+          <title>DeckThemes | Submit</title>
+        </Head>
+        <style>
+          {`
         
         .dark .filepond--panel-root {
           background-color: #2e2e2e;
@@ -122,119 +131,127 @@ export default function Submit() {
           color: #fff;
         }
         `}
-      </style>
-      <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
-        <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
-        <div className="w-fit mx-4 flex flex-col gap-4 p-4 justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl mb-4 text-3xl">
-          <a
-            href={process.env.NEXT_PUBLIC_DOCS_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-800 to-blue-500 p-1 rounded-3xl"
-          >
-            <span className="text-textLight dark:text-textDark">Need help? </span>
-            <br className="flex md:hidden" />
-            View the docs <br className="flex md:hidden" />
-            <span className="text-textLight dark:text-textDark">
-              for guides, documentation, and tools!
-            </span>
-          </a>
-          <a
-            href="https://discord.gg/zSyf5GgdQY"
-            target="_blank"
-            rel="noreferrer"
-            className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
-          >
-            Join our Discord <br className="flex md:hidden" />
-            <span className="text-textLight dark:text-textDark">
-              to keep updated on your submission&apos;s status!
-            </span>
-          </a>
+        </style>
+        <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
+          <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
+          <div className="w-fit mx-4 flex flex-col gap-4 p-4 justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl mb-4 text-3xl">
+            <a
+              href={process.env.NEXT_PUBLIC_DOCS_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-800 to-blue-500 p-1 rounded-3xl"
+            >
+              <span className="text-textLight dark:text-textDark">Need help? </span>
+              <br className="flex md:hidden" />
+              View the docs <br className="flex md:hidden" />
+              <span className="text-textLight dark:text-textDark">
+                for guides, documentation, and tools!
+              </span>
+            </a>
+            <a
+              href="https://discord.gg/zSyf5GgdQY"
+              target="_blank"
+              rel="noreferrer"
+              className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
+            >
+              Join our Discord <br className="flex md:hidden" />
+              <span className="text-textLight dark:text-textDark">
+                to keep updated on your submission&apos;s status!
+              </span>
+            </a>
+          </div>
+          <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
+            <section className="p-4 w-full flex flex-col items-center">
+              <div className="flex flex-col items-center gap-4 justify-center mb-4">
+                <span className={partHeaderClasses}>Part 1: Upload Your Theme</span>
+                <div className="flex flex-col md:flex-row gap-2">
+                  <div className="flex flex-col h-20">
+                    <span>Upload Method</span>
+                    <select
+                      className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                      value={uploadMethod}
+                      onChange={({ target: { value } }) => {
+                        setUploadMethod(value);
+                        if (value === "css") {
+                          setUploadType("css");
+                        }
+                      }}
+                    >
+                      <option value="git">Link Git Repo</option>
+                      <option value="zip">Upload Zip</option>
+                      <option value="css">Paste CSS Snippet</option>
+                    </select>
+                  </div>
+                  <div className="flex flex-col h-20">
+                    <span>Target Plugin</span>
+                    <select
+                      className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                      value={uploadType}
+                      onChange={({ target: { value } }) => {
+                        if (value === "css" || value === "audio") {
+                          setUploadType(value);
+                        }
+                      }}
+                    >
+                      <option value="css">CSSLoader</option>
+                      <option value="audio" disabled={uploadMethod === "css"}>
+                        AudioLoader
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              {uploadMethod === "zip" && (
+                <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
+              )}
+              {uploadMethod === "git" && (
+                <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
+              )}
+              {uploadMethod === "css" && (
+                <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
+              )}
+            </section>
+            <BigDivider />
+            <section className="p-4 w-full flex flex-col items-center">
+              <span className={partHeaderClasses}>Part 2: Add More Info</span>
+              <MetaSubmitPanel
+                info={metaInfo}
+                setInfo={setMetaInfo}
+                uploadType={uploadType}
+                uploadMethod={uploadMethod}
+              />
+            </section>
+            <BigDivider />
+            <section className="p-4 w-full flex flex-col items-center">
+              <span className={partHeaderClasses}>Part 3: Accept Terms</span>
+              <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
+            </section>
+            <BigDivider />
+            <section className="p-4 w-full flex flex-col items-center">
+              {checkIfReady() ? (
+                <>
+                  <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                    <span
+                      className="text-textDark dark:text-textLight"
+                      onClick={() => submitTheme()}
+                    >
+                      Submit
+                    </span>
+                  </button>
+                </>
+              ) : (
+                <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                  <span>Add Info Before Submitting</span>
+                </div>
+              )}
+            </section>
+          </main>
         </div>
-        <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
-          <section className="p-4 w-full flex flex-col items-center">
-            <div className="flex flex-col items-center gap-4 justify-center mb-4">
-              <span className={partHeaderClasses}>Part 1: Upload Your Theme</span>
-              <div className="flex flex-col md:flex-row gap-2">
-                <div className="flex flex-col h-20">
-                  <span>Upload Method</span>
-                  <select
-                    className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
-                    value={uploadMethod}
-                    onChange={({ target: { value } }) => {
-                      setUploadMethod(value);
-                      if (value === "css") {
-                        setUploadType("css");
-                      }
-                    }}
-                  >
-                    <option value="git">Link Git Repo</option>
-                    <option value="zip">Upload Zip</option>
-                    <option value="css">Paste CSS Snippet</option>
-                  </select>
-                </div>
-                <div className="flex flex-col h-20">
-                  <span>Target Plugin</span>
-                  <select
-                    className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
-                    value={uploadType}
-                    onChange={({ target: { value } }) => {
-                      if (value === "css" || value === "audio") {
-                        setUploadType(value);
-                      }
-                    }}
-                  >
-                    <option value="css">CSSLoader</option>
-                    <option value="audio" disabled={uploadMethod === "css"}>
-                      AudioLoader
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            {uploadMethod === "zip" && (
-              <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
-            )}
-            {uploadMethod === "git" && (
-              <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
-            )}
-            {uploadMethod === "css" && (
-              <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
-            )}
-          </section>
-          <BigDivider />
-          <section className="p-4 w-full flex flex-col items-center">
-            <span className={partHeaderClasses}>Part 2: Add More Info</span>
-            <MetaSubmitPanel
-              info={metaInfo}
-              setInfo={setMetaInfo}
-              uploadType={uploadType}
-              uploadMethod={uploadMethod}
-            />
-          </section>
-          <BigDivider />
-          <section className="p-4 w-full flex flex-col items-center">
-            <span className={partHeaderClasses}>Part 3: Accept Terms</span>
-            <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
-          </section>
-          <BigDivider />
-          <section className="p-4 w-full flex flex-col items-center">
-            {checkIfReady() ? (
-              <>
-                <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                  <span className="text-textDark dark:text-textLight" onClick={() => submitTheme()}>
-                    Submit
-                  </span>
-                </button>
-              </>
-            ) : (
-              <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                <span>Add Info Before Submitting</span>
-              </div>
-            )}
-          </section>
-        </main>
-      </div>
-    </>
-  );
+      </>
+    );
+  }
+  if (hasCookie) {
+    return <LoadingPage />;
+  }
+  return <LogInPage />;
 }

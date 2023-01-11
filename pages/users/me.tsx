@@ -3,7 +3,8 @@ import { authContext } from "../_app";
 import { clearCookie, fetchDiscordUrl } from "../../api";
 import {
   DeckTokenDisplay,
-  LoadingSpinner,
+  LoadingPage,
+  LogInPage,
   PfpDisplay,
   UserThemeCategoryDisplay,
 } from "../../components";
@@ -97,35 +98,10 @@ export default function Account() {
     );
   }
   if (hasCookie) {
-    return (
-      <>
-        <Head>
-          <title>DeckThemes | Loading</title>
-        </Head>
-        <main className="flex w-full flex-grow items-center justify-center text-center px-5 gap-2">
-          <LoadingSpinner />
-          <span className="text-4xl font-semibold">Loading</span>
-        </main>
-      </>
-    );
+    return <LoadingPage />;
   }
 
   if (!accountInfo?.username) {
-    return (
-      <>
-        <Head>
-          <title>DeckThemes | Log In</title>
-        </Head>
-        <main className="flex flex-col items-center text-center px-5">
-          <h1 className="text-4xl font-semibold pt-20">You Are Not Logged In</h1>
-          <button
-            className="text-discordColor font-medium text-5xl pt-10"
-            onClick={fetchDiscordUrl}
-          >
-            <span>Login</span>
-          </button>
-        </main>
-      </>
-    );
+    return <LogInPage />;
   }
 }
