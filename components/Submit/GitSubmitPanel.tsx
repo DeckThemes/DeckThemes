@@ -33,6 +33,7 @@ export function GitSubmitPanel({
           <input
             type="text"
             value={info.commit}
+            placeholder="Leave blank for latest commit"
             onChange={(e) => setInfo({ ...info, commit: e.target.value })}
             className={fieldClasses}
           />

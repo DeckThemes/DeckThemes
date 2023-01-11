@@ -145,7 +145,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 {themeData.download !== undefined ? (
                   <>
                     <button
-                      className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-3xl rounded-full justify-between mt-4"
+                      className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-xl md:text-3xl rounded-full justify-between mt-4"
                       onClick={() => {
                         themeData !== undefined &&
                           location.assign(
@@ -157,7 +157,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                         <FiArrowDown size={48} />
                       </div>
                       <div>
-                        <span className="font-semibold ml-2 mr-2">
+                        <span className="font-semibold ml-2 mr-1 md:mr-2">
                           {themeData.download.downloadCount}
                         </span>
                         <span className="pr-3">

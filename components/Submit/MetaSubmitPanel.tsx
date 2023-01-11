@@ -169,7 +169,7 @@ export function MetaSubmitPanel({
             value={info.description}
             placeholder={`${
               uploadMethod !== "css"
-                ? `Leave empty to use ${uploadType === "audio" ? "pack.json" : "theme.json"} value.`
+                ? `Leave blank to use ${uploadType === "audio" ? "pack.json" : "theme.json"} value.`
                 : "Enter Description Here"
             }`}
             onChange={(e) => setInfo({ ...info, description: e.target.value })}
