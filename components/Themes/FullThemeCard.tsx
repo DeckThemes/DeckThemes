@@ -86,20 +86,11 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
         {themeData !== undefined ? (
           <>
             <div className="flex flex-col lg:flex-row items-center lg:items-start lg:mx-16 xl:mx-32 h-fit w-full p-4 bg-cardLight dark:bg-cardDark rounded-3xl">
-              {themeData?.images.length > 0 ? (
-                <>
-                  <div className="w-full h-full flex items-center lg:items-start">
-                    <ThemeImageCarousel data={themeData} />
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="w-full h-full flex items-center justify-center">
-                    <span className="text-4xl my-auto">No Images Provided</span>
-                  </div>
-                </>
-              )}
-
+              <>
+                <div className="w-full h-full flex items-center lg:items-start">
+                  <ThemeImageCarousel data={themeData} />
+                </div>
+              </>
               <div className="flex flex-col items-center lg:items-start text-xl gap-2 my-4 lg:mx-8 relative">
                 <ThemeAdminPanel themeData={themeData} />
                 <h1 className="text-3xl md:text-5xl font-semibold mb-auto max-w-[640px]">
