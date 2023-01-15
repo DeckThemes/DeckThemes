@@ -9,6 +9,10 @@ const nextConfig = {
         source: "/discord",
         destination: "https://discord.gg/HsU72Kfnpf",
       },
+      {
+        source: "/docs",
+        destination: "https://docs.deckthemes.com",
+      },
     ];
   },
   images: {
