@@ -3,6 +3,14 @@ const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
   swcMinify: true,
+  async rewrites() {
+    return [
+      {
+        source: "/discord",
+        destination: "https://discord.gg/HsU72Kfnpf",
+      },
+    ];
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
