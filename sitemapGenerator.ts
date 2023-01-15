@@ -1,4 +1,5 @@
 const sitemap = require("nextjs-sitemap-generator");
+export {};
 sitemap({
   baseUrl: process.env.NEXT_PUBLIC_CLIENT_URL || "",
   ignoredPaths: ["submissions"],
