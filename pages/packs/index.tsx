@@ -38,7 +38,7 @@ export default function Themes() {
         setLoaded(true);
       });
     }
-  }, [chosenSearchOpts]);
+  }, [chosenSearchOpts, ready]);
 
   useEffect(() => {
     genericGET("/themes/filters?type=AUDIO").then((filterData) => {
