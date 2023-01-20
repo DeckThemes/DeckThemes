@@ -23,7 +23,7 @@ export default function Themes() {
   });
   const [chosenSearchOpts, setChosenSearchOpts] = useState<ThemeQueryRequest>({
     page: 1,
-    perPage: 25,
+    perPage: 24,
     filters: "",
     order: "",
     search: "",
