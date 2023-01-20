@@ -28,7 +28,7 @@ export function HighlightReelView({
 
   return (
     <>
-      <div className="flex flex-col w-full items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 pt-4 pb-8">
+      <div className="flex flex-col w-full items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 py-8">
         <h3 className="text-2xl md:text-3xl font-medium">{title}</h3>
         <div
           // TODO: 'items-center' COULD BREAK SOMETHING, PLEASE DOUBLE CHECK IT\
