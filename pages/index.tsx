@@ -56,12 +56,12 @@ export default function Home() {
                 <ColorfulTitle>CSS Loader</ColorfulTitle>
               </Link>
               <HighlightReelView
-                apiURL="/themes?order=Most Downloaded&filters=CSS&perPage=7"
+                apiURL="/themes?order=Most Downloaded&filters=CSS&perPage=6"
                 linkHref="/themes?order=Most Downloaded"
                 title="Popular CSS Themes"
               />
               <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=CSS&perPage=7"
+                apiURL="/themes?order=Last Updated&filters=CSS&perPage=6"
                 linkHref="/themes?order=Last Updated"
                 title="Recent CSS Themes"
               />
@@ -71,12 +71,12 @@ export default function Home() {
                 <ColorfulTitle>Audio Loader</ColorfulTitle>
               </Link>
               <HighlightReelView
-                apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=7"
+                apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=6"
                 linkHref="/packs?order=Most Downloaded"
                 title="Popular Audio Packs"
               />
               <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=7"
+                apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=6"
                 linkHref="/packs?order=Last Updated"
                 title="Recent Audio Packs"
               />
