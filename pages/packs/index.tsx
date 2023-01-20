@@ -15,7 +15,7 @@ export default function Themes() {
 
   const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(true);
+  const [ready, setReady] = useState<boolean>(false);
 
   const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
     filters: [],
