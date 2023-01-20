@@ -172,7 +172,7 @@ export function AudioMiniThemeCard({
   }
   if (submissionId) {
     return (
-      <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
+      <div className="text-textDark hover:translate-y-1 transition-all sm:w-[260px] w-full">
         <div>
           <InnerContent />
         </div>
@@ -181,7 +181,7 @@ export function AudioMiniThemeCard({
   }
 
   return (
-    <div className="text-textDark hover:translate-y-1 transition-all md:w-[260px] w-full">
+    <div className="text-textDark hover:translate-y-1 transition-all sm:w-[260px] w-full">
       <Link href={`/packs/view?themeId=${data.id}`}>
         <InnerContent />
       </Link>
