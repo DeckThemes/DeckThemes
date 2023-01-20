@@ -3,15 +3,17 @@ const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
   swcMinify: true,
-  async rewrites() {
+  async redirects() {
     return [
       {
         source: "/discord",
         destination: "https://discord.gg/HsU72Kfnpf",
+        permanent: false,
       },
       {
         source: "/docs",
         destination: "https://docs.deckthemes.com",
+        permanent: false,
       },
     ];
   },

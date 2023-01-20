@@ -10,6 +10,7 @@ import {
   LoadingPage,
   LogInPage,
   MetaSubmitPanel,
+  MiniDivider,
   partHeaderClasses,
   TosCheckboxes,
   ZipSubmitPanel,
@@ -134,7 +135,7 @@ export default function Submit() {
         </style>
         <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
           <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
-          <div className="w-fit mx-4 flex flex-col gap-4 p-4 justify-center items-center bg-cardLight dark:bg-cardDark rounded-3xl mb-4 text-3xl">
+          <div className="w-fit mx-4 flex flex-col gap-4 px-4 py-2 justify-center items-center bg-cardLight dark:bg-cardDark rounded-xl mb-4 text-xl">
             <a
               href={process.env.NEXT_PUBLIC_DOCS_URL}
               target="_blank"
@@ -148,7 +149,7 @@ export default function Submit() {
                 for guides, documentation, and tools!
               </span>
             </a>
-            <a
+            {/* <a
               href="https://discord.gg/zSyf5GgdQY"
               target="_blank"
               rel="noreferrer"
@@ -158,7 +159,7 @@ export default function Submit() {
               <span className="text-textLight dark:text-textDark">
                 to keep updated on your submission&apos;s status!
               </span>
-            </a>
+            </a> */}
           </div>
           <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
             <section className="p-4 w-full flex flex-col items-center">
@@ -168,7 +169,7 @@ export default function Submit() {
                   <div className="flex flex-col h-20">
                     <span>Upload Method</span>
                     <select
-                      className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
                       value={uploadMethod}
                       onChange={({ target: { value } }) => {
                         setUploadMethod(value);
@@ -185,7 +186,7 @@ export default function Submit() {
                   <div className="flex flex-col h-20">
                     <span>Target Plugin</span>
                     <select
-                      className="bg-bgLight dark:bg-bgDark rounded-3xl h-full p-4 md:py-0 text-xl text-center"
+                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
                       value={uploadType}
                       onChange={({ target: { value } }) => {
                         if (value === "css" || value === "audio") {
@@ -193,14 +194,16 @@ export default function Submit() {
                         }
                       }}
                     >
-                      <option value="css">CSSLoader</option>
+                      <option value="css">CSS Loader</option>
                       <option value="audio" disabled={uploadMethod === "css"}>
-                        AudioLoader
+                        Audio Loader
                       </option>
                     </select>
                   </div>
                 </div>
               </div>
+              <MiniDivider />
+              <div className="pb-4" />
               {uploadMethod === "zip" && (
                 <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
               )}
@@ -232,7 +235,7 @@ export default function Submit() {
                 <>
                   <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
                     <span
-                      className="text-textDark dark:text-textLight"
+                      className="text-textDark dark:text-textLight font-fancy"
                       onClick={() => submitTheme()}
                     >
                       Submit

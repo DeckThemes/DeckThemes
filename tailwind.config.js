@@ -31,10 +31,6 @@ module.exports = {
         textFadedDark: "#aaa",
       },
     },
-    fontFamily: {
-      sans: ["Montserrat", "sans-serif"],
-      serif: ["serif"],
-    },
   },
   plugins: [],
   darkMode: "class",

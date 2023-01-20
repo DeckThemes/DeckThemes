@@ -76,7 +76,7 @@ export function MetaSubmitPanel({
               <span className={`${fieldTitleClasses}`}>Target</span>
               <div className="flex justify-center w-full">
                 <select
-                  className="bg-bgLight dark:bg-bgDark rounded-3xl p-2 px-4 text-xl"
+                  className="bg-bgLight dark:bg-bgDark rounded-md p-2 px-4 text-xl"
                   value={info.target}
                   onChange={({ target: { value } }) => {
                     setInfo({ ...info, target: value });

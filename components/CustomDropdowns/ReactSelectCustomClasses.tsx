@@ -4,17 +4,17 @@ export const ReactSelectCustomClasses = {
       return "relative";
     },
     menu() {
-      return "!w-max flex flex-col border-borderLight dark:border-borderDark border-2 rounded-xl absolute right-1/2 translate-x-1/2";
+      return "!w-max flex flex-col border-borderLight dark:border-borderDark border-2 absolute right-1/2 translate-x-1/2";
     },
     menuList() {
-      return "w-full bg-cardLight dark:bg-cardDark rounded-xl flex flex-col gap-1";
+      return "w-full bg-cardLight dark:bg-cardDark flex flex-col gap-1";
     },
 
     option() {
       return "bg-bgLight dark:bg-bgDark";
     },
     control() {
-      return "bg-bgLight dark:bg-bgDark rounded-3xl";
+      return "bg-bgLight dark:bg-bgDark";
     },
     singleValue() {
       return "translate-x-2";

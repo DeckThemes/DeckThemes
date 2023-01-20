@@ -16,12 +16,12 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
     });
   }
   return (
-    <>
-      <span className="text-3xl font-semibold pb-2">Connect Your Steam Deck</span>
+    <div className="flex flex-col gap-4 p-4 border-borderLight dark:border-borderDark">
+      <span className="text-3xl font-semibold font-fancy text-center">Connect Your Steam Deck</span>
       <div className="flex flex-col md:flex-row items-center bg-cardLight dark:bg-cardDark rounded-3xl">
         <button
           onClick={generateDeckToken}
-          className="w-full p-4 bg-borderLight dark:bg-borderDark rounded-3xl font-semibold"
+          className="w-full p-4 bg-borderLight dark:bg-borderDark rounded-3xl font-fancy"
         >
           {deckToken ? "Reg" : "G"}enerate Deck Token
         </button>
@@ -59,6 +59,6 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
           </>
         ) : null}
       </div>
-    </>
+    </div>
   );
 }

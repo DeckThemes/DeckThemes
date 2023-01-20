@@ -29,10 +29,10 @@ export function MainNav() {
           href="https://discord.gg/HsU72Kfnpf"
           target="_blank"
           rel="noreferrer"
-          className="ml-4 px-2 flex items-center gap-2 md:bg-bgLight md:dark:bg-bgDark p-1 rounded-2xl"
+          className="ml-4 flex items-center gap-2 md:bg-bgLight md:dark:bg-bgDark p-2 rounded-2xl"
         >
-          <Discord size={36} />
-          <span className="hidden md:flex">Join The Discord!</span>
+          <Discord size={30} />
+          {/* <span className="hidden md:flex">Join The Discord!</span> */}
         </a>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
@@ -42,7 +42,7 @@ export function MainNav() {
           target="_blank"
           className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
         >
-          <ImBook size={34} />
+          <ImBook size={28} />
         </a>
         {accountInfo?.username ? (
           <>
@@ -51,17 +51,17 @@ export function MainNav() {
                 href="/submissions"
                 className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
               >
-                <RiAdminFill size={34} />
+                <RiAdminFill size={32} />
               </Link>
             )}
             <Link
               href="/submit"
               className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
             >
-              <TbUpload size={36} className="scale-x-105" />
+              <TbUpload size={32} className="scale-x-105" />
             </Link>
             {/* @ts-ignore */}
-            <MiniPfpDisplay accountInfo={accountInfo} goToMe />
+            <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
           </>
         ) : (
           <>

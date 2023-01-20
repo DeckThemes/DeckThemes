@@ -22,7 +22,7 @@ export function NavIcon({}) {
         width="48"
         alt="CSSLoader Logo"
       />
-      <span className="hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
+      <span className="font-fancy hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
     </Link>
   );
 }

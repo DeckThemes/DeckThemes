@@ -6,7 +6,7 @@ import Head from "next/head";
 
 function ColorfulTitle({ children }: { children: ReactNode }) {
   return (
-    <span className="text-3xl md:text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
+    <span className="font-fancy text-3xl md:text-5xl font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-400 to-purple-500">
       {children}
     </span>
   );
@@ -33,7 +33,9 @@ export default function Home() {
           </div>
           <div className="absolute top-[40%] items-center flex flex-col">
             <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
-            <h2 className="text-2xl md:text-3xl font-medium">CSSLoader & AudioLoader</h2>
+            <h2 className="font-default text-2xl md:text-3xl font-medium">
+              CSS Loader and Audio Loader
+            </h2>
           </div>
           <button
             className="absolute bottom-8"
@@ -51,7 +53,7 @@ export default function Home() {
           <>
             <div className="w-10/12 flex flex-col gap-8 items-center">
               <Link href="/themes">
-                <ColorfulTitle>CSSLoader</ColorfulTitle>
+                <ColorfulTitle>CSS Loader</ColorfulTitle>
               </Link>
               <HighlightReelView
                 apiURL="/themes?order=Most Downloaded&filters=CSS&perPage=7"
@@ -64,11 +66,9 @@ export default function Home() {
                 title="Recent CSS Themes"
               />
             </div>
-            <div className="w-1 rounded-3xl h-[90%] bg-borderLight dark:bg-borderDark absolute left-1/2 -translate-x-1/2 hidden xl:flex bottom-0" />
-            <div className="h-1 rounded-3xl w-full bg-borderLight dark:bg-borderDark xl:hidden" />
             <div className="w-10/12 flex flex-col gap-8 items-center">
               <Link href="/packs">
-                <ColorfulTitle>AudioLoader</ColorfulTitle>
+                <ColorfulTitle>Audio Loader</ColorfulTitle>
               </Link>
               <HighlightReelView
                 apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=7"

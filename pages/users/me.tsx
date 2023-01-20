@@ -80,19 +80,21 @@ export default function Account() {
           />
           <BigDivider />
           <DeckTokenDisplay />
-          <div className="mt-5" />
-          <button
-            onClick={logOut}
-            className="mt-auto p-5 mb-5 font-medium text-xl bg-cardLight dark:bg-cardDark rounded-full"
-          >
-            Log Out
-          </button>
-          <button
-            onClick={logOutAll}
-            className="mt-auto p-5 mb-5 font-medium text-xl bg-cardLight dark:bg-cardDark rounded-full"
-          >
-            Log Out All Devices
-          </button>
+          <div className="my-5 h-2 w-10/12 rounded-full bg-borderLight dark:bg-borderDark" />
+          <div className="flex gap-4 p-4">
+            <button
+              onClick={logOut}
+              className="mt-auto p-5 mb-5 font-medium text-xl bg-red-500 rounded-3xl"
+            >
+              Log Out This Device
+            </button>
+            <button
+              onClick={logOutAll}
+              className="mt-auto p-5 mb-5 font-medium text-xl border-red-500 border-2 rounded-3xl"
+            >
+              Log Out All Devices
+            </button>
+          </div>
         </main>
       </>
     );

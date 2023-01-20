@@ -29,7 +29,7 @@ export function HighlightReelView({
   return (
     <>
       <div className="flex flex-col w-full items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 pt-4 pb-8">
-        <span className="text-2xl md:text-3xl font-medium">{title}</span>
+        <h3 className="text-2xl md:text-3xl font-medium">{title}</h3>
         <div
           // TODO: 'items-center' COULD BREAK SOMETHING, PLEASE DOUBLE CHECK IT\
           className={`flex flex-wrap w-full justify-center gap-4 px-4 ${
@@ -50,13 +50,21 @@ export function HighlightReelView({
             <LoadingSpinner />
           )}
 
-          <Link
+          {/* The old "full card sized" view more button */}
+          {/* <Link
             href={linkHref}
             className="bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark hover:translate-y-1 transition-all w-[260px] flex items-center justify-center rounded-3xl"
           >
             <span className="text-2xl p-4">View More</span>
-          </Link>
+          </Link> */}
         </div>
+
+        <Link
+          href={linkHref}
+          className="bg-borderLight dark:bg-borderDark p-2 px-4 rounded-3xl text-2xl"
+        >
+          View More
+        </Link>
       </div>
     </>
   );

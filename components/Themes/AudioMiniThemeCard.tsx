@@ -21,7 +21,7 @@ export function AudioMiniThemeCard({
       <>
         <article
           key={`Theme_${data.name}`}
-          className="ThemeBrowserItem_BgImg"
+          className="ThemeBrowserItem_BgImg font-fancy"
           style={{
             backgroundImage: imageURLCreator(),
             backgroundSize: "cover",

@@ -81,7 +81,7 @@ export function FilterSelectorCard({
       <div className="flex flex-col md:flex-row gap-2 p-4 text-xl">
         {!searchOnly && (
           <>
-            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
+            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
               <span>Filter</span>
               <Select
                 // This sets initial value to "All" if not pre-set
@@ -91,35 +91,12 @@ export function FilterSelectorCard({
                 onChange={(e) => {
                   onFilterChange && onFilterChange({ target: e });
                 }}
-                // {...ReactSelectCustomClasses}
-                classNames={{
-                  container() {
-                    return "relative";
-                  },
-                  menu() {
-                    return "!w-max flex flex-col border-borderLight dark:border-borderDark border-2 rounded-xl absolute right-1/2 translate-x-1/2";
-                  },
-                  menuList() {
-                    return "w-full bg-cardLight dark:bg-cardDark rounded-xl flex flex-col gap-1";
-                  },
-
-                  option() {
-                    return "bg-bgLight dark:bg-bgDark";
-                  },
-                  control() {
-                    return "bg-bgLight dark:bg-bgDark rounded-3xl";
-                  },
-                  singleValue() {
-                    return "translate-x-2";
-                  },
-                }}
-                unstyled={true}
-                // menuIsOpen
+                {...ReactSelectCustomClasses}
                 isSearchable={false}
                 options={formattedFilterOpts}
               />
             </div>
-            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
+            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
               <span>Order</span>
               <Select
                 value={
@@ -136,19 +113,19 @@ export function FilterSelectorCard({
             </div>
           </>
         )}
-        <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
+        <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
           <span>Search</span>
           <DebounceInput
             minLength={1}
             debounceTimeout={300}
             // @ts-ignore
             onChange={onSearchChange}
-            className="bg-bgLight dark:bg-bgDark p-2 rounded-3xl w-full"
+            className="bg-bgLight dark:bg-bgDark p-2 w-full h-12"
           />
         </div>
         {cssOrAudioValue !== undefined && (
           <>
-            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-3xl p-2">
+            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
               <span>Type</span>
               <Select
                 value={

@@ -6,10 +6,12 @@ export function MiniPfpDisplay({
   accountInfo,
   goToMe = false,
   dark = false,
+  hideName = false,
 }: {
   accountInfo: UserInfo;
   goToMe?: boolean;
   dark?: boolean;
+  hideName?: boolean;
 }) {
   return (
     <div
@@ -22,7 +24,7 @@ export function MiniPfpDisplay({
         href={goToMe ? "/users/me" : `/users/view?userId=${accountInfo.id}`}
         className="flex items-center"
       >
-        <span className="ml-4 mr-2 hidden md:flex">{accountInfo.username}</span>
+        {!hideName && <span className="ml-4 mr-2 hidden md:flex">{accountInfo.username}</span>}
         <Image
           src={`${accountInfo.avatar || "/question_mark.png"}`}
           alt="Your Discord Profile Picture"

@@ -92,16 +92,16 @@ export default function FullSubmissionViewPage() {
         <>
           <main className="w-full flex flex-col flex-grow items-center">
             <div className="flex flex-col w-full items-center">
-              <span className="text-3xl md:text-4xl font-semibold mt-4 -mb-4">
+              <h1 className="text-3xl md:text-4xl font-semibold mt-4 -mb-4">
                 {/* This regex just adds a space before every capital letter to make it look like a normal sentence */}
                 {submissionData.intent.replace(/([A-Z])/g, " $1")}
-              </span>
+              </h1>
               <FullThemeCard parsedId={submissionData.newTheme.id} />
             </div>
             <div className="flex flex-col w-full items-center">
-              <span className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">
+              <h2 className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">
                 Submission Info
-              </span>
+              </h2>
               {submissionData.status === "AwaitingApproval" ? (
                 <>
                   <div className="flex flex-col items-center mb-4">
