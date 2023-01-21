@@ -53,14 +53,14 @@ export default function App({ Component, pageProps }: AppProps) {
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
   const [toastText, setToastText] = useState<string | undefined>(undefined);
 
-  const [toastOpacity, setToastOpacity] = useState<number>(0);
+  const [toastOpacity, setToastOpacity] = useState<boolean>(false);
 
   useEffect(() => {
     if (toastText) {
       setTimeout(() => {
-        setToastOpacity(100);
+        setToastOpacity(true);
         setTimeout(() => {
-          setToastOpacity(0);
+          setToastOpacity(false);
           setTimeout(() => {
             setToastText(undefined);
           }, 101);
@@ -78,7 +78,9 @@ export default function App({ Component, pageProps }: AppProps) {
               <MainNav />
               <Component {...pageProps} />
               <div
-                className={`transition-opacity duration-100 absolute bottom-5 left-1/2 -translate-x-1/2 bg-borderLight dark:bg-borderDark p-4 rounded-3xl text-2xl opacity-${toastOpacity}`}
+                className={`transition-opacity duration-100 absolute bottom-5 left-1/2 -translate-x-1/2 bg-borderLight dark:bg-borderDark p-4 rounded-3xl text-2xl ${
+                  toastOpacity ? "opacity-100" : "opacity-0"
+                }`}
               >
                 {toastText}
               </div>
