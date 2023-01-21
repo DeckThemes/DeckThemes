@@ -6,7 +6,8 @@ import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
 import { LoadingPage, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext, toastContext } from "../../pages/_app";
+import { authContext } from "../../pages/_app";
+import { toast } from "react-toastify";
 
 function MiniDivider() {
   return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
@@ -17,7 +18,6 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
-  const { setToastText } = useContext(toastContext);
   const { accountInfo } = useContext(authContext);
 
   async function getStarredStatus() {
@@ -129,7 +129,11 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                       navigator.clipboard.writeText(
                         `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`
                       );
-                      setToastText("Link Copied To Clipboard");
+                      toast("🔗 Link Copied To Clipboard", {
+                        autoClose: 2000,
+                        hideProgressBar: true,
+                        pauseOnHover: false,
+                      });
                     }}
                     className={`flex items-center gap-2 bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer px-2 transition-all rounded-2xl`}
                   >

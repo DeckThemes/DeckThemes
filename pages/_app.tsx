@@ -5,17 +5,13 @@ import { createContext, useEffect, useState } from "react";
 import { Theme, themeContext } from "../styles";
 import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../api";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
   setAccountInfo: () => {},
 });
-
-export const toastContext = createContext<any>({
-  toastText: undefined,
-  setToastText: () => {},
-});
-
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("dark");
 
@@ -51,45 +47,30 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
-  const [toastText, setToastText] = useState<string | undefined>(undefined);
-
-  const [toastOpacity, setToastOpacity] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (toastText) {
-      setTimeout(() => {
-        setToastOpacity(true);
-        setTimeout(() => {
-          setToastOpacity(false);
-          setTimeout(() => {
-            setToastText(undefined);
-          }, 101);
-        }, 3000);
-      }, 101);
-    }
-  }, [toastText]);
 
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
-        <toastContext.Provider value={{ toastText, setToastText }}>
-          <div className={`${theme}`}>
-            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
-              <MainNav />
-              <Component {...pageProps} />
-              <div
-                className={`transition-opacity duration-100 absolute bottom-5 left-1/2 -translate-x-1/2 bg-borderLight dark:bg-borderDark p-4 rounded-3xl text-2xl ${
-                  toastOpacity ? "opacity-100" : "opacity-0"
-                }`}
-              >
-                {toastText}
-              </div>
-              <div className="mt-auto pt-20">
-                <Footer />
-              </div>
+        <div className={`${theme}`}>
+          <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
+            <MainNav />
+            <ToastContainer
+              position="bottom-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop
+              closeOnClick
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme={theme}
+            />
+            <Component {...pageProps} />
+            <div className="mt-auto pt-20">
+              <Footer />
             </div>
           </div>
-        </toastContext.Provider>
+        </div>
       </authContext.Provider>
     </themeContext.Provider>
   );
