@@ -42,6 +42,7 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
           backgroundPosition: "center",
           // DONT make this just 'background', because it overwrites all of the above
           backgroundImage: currentImg,
+          maxHeight: "80vh",
         }}
       >
         {data.images?.length > 1 && (

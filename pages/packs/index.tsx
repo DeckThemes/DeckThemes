@@ -126,7 +126,7 @@ export default function Themes() {
           ) : (
             <>
               {loaded ? (
-                <span className="pt-10 text-xl text-red-500">No Themes Found</span>
+                <span className="pt-10 text-xl text-red-500">No Packs Found</span>
               ) : (
                 <div className="flex items-center text-4xl gap-2 pt-10">
                   <LoadingSpinner />

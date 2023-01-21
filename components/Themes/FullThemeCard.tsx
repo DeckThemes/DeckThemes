@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
-import { BsStar, BsStarFill } from "react-icons/bs";
+import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
 import { LoadingPage, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext } from "../../pages/_app";
+import { authContext, toastContext } from "../../pages/_app";
 
 function MiniDivider() {
   return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
@@ -17,13 +17,14 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
 
+  const { setToastText } = useContext(toastContext);
   const { accountInfo } = useContext(authContext);
 
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
     isStarred?.starred ? setStarred(true) : setStarred(false);
     // This is just a fix for when you've starred a theme, but the server hasn't updated and still displays 0 stars
-    if (isStarred && themeData?.starCount === 0) {
+    if (isStarred?.starred && themeData?.starCount === 0) {
       setThemeData({
         ...themeData,
         starCount: 1,
@@ -118,9 +119,22 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                       accountInfo?.username
                         ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
                         : "cursor-auto"
-                    } pl-2 pr-3 transition-all rounded-2xl`}
+                    } px-2 transition-all rounded-2xl`}
                   >
-                    {isStarred ? <BsStarFill /> : <BsStar />} <span>{themeData.starCount}</span>
+                    {isStarred ? <BsStarFill /> : <BsStar />}{" "}
+                    <span className="-translate-y-[1.5px]">{themeData.starCount}</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(
+                        `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`
+                      );
+                      setToastText("Link Copied To Clipboard");
+                    }}
+                    className={`flex items-center gap-2 bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer px-2 transition-all rounded-2xl`}
+                  >
+                    <BsShare className="scale-x-90" />{" "}
+                    <span className="-translate-y-[1.5px]">Share</span>
                   </button>
                   <MiniDivider />
                 </div>
@@ -163,10 +177,21 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 )}
                 <div className="text-sm max-w-[640px]">
                   {themeData.source ? (
-                    <span>
+                    <>
                       <span className="text-textFadedLight dark:text-textFadedDark">Source:</span>{" "}
-                      {themeData.source}
-                    </span>
+                      {themeData.source.slice(0, 5) === "https" ? (
+                        <a
+                          href={themeData.source.slice(0, themeData.source.lastIndexOf("@") - 1)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="underline text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700"
+                        >
+                          {themeData.source}
+                        </a>
+                      ) : (
+                        <span>{themeData.source}</span>
+                      )}
+                    </>
                   ) : (
                     <span className="text-textFadedLight dark:text-textFadedDark">
                       <i>No Source Provided</i>
