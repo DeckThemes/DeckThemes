@@ -1,6 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
+import { toast } from "react-toastify";
 import { generateAuthCookie, getMeDataFromToken } from "../api";
 import { LoadingSpinner } from "../components";
 import { authContext } from "./_app";
@@ -41,6 +42,7 @@ export default function Auth() {
         getAndSetMeData(json.token);
       })
       .catch((err) => {
+        toast.error(`Error Authenticating! ${JSON.stringify(err)}`);
         console.error("Account Token Fetch Failed:", err);
       });
   }

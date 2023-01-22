@@ -17,6 +17,7 @@ import {
 } from "../components";
 import { useHasCookie } from "../hooks";
 import { authContext } from "./_app";
+import { toast } from "react-toastify";
 
 const BigDivider = () => {
   return <div className="h-2 w-full bg-borderLight dark:bg-borderDark my-2" />;
@@ -110,6 +111,7 @@ export default function Submit() {
           }
         })
         .catch((err) => {
+          toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
           console.error("Error Submitting Theme!", err);
         });
     }

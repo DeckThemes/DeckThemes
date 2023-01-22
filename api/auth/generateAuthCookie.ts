@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function generateAuthCookie(token: string) {
   if (token) {
     const d = new Date();
@@ -9,7 +11,7 @@ export function generateAuthCookie(token: string) {
     } Secure`;
     localStorage.tokenExpiryDate = new Date().valueOf() + 60 * 10 * 1000;
   } else {
-    console.log("NO TOKEN TO CREATE COOKIE WITH");
+    toast.error("Unable to save account cookie!");
   }
 
   return true;

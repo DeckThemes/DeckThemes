@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
+import { toast } from "react-toastify";
 import { checkAndRefreshToken } from "../../api";
 import { TaskQueryResponse } from "../../types";
 
@@ -30,6 +31,7 @@ export default function TaskView() {
             setStatus(json);
           })
           .catch((err) => {
+            toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
             console.error("Error Submitting Theme!", err);
           });
       }

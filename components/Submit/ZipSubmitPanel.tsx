@@ -6,6 +6,7 @@ import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import { checkAndRefreshToken } from "../../api";
+import { toast } from "react-toastify";
 
 registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType);
 
@@ -69,6 +70,7 @@ export function ZipSubmitPanel({
                         }
                       })
                       .catch((err) => {
+                        toast.error(`Error Uploading File! ${JSON.stringify(err)}`);
                         error(err);
                       });
                   }

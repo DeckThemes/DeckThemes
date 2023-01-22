@@ -5,6 +5,7 @@ import { authContext } from "../../pages/_app";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
 import { fetchWithRefresh } from "../../api";
+import { toast } from "react-toastify";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
@@ -27,6 +28,7 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
             throw new Error(`Res Not OK! Error Code ${res.status}`);
           })
           .catch((err) => {
+            toast.error(`Error Deleting Theme! ${JSON.stringify(err)}`);
             console.error("Delete Request Failed!", err);
           });
       } else {
@@ -67,6 +69,7 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
           }
         })
         .catch((err) => {
+          toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
           console.error(err);
         });
     });

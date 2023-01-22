@@ -70,6 +70,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
           }
         })
         .catch((err) => {
+          toast.error(`Error Starring Theme! ${JSON.stringify(err)}`);
           console.error("Error Setting Star On Theme", err);
         });
     }

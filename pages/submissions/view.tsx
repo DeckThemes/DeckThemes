@@ -2,6 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
+import { toast } from "react-toastify";
 import { checkAndRefreshToken, fetchWithRefresh, genericGET } from "../../api";
 import {
   FullThemeCard,
@@ -54,7 +55,7 @@ export default function FullSubmissionViewPage() {
           })
           .catch((err) => {
             console.error("Error Submitting Theme Review!", err);
-            alert("Error Submitting Theme Review");
+            toast.error(`Error Submitting Theme Review! ${JSON.stringify(err)}`);
           });
       }
     }

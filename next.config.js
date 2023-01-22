@@ -1,4 +1,6 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require("@next/bundle-analyzer");
+
 const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
@@ -41,4 +43,5 @@ const nextConfig = {
   },
 };
 
+// module.exports = withBundleAnalyzer(nextConfig);
 module.exports = nextConfig;

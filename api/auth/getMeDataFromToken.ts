@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { AccountData } from "../../types";
 
 export async function getMeDataFromToken(token: string): Promise<AccountData> {
@@ -17,6 +18,7 @@ export async function getMeDataFromToken(token: string): Promise<AccountData> {
       return res.json();
     })
     .catch((err) => {
+      toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
       console.error("Account Data Fetch Failed!", err);
     });
   return meJson;

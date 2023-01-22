@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { AccountData } from "../../types";
 import { checkAndRefreshToken } from "../genericFetches";
 
@@ -26,6 +27,7 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
             return res.json();
           })
           .catch((err) => {
+            toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
             console.error("Error Fetching User Data!", err);
           });
         return meJson;

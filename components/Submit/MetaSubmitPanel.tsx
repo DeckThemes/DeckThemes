@@ -16,6 +16,7 @@ import {
   metaFieldContainerClasses,
   sectionContainerClasses,
 } from "./SubmitPageTailwindClasses";
+import { toast } from "react-toastify";
 
 registerPlugin(
   FilePondPluginFileValidateSize,
@@ -151,6 +152,7 @@ export function MetaSubmitPanel({
                           }
                         })
                         .catch((err) => {
+                          toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
                           error(err);
                         });
                     }
