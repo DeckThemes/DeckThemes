@@ -29,10 +29,9 @@ export function MainNav() {
           href="https://discord.gg/HsU72Kfnpf"
           target="_blank"
           rel="noreferrer"
-          className="ml-4 flex items-center gap-2 md:bg-bgLight md:dark:bg-bgDark p-2 rounded-2xl"
+          className="ml-4 flex rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
         >
           <Discord size={30} />
-          {/* <span className="hidden md:flex">Join The Discord!</span> */}
         </a>
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">

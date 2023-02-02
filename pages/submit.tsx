@@ -137,7 +137,7 @@ export default function Submit() {
         </style>
         <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
           <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
-          <div className="w-fit mx-4 flex flex-col gap-4 px-4 py-2 justify-center items-center bg-cardLight dark:bg-cardDark rounded-xl mb-4 text-xl">
+          <div className="m-4 px-4 py-2 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors rounded-xl text-xl">
             <a
               href={process.env.NEXT_PUBLIC_DOCS_URL}
               target="_blank"
@@ -151,17 +151,6 @@ export default function Submit() {
                 for guides, documentation, and tools!
               </span>
             </a>
-            {/* <a
-              href="https://discord.gg/zSyf5GgdQY"
-              target="_blank"
-              rel="noreferrer"
-              className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
-            >
-              Join our Discord <br className="flex md:hidden" />
-              <span className="text-textLight dark:text-textDark">
-                to keep updated on your submission&apos;s status!
-              </span>
-            </a> */}
           </div>
           <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
             <section className="p-4 w-full flex flex-col items-center">

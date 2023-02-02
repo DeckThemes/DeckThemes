@@ -11,7 +11,12 @@ import {
   MiniPfpDisplay,
   PfpDisplay,
 } from "../../components";
-import { Permissions, ThemeSubmissionInfo } from "../../types";
+import {
+  FormattedSubmissionIntent,
+  FormattedSubmissionIntentAudio,
+  Permissions,
+  ThemeSubmissionInfo,
+} from "../../types";
 import { authContext } from "../_app";
 
 export default function FullSubmissionViewPage() {
@@ -94,8 +99,9 @@ export default function FullSubmissionViewPage() {
           <main className="w-full flex flex-col flex-grow items-center">
             <div className="flex flex-col w-full items-center">
               <h1 className="text-3xl md:text-4xl font-semibold mt-4 -mb-4">
-                {/* This regex just adds a space before every capital letter to make it look like a normal sentence */}
-                {submissionData.intent.replace(/([A-Z])/g, " $1")}
+                {submissionData.newTheme.type === "Audio"
+                  ? FormattedSubmissionIntentAudio[submissionData.intent]
+                  : FormattedSubmissionIntent[submissionData.intent]}
               </h1>
               <FullThemeCard parsedId={submissionData.newTheme.id} />
             </div>

@@ -3,6 +3,7 @@ import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { Url } from "url";
 import {
   FormattedSubmissionIntent,
+  FormattedSubmissionIntentAudio,
   FormattedSubmissionStatus,
   ThemeSubmissionInfo,
 } from "../../types";
@@ -14,7 +15,11 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
       href={`/submissions/view?submissionId=${data.id}`}
       className="flex flex-col items-center transition-all hover:translate-y-1 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-3xl w-[300px] text-center"
     >
-      <span className="text-xl mb-2">{FormattedSubmissionIntent[data.intent]}</span>
+      <span className="text-xl mb-2">
+        {data.newTheme.type === "Audio"
+          ? FormattedSubmissionIntentAudio[data.intent]
+          : FormattedSubmissionIntent[data.intent]}
+      </span>
       <MiniThemeCardRoot data={data.newTheme} submissionId={data.id} />
       {
         (() => {

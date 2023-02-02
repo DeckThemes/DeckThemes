@@ -62,7 +62,7 @@ export default function TaskView() {
       <Head>
         <title>DeckThemes | Task Status</title>
       </Head>
-      <main className="flex flex-col items-center p-4">
+      <main className="flex flex-col items-center p-4 justify-center flex-grow">
         {typeof task === "string" ? (
           <>
             {apiStatus ? (
@@ -108,6 +108,19 @@ export default function TaskView() {
                     <span>{apiStatus.status}</span>
                   </>
                 )}
+                <div className="m-4 px-4 py-2 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors rounded-xl text-xl">
+                  <a
+                    href="https://discord.gg/zSyf5GgdQY"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
+                  >
+                    Join our Discord <br className="flex md:hidden" />
+                    <span className="text-textLight dark:text-textDark">
+                      to keep updated on your submission&apos;s status!
+                    </span>
+                  </a>
+                </div>
               </div>
             ) : (
               <>

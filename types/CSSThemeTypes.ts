@@ -60,6 +60,11 @@ export enum FormattedSubmissionIntent {
   "UpdateTheme" = "Theme Update",
   "UpdateMeta" = "Theme Meta Update",
 }
+export enum FormattedSubmissionIntentAudio {
+  "NewTheme" = "New Audio Pack",
+  "UpdateTheme" = "Audio Update",
+  "UpdateMeta" = "Audio Meta Update",
+}
 export type SubmissionStatus = "AwaitingApproval" | "Approved" | "Denied" | "Dead";
 export enum FormattedSubmissionStatus {
   "AwaitingApproval" = "Awaiting Review",
