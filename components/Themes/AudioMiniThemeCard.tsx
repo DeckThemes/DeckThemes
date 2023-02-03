@@ -18,161 +18,35 @@ export function AudioMiniThemeCard({
 
   function InnerContent() {
     return (
-      <>
-        <article
-          key={`Theme_${data.name}`}
-          className="ThemeBrowserItem_BgImg font-fancy"
+      <div className="bg-cardLight dark:bg-cardDark rounded-xl">
+        <div
+          className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg"
           style={{
             backgroundImage: imageURLCreator(),
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            borderRadius: "5px",
           }}
         >
-          <style>
-            {`
-              .ThemeBrowserItem_BgColor:hover {
-                background: #000f;
-              }
-              .ThemeBrowserItem_BgColor {
-                background: #000c;
-                transition: background 0.2s;
-              }
-            `}
-          </style>
-          <div
-            className="ThemeBrowserItem_BgColor"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              backdropFilter: "blur(5px)",
-              width: "100%",
-              height: "100%",
-              borderRadius: "3px",
-            }}
-          >
-            <span
-              className="CssLoader_ThemeBrowser_SingleItem_ThemeName"
-              style={{
-                textAlign: "center",
-                marginTop: "5px",
-                fontSize: "1.25em",
-                fontWeight: "bold",
-                // This stuff here truncates it if it's too long
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                width: "90%",
-              }}
-            >
-              {data.name}
-            </span>
-            <span
-              className="CssLoader_ThemeBrowser_SingleItem_ThemeTarget"
-              style={{
-                marginTop: "-6px",
-                fontSize: "1em",
-                textShadow: "rgb(48, 48, 48) 0px 0 10px",
-              }}
-            >
-              {data.target}
-            </span>
-            {/* All of this is lovingly borrowed from Emerald's amazing work */}
+          {/* <div className="overflow-clip rounded-xl h-[162.5px]">
             <div
-              // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
-              className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
+              className="h-[162.5px] bg-contain bg-top bg-no-repeat bg-clip-content scale-[200%] translate-y-48"
               style={{
-                width: "200px",
-                height: "150px",
-                position: "relative",
+                backgroundImage: 'url("https://i.imgur.com/V9t3728.png")',
               }}
-            >
-              <div
-                style={{
-                  background:
-                    data.target === "Music"
-                      ? "url(https://i.imgur.com/nISGpci.png)"
-                      : "linear-gradient(150deg, rgba(0, 0, 0, 0) 0%, rgba(118, 118, 118, 0) 0%, rgba(255, 255, 255, 0.2) 32%, rgba(255, 255, 255, 0.2) 35%, rgba(255, 255, 255, 0.2) 38%, rgba(210, 210, 210, 0) 70%, rgba(0, 0, 0, 0) 100%) 0% 0% / cover",
-                  position: "absolute",
-                  left: "0",
-                  width: "75%",
-                  height: "100%",
-                  backgroundSize: "cover",
-                  zIndex: 3,
-                  borderRadius: "2px",
-                }}
-              />
-              <div
-                style={{
-                  backgroundImage: imageURLCreator(),
-                  backgroundColor: "#21323d",
-                  position: "absolute",
-                  left: "0",
-                  width: "75%",
-                  height: "100%",
-                  backgroundSize: "cover",
-                  zIndex: 2,
-                  borderRadius: "2px",
-                }}
-              />
-              <div
-                style={{
-                  backgroundImage:
-                    data.target === "Music"
-                      ? 'url("https://i.imgur.com/V9t3728.png")'
-                      : 'url("https://i.imgur.com/pWm35T0.png")',
-                  position: "absolute",
-                  right: "5%",
-                  width: "20%",
-                  backgroundPosition: "right",
-                  height: "100%",
-                  backgroundSize: "cover",
-                  zIndex: 1,
-                }}
-              />
-            </div>
-            <div
-              className="CssLoader_ThemeBrowser_SingleItem_AuthorVersionContainer"
-              style={{
-                width: "240px",
-                textAlign: "center",
-                display: "flex",
-              }}
-            >
-              <span
-                className="CssLoader_ThemeBrowser_SingleItem_AuthorText"
-                style={{
-                  marginRight: "auto",
-                  fontSize: "1em",
-                  textShadow: "rgb(48, 48, 48) 0px 0 10px",
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {data.specifiedAuthor}
-              </span>
-              <span
-                className="CssLoader_ThemeBrowser_SingleItem_VersionText"
-                style={{
-                  marginLeft: "auto",
-                  fontSize: "1em",
-                  textShadow: "rgb(48, 48, 48) 0px 0 10px",
-                }}
-              >
-                {data.version}
-              </span>
-            </div>
+            />
+          </div> */}
+        </div>
+        <div className="flex flex-col items-start p-4">
+          <span className="font-bold">{data.name}</span>
+          <div className="flex justify-between w-full">
+            <span>{data.specifiedAuthor}</span>
+            <span>{data.version}</span>
           </div>
-        </article>
-      </>
+        </div>
+      </div>
     );
   }
   if (submissionId) {
     return (
-      <div className="text-textDark hover:translate-y-1 transition-all sm:w-[260px] w-full">
+      <div className="hover:translate-y-1 transition-all sm:w-[260px] w-full">
         <div>
           <InnerContent />
         </div>
@@ -181,7 +55,7 @@ export function AudioMiniThemeCard({
   }
 
   return (
-    <div className="text-textDark hover:translate-y-1 transition-all sm:w-[260px] w-full">
+    <div className="hover:translate-y-1 transition-all sm:w-[260px] w-full">
       <Link href={`/packs/view?themeId=${data.id}`}>
         <InnerContent />
       </Link>
