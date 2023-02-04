@@ -28,7 +28,7 @@ export function HighlightReelView({
 
   return (
     <>
-      <div className="flex flex-col w-full items-center rounded-3xl bg-elevation-1-light dark:bg-elevation-1-dark gap-4 py-8 px-2 md:px-4">
+      <div className="flex flex-col w-full items-center rounded-3xl bg-elevation-1-light dark:bg-elevation-1-dark gap-4 py-4 px-2">
         <div className="flex justify-between items-center w-full px-2 gap-2">
           <h3 className="text-2xl md:text-3xl font-medium text-start">{title}</h3>
           <Link

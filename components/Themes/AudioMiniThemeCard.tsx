@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useState } from "react";
 
 // @ts-ignore
@@ -68,9 +67,9 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
         </div>
       </div>
       <div className="flex flex-col items-start p-4">
-        <span className="font-bold">{data.name}</span>
+        <span className="font-bold truncate w-full text-start">{data.name}</span>
         <div className="flex justify-between w-full">
-          <span>{data.specifiedAuthor}</span>
+          <span className="flex-grow text-start truncate">{data.specifiedAuthor}</span>
           <span>{data.version}</span>
         </div>
       </div>
