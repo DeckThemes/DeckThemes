@@ -79,8 +79,22 @@ module.exports = {
         lightenerLight: "rgba(255,255,255,0.3)",
         bgDark: "#2e2e2e",
         bgLight: "#e2e2e2",
-        cardDark: "#0000003e",
+        cardDark: "#0000004e",
         cardLight: "#0000002e",
+        elevation: {
+          1: {
+            light: "#0000001e",
+            dark: "#0000002e",
+          },
+          2: {
+            light: "#0000002e",
+            dark: "#0000004e",
+          },
+          3: {
+            light: "#0000006e",
+            dark: "#0000006e",
+          },
+        },
         borderDark: "#0e0e0e",
         borderLight: "#a2a2a2",
         darkBorderDark: "#020202",

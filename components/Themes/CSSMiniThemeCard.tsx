@@ -1,13 +1,6 @@
-import Link from "next/link";
 import { PartialCSSThemeInfo } from "../../types";
 
-export function CSSMiniThemeCard({
-  data,
-  submissionId = "",
-}: {
-  data: PartialCSSThemeInfo;
-  submissionId?: string;
-}) {
+export function CSSMiniThemeCard({ data }: { data: PartialCSSThemeInfo }) {
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;

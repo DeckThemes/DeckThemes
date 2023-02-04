@@ -1,26 +1,11 @@
 import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
-import Link from "next/link";
+import { useState } from "react";
 
-import { extractColors } from "extract-colors";
+// @ts-ignore
+import { ColorExtractor } from "react-color-extractor";
 
-export function AudioMiniThemeCard({
-  data,
-  submissionId = "",
-}: {
-  data: any;
-  submissionId?: string;
-}) {
+export function AudioMiniThemeCard({ data }: { data: any }) {
   const [albumColor, setAlbumColor] = useState<string>("");
-  useEffect(() => {
-    if (data?.images[0]?.id) {
-      extractColors(imageSRCCreator(), {
-        crossOrigin: "anonymous",
-      })
-        .then((colorArr) => setAlbumColor(colorArr[0].hex))
-        .catch(console.error);
-    }
-  }, [data]);
 
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
@@ -57,7 +42,13 @@ export function AudioMiniThemeCard({
               backgroundSize: "cover",
             }}
           />
-          {/* <ColorExtractor getColors={console.log}> */}
+          <ColorExtractor
+            getColors={(colors: string[]) => {
+              console.log("colors", colors);
+              setAlbumColor(colors[0]);
+            }}
+            src={imageSRCCreator()}
+          />
           <div
             style={{
               backgroundImage: `url(${imageSRCCreator()})`,
