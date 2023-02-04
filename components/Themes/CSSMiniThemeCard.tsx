@@ -16,41 +16,21 @@ export function CSSMiniThemeCard({
     }
   }
 
-  function InnerContent() {
-    return (
-      <div className="bg-cardLight dark:bg-cardDark rounded-xl">
-        <div
-          className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg"
-          style={{
-            backgroundImage: `url(${imageSRCCreator()})`,
-          }}
-        />
-        <div className="flex flex-col items-start p-4">
-          <span className="font-bold">{data.name}</span>
-          <div className="flex justify-between w-full">
-            <span>{data.specifiedAuthor}</span>
-            <span>{data.version}</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (submissionId) {
-    return (
-      <div className="transition-all sm:w-[260px] w-full">
-        <div>
-          <InnerContent />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="transition-all sm:w-[260px] w-full">
-      <Link href={`/themes/view?themeId=${data.id}`}>
-        <InnerContent />
-      </Link>
+    <div className="bg-cardLight dark:bg-cardDark rounded-xl">
+      <div
+        className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg"
+        style={{
+          backgroundImage: `url(${imageSRCCreator()})`,
+        }}
+      />
+      <div className="flex flex-col items-start p-4">
+        <span className="font-bold">{data.name}</span>
+        <div className="flex justify-between w-full">
+          <span>{data.specifiedAuthor}</span>
+          <span>{data.version}</span>
+        </div>
+      </div>
     </div>
   );
 }

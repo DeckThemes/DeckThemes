@@ -28,12 +28,12 @@ export function HighlightReelView({
 
   return (
     <>
-      <div className="flex flex-col w-full items-center rounded-3xl bg-cardDark gap-4 py-8 px-4">
-        <div className="flex justify-between items-center w-full px-2">
-          <h3 className="text-2xl md:text-3xl font-medium">{title}</h3>
+      <div className="flex flex-col w-full items-center rounded-3xl bg-cardDark gap-4 py-8 px-2 md:px-4">
+        <div className="flex justify-between items-center w-full px-2 gap-2">
+          <h3 className="text-2xl md:text-3xl font-medium text-start">{title}</h3>
           <Link
             href={linkHref}
-            className="bg-borderLight dark:bg-borderDark p-2 px-4 rounded-3xl text-2xl"
+            className="bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors p-2 px-4 rounded-3xl text-xl md:text-2xl"
           >
             View More
           </Link>

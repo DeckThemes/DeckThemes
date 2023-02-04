@@ -14,7 +14,9 @@ export function AudioMiniThemeCard({
   const [albumColor, setAlbumColor] = useState<string>("");
   useEffect(() => {
     if (data?.images[0]?.id) {
-      extractColors(imageSRCCreator())
+      extractColors(imageSRCCreator(), {
+        crossOrigin: "anonymous",
+      })
         .then((colorArr) => setAlbumColor(colorArr[0].hex))
         .catch(console.error);
     }
@@ -28,79 +30,60 @@ export function AudioMiniThemeCard({
     }
   }
 
-  function InnerContent() {
-    return (
-      <div className="bg-cardLight dark:bg-cardDark rounded-xl">
+  return (
+    <div className="bg-cardLight dark:bg-cardDark rounded-xl">
+      <div
+        className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg flex items-center justify-center"
+        style={{
+          backgroundColor: albumColor || "#1e1e1e",
+        }}
+      >
         <div
-          className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg flex items-center justify-center"
+          // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
+          className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
           style={{
-            backgroundColor: albumColor,
+            width: "180px",
+            height: "135px",
+            position: "relative",
           }}
         >
           <div
-            // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
-            className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
+            className="absolute left-0 w-3/4 h-full bg-cover z-30 rounded-sm"
             style={{
-              width: "200px",
-              height: "150px",
-              position: "relative",
+              background:
+                data.target === "Music"
+                  ? "url(https://i.imgur.com/nISGpci.png)"
+                  : "linear-gradient(150deg, rgba(0, 0, 0, 0) 0%, rgba(118, 118, 118, 0) 0%, rgba(255, 255, 255, 0.2) 32%, rgba(255, 255, 255, 0.2) 35%, rgba(255, 255, 255, 0.2) 38%, rgba(210, 210, 210, 0) 70%, rgba(0, 0, 0, 0) 100%) 0% 0% / cover",
+              backgroundSize: "cover",
             }}
+          />
+          {/* <ColorExtractor getColors={console.log}> */}
+          <div
+            style={{
+              backgroundImage: `url(${imageSRCCreator()})`,
+            }}
+            className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-[#21323d]"
           >
-            <div
-              className="absolute left-0 w-3/4 h-full bg-cover z-30 rounded-sm"
-              style={{
-                background:
-                  data.target === "Music"
-                    ? "url(https://i.imgur.com/nISGpci.png)"
-                    : "linear-gradient(150deg, rgba(0, 0, 0, 0) 0%, rgba(118, 118, 118, 0) 0%, rgba(255, 255, 255, 0.2) 32%, rgba(255, 255, 255, 0.2) 35%, rgba(255, 255, 255, 0.2) 38%, rgba(210, 210, 210, 0) 70%, rgba(0, 0, 0, 0) 100%) 0% 0% / cover",
-                backgroundSize: "cover",
-              }}
-            />
-            {/* <ColorExtractor getColors={console.log}> */}
-            <div
-              style={{
-                backgroundImage: `url(${imageSRCCreator()})`,
-              }}
-              className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-[#21323d]"
-            >
-              <Image src={imageSRCCreator()} fill alt="" className="object-contain" />
-            </div>
-            <div
-              className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
-              style={{
-                backgroundImage:
-                  data.target === "Music"
-                    ? 'url("https://i.imgur.com/V9t3728.png")'
-                    : 'url("https://i.imgur.com/pWm35T0.png")',
-              }}
-            />
+            <Image src={imageSRCCreator()} fill alt="" className="object-contain" />
           </div>
-        </div>
-        <div className="flex flex-col items-start p-4">
-          <span className="font-bold">{data.name}</span>
-          <div className="flex justify-between w-full">
-            <span>{data.specifiedAuthor}</span>
-            <span>{data.version}</span>
-          </div>
+          <div
+            className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
+            style={{
+              backgroundImage:
+                data.target === "Music"
+                  ? 'url("https://i.imgur.com/V9t3728.png")'
+                  : 'url("https://i.imgur.com/pWm35T0.png")',
+            }}
+          />
         </div>
       </div>
-    );
-  }
-  if (submissionId) {
-    return (
-      <div className="sm:w-[260px] w-full">
-        <div>
-          <InnerContent />
+      <div className="flex flex-col items-start p-4">
+        <span className="font-bold">{data.name}</span>
+        <div className="flex justify-between w-full">
+          <span>{data.specifiedAuthor}</span>
+          <span>{data.version}</span>
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="sm:w-[260px] w-full">
-      <Link href={`/packs/view?themeId=${data.id}`}>
-        <InnerContent />
-      </Link>
     </div>
   );
 }
