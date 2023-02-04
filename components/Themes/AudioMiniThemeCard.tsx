@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ColorExtractor } from "react-color-extractor";
 
 export function AudioMiniThemeCard({ data }: { data: any }) {
-  const [albumColor, setAlbumColor] = useState<string>("");
+  const [albumColors, setAlbumColors] = useState<[string, string] | undefined>(undefined);
 
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
@@ -20,7 +20,9 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
       <div
         className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg flex items-center justify-center"
         style={{
-          backgroundColor: albumColor || "#1e1e1e",
+          background: albumColors
+            ? `linear-gradient(135deg, ${albumColors[0]}, ${albumColors[1]})`
+            : "#2e2e2e",
         }}
       >
         <div
@@ -44,8 +46,7 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
           />
           <ColorExtractor
             getColors={(colors: string[]) => {
-              console.log("colors", colors);
-              setAlbumColor(colors[0]);
+              setAlbumColors([colors[0], colors[1]]);
             }}
             src={imageSRCCreator()}
           />
@@ -53,10 +54,8 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
             style={{
               backgroundImage: `url(${imageSRCCreator()})`,
             }}
-            className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-[#21323d]"
-          >
-            <Image src={imageSRCCreator()} fill alt="" className="object-contain" />
-          </div>
+            className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
+          />
           <div
             className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
             style={{
