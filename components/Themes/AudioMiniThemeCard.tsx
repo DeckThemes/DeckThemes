@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 
 import { extractColors } from "extract-colors";
@@ -12,8 +12,13 @@ export function AudioMiniThemeCard({
   submissionId?: string;
 }) {
   const [albumColor, setAlbumColor] = useState<string>("");
-
-  extractColors(imageSRCCreator()).then(console.log).catch(console.error);
+  useEffect(() => {
+    if (data?.images[0]?.id) {
+      extractColors(imageSRCCreator())
+        .then((colorArr) => setAlbumColor(colorArr[0].hex))
+        .catch(console.error);
+    }
+  }, [data]);
 
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
@@ -83,7 +88,7 @@ export function AudioMiniThemeCard({
   }
   if (submissionId) {
     return (
-      <div className="hover:translate-y-1 transition-all sm:w-[260px] w-full">
+      <div className="sm:w-[260px] w-full">
         <div>
           <InnerContent />
         </div>
@@ -92,7 +97,7 @@ export function AudioMiniThemeCard({
   }
 
   return (
-    <div className="hover:translate-y-1 transition-all sm:w-[260px] w-full">
+    <div className="sm:w-[260px] w-full">
       <Link href={`/packs/view?themeId=${data.id}`}>
         <InnerContent />
       </Link>
