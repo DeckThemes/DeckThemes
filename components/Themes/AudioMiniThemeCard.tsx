@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
-// @ts-ignore
-import { ColorExtractor } from "react-color-extractor";
+
+import { extractColors } from "extract-colors";
 
 export function AudioMiniThemeCard({
   data,
@@ -12,6 +12,8 @@ export function AudioMiniThemeCard({
   submissionId?: string;
 }) {
   const [albumColor, setAlbumColor] = useState<string>("");
+
+  extractColors(imageSRCCreator()).then(console.log).catch(console.error);
 
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
@@ -56,10 +58,6 @@ export function AudioMiniThemeCard({
               }}
               className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-[#21323d]"
             >
-              <ColorExtractor
-                src={imageSRCCreator()}
-                getColors={(colors: string[]) => setAlbumColor(colors[1])}
-              />
               <Image src={imageSRCCreator()} fill alt="" className="object-contain" />
             </div>
             <div
