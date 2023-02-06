@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState } from "react";
 
 // @ts-ignore
@@ -47,14 +48,19 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
             getColors={(colors: string[]) => {
               setAlbumColors([colors[0], colors[1]]);
             }}
-            src={imageSRCCreator()}
-          />
-          <div
-            style={{
-              backgroundImage: `url(${imageSRCCreator()})`,
-            }}
-            className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
-          />
+          >
+            {/* <div
+              style={{
+                backgroundImage: `url(${imageSRCCreator()})`,
+              }}
+              className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
+            /> */}
+            <img
+              src={imageSRCCreator()}
+              className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
+              alt={data.name}
+            />
+          </ColorExtractor>
           <div
             className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
             style={{
