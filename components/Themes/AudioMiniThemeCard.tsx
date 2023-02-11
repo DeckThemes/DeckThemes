@@ -1,12 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from "react";
 
 // @ts-ignore
-import { ColorExtractor } from "react-color-extractor";
+// import { ColorExtractor } from "react-color-extractor";
 
 export function AudioMiniThemeCard({ data }: { data: any }) {
-  const [albumColors, setAlbumColors] = useState<[string, string] | undefined>(undefined);
-
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
@@ -18,58 +15,58 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
   return (
     <div className="bg-cardLight dark:bg-cardDark rounded-xl">
       <div
-        className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg flex items-center justify-center"
+        className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg"
         style={{
-          background: albumColors
-            ? `linear-gradient(135deg, ${albumColors[0]}, ${albumColors[1]})`
-            : "#2e2e2e",
+          backgroundImage: `url(${imageSRCCreator()})`,
         }}
       >
         <div
-          // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
-          className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
+          className="w-full h-full flex items-center justify-center rounded-xl"
           style={{
-            width: "180px",
-            height: "135px",
-            position: "relative",
+            background: "#000a",
           }}
         >
           <div
-            className="absolute left-0 w-3/4 h-full bg-cover z-30 rounded-sm"
+            // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
+            className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
             style={{
-              background:
-                data.target === "Music"
-                  ? "url(https://i.imgur.com/nISGpci.png)"
-                  : "linear-gradient(150deg, rgba(0, 0, 0, 0) 0%, rgba(118, 118, 118, 0) 0%, rgba(255, 255, 255, 0.2) 32%, rgba(255, 255, 255, 0.2) 35%, rgba(255, 255, 255, 0.2) 38%, rgba(210, 210, 210, 0) 70%, rgba(0, 0, 0, 0) 100%) 0% 0% / cover",
-              backgroundSize: "cover",
-            }}
-          />
-          <ColorExtractor
-            getColors={(colors: string[]) => {
-              setAlbumColors([colors[0], colors[1]]);
+              width: "180px",
+              height: "135px",
+              position: "relative",
             }}
           >
-            {/* <div
+            <div
+              className="absolute left-0 w-3/4 h-full bg-cover z-30 rounded-sm"
+              style={{
+                background:
+                  data.target === "Music"
+                    ? "url(https://i.imgur.com/nISGpci.png)"
+                    : "linear-gradient(150deg, rgba(0, 0, 0, 0) 0%, rgba(118, 118, 118, 0) 0%, rgba(255, 255, 255, 0.2) 32%, rgba(255, 255, 255, 0.2) 35%, rgba(255, 255, 255, 0.2) 38%, rgba(210, 210, 210, 0) 70%, rgba(0, 0, 0, 0) 100%) 0% 0% / cover",
+                backgroundSize: "cover",
+              }}
+            />
+            <div
               style={{
                 backgroundImage: `url(${imageSRCCreator()})`,
               }}
               className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
-            /> */}
-            <img
+            />
+            {/* <Image
+              fill
               src={imageSRCCreator()}
               className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
               alt={data.name}
+            /> */}
+            <div
+              className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
+              style={{
+                backgroundImage:
+                  data.target === "Music"
+                    ? 'url("https://i.imgur.com/V9t3728.png")'
+                    : 'url("https://i.imgur.com/pWm35T0.png")',
+              }}
             />
-          </ColorExtractor>
-          <div
-            className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
-            style={{
-              backgroundImage:
-                data.target === "Music"
-                  ? 'url("https://i.imgur.com/V9t3728.png")'
-                  : 'url("https://i.imgur.com/pWm35T0.png")',
-            }}
-          />
+          </div>
         </div>
       </div>
       <div className="flex flex-col items-start p-4">
