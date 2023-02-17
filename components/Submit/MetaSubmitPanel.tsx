@@ -25,6 +25,9 @@ registerPlugin(
   FilePondPluginImagePreview
 );
 
+// Use this to hide targets that aren't meant for user choice
+const disallowedOverrideTargets = ["Preset"];
+
 export function MetaSubmitPanel({
   info,
   setInfo,
@@ -42,7 +45,10 @@ export function MetaSubmitPanel({
   async function getTargets() {
     const data = await genericGET(`/themes/filters?type=CSS`, true);
     if (data?.filters) {
-      setTargetOptions(["None", ...Object.keys(data.filters)]);
+      setTargetOptions([
+        "None",
+        ...Object.keys(data.filters).filter((e) => !disallowedOverrideTargets.includes(e)),
+      ]);
     }
   }
   useEffect(() => {
