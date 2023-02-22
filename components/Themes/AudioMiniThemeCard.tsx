@@ -19,7 +19,7 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
           className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg absolute"
           style={{
             backgroundImage: `url(${imageSRCCreator()})`,
-            filter: "blur(10px) saturate(4)",
+            filter: "blur(20px) saturate(4) brightness(50%)",
           }}
         />
         <div className="w-full h-full flex items-center justify-center rounded-xl">
