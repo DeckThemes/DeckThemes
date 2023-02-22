@@ -14,18 +14,15 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
 
   return (
     <div className="bg-cardLight dark:bg-cardDark rounded-xl">
-      <div
-        className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg"
-        style={{
-          backgroundImage: `url(${imageSRCCreator()})`,
-        }}
-      >
+      <div className="relative rounded-xl w-[260px] h-[162.5px] drop-shadow-lg bg-clip overflow-hidden">
         <div
-          className="w-full h-full flex items-center justify-center rounded-xl"
+          className="rounded-xl bg-cover bg-center bg-no-repeat w-[260px] h-[162.5px] drop-shadow-lg absolute"
           style={{
-            background: "#000a",
+            backgroundImage: `url(${imageSRCCreator()})`,
+            filter: "blur(10px) saturate(4)",
           }}
-        >
+        />
+        <div className="w-full h-full flex items-center justify-center rounded-xl">
           <div
             // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
             className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
@@ -51,12 +48,6 @@ export function AudioMiniThemeCard({ data }: { data: any }) {
               }}
               className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
             />
-            {/* <Image
-              fill
-              src={imageSRCCreator()}
-              className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
-              alt={data.name}
-            /> */}
             <div
               className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
               style={{

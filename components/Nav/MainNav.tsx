@@ -9,7 +9,7 @@ import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
-import { Discord } from "@icons-pack/react-simple-icons";
+import { Discord, Patreon } from "@icons-pack/react-simple-icons";
 import { useHasCookie } from "../../hooks";
 import { ImBook } from "react-icons/im";
 
@@ -24,15 +24,29 @@ export function MainNav() {
       <div className="ml-4">
         <NavIcon />
       </div>
-      <div>
-        <a
-          href="https://discord.gg/HsU72Kfnpf"
-          target="_blank"
-          rel="noreferrer"
-          className="ml-4 flex rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
-        >
-          <Discord size={30} />
-        </a>
+      <div className="flex gap-4 mx-4 h-14 items-center">
+        {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
+          <a
+            href={process.env.NEXT_PUBLIC_DISCORD_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-col items-center rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
+          >
+            <Discord size={31} />
+            {/* <span className="text-sm">Chat</span> */}
+          </a>
+        )}
+        {!!process.env.NEXT_PUBLIC_PATREON_URL && (
+          <a
+            href={process.env.NEXT_PUBLIC_PATREON_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="flex flex-col items-center rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
+          >
+            <Patreon size={31} />
+            {/* <span className="text-sm">Donate</span> */}
+          </a>
+        )}
       </div>
       <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
         <a
