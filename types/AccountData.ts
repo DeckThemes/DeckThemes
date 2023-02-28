@@ -6,6 +6,9 @@ export enum Permissions {
   "approveSubs" = "ApproveThemeSubmissions",
   "viewSubs" = "ViewThemeSubmissions",
   "admin" = "ManageApi",
+  "donator1" = "PremiumTier1",
+  "donator2" = "PremiumTier2",
+  "donator3" = "PremiumTier3",
 }
 
 export interface AccountData extends UserInfo {
