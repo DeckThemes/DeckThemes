@@ -13,7 +13,13 @@ function MiniDivider() {
   return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
 }
 
-export function FullThemeCard({ parsedId }: { parsedId: string }) {
+export function FullThemeCard({
+  parsedId,
+  hideAdminMenu = false,
+}: {
+  parsedId: string;
+  hideAdminMenu?: boolean;
+}) {
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -94,7 +100,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                 </div>
               </>
               <div className="flex flex-col items-center lg:items-start text-xl gap-2 my-4 lg:mx-8 relative">
-                <ThemeAdminPanel themeData={themeData} />
+                {!hideAdminMenu && <ThemeAdminPanel themeData={themeData} />}
                 <h1 className="text-3xl md:text-5xl font-semibold mb-auto max-w-[640px]">
                   {themeData.name}
                 </h1>

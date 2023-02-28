@@ -103,7 +103,7 @@ export default function FullSubmissionViewPage() {
                   ? FormattedSubmissionIntentAudio[submissionData.intent]
                   : FormattedSubmissionIntent[submissionData.intent]}
               </h1>
-              <FullThemeCard parsedId={submissionData.newTheme.id} />
+              <FullThemeCard parsedId={submissionData.newTheme.id} hideAdminMenu />
             </div>
             <div className="flex flex-col w-full items-center">
               <h2 className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">
