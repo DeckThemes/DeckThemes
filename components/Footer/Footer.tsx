@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { themeContext } from "../../styles";
+import Link from "next/link";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
@@ -43,14 +44,22 @@ export function Footer() {
         </button>
       </div>
       {!!patreonPercentage && (
-        <div className="h-4 bg-cardLight dark:bg-cardDark relative">
-          <div
-            className="bg-[#FF424D] transition-all absolute left-0 h-4 z-0"
-            style={{
-              width: Math.min(patreonPercentage, 100) + "%",
-              backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
-            }}
-          />
+        <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center px-4">
+          <div className="h-8 w-1/2 font-fancy flex items-center justify-between px-4">
+            <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
+            <Link href={process.env.NEXT_PUBLIC_PATREON_URL} className="underline text-[#FF424D]">
+              Support Us!
+            </Link>
+          </div>
+          <div className="h-4 w-1/2 relative rounded-full bg-cardLight dark:bg-borderDark">
+            <div
+              className="bg-[#FF424D] transition-all absolute left-0 h-4 z-0 rounded-l-full"
+              style={{
+                width: Math.min(patreonPercentage, 100) + "%",
+                backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
+              }}
+            />
+          </div>
         </div>
       )}
     </footer>
