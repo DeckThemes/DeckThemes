@@ -1,11 +1,23 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { themeContext } from "../../styles";
 
-let patreonPercentage: undefined | number = undefined;
-
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
+  const [patreonPercentage, setPatreonPercentage] = useState<undefined | number>(undefined);
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_SHARE_URL}/api/patreonfetch`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        if (!isNaN(Number(json))) {
+          setPatreonPercentage(json);
+        }
+      });
+  }, []);
+
   return (
     <footer className="w-full bg-cardLight dark:bg-cardDark h-fit flex flex-col">
       <div className="flex items-center w-full p-4">
@@ -35,8 +47,8 @@ export function Footer() {
           <div
             className="bg-[#FF424D] transition-all absolute left-0 h-4 z-0"
             style={{
-              width: Math.min(patreonPercentage, 1) * 100 + "%",
-              backgroundColor: patreonPercentage < 1 ? "#FF424D" : "#33aaff",
+              width: Math.min(patreonPercentage, 100) + "%",
+              backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
             }}
           />
         </div>
