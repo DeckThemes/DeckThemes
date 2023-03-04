@@ -5,19 +5,19 @@ import Link from "next/link";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
-  const [patreonPercentage, setPatreonPercentage] = useState<undefined | number>("0");
+  const [patreonPercentage, setPatreonPercentage] = useState<number>(0);
 
-  // useEffect(() => {
-  //   fetch(`${process.env.NEXT_PUBLIC_SHARE_URL}/api/patreonfetch`)
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((json) => {
-  //       if (!isNaN(Number(json))) {
-  //         setPatreonPercentage(json);
-  //       }
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_SHARE_URL}/api/patreonfetch`)
+      .then((res) => {
+        return res.json();
+      })
+      .then((json) => {
+        if (!isNaN(Number(json))) {
+          setPatreonPercentage(Number(json));
+        }
+      });
+  }, []);
 
   return (
     <footer className="w-full bg-cardLight dark:bg-cardDark h-fit flex flex-col">
@@ -62,26 +62,26 @@ export function Footer() {
           </div>
         </div>
       )} */}
-      {!!patreonPercentage && (
-        <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center overflow-hidden relative">
-          <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
-            <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
-            <Link
-              href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
-              className="underline text-[#FF424D]"
-            >
-              Support Us!
-            </Link>
-          </div>
-          <div
-            className="bg-[#FF424D] transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
-            style={{
-              width: Math.min(patreonPercentage, 100) + "%",
-              backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
-            }}
-          />
+      {/* {!!patreonPercentage && ( */}
+      <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center overflow-hidden relative">
+        <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
+          <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
+          <Link
+            href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
+            className="underline text-[#FF424D]"
+          >
+            Support Us!
+          </Link>
         </div>
-      )}
+        <div
+          className="bg-[#FF424D] transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
+          style={{
+            width: Math.min(patreonPercentage, 100) + "%",
+            backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
+          }}
+        />
+      </div>
+      {/* )} */}
     </footer>
   );
 }
