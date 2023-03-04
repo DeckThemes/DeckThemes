@@ -67,6 +67,8 @@ export function Footer() {
         <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
           <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
           <Link
+            rel="noreferrer"
+            target="_blank"
             href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
             className="underline text-[#FF424D]"
           >

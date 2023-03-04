@@ -22,7 +22,7 @@ export default function Home() {
       </Head>
       <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
         <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
-          <div className="w-full h-full bg-black">
+          <div className="w-full h-full bg-black overflow-hidden">
             <div
               style={{
                 backgroundImage: `url(/hero_reel.gif)`,
