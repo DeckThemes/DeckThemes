@@ -24,13 +24,13 @@ export function MainNav() {
       <div className="ml-4">
         <NavIcon />
       </div>
-      <div className="flex gap-4 mx-4 h-14 items-center">
+      <div className="ml-auto flex mx-4 h-full items-center">
         {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
           <a
             href={process.env.NEXT_PUBLIC_DISCORD_URL}
             target="_blank"
             rel="noreferrer"
-            className="flex flex-col items-center rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
+            className="bg-[#5865F2] flex flex-col items-center justify-center h-full w-16 text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
           >
             <Discord size={31} />
             {/* <span className="text-sm">Chat</span> */}
@@ -41,14 +41,14 @@ export function MainNav() {
             href={process.env.NEXT_PUBLIC_PATREON_URL}
             target="_blank"
             rel="noreferrer"
-            className="flex flex-col items-center rounded-2xl text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
+            className="bg-[#FF424D] flex flex-col items-center justify-center h-full w-16 text-textLight dark:text-textDark hover:text-textFadedLight hover:dark:text-textFadedDark transition-colors"
           >
             <Patreon size={31} />
             {/* <span className="text-sm">Donate</span> */}
           </a>
         )}
       </div>
-      <div className="ml-auto mr-4 h-4/5 font-extrabold flex items-center">
+      <div className="mr-4 h-4/5 font-extrabold flex items-center">
         <a
           href={process.env.NEXT_PUBLIC_DOCS_URL}
           rel="noreferrer"
