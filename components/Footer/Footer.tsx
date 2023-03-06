@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
-  const [patreonPercentage, setPatreonPercentage] = useState<number>(50);
+  const [patreonPercentage, setPatreonPercentage] = useState<number>(0);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEV_MODE === "true") {
