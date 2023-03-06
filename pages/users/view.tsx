@@ -81,7 +81,7 @@ export default function Account() {
         <title>{userInfo.username} | DeckThemes</title>
       </Head>
       <main className="flex flex-col items-center w-full">
-        <PfpDisplay avatar={userInfo.avatar} username={userInfo.username} id={userInfo.id} />
+        <PfpDisplay userData={userInfo} />
         <div className="mt-4" />
         <UserThemeCategoryDisplay
           themeDataApiPath={`/users/${parsedId}/themes`}

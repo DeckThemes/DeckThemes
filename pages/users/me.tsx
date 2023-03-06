@@ -49,11 +49,7 @@ export default function Account() {
           <title>DeckThemes | My Profile</title>
         </Head>
         <main className="flex flex-col items-center w-full">
-          <PfpDisplay
-            avatar={accountInfo.avatar}
-            username={accountInfo.username}
-            id={accountInfo.id}
-          />
+          <PfpDisplay userData={accountInfo} />
           <div className="mt-4" />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/stars"

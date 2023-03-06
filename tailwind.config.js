@@ -74,6 +74,7 @@ module.exports = {
         cssPurple: "#de2cf7",
         audioBlue: "rgb(26,159,255)",
         discordColor: "#5865F2",
+        patreonColor: "#FF424D",
         // These are used to "transform" the card values to look like the bg values
         lightenerDark: "rgba(255,255,255,0.1)",
         lightenerLight: "rgba(255,255,255,0.3)",

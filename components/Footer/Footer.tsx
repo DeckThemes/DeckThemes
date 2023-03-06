@@ -5,9 +5,12 @@ import Link from "next/link";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
-  const [patreonPercentage, setPatreonPercentage] = useState<number>(0);
+  const [patreonPercentage, setPatreonPercentage] = useState<number>(50);
 
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_DEV_MODE === "true") {
+      return;
+    }
     fetch(`${process.env.NEXT_PUBLIC_SHARE_URL}/api/patreonfetch`)
       .then((res) => {
         return res.json();
@@ -47,13 +50,13 @@ export function Footer() {
         <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center px-4">
           <div className="h-8 w-1/2 font-fancy flex items-center justify-between px-4">
             <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
-            <Link href={process.env.NEXT_PUBLIC_PATREON_URL} className="underline text-[#FF424D]">
+            <Link href={process.env.NEXT_PUBLIC_PATREON_URL} className="underline text-patreonColor">
               Support Us!
             </Link>
           </div>
           <div className="h-4 w-1/2 relative rounded-full bg-cardLight dark:bg-borderDark">
             <div
-              className="bg-[#FF424D] transition-all absolute left-0 h-4 z-0 rounded-l-full"
+              className="bg-patreonColor transition-all absolute left-0 h-4 z-0 rounded-l-full"
               style={{
                 width: Math.min(patreonPercentage, 100) + "%",
                 backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
@@ -70,13 +73,13 @@ export function Footer() {
             rel="noreferrer"
             target="_blank"
             href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
-            className="underline text-[#FF424D]"
+            className="underline font-medium text-[#A24] dark:text-patreonColor"
           >
             Support Us!
           </Link>
         </div>
         <div
-          className="bg-[#FF424D] transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
+          className="scale-110 transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
           style={{
             width: Math.min(patreonPercentage, 100) + "%",
             backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",

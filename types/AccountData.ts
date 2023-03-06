@@ -1,19 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
-import { PartialCSSThemeInfo, UserInfo } from "./CSSThemeTypes";
+import { PartialCSSThemeInfo } from "./CSSThemeTypes";
 
 export enum Permissions {
   "editAny" = "EditAnyPost",
   "approveSubs" = "ApproveThemeSubmissions",
   "viewSubs" = "ViewThemeSubmissions",
   "admin" = "ManageApi",
-  "donator1" = "PremiumTier1",
-  "donator2" = "PremiumTier2",
-  "donator3" = "PremiumTier3",
 }
 
-export interface AccountData extends UserInfo {
+export type PremiumTiers = "None" | "Tier1" | "Tier2" | "Tier3";
+export interface UserInfo {
+  premiumTier: PremiumTiers;
   permissions: Permissions[];
+  id: string;
+  username: string;
+  avatar: string;
 }
+
+export type AccountData = UserInfo;
 
 export interface AuthContextContents {
   accountInfo: AccountData | undefined;
