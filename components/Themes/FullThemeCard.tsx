@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { LoadingPage, ThemeAdminPanel, ThemeImageCarousel } from "..";
+import { LoadingPage, SupporterIcon, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
 import { authContext } from "../../pages/_app";
 import { toast } from "react-toastify";
@@ -104,13 +104,17 @@ export function FullThemeCard({
                 <h1 className="text-3xl md:text-5xl font-semibold mb-auto max-w-[640px]">
                   {themeData.name}
                 </h1>
-                <Link href={`/users/view?userId=${themeData.author.id}`}>
-                  <h3>
-                    Created By <br className="flex md:hidden" />
-                    <span className="text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700 underline transition-colors">
+                <Link
+                  href={`/users/view?userId=${themeData.author.id}`}
+                  className="flex flex-col md:flex-row gap-1"
+                >
+                  <h3>Created By </h3>
+                  <div className="flex items-center">
+                    <span className="text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700 underline transition-colors font-fancy">
                       {themeData.specifiedAuthor}
                     </span>
-                  </h3>
+                    <SupporterIcon author={themeData.author} />
+                  </div>
                 </Link>
                 <div className="flex justify-between w-full px-3 md:px-0">
                   <h3>{themeData.target}</h3>
