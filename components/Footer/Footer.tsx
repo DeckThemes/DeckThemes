@@ -2,10 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import { themeContext } from "../../styles";
 import Link from "next/link";
+import { LoadingSpinner } from "../Generic";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
-  const [patreonPercentage, setPatreonPercentage] = useState<number>(0);
+  const [patreonPercentage, setPatreonPercentage] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEV_MODE === "true") {
@@ -67,26 +68,34 @@ export function Footer() {
       )} */}
       {/* {!!patreonPercentage && ( */}
       <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center overflow-hidden relative">
-        <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
-          <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
-          <Link
-            rel="noreferrer"
-            target="_blank"
-            href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
-            className="underline font-medium text-[#A24] dark:text-patreonColor"
-          >
-            Support Us!
-          </Link>
-        </div>
-        <div
-          className="scale-110 transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
-          style={{
-            width: Math.min(patreonPercentage, 100) + "%",
-            backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
-          }}
-        />
+        {patreonPercentage !== undefined ? (
+          <>
+            <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
+              <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
+              <Link
+                rel="noreferrer"
+                target="_blank"
+                href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
+                className="underline font-medium text-[#A24] dark:text-patreonColor"
+              >
+                Support Us!
+              </Link>
+            </div>
+            <div
+              className="scale-110 transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
+              style={{
+                width: Math.min(patreonPercentage, 100) + "%",
+                backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
+              }}
+            />
+          </>
+        ) : (
+          <div className="w-full flex items-center justify-center gap-4">
+            <LoadingSpinner size={20} />
+            <span>Loading Contribution Data...</span>
+          </div>
+        )}
       </div>
-      {/* )} */}
     </footer>
   );
 }
