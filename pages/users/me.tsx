@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { authContext } from "../_app";
-import { clearCookie, fetchDiscordUrl } from "../../api";
+import { clearCookie, genericGET } from "../../api";
 import {
   DeckTokenDisplay,
   LoadingPage,
@@ -10,6 +10,7 @@ import {
 } from "../../components";
 import Head from "next/head";
 import { useHasCookie } from "../../hooks";
+import { UserInfo } from "../../types";
 
 function BigDivider() {
   return (
@@ -21,6 +22,17 @@ export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
 
   const hasCookie = useHasCookie();
+
+  const [meInfo, setMeInfo] = useState<UserInfo>();
+
+  useEffect(() => {
+    genericGET(`/auth/me_full`, true).then((data) => {
+      if (data) {
+        setMeInfo(data);
+      }
+      return;
+    });
+  }, []);
 
   function logOut() {
     setAccountInfo(undefined);
@@ -49,7 +61,7 @@ export default function Account() {
           <title>DeckThemes | My Profile</title>
         </Head>
         <main className="flex flex-col items-center w-full">
-          <PfpDisplay userData={accountInfo} />
+          <PfpDisplay userData={meInfo || accountInfo} />
           <div className="mt-4" />
           <UserThemeCategoryDisplay
             themeDataApiPath="/users/me/stars"
