@@ -28,43 +28,37 @@ export function HighlightReelView({
 
   return (
     <>
-      <div className="flex flex-col w-full items-center bg-cardLight dark:bg-cardDark rounded-3xl gap-4 py-8">
-        <h3 className="text-2xl md:text-3xl font-medium">{title}</h3>
-        <div
-          // TODO: 'items-center' COULD BREAK SOMETHING, PLEASE DOUBLE CHECK IT\
-          className={`flex flex-wrap w-full justify-center gap-4 px-4 ${
-            !loaded ? "items-center" : ""
-          }`}
-        >
-          {loaded ? (
-            <>
-              {themeData?.total ? (
-                <>
-                  {themeData.items.map((e, i) => {
-                    return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
-                  })}
-                </>
-              ) : null}
-            </>
-          ) : (
-            <LoadingSpinner />
-          )}
-
-          {/* The old "full card sized" view more button */}
-          {/* <Link
+      <div className="flex flex-col w-full items-center rounded-3xl bg-elevation-1-light dark:bg-elevation-1-dark gap-4 py-4 px-2">
+        <div className="flex justify-between items-center w-full px-2 gap-2">
+          <h3 className="text-2xl md:text-3xl font-medium text-start">{title}</h3>
+          <Link
             href={linkHref}
-            className="bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark hover:translate-y-1 transition-all w-[260px] flex items-center justify-center rounded-3xl"
+            className="bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light hover:dark:bg-elevation-3-dark transition-colors p-2 px-4 rounded-3xl text-xl md:text-2xl"
           >
-            <span className="text-2xl p-4">View More</span>
-          </Link> */}
+            View More
+          </Link>
         </div>
-
-        <Link
-          href={linkHref}
-          className="bg-borderLight dark:bg-borderDark p-2 px-4 rounded-3xl text-2xl"
-        >
-          View More
-        </Link>
+        <div className="flex justify-center items-center w-full">
+          <div
+            className={`flex flex-wrap w-full justify-center gap-4 ${
+              !loaded ? "items-center" : ""
+            }`}
+          >
+            {loaded ? (
+              <>
+                {themeData?.total ? (
+                  <>
+                    {themeData.items.map((e, i) => {
+                      return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
+                    })}
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <LoadingSpinner />
+            )}
+          </div>
+        </div>
       </div>
     </>
   );

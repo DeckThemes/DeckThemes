@@ -1,11 +1,6 @@
 import { Url } from "url";
+import { Permissions, UserInfo } from "./AccountData";
 import { APIBlob } from "./BlobTypes";
-
-export interface UserInfo {
-  id: string;
-  username: string;
-  avatar: string;
-}
 
 export interface MinimalCSSThemeInfo {
   id: string;
