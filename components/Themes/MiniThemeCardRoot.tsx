@@ -90,7 +90,7 @@ export function MiniThemeCardRoot({
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
     } else {
-      return `https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Steam_Deck_logo_%28blue_background%29.svg/2048px-Steam_Deck_logo_%28blue_background%29.svg.png`;
+      return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
     }
   }
 
