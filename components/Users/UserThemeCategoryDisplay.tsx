@@ -129,7 +129,7 @@ export function UserThemeCategoryDisplay({
               setCSSAudio(e.target.value);
             }}
           />
-          <div className="flex flex-col md:flex-row w-full justify-center items-center flex-wrap gap-4">
+          <div className="flex flex-col md:flex-row w-full justify-center items-stretch flex-wrap gap-4">
             {themeData.total === 0 && (
               <span>No {cssOrAudio === "AUDIO" ? "Packs" : "Themes"} Found</span>
             )}
