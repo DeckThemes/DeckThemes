@@ -107,7 +107,7 @@ export function MetaSubmitPanel({
               allowFileTypeValidation
               labelFileTypeNotAllowed="Invalid File Type!"
               fileValidateTypeLabelExpectedTypes="Images must be in .JPG format"
-              acceptedFileTypes={["image/jpeg"]}
+              acceptedFileTypes={["image/jpeg", "image/png"]}
               allowFileSizeValidation
               allowImagePreview
               allowImageExifOrientation
