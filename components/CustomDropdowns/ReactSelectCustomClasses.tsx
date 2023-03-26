@@ -7,7 +7,7 @@ export const ReactSelectCustomClasses = {
       return "!w-max flex flex-col border-borderLight dark:border-borderDark border-2 absolute right-1/2 translate-x-1/2";
     },
     menuList() {
-      return "w-full bg-cardLight dark:bg-cardDark flex flex-col gap-1";
+      return "w-full bg-[#b9b9b9] dark:bg-[#202020] flex flex-col gap-1";
     },
 
     option() {
