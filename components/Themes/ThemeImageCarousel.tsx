@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { type } from "os";
 import { useMemo, useState } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FullCSSThemeInfo } from "../../types";
@@ -10,7 +11,7 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
     if (data?.images[selectedImage]?.id && data.images[selectedImage].id !== "MISSING") {
       return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[selectedImage].id})`;
     } else {
-      return `url(https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Steam_Deck_logo_%28blue_background%29.svg/2048px-Steam_Deck_logo_%28blue_background%29.svg.png)`;
+      return `url(https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png)`;
     }
   }, [selectedImage, data]);
 
