@@ -6,7 +6,7 @@ import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
 import { LoadingPage, SupporterIcon, ThemeAdminPanel, ThemeImageCarousel } from "..";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext } from "../../pages/_app";
+import { authContext, desktopModeContext } from "../../pages/_app";
 import { toast } from "react-toastify";
 
 function MiniDivider() {
@@ -25,6 +25,7 @@ export function FullThemeCard({
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const { accountInfo } = useContext(authContext);
+  const { desktopMode } = useContext(desktopModeContext);
 
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
@@ -177,13 +178,21 @@ export function FullThemeCard({
                         <FiArrowDown size={48} />
                       </div>
                       <div>
-                        <span className="font-semibold ml-2 mr-1 md:mr-2">
-                          {themeData.download.downloadCount}
-                        </span>
-                        <span className="pr-3">
-                          Download
-                          {themeData.download.downloadCount !== 1 ? "s" : ""}
-                        </span>
+                        {desktopMode ? (
+                          <>
+                            <span>YOU ARE ON DESKTOP, INSTALL?</span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="font-semibold ml-2 mr-1 md:mr-2">
+                              {themeData.download.downloadCount}
+                            </span>
+                            <span className="pr-3">
+                              Download
+                              {themeData.download.downloadCount !== 1 ? "s" : ""}
+                            </span>
+                          </>
+                        )}
                       </div>
                     </button>
                   </>
