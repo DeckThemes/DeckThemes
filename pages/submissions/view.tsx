@@ -109,26 +109,26 @@ export default function FullSubmissionViewPage() {
               <h2 className="text-3xl md:text-4xl font-semibold my-4 border-b-4 border-textLight dark:border-textDark">
                 Submission Info
               </h2>
+              <div className="flex flex-col items-center mb-4">
+                {submissionData.errors && submissionData.errors.length > 0 ? (
+                  <>
+                    <span className="text-2xl">Errors:</span>
+                    <div className="flex flex-col items-center text-center overflow-y-scroll max-h-64 border-4 border-borderLight dark:border-borderDark rounded-3xl px-8">
+                      {submissionData.errors.map((e, i) => (
+                        <span key={`Submission Error ${i}`} className="max-w-[60vw]">
+                          <b>{i + 1}:</b> {e}
+                        </span>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span>No Errors</span>
+                  </>
+                )}
+              </div>
               {submissionData.status === "AwaitingApproval" ? (
                 <>
-                  <div className="flex flex-col items-center mb-4">
-                    {submissionData.errors && submissionData.errors.length > 0 ? (
-                      <>
-                        <span className="text-2xl">Errors:</span>
-                        <div className="flex flex-col items-center text-center overflow-y-scroll max-h-64 border-4 border-borderLight dark:border-borderDark rounded-3xl px-8">
-                          {submissionData.errors.map((e, i) => (
-                            <span key={`Submission Error ${i}`} className="max-w-[60vw]">
-                              <b>{i + 1}:</b> {e}
-                            </span>
-                          ))}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <span>No Errors</span>
-                      </>
-                    )}
-                  </div>
                   <>
                     {!reviewSubmitted ? (
                       <>

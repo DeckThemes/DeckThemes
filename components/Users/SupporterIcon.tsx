@@ -32,11 +32,13 @@ export function SupporterIcon({ author }: { author: UserInfo }) {
             </linearGradient>
           </svg>
           <RiMedalFill id="supporter-tt" style={{ fill: "url(#medal-gradient)" }} />
-          <Tooltip
-            anchorSelect="#supporter-tt"
-            content={`Tier ${author?.premiumTier?.slice(-1)} Patreon Supporter`}
-            place="bottom"
-          />
+          {typeof window !== "undefined" && (
+            <Tooltip
+              anchorSelect="#supporter-tt"
+              content={`Tier ${author?.premiumTier?.slice(-1)} Patreon Supporter`}
+              place="bottom"
+            />
+          )}
         </>
       )}
     </>
