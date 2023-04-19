@@ -61,12 +61,17 @@ export default function App({ Component, pageProps }: AppProps) {
       if (event.origin !== "http://localhost:3000") return;
 
       if (event.data === "enableDesktopAppMode") {
-        setTheme("light");
         setDesktopMode(true);
       }
     });
 
-    window.parent.postMessage("isThisDesktopApp", "http://localhost:3000");
+    window.parent.postMessage(
+      {
+        action: "isThisDesktopApp",
+        payload: undefined,
+      },
+      "http://localhost:3000"
+    );
   }, []);
 
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
@@ -77,7 +82,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <desktopModeContext.Provider value={{ desktopMode, setDesktopMode }}>
           <div className={`${theme}`}>
             <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
-              <MainNav />
+              {!desktopMode && <MainNav />}
               <ToastContainer
                 position="bottom-center"
                 autoClose={5000}

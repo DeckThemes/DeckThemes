@@ -168,6 +168,16 @@ export function FullThemeCard({
                     <button
                       className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-xl md:text-3xl rounded-full justify-between mt-4"
                       onClick={() => {
+                        if (desktopMode) {
+                          window.parent.postMessage(
+                            {
+                              action: "installTheme",
+                              payload: themeData.id,
+                            },
+                            "http://localhost:3000"
+                          );
+                          return;
+                        }
                         themeData !== undefined &&
                           location.assign(
                             `${process.env.NEXT_PUBLIC_API_URL}/blobs/${themeData.download.id}`
@@ -180,7 +190,7 @@ export function FullThemeCard({
                       <div>
                         {desktopMode ? (
                           <>
-                            <span>YOU ARE ON DESKTOP, INSTALL?</span>
+                            <span>Install</span>
                           </>
                         ) : (
                           <>
