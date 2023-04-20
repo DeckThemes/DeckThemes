@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { useRef, ReactNode } from "react";
+import { useRef, ReactNode, useContext } from "react";
 import { HighlightReelView } from "../components";
 import { BsArrowDown } from "react-icons/bs";
 import Head from "next/head";
+import { desktopModeContext } from "./_app";
 
 function ColorfulTitle({ children }: { children: ReactNode }) {
   return (
@@ -14,6 +15,8 @@ function ColorfulTitle({ children }: { children: ReactNode }) {
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
+
+  const { desktopMode } = useContext(desktopModeContext);
 
   return (
     <>
@@ -66,21 +69,25 @@ export default function Home() {
                 title="Recent CSS Themes"
               />
             </div>
-            <div className="w-10/12 flex flex-col gap-8 items-center">
-              <Link href="/packs">
-                <ColorfulTitle>Audio Loader</ColorfulTitle>
-              </Link>
-              <HighlightReelView
-                apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=6"
-                linkHref="/packs?order=Most Downloaded"
-                title="Popular Audio Packs"
-              />
-              <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=6"
-                linkHref="/packs?order=Last Updated"
-                title="Recent Audio Packs"
-              />
-            </div>
+            {!desktopMode && (
+              <>
+                <div className="w-10/12 flex flex-col gap-8 items-center">
+                  <Link href="/packs">
+                    <ColorfulTitle>Audio Loader</ColorfulTitle>
+                  </Link>
+                  <HighlightReelView
+                    apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=6"
+                    linkHref="/packs?order=Most Downloaded"
+                    title="Popular Audio Packs"
+                  />
+                  <HighlightReelView
+                    apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=6"
+                    linkHref="/packs?order=Last Updated"
+                    title="Recent Audio Packs"
+                  />
+                </div>
+              </>
+            )}
           </>
         </div>
       </main>

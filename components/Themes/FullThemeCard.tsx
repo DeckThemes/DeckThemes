@@ -123,6 +123,15 @@ export function FullThemeCard({
                 </div>
                 <div className="flex  w-full items-center gap-2">
                   <MiniDivider />
+                  {desktopMode && (
+                    <div className="flex items-center gap-2 bg-borderLight dark:bg-borderDark px-2 transition-all rounded-2xl">
+                      <FiArrowDown />
+                      <span className="-translate-y-[1.5px]">
+                        {themeData.download.downloadCount}
+                      </span>
+                    </div>
+                  )}
+
                   <button
                     onClick={() => {
                       if (accountInfo?.username) toggleStar();
@@ -191,11 +200,7 @@ export function FullThemeCard({
                         {desktopMode ? (
                           <>
                             <div className="flex flex-col items-center justify-center ml-2 mr-3">
-                              <span className="text-sm">
-                                {themeData.download.downloadCount} Download
-                                {themeData.download.downloadCount !== 1 ? "s" : ""}
-                              </span>
-                              <span className="font-semibold">Install</span>
+                              <span className="font-semibold font-fancy">Install</span>
                             </div>
                           </>
                         ) : (
