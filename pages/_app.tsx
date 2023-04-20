@@ -56,21 +56,16 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     window.addEventListener("message", (event) => {
-      console.log("IFRAME DETECTED MESSAGE", event);
-      // Do we trust the sender of this message?
-      if (event.origin !== "http://localhost:3000") return;
-
       if (event.data === "enableDesktopAppMode") {
         setDesktopMode(true);
       }
     });
-
     window.parent.postMessage(
       {
         action: "isThisDesktopApp",
         payload: undefined,
       },
-      "http://localhost:3000"
+      "*"
     );
   }, []);
 

@@ -174,7 +174,7 @@ export function FullThemeCard({
                               action: "installTheme",
                               payload: themeData.id,
                             },
-                            "http://localhost:3000"
+                            "*"
                           );
                           return;
                         }
@@ -190,7 +190,18 @@ export function FullThemeCard({
                       <div>
                         {desktopMode ? (
                           <>
-                            <span>Install</span>
+                            <div className="flex flex-col items-center justify-center ml-2 mr-3">
+                              <div>
+                                <span className="font-semibold text-sm">
+                                  {themeData.download.downloadCount}
+                                </span>
+                                <span className="text-sm">
+                                  Download
+                                  {themeData.download.downloadCount !== 1 ? "s" : ""}
+                                </span>
+                              </div>
+                              <span className="font-semibold">Install</span>
+                            </div>
                           </>
                         ) : (
                           <>
