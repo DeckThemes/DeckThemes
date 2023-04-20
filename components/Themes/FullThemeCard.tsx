@@ -191,15 +191,10 @@ export function FullThemeCard({
                         {desktopMode ? (
                           <>
                             <div className="flex flex-col items-center justify-center ml-2 mr-3">
-                              <div>
-                                <span className="font-semibold text-sm">
-                                  {themeData.download.downloadCount}
-                                </span>
-                                <span className="text-sm">
-                                  Download
-                                  {themeData.download.downloadCount !== 1 ? "s" : ""}
-                                </span>
-                              </div>
+                              <span className="text-sm">
+                                {themeData.download.downloadCount} Download
+                                {themeData.download.downloadCount !== 1 ? "s" : ""}
+                              </span>
                               <span className="font-semibold">Install</span>
                             </div>
                           </>
