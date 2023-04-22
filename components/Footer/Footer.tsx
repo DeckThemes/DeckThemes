@@ -76,9 +76,15 @@ export function Footer() {
                 rel="noreferrer"
                 target="_blank"
                 href={process.env.NEXT_PUBLIC_PATREON_URL || ""}
-                className="underline font-medium text-[#A24] dark:text-patreonColor"
               >
-                Support Us!
+                {/* TODO: Probably can refactor this */}
+                {patreonPercentage < 100 ? (
+                  <span className="text-[#A24] dark:text-patreonColor underline font-medium">
+                    Support Us!
+                  </span>
+                ) : (
+                  <span>Support Us!</span>
+                )}
               </Link>
             </div>
             <div
