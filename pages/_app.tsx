@@ -12,8 +12,19 @@ export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
   setAccountInfo: () => {},
 });
+
+export const desktopModeContext = createContext<any>({
+  desktopMode: false,
+  setDesktopMode: () => {},
+  installing: false,
+  setInstalling: () => {},
+});
+
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("dark");
+
+  const [desktopMode, setDesktopMode] = useState<boolean>(false);
+  const [installing, setInstalling] = useState<boolean>(false);
 
   function initSetTheme(): void {
     //Sets dark theme based on browser preferences, but also allows for manual changing
@@ -46,31 +57,53 @@ export default function App({ Component, pageProps }: AppProps) {
     initGetUserData();
   }, []);
 
+  useEffect(() => {
+    window.addEventListener("message", (event) => {
+      if (event.data === "enableDesktopAppMode") {
+        setDesktopMode(true);
+      }
+      if (event.data === "themeInstalled") {
+        setInstalling(false);
+      }
+    });
+    window.parent.postMessage(
+      {
+        action: "isThisDesktopApp",
+        payload: undefined,
+      },
+      "*"
+    );
+  }, []);
+
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
 
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
-        <div className={`${theme}`}>
-          <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
-            <MainNav />
-            <ToastContainer
-              position="bottom-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop
-              closeOnClick
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme={theme}
-            />
-            <Component {...pageProps} />
-            <div className="mt-auto pt-20">
-              <Footer />
+        <desktopModeContext.Provider
+          value={{ desktopMode, setDesktopMode, installing, setInstalling }}
+        >
+          <div className={`${theme}`}>
+            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
+              {desktopMode && <MainNav />}
+              <ToastContainer
+                position="bottom-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme={theme}
+              />
+              <Component {...pageProps} />
+              <div className="mt-auto pt-20">
+                <Footer />
+              </div>
             </div>
           </div>
-        </div>
+        </desktopModeContext.Provider>
       </authContext.Provider>
     </themeContext.Provider>
   );

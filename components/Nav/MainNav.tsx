@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
-import { authContext } from "../../pages/_app";
+import { authContext, desktopModeContext } from "../../pages/_app";
 import { fetchDiscordUrl } from "../../api";
 import { NavIcon } from "./NavIcon";
 
@@ -16,11 +16,21 @@ import { ImBook } from "react-icons/im";
 export function MainNav() {
   // const router = useRouter();
   const { accountInfo } = useContext(authContext);
+  const { desktopMode } = useContext(desktopModeContext);
 
   const hasCookie = useHasCookie();
 
   return (
-    <nav className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center">
+    <nav
+      className="w-full bg-cardLight dark:bg-cardDark h-16 flex items-center"
+      style={
+        desktopMode
+          ? {
+              backgroundColor: "#000a",
+            }
+          : {}
+      }
+    >
       <div className="ml-4">
         <NavIcon />
       </div>
@@ -51,14 +61,17 @@ export function MainNav() {
         )}
       </div>
       <div className="ml-auto md:ml-0 mr-4 h-4/5 font-extrabold flex items-center">
-        <a
-          href={process.env.NEXT_PUBLIC_DOCS_URL}
-          rel="noreferrer"
-          target="_blank"
-          className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-        >
-          <ImBook size={28} />
-        </a>
+        {!desktopMode && (
+          <a
+            href={process.env.NEXT_PUBLIC_DOCS_URL}
+            rel="noreferrer"
+            target="_blank"
+            className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+          >
+            <ImBook size={28} />
+          </a>
+        )}
+
         {accountInfo?.username ? (
           <>
             {accountInfo.permissions.includes(Permissions.viewSubs) && (
