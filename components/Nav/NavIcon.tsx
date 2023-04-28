@@ -19,18 +19,15 @@ export function NavIcon({}) {
   return (
     <Link href="/" className="flex items-center">
       {desktopMode ? (
-        <FiHome size={48} />
+        <div className="bg-bgLight dark:bg-bgDark rounded-full p-2">
+          <FiHome size={36} />
+        </div>
       ) : (
-        <Image
-          // src={theme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png"}
-          src={src()}
-          height="48"
-          width="48"
-          alt="CSSLoader Logo"
-        />
+        <>
+          <Image src={src()} height="48" width="48" alt="CSSLoader Logo" />
+          <span className="font-fancy hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
+        </>
       )}
-
-      <span className="font-fancy hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
     </Link>
   );
 }

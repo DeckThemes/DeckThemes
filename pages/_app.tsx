@@ -84,7 +84,7 @@ export default function App({ Component, pageProps }: AppProps) {
           value={{ desktopMode, setDesktopMode, installing, setInstalling }}
         >
           <div className={`${theme}`}>
-            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
+            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
               <MainNav />
               <ToastContainer
                 position="bottom-center"
