@@ -16,12 +16,15 @@ export const authContext = createContext<AuthContextContents>({
 export const desktopModeContext = createContext<any>({
   desktopMode: false,
   setDesktopMode: () => {},
+  installing: false,
+  setInstalling: () => {},
 });
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("dark");
 
   const [desktopMode, setDesktopMode] = useState<boolean>(false);
+  const [installing, setInstalling] = useState<boolean>(false);
 
   function initSetTheme(): void {
     //Sets dark theme based on browser preferences, but also allows for manual changing
@@ -59,6 +62,9 @@ export default function App({ Component, pageProps }: AppProps) {
       if (event.data === "enableDesktopAppMode") {
         setDesktopMode(true);
       }
+      if (event.data === "themeInstalled") {
+        setInstalling(false);
+      }
     });
     window.parent.postMessage(
       {
@@ -74,10 +80,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <themeContext.Provider value={{ theme, setTheme }}>
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
-        <desktopModeContext.Provider value={{ desktopMode, setDesktopMode }}>
+        <desktopModeContext.Provider
+          value={{ desktopMode, setDesktopMode, installing, setInstalling }}
+        >
           <div className={`${theme}`}>
             <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col">
-              {!desktopMode && <MainNav />}
+              {desktopMode && <MainNav />}
               <ToastContainer
                 position="bottom-center"
                 autoClose={5000}

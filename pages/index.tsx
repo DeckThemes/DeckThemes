@@ -37,7 +37,7 @@ export default function Home() {
           <div className="absolute top-[40%] items-center flex flex-col">
             <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
             <h2 className="font-default text-2xl md:text-3xl font-medium">
-              CSS Loader and Audio Loader
+              {desktopMode ? "CSSLoader Desktop Theme Browser" : "CSS Loader and Audio Loader"}
             </h2>
           </div>
           <button
@@ -51,6 +51,7 @@ export default function Home() {
         </div>
         <div
           className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row xl:items-start"
+          style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >
           <>

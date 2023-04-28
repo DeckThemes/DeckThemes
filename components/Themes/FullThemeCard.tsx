@@ -4,7 +4,13 @@ import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
 import { checkAndRefreshToken, genericGET } from "../../api";
-import { LoadingPage, SupporterIcon, ThemeAdminPanel, ThemeImageCarousel } from "..";
+import {
+  LoadingPage,
+  LoadingSpinner,
+  SupporterIcon,
+  ThemeAdminPanel,
+  ThemeImageCarousel,
+} from "..";
 import { FullCSSThemeInfo } from "../../types";
 import { authContext, desktopModeContext } from "../../pages/_app";
 import { toast } from "react-toastify";
@@ -25,7 +31,7 @@ export function FullThemeCard({
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const { accountInfo } = useContext(authContext);
-  const { desktopMode } = useContext(desktopModeContext);
+  const { desktopMode, setInstalling, installing } = useContext(desktopModeContext);
 
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
@@ -178,6 +184,7 @@ export function FullThemeCard({
                       className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-xl md:text-3xl rounded-full justify-between mt-4"
                       onClick={() => {
                         if (desktopMode) {
+                          setInstalling(true);
                           window.parent.postMessage(
                             {
                               action: "installTheme",
@@ -194,7 +201,7 @@ export function FullThemeCard({
                       }}
                     >
                       <div className="bg-lightenerLight dark:bg-lightenerDark p-2 rounded-full">
-                        <FiArrowDown size={48} />
+                        {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={48} />}
                       </div>
                       <div>
                         {desktopMode ? (
