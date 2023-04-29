@@ -17,7 +17,6 @@ export function MainNav() {
   // const router = useRouter();
   const { accountInfo } = useContext(authContext);
   const { desktopMode } = useContext(desktopModeContext);
-
   const hasCookie = useHasCookie();
 
   return (
@@ -26,7 +25,11 @@ export function MainNav() {
       style={
         desktopMode
           ? {
-              backgroundColor: "#000a",
+              position: "absolute",
+              top: "0",
+              left: "0",
+              zIndex: "10",
+              backgroundColor: "transparent",
             }
           : {}
       }
@@ -34,16 +37,43 @@ export function MainNav() {
       <div className="ml-4">
         <NavIcon />
       </div>
-      <div className="md:ml-auto flex mx-4 h-full items-center gap-4 md:gap-0">
+      <div
+        style={
+          desktopMode
+            ? {
+                gap: "1rem",
+              }
+            : {}
+        }
+        className="md:ml-auto flex mx-4 h-full items-center gap-4 md:gap-0"
+      >
         {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
           <a
             href={process.env.NEXT_PUBLIC_DISCORD_URL}
             target="_blank"
             rel="noreferrer"
-            className="md:bg-discordColor text-discordColor h-full w-8 md:w-16 md:text-textLight md:dark:text-textDark"
+            style={
+              desktopMode
+                ? {
+                    borderRadius: "100%",
+                    height: "3rem",
+                    width: "3rem",
+                  }
+                : {}
+            }
+            className="md:bg-discordColor text-discordColor h-full w-4 md:w-16 md:text-textLight md:dark:text-textDark"
           >
             <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-              <Discord size={31} />
+              <Discord
+                size={31}
+                style={
+                  desktopMode
+                    ? {
+                        transform: "translateX(1px)",
+                      }
+                    : {}
+                }
+              />
             </div>
           </a>
         )}
@@ -52,10 +82,28 @@ export function MainNav() {
             href={process.env.NEXT_PUBLIC_PATREON_URL}
             target="_blank"
             rel="noreferrer"
+            style={
+              desktopMode
+                ? {
+                    borderRadius: "100%",
+                    height: "3rem",
+                    width: "3rem",
+                  }
+                : {}
+            }
             className="md:bg-patreonColor text-patreonColor flex flex-col items-center justify-center h-full w-8 md:w-16 md:text-textLight md:dark:text-textDark transition-colors"
           >
             <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-              <Patreon size={31} />
+              <Patreon
+                size={31}
+                style={
+                  desktopMode
+                    ? {
+                        transform: "translateX(1px)",
+                      }
+                    : {}
+                }
+              />
             </div>
           </a>
         )}
