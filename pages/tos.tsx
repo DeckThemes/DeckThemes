@@ -212,8 +212,8 @@ export default function ToS() {
             <li>
               By Email:
               <ul>
-                <li>mudkip@suchmeme.nl</li>
-                <li>logan@beebl.es</li>
+                <li>contact@suchmeme.nl</li>
+                <li>contact@beebl.es</li>
               </ul>
             </li>
           </ul>
