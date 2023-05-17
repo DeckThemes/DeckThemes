@@ -24,50 +24,69 @@ export default function Home() {
         <title>DeckThemes | Home</title>
       </Head>
       <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
-        <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
-          <div className="w-full h-full bg-black overflow-hidden">
-            <div
-              style={{
-                backgroundImage: `url(/hero_reel.gif)`,
-                filter: "blur(8px) brightness(0.5)",
+        {!desktopMode && (
+          <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
+            <div className="w-full h-full bg-black overflow-hidden">
+              <div
+                style={{
+                  backgroundImage: `url(/hero_reel.gif)`,
+                  filter: "blur(8px) brightness(0.5)",
+                }}
+                className="w-full h-full bg-no-repeat bg-cover bg-center"
+              />
+            </div>
+            <div className="absolute top-[40%] items-center flex flex-col">
+              <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
+              <h2 className="font-default text-2xl md:text-3xl font-medium">
+                CSS Loader and Audio Loader
+              </h2>
+            </div>
+            <button
+              className="absolute bottom-8"
+              onClick={() => {
+                contentRef?.current && contentRef.current.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full h-full bg-no-repeat bg-cover bg-center"
-            />
+            >
+              <BsArrowDown size={60} />
+            </button>
           </div>
-          <div className="absolute top-[40%] items-center flex flex-col">
-            <h1 className="font-extrabold text-4xl md:text-6xl">DeckThemes</h1>
-            <h2 className="font-default text-2xl md:text-3xl font-medium">
-              {desktopMode ? "CSSLoader Desktop Theme Browser" : "CSS Loader and Audio Loader"}
-            </h2>
-          </div>
-          <button
-            className="absolute bottom-8"
-            onClick={() => {
-              contentRef?.current && contentRef.current.scrollIntoView({ behavior: "smooth" });
-            }}
-          >
-            <BsArrowDown size={60} />
-          </button>
-        </div>
+        )}
         <div
           className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row xl:items-start"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >
           <>
+            {desktopMode && (
+              <div className="w-10/12 flex flex-col gap-8 items-center">
+                <Link href="/themes">
+                  <ColorfulTitle>Desktop Steam</ColorfulTitle>
+                </Link>
+                <HighlightReelView
+                  apiURL="/themes?order=Most Downloaded&filters=CSS.Desktop&perPage=6"
+                  linkHref="/themes?order=Most Downloaded&filters=Desktop"
+                  title="Popular Desktop Themes"
+                />
+                <HighlightReelView
+                  apiURL="/themes?order=Last Updated&filters=CSS.Desktop&perPage=6"
+                  linkHref="/themes?order=Last Updated&filters=Desktop"
+                  title="Recent Desktop Themes"
+                />
+              </div>
+            )}
             <div className="w-10/12 flex flex-col gap-8 items-center">
               <Link href="/themes">
-                <ColorfulTitle>CSS Loader</ColorfulTitle>
+                <ColorfulTitle>{desktopMode ? "Big Picture Mode" : "CSS Loader"}</ColorfulTitle>
               </Link>
               <HighlightReelView
-                apiURL="/themes?order=Most Downloaded&filters=CSS&perPage=6"
-                linkHref="/themes?order=Most Downloaded"
-                title="Popular CSS Themes"
+                apiURL="/themes?order=Most Downloaded&filters=CSS.-Desktop&perPage=6"
+                linkHref="/themes?order=Most Downloaded&filters=-Desktop"
+                title={`Popular ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
               <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=CSS&perPage=6"
-                linkHref="/themes?order=Last Updated"
-                title="Recent CSS Themes"
+                apiURL="/themes?order=Last Updated&filters=CSS&.-Desktop&perPage=6"
+                linkHref="/themes?order=Last Updated&filters=-Desktop"
+                title={`Recent ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
             </div>
             {!desktopMode && (

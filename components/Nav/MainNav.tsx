@@ -119,43 +119,46 @@ export function MainNav() {
             <ImBook size={28} />
           </a>
         )}
-
-        {accountInfo?.username ? (
+        {!desktopMode && (
           <>
-            {accountInfo.permissions.includes(Permissions.viewSubs) && (
-              <Link
-                href="/submissions"
-                className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-              >
-                <RiAdminFill size={32} />
-              </Link>
-            )}
-            <Link
-              href="/submit"
-              className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-            >
-              <TbUpload size={32} className="scale-x-105" />
-            </Link>
-            {/* @ts-ignore */}
-            <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
-          </>
-        ) : (
-          <>
-            {hasCookie ? (
+            {accountInfo?.username ? (
               <>
-                <LoadingSpinner size={32} />
+                {accountInfo.permissions.includes(Permissions.viewSubs) && (
+                  <Link
+                    href="/submissions"
+                    className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+                  >
+                    <RiAdminFill size={32} />
+                  </Link>
+                )}
+                <Link
+                  href="/submit"
+                  className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+                >
+                  <TbUpload size={32} className="scale-x-105" />
+                </Link>
+                {/* @ts-ignore */}
+                <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
               </>
             ) : (
               <>
-                <button
-                  className="bg-discordColor px-2 h-full rounded-md flex items-center justify-center text-slate-800"
-                  onClick={fetchDiscordUrl}
-                >
-                  <span>
-                    Login <br />
-                    With Discord
-                  </span>
-                </button>
+                {hasCookie ? (
+                  <>
+                    <LoadingSpinner size={32} />
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="bg-discordColor px-2 h-full rounded-md flex items-center justify-center text-slate-800"
+                      onClick={fetchDiscordUrl}
+                    >
+                      <span>
+                        Login <br />
+                        With Discord
+                      </span>
+                    </button>
+                  </>
+                )}
               </>
             )}
           </>
