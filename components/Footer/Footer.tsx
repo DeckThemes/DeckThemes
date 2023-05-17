@@ -26,11 +26,16 @@ export function Footer() {
   return (
     <footer className="w-full bg-cardLight dark:bg-cardDark h-fit flex flex-col">
       <div className="flex items-center w-full p-4">
-        <p className="max-w-5xl text-[0.5rem] md:text-xs">
-          Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
-          Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
-          registered trademarks of Valve Corporation in the U.S. and/or other countries.
-        </p>
+        <div className="max-w-5xl text-[0.5rem] md:text-xs flex flex-col">
+          <p>
+            Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
+            Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
+            registered trademarks of Valve Corporation in the U.S. and/or other countries.
+          </p>
+          <Link href="/tos" className="text-lg underline">
+            Deckthemes Terms Of Use
+          </Link>
+        </div>
         <button
           className="ml-auto pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
           onClick={() => {
