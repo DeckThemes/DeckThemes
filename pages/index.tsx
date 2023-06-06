@@ -105,7 +105,7 @@ export default function Home() {
                 title={`Popular ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
               <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=CSS&.-Desktop&perPage=6"
+                apiURL="/themes?order=Last Updated&filters=CSS.-Desktop&perPage=6"
                 linkHref="/themes?order=Last Updated&filters=-Desktop"
                 title={`Recent ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
