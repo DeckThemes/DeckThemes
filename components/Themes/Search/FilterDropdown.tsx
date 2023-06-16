@@ -26,7 +26,7 @@ export function FilterDropdown({
       ),
     },
     ...Object.entries(filterOpts)
-      .filter(([_, itemCount]) => Number(itemCount) > 0 || showFiltersWithZero)
+      .filter(([_, itemCount]) => Number(itemCount) > 0 || true)
       .map(([filterName, itemCount]) => ({
         value: filterName,
         label: <ReactSelectCustomLabel mainText={filterName} bubbleValue={itemCount} />,

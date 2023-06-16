@@ -64,25 +64,25 @@ export default function Account() {
           <PfpDisplay userData={meInfo || accountInfo} />
           <div className="mt-4" />
           <UserThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/stars"
             filterDataApiPath={`/users/me/stars/filters`}
             title="Starred Themes"
-            addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/themes"
             filterDataApiPath={`/users/me/themes/filters`}
             title="Your Approved Themes"
-            addPluginChoice
           />
           <BigDivider />
           <UserThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/submissions"
             filterDataApiPath={`/users/me/submissions/filters`}
             title="Your Submissions"
             useSubmissionCards
-            addPluginChoice
             showFiltersWithZero
             defaultFilter="AwaitingApproval"
           />

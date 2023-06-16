@@ -30,7 +30,7 @@ export default function Submissions() {
               showFiltersWithZero
               useSubmissionCards
               themesPerPage={20}
-              addPluginChoice
+              typeOptionPreset="All"
               defaultFilter="AwaitingApproval"
             />
           </div>

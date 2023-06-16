@@ -1,8 +1,4 @@
-import { DebounceInput } from "react-debounce-input";
-import Select from "react-select";
-import { ReactSelectCustomLabel, ReactSelectCustomClasses } from "../CustomDropdowns";
-import { FilterDropdown, OrderDropdown, SearchInput } from "./Search";
-import { TypeDropdown } from "./Search/TypeDropdown";
+import { FilterDropdown, OrderDropdown, SearchInput, TypeDropdown, TypeOptions } from ".";
 
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
@@ -12,8 +8,9 @@ export function FilterSelectorCard({
   onFilterChange,
   onOrderChange,
   onSearchChange,
-  cssOrAudioValue,
-  onCSSAudioChange,
+  typeOptions,
+  typeValue,
+  onTypeChange,
   filterValue,
   orderValue,
   searchOnly = false,
@@ -24,11 +21,12 @@ export function FilterSelectorCard({
   orderOpts?: string[];
   orderValue: string;
   searchValue: string;
+  typeOptions: TypeOptions;
+  typeValue?: string | undefined;
   onFilterChange?: (e: any) => void;
   onOrderChange?: (e: any) => void;
   onSearchChange?: (e: any) => any;
-  cssOrAudioValue?: "CSS" | "AUDIO" | "" | undefined;
-  onCSSAudioChange?: (e: any) => void;
+  onTypeChange?: (e: any) => void;
   searchOnly?: boolean;
 }) {
   return (
@@ -41,24 +39,13 @@ export function FilterSelectorCard({
           </>
         )}
         <SearchInput {...{ onSearchChange }} />
-        <TypeDropdown
-          typeValue={cssOrAudioValue}
-          onTypeChange={onCSSAudioChange}
-          typeOptions={[
-            {
-              value: "",
-              displayText: "CSS & Audio",
-            },
-            {
-              value: "CSS",
-              displayText: "CSS",
-            },
-            {
-              value: "AUDIO",
-              displayText: "Audio",
-            },
-          ]}
-        />
+        {typeOptions !== undefined && (
+          <TypeDropdown
+            typeValue={typeValue}
+            onTypeChange={onTypeChange}
+            typeOptions={typeOptions}
+          />
+        )}
       </div>
     </>
   );

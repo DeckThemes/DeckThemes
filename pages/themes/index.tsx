@@ -73,6 +73,7 @@ export default function Themes() {
         <div className="flex flex-col items-center justify-center">
           <h2 className="font-bold text-3xl md:text-5xl pt-4">CSS Themes</h2>
           <FilterSelectorCard
+            typeOptions={undefined}
             filterOpts={serverSearchOpts.filters}
             onFilterChange={(e) => {
               const newFilters = e.target.value;

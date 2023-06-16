@@ -84,6 +84,7 @@ export default function Account() {
         <PfpDisplay userData={userInfo} />
         <div className="mt-4" />
         <UserThemeCategoryDisplay
+          typeOptionPreset="All"
           themeDataApiPath={`/users/${parsedId}/themes`}
           filterDataApiPath={`/users/${parsedId}/themes/filters`}
           title={`${calcDisplayName()} Themes`}
@@ -94,6 +95,7 @@ export default function Account() {
           <>
             <BigDivider />
             <UserThemeCategoryDisplay
+              typeOptionPreset="All"
               themeDataApiPath={`/users/${parsedId}/stars`}
               filterDataApiPath={`/users/${parsedId}/stars/filters`}
               title={`${calcDisplayName()} Stars`}
@@ -101,6 +103,7 @@ export default function Account() {
             />
             <BigDivider />
             <UserThemeCategoryDisplay
+              typeOptionPreset="All"
               themeDataApiPath={`/users/${parsedId}/submissions`}
               filterDataApiPath={`/users/${parsedId}/submissions/filters`}
               title={`${calcDisplayName()} Submissions`}
