@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
-import { genericGET } from "../../api";
+import { genericGET } from "../../apiHelpers";
 import { AccountData, Permissions } from "../../types";
 import { LoadingSpinner, PfpDisplay, ThemeCategoryDisplay } from "../../components";
 import Head from "next/head";

@@ -1,5 +1,5 @@
 import { useState, Dispatch, SetStateAction, useEffect } from "react";
-import { generateParamStr, genericGET } from "../../api";
+import { generateParamStr, genericGET } from "../../apiHelpers";
 import { ThemeQueryRequest, ThemeQueryResponse, ThemeSubmissionQueryResponse } from "../../types";
 import { LoadingSpinner } from "../Generic";
 

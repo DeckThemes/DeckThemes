@@ -5,7 +5,7 @@ import { FilePond, File, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken } from "../../api";
+import { checkAndRefreshToken } from "../../apiHelpers";
 import { toast } from "react-toastify";
 
 registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType);

@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { generateParamStr, genericGET } from "../../api";
+import { generateParamStr, genericGET } from "../../apiHelpers";
 import { authContext } from "../../pages/_app";
 import {
   FilterQueryResponse,

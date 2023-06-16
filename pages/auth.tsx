@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
-import { generateAuthCookie, getMeDataFromToken } from "../api";
+import { generateAuthCookie, getMeDataFromToken } from "../apiHelpers";
 import { LoadingSpinner } from "../components";
 import { authContext } from "./_app";
 

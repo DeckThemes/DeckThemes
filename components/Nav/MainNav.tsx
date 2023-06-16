@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";
 import { authContext, desktopModeContext } from "../../pages/_app";
-import { fetchDiscordUrl } from "../../api";
+import { fetchDiscordUrl } from "../../apiHelpers";
 import { NavIcon } from "./NavIcon";
 
 import { TbUpload } from "react-icons/tb";

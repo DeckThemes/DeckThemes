@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { fetchWithRefresh, genericGET } from "../../api";
+import { fetchWithRefresh, genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
 
 export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {

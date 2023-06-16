@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import { checkAndRefreshToken, fetchWithRefresh, genericGET } from "../../api";
+import { checkAndRefreshToken, fetchWithRefresh, genericGET } from "../../apiHelpers";
 import {
   FullThemeCard,
   LoadingPage,

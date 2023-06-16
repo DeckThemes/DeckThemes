@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useState } from "react";
-import { checkAndRefreshToken, fetchDiscordUrl } from "../api";
+import { checkAndRefreshToken, fetchDiscordUrl } from "../apiHelpers";
 
 import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 import {

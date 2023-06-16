@@ -7,7 +7,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericGET } from "../../api";
+import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { MetaInfo } from "../../types";
 import { MiniDivider } from "../Generic";
 import {

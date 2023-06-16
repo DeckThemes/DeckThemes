@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { genericGET } from "../../api";
+import { genericGET } from "../../apiHelpers";
 import { ThemeQueryResponse } from "../../types";
 import { LoadingSpinner } from "../Generic";
 import { MiniThemeCardRoot } from "../Themes";

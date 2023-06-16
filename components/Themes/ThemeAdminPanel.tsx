@@ -4,7 +4,7 @@ import Link from "next/link";
 import { authContext } from "../../pages/_app";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
-import { fetchWithRefresh } from "../../api";
+import { fetchWithRefresh } from "../../apiHelpers";
 import { toast } from "react-toastify";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {

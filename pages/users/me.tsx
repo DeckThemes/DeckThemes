@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../_app";
-import { clearCookie, genericGET } from "../../api";
+import { clearCookie, genericGET } from "../../apiHelpers";
 import {
   DeckTokenDisplay,
   LoadingPage,

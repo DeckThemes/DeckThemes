@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { fetchDiscordUrl } from "../../api";
+import { fetchDiscordUrl } from "../../apiHelpers";
 
 export function LogInPage() {
   return (

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
 import { FiArrowDown } from "react-icons/fi";
-import { checkAndRefreshToken, genericGET } from "../../api";
+import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import {
   LoadingPage,
   LoadingSpinner,

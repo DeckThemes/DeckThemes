@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
 import { toast } from "react-toastify";
-import { checkAndRefreshToken } from "../../api";
+import { checkAndRefreshToken } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
 
 export default function TaskView() {
