@@ -88,7 +88,6 @@ export default function Account() {
           themeDataApiPath={`/users/${parsedId}/themes`}
           filterDataApiPath={`/users/${parsedId}/themes/filters`}
           title={`${calcDisplayName()} Themes`}
-          addPluginChoice
           noAuthRequired
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (
@@ -99,7 +98,6 @@ export default function Account() {
               themeDataApiPath={`/users/${parsedId}/stars`}
               filterDataApiPath={`/users/${parsedId}/stars/filters`}
               title={`${calcDisplayName()} Stars`}
-              addPluginChoice
             />
             <BigDivider />
             <UserThemeCategoryDisplay
@@ -108,7 +106,6 @@ export default function Account() {
               filterDataApiPath={`/users/${parsedId}/submissions/filters`}
               title={`${calcDisplayName()} Submissions`}
               useSubmissionCards
-              addPluginChoice
               showFiltersWithZero
               defaultFilter="AwaitingApproval"
             />
