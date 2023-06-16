@@ -25,7 +25,7 @@ export default function Submissions() {
               showFiltersWithZero
               useSubmissionCards
               themesPerPage={20}
-              typeOptionPreset="All"
+              typeOptionPreset="CSS+Audio"
               defaultFilter="AwaitingApproval"
             />
           </div>
