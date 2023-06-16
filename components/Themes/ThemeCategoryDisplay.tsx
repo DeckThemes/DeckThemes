@@ -16,7 +16,7 @@ import {
   typePresets,
 } from ".";
 
-export function UserThemeCategoryDisplay({
+export function ThemeCategoryDisplay({
   themeDataApiPath,
   filterDataApiPath,
   title,

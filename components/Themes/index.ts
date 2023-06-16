@@ -6,4 +6,4 @@ export * from "./ThemeAdminPanel";
 export * from "./MiniThemeCardRoot";
 export * from "./LoadMoreButton";
 export * from "./Search";
-export * from "./UserThemeCategoryDisplay";
+export * from "./ThemeCategoryDisplay";

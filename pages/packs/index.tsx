@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { UserThemeCategoryDisplay } from "../../components";
+import { ThemeCategoryDisplay } from "../../components";
 
 export default function Packs() {
   const router = useRouter();
@@ -10,7 +10,7 @@ export default function Packs() {
   >(undefined);
   useEffect(() => {
     if (router.isReady) {
-      let urlFilters, urlOrder, urlType;
+      let urlFilters, urlOrder;
       if (typeof router.query?.filters === "string") {
         urlFilters = router.query.filters;
       }
@@ -34,7 +34,7 @@ export default function Packs() {
           <h2 className="font-bold text-3xl md:text-5xl pt-4">AudioLoader Packs</h2>
         </div>
         {defaults !== undefined && (
-          <UserThemeCategoryDisplay
+          <ThemeCategoryDisplay
             {...defaults}
             themeDataApiPath="/themes"
             filterDataApiPath="/themes/filters"

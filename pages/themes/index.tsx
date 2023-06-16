@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { UserThemeCategoryDisplay } from "../../components";
+import { ThemeCategoryDisplay } from "../../components";
 
 export default function Themes() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function Themes() {
           <h2 className="font-bold text-3xl md:text-5xl pt-4">CSS Themes</h2>
         </div>
         {defaults !== undefined && (
-          <UserThemeCategoryDisplay
+          <ThemeCategoryDisplay
             {...defaults}
             themeDataApiPath="/themes"
             filterDataApiPath="/themes/filters"
