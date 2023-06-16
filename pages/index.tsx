@@ -85,12 +85,12 @@ export default function Home() {
                 </Link>
                 <HighlightReelView
                   apiURL="/themes?order=Most Downloaded&filters=CSS.Desktop&perPage=6"
-                  linkHref="/themes?order=Most Downloaded&filters=Desktop"
+                  linkHref="/themes?order=Most Downloaded&type=DESKTOP-CSS"
                   title="Popular Desktop Themes"
                 />
                 <HighlightReelView
                   apiURL="/themes?order=Last Updated&filters=CSS.Desktop&perPage=6"
-                  linkHref="/themes?order=Last Updated&filters=Desktop"
+                  linkHref="/themes?order=Last Updated&type=Desktop-CSS"
                   title="Recent Desktop Themes"
                 />
               </div>
@@ -101,12 +101,12 @@ export default function Home() {
               </Link>
               <HighlightReelView
                 apiURL="/themes?order=Most Downloaded&filters=CSS.-Desktop&perPage=6"
-                linkHref="/themes?order=Most Downloaded&filters=-Desktop"
+                linkHref={`/themes?order=Most Downloaded${desktopMode ? "&type=BPM-CSS" : ""}`}
                 title={`Popular ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
               <HighlightReelView
                 apiURL="/themes?order=Last Updated&filters=CSS.-Desktop&perPage=6"
-                linkHref="/themes?order=Last Updated&filters=-Desktop"
+                linkHref={`/themes?order=Last Updated${desktopMode ? "&type=BPM-CSS" : ""}`}
                 title={`Recent ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
             </div>

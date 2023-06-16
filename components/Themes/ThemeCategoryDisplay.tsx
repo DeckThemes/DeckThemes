@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, useCallback } from "react";
+import { useState, useEffect, useContext } from "react";
 import { generateParamStr, genericGET } from "../../api";
 import { authContext } from "../../pages/_app";
 import {
@@ -12,28 +12,36 @@ import {
   LoadMoreButton,
   MiniSubmissionCard,
   MiniThemeCardRoot,
-} from "../Themes";
+  TypeOptionPreset,
+  typePresets,
+} from ".";
 
-export function UserThemeCategoryDisplay({
+export function ThemeCategoryDisplay({
   themeDataApiPath,
   filterDataApiPath,
   title,
   useSubmissionCards,
-  addPluginChoice,
+  typeOptionPreset = "None",
   themesPerPage = 5,
   defaultFilter = "",
+  defaultOrder = "",
+  defaultType = "",
   noAuthRequired = false,
   showFiltersWithZero = false,
+  onSearchOptsChange = () => {},
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
   title: string;
+  typeOptionPreset?: TypeOptionPreset;
   useSubmissionCards?: boolean;
-  addPluginChoice?: boolean;
   themesPerPage?: number;
   defaultFilter?: string;
+  defaultOrder?: string;
+  defaultType?: string;
   noAuthRequired?: boolean;
   showFiltersWithZero?: boolean;
+  onSearchOptsChange?: (searchOpts: any, type: any) => void;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -45,22 +53,21 @@ export function UserThemeCategoryDisplay({
     page: 1,
     perPage: themesPerPage,
     filters: defaultFilter,
-    order: "",
+    order: defaultOrder,
     search: "",
   });
   const [themeData, setThemeData] = useState<ThemeQueryResponse | ThemeSubmissionQueryResponse>({
     total: 0,
     items: [],
   });
-  const [cssOrAudio, setCSSAudio] = useState<"CSS" | "AUDIO" | "" | undefined>(
-    addPluginChoice ? "" : undefined
-  );
+  const [type, setType] = useState<string>(defaultType);
 
   function fetchNewData() {
-    // Submissions should include both, which to the api is an empty string
-    const prependValue = addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS.";
-    // This just changes "All" to "", as that is what the backend looks for
+    // If there is a prepend value AND a filter, the generateParamStr function will separate them with a '.'
+    const prependValue = typeOptionPreset || type ? `${type}` : "";
+    // Turns the object of orders/filters/etc into an actual html query string
     const searchOptStr = generateParamStr(
+      // This just changes "All" to an empty string
       searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
       prependValue
     );
@@ -71,37 +78,42 @@ export function UserThemeCategoryDisplay({
     });
   }
 
+  // These are split into 2 useEffect's as I found it silly to re-fetch filters every time searchOpts changes
   useEffect(() => {
     if (accountInfo?.username || noAuthRequired) {
       fetchNewData();
+      onSearchOptsChange(searchOpts, type);
     }
-  }, [searchOpts, accountInfo, cssOrAudio]);
-
+  }, [searchOpts, accountInfo, type, noAuthRequired]);
   useEffect(() => {
-    if (accountInfo?.id) {
-      genericGET(`${filterDataApiPath}?type=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`).then(
-        (data) => {
-          if (data) {
-            setServerFilters(data);
-          }
+    if (accountInfo?.username || noAuthRequired) {
+      genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then((data) => {
+        if (data) {
+          setServerFilters(data);
         }
-      );
+      });
     }
-  }, [accountInfo, cssOrAudio]);
+  }, [accountInfo, type, noAuthRequired]);
 
   useEffect(() => {
-    // This ensures if you switch from themes to packs or vice versa, that it resets your filter so that you see all entries again
+    // This ensures if you switch types, that it resets your filter so that you see all entries again
+    // This could just be made to reset your filter on ANY type change, however I think until this proves too cumbersome to handle, it's fine as is
     if (
-      cssOrAudio === "CSS" &&
+      type.includes("CSS") &&
       (searchOpts.filters === "Music" || searchOpts.filters === "Audio")
     ) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
-
-    if (cssOrAudio === "AUDIO" && searchOpts.filters !== "All") {
+    if (type.includes("DESKTOP") && !searchOpts.filters.includes("Desktop")) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
-  }, [cssOrAudio]);
+    if (type.includes("BPM") && searchOpts.filters.includes("Desktop")) {
+      setSearchOpts({ ...searchOpts, filters: "All" });
+    }
+    if (type.includes("AUDIO") && searchOpts.filters !== "All") {
+      setSearchOpts({ ...searchOpts, filters: "All" });
+    }
+  }, [type]);
 
   return (
     <>
@@ -124,15 +136,14 @@ export function UserThemeCategoryDisplay({
             onSearchChange={(e) => {
               setSearchOpts({ ...searchOpts, search: e.target.value });
             }}
-            cssOrAudioValue={cssOrAudio}
-            onCSSAudioChange={(e) => {
-              setCSSAudio(e.target.value);
+            typeOptions={typePresets[typeOptionPreset]}
+            onTypeChange={(e) => {
+              setType(e.target.value);
             }}
+            typeValue={type}
           />
           <div className="flex flex-col md:flex-row w-full justify-center items-center md:items-stretch flex-wrap gap-4">
-            {themeData.total === 0 && (
-              <span>No {cssOrAudio === "AUDIO" ? "Packs" : "Themes"} Found</span>
-            )}
+            {themeData.total === 0 && <span>No Results Found</span>}
             {useSubmissionCards ? (
               <>
                 {themeData.items.map((e, i) => {
@@ -155,11 +166,9 @@ export function UserThemeCategoryDisplay({
               themeArr={themeData}
               setThemeArr={setThemeData}
               fetchPath={themeDataApiPath}
-              paramStrFilterPrepend={
-                addPluginChoice ? `${cssOrAudio}.` : useSubmissionCards ? "" : "CSS."
-              }
+              paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
               origSearchOpts={searchOpts}
-              cssOrAudio={cssOrAudio}
+              type={type}
             />
           </div>
         </div>

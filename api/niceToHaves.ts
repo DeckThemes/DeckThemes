@@ -4,7 +4,7 @@ export function generateParamStr(origSearchOpts: any, filterPrepend: string = ""
   // This can be done with 'new URLSearchParams(obj)' but I want more control
   const searchOpts = cloneDeep(origSearchOpts);
   if (filterPrepend) {
-    searchOpts.filters = filterPrepend + searchOpts.filters;
+    searchOpts.filters = filterPrepend + `${searchOpts.filters ? `.${searchOpts.filters}` : ``}`;
   }
   let paramString = "?";
   Object.keys(searchOpts).forEach((key, i) => {

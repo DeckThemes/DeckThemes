@@ -6,7 +6,7 @@ import {
   LoadingPage,
   LogInPage,
   PfpDisplay,
-  UserThemeCategoryDisplay,
+  ThemeCategoryDisplay,
 } from "../../components";
 import Head from "next/head";
 import { useHasCookie } from "../../hooks";
@@ -63,26 +63,26 @@ export default function Account() {
         <main className="flex flex-col items-center w-full">
           <PfpDisplay userData={meInfo || accountInfo} />
           <div className="mt-4" />
-          <UserThemeCategoryDisplay
+          <ThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/stars"
             filterDataApiPath={`/users/me/stars/filters`}
             title="Starred Themes"
-            addPluginChoice
           />
           <BigDivider />
-          <UserThemeCategoryDisplay
+          <ThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/themes"
             filterDataApiPath={`/users/me/themes/filters`}
             title="Your Approved Themes"
-            addPluginChoice
           />
           <BigDivider />
-          <UserThemeCategoryDisplay
+          <ThemeCategoryDisplay
+            typeOptionPreset="All"
             themeDataApiPath="/users/me/submissions"
             filterDataApiPath={`/users/me/submissions/filters`}
             title="Your Submissions"
             useSubmissionCards
-            addPluginChoice
             showFiltersWithZero
             defaultFilter="AwaitingApproval"
           />

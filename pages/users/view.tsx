@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
 import { genericGET } from "../../api";
 import { AccountData, Permissions } from "../../types";
-import { LoadingSpinner, PfpDisplay, UserThemeCategoryDisplay } from "../../components";
+import { LoadingSpinner, PfpDisplay, ThemeCategoryDisplay } from "../../components";
 import Head from "next/head";
 
 function BigDivider() {
@@ -83,29 +83,29 @@ export default function Account() {
       <main className="flex flex-col items-center w-full">
         <PfpDisplay userData={userInfo} />
         <div className="mt-4" />
-        <UserThemeCategoryDisplay
+        <ThemeCategoryDisplay
+          typeOptionPreset="All"
           themeDataApiPath={`/users/${parsedId}/themes`}
           filterDataApiPath={`/users/${parsedId}/themes/filters`}
           title={`${calcDisplayName()} Themes`}
-          addPluginChoice
           noAuthRequired
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (
           <>
             <BigDivider />
-            <UserThemeCategoryDisplay
+            <ThemeCategoryDisplay
+              typeOptionPreset="All"
               themeDataApiPath={`/users/${parsedId}/stars`}
               filterDataApiPath={`/users/${parsedId}/stars/filters`}
               title={`${calcDisplayName()} Stars`}
-              addPluginChoice
             />
             <BigDivider />
-            <UserThemeCategoryDisplay
+            <ThemeCategoryDisplay
+              typeOptionPreset="All"
               themeDataApiPath={`/users/${parsedId}/submissions`}
               filterDataApiPath={`/users/${parsedId}/submissions/filters`}
               title={`${calcDisplayName()} Submissions`}
               useSubmissionCards
-              addPluginChoice
               showFiltersWithZero
               defaultFilter="AwaitingApproval"
             />

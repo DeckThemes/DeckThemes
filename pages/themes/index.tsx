@@ -1,69 +1,33 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { generateThemeParamStr, genericGET } from "../../api";
-import {
-  MiniThemeCardRoot,
-  FilterSelectorCard,
-  LoadingSpinner,
-  LoadMoreButton,
-} from "../../components";
-import { FilterQueryResponse, ThemeQueryRequest, ThemeQueryResponse } from "../../types";
+import { ThemeCategoryDisplay } from "../../components";
 
 export default function Themes() {
   const router = useRouter();
-
-  const [themeArr, setThemeArr] = useState<ThemeQueryResponse>({ total: 0, items: [] });
-  const [loaded, setLoaded] = useState<boolean>(false);
-  const [ready, setReady] = useState<boolean>(false);
-
-  const [serverSearchOpts, setServerSearchOpts] = useState<FilterQueryResponse>({
-    filters: [],
-    order: [],
-  });
-  const [chosenSearchOpts, setChosenSearchOpts] = useState<ThemeQueryRequest>({
-    page: 1,
-    perPage: 24,
-    filters: "",
-    order: "",
-    search: "",
-  });
+  const [defaults, setDefaults] = useState<
+    { defaultFilter: string; defaultOrder: string; defaultType: string } | undefined
+  >(undefined);
   useEffect(() => {
-    if (ready) {
-      const searchOpts = generateThemeParamStr(chosenSearchOpts, "CSS.");
-      genericGET(`/themes${searchOpts}`, true).then((data) => {
-        if (data) {
-          setThemeArr(data);
-        }
-        setLoaded(true);
-      });
-    }
-  }, [chosenSearchOpts, ready]);
-
-  useEffect(() => {
-    genericGET("/themes/filters?type=CSS").then((filterData) => {
-      if (filterData) {
-        setServerSearchOpts(filterData);
-      }
-    });
     if (router.isReady) {
-      let urlFilters, urlOrder;
+      let urlFilters, urlOrder, urlType;
       if (typeof router.query?.filters === "string") {
         urlFilters = router.query.filters;
       }
       if (typeof router.query?.order === "string") {
         urlOrder = router.query.order;
       }
-      setChosenSearchOpts({
-        ...chosenSearchOpts,
-        filters: urlFilters || "",
-        order: urlOrder || "",
+      if (typeof router.query?.type === "string") {
+        urlType = router.query.type;
+      }
+      setDefaults({
+        defaultFilter: urlFilters || "",
+        defaultOrder: urlOrder || "",
+        defaultType: urlType || "",
       });
       // This ready here makes sure that themes aren't fetched until the initial url values have been pre-filled
-      setReady(true);
     }
   }, [router.query, router.pathname, router.isReady]);
-
   return (
     <>
       <Head>
@@ -72,71 +36,28 @@ export default function Themes() {
       <main className="flex flex-col items-center">
         <div className="flex flex-col items-center justify-center">
           <h2 className="font-bold text-3xl md:text-5xl pt-4">CSS Themes</h2>
-          <FilterSelectorCard
-            filterOpts={serverSearchOpts.filters}
-            onFilterChange={(e) => {
-              const newFilters = e.target.value;
+        </div>
+        {defaults !== undefined && (
+          <ThemeCategoryDisplay
+            {...defaults}
+            themeDataApiPath="/themes"
+            filterDataApiPath="/themes/filters"
+            title=""
+            typeOptionPreset="Desktop+BPM"
+            themesPerPage={24}
+            noAuthRequired
+            onSearchOptsChange={(searchOpts, type) => {
               router.push(
                 {
                   pathname: "/themes",
-                  query: { filters: newFilters, order: chosenSearchOpts.order },
+                  query: { filters: searchOpts.filters, order: searchOpts.order, type: type },
                 },
                 undefined,
                 { shallow: true }
               );
-              setChosenSearchOpts({ ...chosenSearchOpts, filters: newFilters });
-            }}
-            filterValue={chosenSearchOpts.filters}
-            orderOpts={serverSearchOpts.order}
-            onOrderChange={(e) => {
-              const newOrder = e.target.value;
-              router.push(
-                {
-                  pathname: "/themes",
-                  query: { filters: chosenSearchOpts.filters, order: newOrder },
-                },
-                undefined,
-                { shallow: true }
-              );
-              setChosenSearchOpts({ ...chosenSearchOpts, order: newOrder });
-            }}
-            orderValue={chosenSearchOpts.order}
-            searchValue={chosenSearchOpts.search}
-            onSearchChange={(e) => {
-              setChosenSearchOpts({ ...chosenSearchOpts, search: e.target.value });
             }}
           />
-          {themeArr.total > 0 ? (
-            <>
-              <div className="flex gap-4 flex-wrap items-center justify-center px-1 sm:px-10">
-                {themeArr.items.map((e) => {
-                  return <MiniThemeCardRoot data={e} key={`ThemeCard ${e.id}`} />;
-                })}
-              </div>
-
-              <div className="mt-4">
-                <LoadMoreButton
-                  themeArr={themeArr}
-                  setThemeArr={setThemeArr}
-                  paramStrFilterPrepend="CSS."
-                  fetchPath="/themes"
-                  origSearchOpts={chosenSearchOpts}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              {loaded ? (
-                <span className="pt-10 text-xl text-red-500">No Themes Found</span>
-              ) : (
-                <div className="flex items-center text-4xl gap-2 pt-10">
-                  <LoadingSpinner />
-                  <span>Loading</span>
-                </div>
-              )}
-            </>
-          )}
-        </div>
+        )}
       </main>
     </>
   );

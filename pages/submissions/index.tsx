@@ -1,10 +1,5 @@
 import Head from "next/head";
-import {
-  LoadingPage,
-  UnauthorizedPage,
-  LogInPage,
-  UserThemeCategoryDisplay,
-} from "../../components";
+import { LoadingPage, UnauthorizedPage, LogInPage, ThemeCategoryDisplay } from "../../components";
 import { useHasCookie } from "../../hooks";
 import { authContext } from "../_app";
 import { useContext } from "react";
@@ -23,14 +18,14 @@ export default function Submissions() {
         <main className="flex flex-col items-center">
           <div className="flex flex-col items-center justify-center px-10">
             <h2 className="font-bold text-5xl pt-8 pb-4">Submissions</h2>
-            <UserThemeCategoryDisplay
+            <ThemeCategoryDisplay
               themeDataApiPath="/submissions"
               filterDataApiPath="/submissions/filters"
               title=""
               showFiltersWithZero
               useSubmissionCards
               themesPerPage={20}
-              addPluginChoice
+              typeOptionPreset="All"
               defaultFilter="AwaitingApproval"
             />
           </div>
