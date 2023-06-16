@@ -75,11 +75,11 @@ export function UserThemeCategoryDisplay({
     if (accountInfo?.username || noAuthRequired) {
       fetchNewData();
     }
-  }, [searchOpts, accountInfo, cssOrAudio]);
+  }, [searchOpts, accountInfo, cssOrAudio, noAuthRequired]);
 
   useEffect(() => {
-    if (accountInfo?.id) {
-      genericGET(`${filterDataApiPath}?type=${cssOrAudio !== undefined ? cssOrAudio : "CSS"}`).then(
+    if (accountInfo?.username || noAuthRequired) {
+      genericGET(`${filterDataApiPath}${cssOrAudio ? `?type=${cssOrAudio}` : "?type=CSS"}`).then(
         (data) => {
           if (data) {
             setServerFilters(data);
@@ -87,7 +87,7 @@ export function UserThemeCategoryDisplay({
         }
       );
     }
-  }, [accountInfo, cssOrAudio]);
+  }, [accountInfo, cssOrAudio, noAuthRequired]);
 
   useEffect(() => {
     // This ensures if you switch from themes to packs or vice versa, that it resets your filter so that you see all entries again

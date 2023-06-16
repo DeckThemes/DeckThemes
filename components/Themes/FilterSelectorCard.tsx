@@ -2,6 +2,7 @@ import { DebounceInput } from "react-debounce-input";
 import Select from "react-select";
 import { ReactSelectCustomLabel, ReactSelectCustomClasses } from "../CustomDropdowns";
 import { FilterDropdown, OrderDropdown, SearchInput } from "./Search";
+import { TypeDropdown } from "./Search/TypeDropdown";
 
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
@@ -30,20 +31,6 @@ export function FilterSelectorCard({
   onCSSAudioChange?: (e: any) => void;
   searchOnly?: boolean;
 }) {
-  const formattedCssAudioOpts = [
-    {
-      value: "",
-      label: <ReactSelectCustomLabel mainText="CSS & Audio" />,
-    },
-    {
-      value: "CSS",
-      label: <ReactSelectCustomLabel mainText="CSS" />,
-    },
-    {
-      value: "AUDIO",
-      label: <ReactSelectCustomLabel mainText="Audio" />,
-    },
-  ];
   return (
     <>
       <div className="flex flex-col md:flex-row gap-2 p-4 text-xl">
@@ -54,26 +41,24 @@ export function FilterSelectorCard({
           </>
         )}
         <SearchInput {...{ onSearchChange }} />
-        {cssOrAudioValue !== undefined && (
-          <>
-            <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
-              <span>Type</span>
-              <Select
-                value={
-                  formattedCssAudioOpts.find((e) => e.value === cssOrAudioValue) ||
-                  formattedCssAudioOpts[0]
-                }
-                onChange={(e) => {
-                  onCSSAudioChange && onCSSAudioChange({ target: e });
-                }}
-                maxMenuHeight={400}
-                {...ReactSelectCustomClasses}
-                isSearchable={false}
-                options={formattedCssAudioOpts}
-              />
-            </div>
-          </>
-        )}
+        <TypeDropdown
+          typeValue={cssOrAudioValue}
+          onTypeChange={onCSSAudioChange}
+          typeOptions={[
+            {
+              value: "",
+              displayText: "CSS & Audio",
+            },
+            {
+              value: "CSS",
+              displayText: "CSS",
+            },
+            {
+              value: "AUDIO",
+              displayText: "Audio",
+            },
+          ]}
+        />
       </div>
     </>
   );
