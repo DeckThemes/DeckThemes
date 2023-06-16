@@ -5,9 +5,6 @@ const nextConfig = {
   trailingSlash: false,
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    runtime: "experimental-edge",
-  },
   async redirects() {
     return [
       {
