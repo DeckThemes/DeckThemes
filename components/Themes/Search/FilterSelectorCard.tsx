@@ -34,7 +34,9 @@ export function FilterSelectorCard({
       <div className="flex flex-col md:flex-row gap-2 p-4 text-xl">
         {!searchOnly && (
           <>
-            <FilterDropdown {...{ filterValue, filterOpts, onFilterChange, showFiltersWithZero }} />
+            <FilterDropdown
+              {...{ filterValue, filterOpts, onFilterChange, showFiltersWithZero, typeValue }}
+            />
             <OrderDropdown {...{ orderValue, onOrderChange, orderOpts }} />
           </>
         )}

@@ -24,8 +24,11 @@ export function UserThemeCategoryDisplay({
   typeOptionPreset = "None",
   themesPerPage = 5,
   defaultFilter = "",
+  defaultOrder = "",
+  defaultType = "",
   noAuthRequired = false,
   showFiltersWithZero = false,
+  onSearchOptsChange = () => {},
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
@@ -34,8 +37,11 @@ export function UserThemeCategoryDisplay({
   useSubmissionCards?: boolean;
   themesPerPage?: number;
   defaultFilter?: string;
+  defaultOrder?: string;
+  defaultType?: string;
   noAuthRequired?: boolean;
   showFiltersWithZero?: boolean;
+  onSearchOptsChange?: (searchOpts: any, type: any) => void;
 }) {
   const { accountInfo } = useContext(authContext);
 
@@ -47,14 +53,14 @@ export function UserThemeCategoryDisplay({
     page: 1,
     perPage: themesPerPage,
     filters: defaultFilter,
-    order: "",
+    order: defaultOrder,
     search: "",
   });
   const [themeData, setThemeData] = useState<ThemeQueryResponse | ThemeSubmissionQueryResponse>({
     total: 0,
     items: [],
   });
-  const [type, setType] = useState<string>("");
+  const [type, setType] = useState<string>(defaultType);
 
   function fetchNewData() {
     // If there is a prepend value AND a filter, the generateParamStr function will separate them with a '.'
@@ -76,6 +82,7 @@ export function UserThemeCategoryDisplay({
   useEffect(() => {
     if (accountInfo?.username || noAuthRequired) {
       fetchNewData();
+      onSearchOptsChange(searchOpts, type);
     }
   }, [searchOpts, accountInfo, type, noAuthRequired]);
   useEffect(() => {

@@ -3,11 +3,13 @@ import Select from "react-select";
 
 export function FilterDropdown({
   filterOpts = ["ERROR"],
+  typeValue,
   filterValue,
   showFiltersWithZero,
   onFilterChange,
 }: {
   filterOpts?: string[];
+  typeValue?: string;
   filterValue: string;
   showFiltersWithZero?: boolean;
   onFilterChange?: (e: any) => void;
@@ -29,7 +31,20 @@ export function FilterDropdown({
       .filter(([_, itemCount]) => Number(itemCount) > 0 || true)
       .map(([filterName, itemCount]) => ({
         value: filterName,
-        label: <ReactSelectCustomLabel mainText={filterName} bubbleValue={itemCount} />,
+        label: (
+          <ReactSelectCustomLabel
+            // TODO: Refactor
+            // This is a little bit of cursed logic that will convert target names like "Desktop-Library" to just "Library"
+            mainText={
+              typeValue &&
+              typeValue?.toLowerCase()?.includes("desktop") &&
+              filterName.toLowerCase().includes(`desktop-`)
+                ? `${filterName.slice(filterName.indexOf("-") + 1)}`
+                : filterName
+            }
+            bubbleValue={itemCount}
+          />
+        ),
       })),
   ];
   return (
