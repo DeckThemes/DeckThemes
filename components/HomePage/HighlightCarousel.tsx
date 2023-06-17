@@ -94,7 +94,7 @@ export function HighlightCarousel({
         </div>
         <div>
           <HighlightCardView
-            apiURL={`/themes?filters=${options[currentNumber].searchFilter}${orderUrl}`}
+            apiURL={`/themes?perPage=5&filters=${options[currentNumber].searchFilter}${orderUrl}`}
             viewMoreURL={`${options[currentNumber].hrefLink + orderUrl}`}
           />
         </div>
