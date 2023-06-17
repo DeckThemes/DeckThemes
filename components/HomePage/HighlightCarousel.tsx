@@ -40,13 +40,13 @@ export function HighlightCarousel({
     return new Promise<void>((resolve) => {
       const animationEnded = () => {
         target.style.opacity = 0;
-        target.style.transform = `translate(0, -50%)`;
+        target.style.transform = `translateX(0)`;
         target.onanimationend = null;
         target.style.animation = null;
         resolve();
       };
       target.onanimationend = animationEnded;
-      target.style.transform = `translate(-50px, -50%)`;
+      target.style.transform = `translateX(-50px)`;
       target.style.animation = `fade-out ${animationDuration}ms 1`;
     });
   }
@@ -66,26 +66,26 @@ export function HighlightCarousel({
   return (
     <>
       <div className="flex flex-col w-full gap-4">
-        <div className="border-b-2 relative border-black dark:border-white w-full flex justify-between items-center h-16">
+        <div className="border-b-2 relative border-black dark:border-white w-full flex flex-col sm:flex-row items-center h-28 sm:h-16">
           {/* This is some cursed ass code but it lets me transition the titles so that the "header" section doesn't have to move with the rest of the carousel */}
           {options.map((e, i) => {
             return (
-              <h2
+              // Rewrote this to be a container div as that way I wouldn't need to touch translateY, makes my life easier
+              <div
                 ref={titleRefArr[i]}
                 key={`Carousel_Title_${i}`}
                 style={{
-                  transform: "translateY(-50%)",
                   transitionDuration: `${animationDuration}`,
                 }}
-                className={`text-3xl font-semibold absolute left-0 top-1/2 transition-transform ${
+                className={`text-3xl font-semibold flex items-center h-16 absolute sm:left-0 transition-transform ${
                   i === 0 ? "opacity-100" : "opacity-0"
                 }`}
               >
-                {e.title}
-              </h2>
+                <h2>{e.title}</h2>
+              </div>
             );
           })}
-          <div className="ml-auto">
+          <div className="mt-auto sm:mt-0 sm:ml-auto pb-4 sm:pb-0">
             <OrderValueToggle
               {...{ orderValue, setOrderValue }}
               orderOptions={["Popular", "Recent"]}

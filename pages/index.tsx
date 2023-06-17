@@ -73,7 +73,7 @@ export default function Home() {
           </div>
         )} */}
         <div
-          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row xl:items-start"
+          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative sm:w-11/12"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >
@@ -93,59 +93,6 @@ export default function Home() {
               { title: "AudioLoader Packs", searchFilter: "AUDIO", hrefLink: "/packs?" },
             ]}
           />
-          <>
-            {/* {desktopMode && (
-              <div className="w-10/12 flex flex-col gap-8 items-center">
-                <Link href="/themes">
-                  <ColorfulTitle>Desktop Steam</ColorfulTitle>
-                </Link>
-                <HighlightReelView
-                  apiURL="/themes?order=Most Downloaded&filters=CSS.Desktop&perPage=6"
-                  linkHref="/themes?order=Most Downloaded&type=DESKTOP-CSS"
-                  title="Popular Desktop Themes"
-                />
-                <HighlightReelView
-                  apiURL="/themes?order=Last Updated&filters=CSS.Desktop&perPage=6"
-                  linkHref="/themes?order=Last Updated&type=Desktop-CSS"
-                  title="Recent Desktop Themes"
-                />
-              </div>
-            )}
-            <div className="w-10/12 flex flex-col gap-8 items-center">
-              <Link href="/themes">
-                <ColorfulTitle>{desktopMode ? "Big Picture Mode" : "CSS Loader"}</ColorfulTitle>
-              </Link>
-              <HighlightReelView
-                apiURL="/themes?order=Most Downloaded&filters=CSS.-Desktop&perPage=6"
-                linkHref={`/themes?order=Most Downloaded${desktopMode ? "&type=BPM-CSS" : ""}`}
-                title={`Popular ${desktopMode ? "Big Picture" : "CSS"} Themes`}
-              />
-              <HighlightReelView
-                apiURL="/themes?order=Last Updated&filters=CSS.-Desktop&perPage=6"
-                linkHref={`/themes?order=Last Updated${desktopMode ? "&type=BPM-CSS" : ""}`}
-                title={`Recent ${desktopMode ? "Big Picture" : "CSS"} Themes`}
-              />
-            </div>
-            {!desktopMode && (
-              <>
-                <div className="w-10/12 flex flex-col gap-8 items-center">
-                  <Link href="/packs">
-                    <ColorfulTitle>Audio Loader</ColorfulTitle>
-                  </Link>
-                  <HighlightReelView
-                    apiURL="/themes?order=Most Downloaded&filters=AUDIO&perPage=6"
-                    linkHref="/packs?order=Most Downloaded"
-                    title="Popular Audio Packs"
-                  />
-                  <HighlightReelView
-                    apiURL="/themes?order=Last Updated&filters=AUDIO&perPage=6"
-                    linkHref="/packs?order=Last Updated"
-                    title="Recent Audio Packs"
-                  />
-                </div>
-              </>
-            )} */}
-          </>
         </div>
       </main>
     </>
