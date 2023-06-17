@@ -3,6 +3,7 @@ import { ThemeQueryResponse } from "../../types";
 import { genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
 import { LoadingSkeletonCard, MiniThemeCardRoot, ViewMoreCard } from "../Themes";
+import { useVW } from "../../hooks";
 
 export function HighlightCardView({
   apiURL,
@@ -13,6 +14,7 @@ export function HighlightCardView({
 }) {
   const [themeData, setData] = useState<ThemeQueryResponse>();
   const [loaded, setLoaded] = useState<boolean>(false);
+  const vw = useVW();
   useEffect(() => {
     setLoaded(false);
     genericGET(apiURL).then((data) => {
@@ -32,9 +34,19 @@ export function HighlightCardView({
             <>
               {themeData?.total ? (
                 <>
-                  {themeData.items.map((e, i) => {
-                    return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
-                  })}
+                  {themeData.items
+                    .filter((_, i) => {
+                      if (vw >= 1188 && vw < 1488) {
+                        return i <= 2;
+                      }
+                      if (vw >= 1488 && vw < 1790) {
+                        return i <= 3;
+                      }
+                      return true;
+                    })
+                    .map((e, i) => {
+                      return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
+                    })}
                   <ViewMoreCard href={viewMoreURL} />
                 </>
               ) : null}
