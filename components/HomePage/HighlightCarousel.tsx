@@ -13,7 +13,6 @@ export function HighlightCarousel({
     hrefLink: string;
   }[];
 }) {
-  const numItems = 3;
   const [orderValue, setOrderValue] = useState<string>("Popular");
   const [currentNumber, setCurrentNumber] = useState<number>(0);
   const [transitioning, setTransitioning] = useState<boolean>(false);
@@ -24,12 +23,8 @@ export function HighlightCarousel({
   // This gives each title a ref so that it can be animated later
   const [titleRefArr, setTitleRefArr] = useState<any[]>([]);
   useEffect(() => {
-    setTitleRefArr(
-      Array(numItems)
-        .fill("")
-        .map((e) => createRef())
-    );
-  }, [numItems]);
+    setTitleRefArr(options.map(() => createRef()));
+  }, [options]);
 
   async function handleCarouselShift(newNumber: number) {
     setTransitioning(true);
@@ -104,22 +99,20 @@ export function HighlightCarousel({
           />
         </div>
         <div className="flex self-center gap-4">
-          {Array(numItems)
-            .fill("")
-            .map((_, i) => {
-              return (
-                <button
-                  disabled={i === currentNumber || transitioning}
-                  onClick={() => i !== currentNumber && handleCarouselShift(i)}
-                  key={`Carousel_Dot_${i}`}
-                  className={`w-4 h-4 ${
-                    i === currentNumber
-                      ? `bg-borderLight dark:bg-borderDark`
-                      : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
-                  } rounded-full transition-colors duration-500`}
-                ></button>
-              );
-            })}
+          {options.map((_, i) => {
+            return (
+              <button
+                disabled={i === currentNumber || transitioning}
+                onClick={() => i !== currentNumber && handleCarouselShift(i)}
+                key={`Carousel_Dot_${i}`}
+                className={`w-4 h-4 ${
+                  i === currentNumber
+                    ? `bg-borderLight dark:bg-borderDark`
+                    : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
+                } rounded-full transition-colors duration-500`}
+              ></button>
+            );
+          })}
         </div>
       </div>
     </>
