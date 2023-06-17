@@ -7,6 +7,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        shimmer: {
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+      },
       height: {
         screenMinusHeader: "calc(100vh - 4rem)",
       },
@@ -107,6 +114,14 @@ module.exports = {
       },
     },
   },
+  safelist: [
+    "opacity-0",
+    "opacity-100",
+    "bg-elevation-2-light",
+    "dark:bg-elevation-2-dark",
+    "hover:bg-elevation-3-light",
+    "dark:hover:bg-elevation-3-dark",
+  ],
   plugins: [],
   darkMode: "class",
 };

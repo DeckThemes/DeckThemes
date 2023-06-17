@@ -1,4 +1,4 @@
-import { PartialCSSThemeInfo } from "../../types";
+import { PartialCSSThemeInfo } from "../../../types";
 import Link from "next/link";
 
 // This essentially just takes in the theme data and either returns an audio card or a css card

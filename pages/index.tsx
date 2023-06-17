@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRef, ReactNode, useContext } from "react";
-import { HighlightReelView } from "../components";
+import { HighlightCarousel, HighlightReelView } from "../components";
 import { BsArrowDown } from "react-icons/bs";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
@@ -45,7 +45,7 @@ export default function Home() {
         />
       </Head>
       <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
-        {!desktopMode && (
+        {/* {!desktopMode && (
           <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
             <div className="w-full h-full bg-black overflow-hidden">
               <div
@@ -71,14 +71,30 @@ export default function Home() {
               <BsArrowDown size={60} />
             </button>
           </div>
-        )}
+        )} */}
         <div
           className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative xl:w-11/12 xl:flex-row xl:items-start"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >
+          <HighlightCarousel
+            options={[
+              {
+                title: "Desktop CSS Themes",
+                searchFilter: "DESKTOP-CSS",
+                hrefLink: "/themes?type=DESKTOP-CSS",
+              },
+              {
+                title: "BPM CSS Themes",
+                searchFilter: "BPM-CSS",
+                hrefLink: "/themes?type=BPM-CSS",
+              },
+              // This has a trailing ? because the link filler only knows to add "&order="
+              { title: "AudioLoader Packs", searchFilter: "AUDIO", hrefLink: "/packs?" },
+            ]}
+          />
           <>
-            {desktopMode && (
+            {/* {desktopMode && (
               <div className="w-10/12 flex flex-col gap-8 items-center">
                 <Link href="/themes">
                   <ColorfulTitle>Desktop Steam</ColorfulTitle>
@@ -128,7 +144,7 @@ export default function Home() {
                   />
                 </div>
               </>
-            )}
+            )} */}
           </>
         </div>
       </main>

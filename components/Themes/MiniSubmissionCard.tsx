@@ -5,7 +5,7 @@ import {
   FormattedSubmissionIntentAudio,
   ThemeSubmissionInfo,
 } from "../../types";
-import { MiniThemeCardRoot } from "./MiniThemeCardRoot";
+import { MiniThemeCardRoot } from ".";
 
 export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
   return (

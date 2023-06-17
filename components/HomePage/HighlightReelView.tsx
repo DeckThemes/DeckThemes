@@ -24,7 +24,7 @@ export function HighlightReelView({
       }
       setLoaded(true);
     });
-  }, []);
+  }, [apiURL]);
 
   return (
     <>
