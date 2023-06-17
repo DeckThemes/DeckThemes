@@ -101,12 +101,16 @@ export default function Home() {
               </Link>
               <HighlightReelView
                 apiURL="/themes?order=Most Downloaded&filters=CSS.-Desktop&perPage=6"
-                linkHref={`/themes?order=Most Downloaded${desktopMode ? "&type=BPM-CSS" : ""}`}
+                linkHref={`/themes?order=Most Downloaded${
+                  desktopMode ? "&type=BPM-CSS" : "&type=CSS"
+                }`}
                 title={`Popular ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
               <HighlightReelView
                 apiURL="/themes?order=Last Updated&filters=CSS.-Desktop&perPage=6"
-                linkHref={`/themes?order=Last Updated${desktopMode ? "&type=BPM-CSS" : ""}`}
+                linkHref={`/themes?order=Last Updated${
+                  desktopMode ? "&type=BPM-CSS" : "&type=CSS"
+                }`}
                 title={`Recent ${desktopMode ? "Big Picture" : "CSS"} Themes`}
               />
             </div>
