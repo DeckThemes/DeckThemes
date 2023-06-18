@@ -49,7 +49,7 @@ export function FilterDropdown({
   ];
   return (
     <>
-      <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
+      <div className="flex flex-col rounded-md gap-2">
         <span>Filter</span>
         <Select
           // This sets initial value to "All" if not pre-set

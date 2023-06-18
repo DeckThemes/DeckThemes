@@ -31,7 +31,8 @@ export function FilterSelectorCard({
 }) {
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-2 p-4 text-xl">
+      <div className="w-full max-w-7xl flex flex-col md:flex-row gap-2 my-4 text-xl">
+	  	<SearchInput {...{ onSearchChange }} />
         {!searchOnly && (
           <>
             <FilterDropdown
@@ -40,7 +41,6 @@ export function FilterSelectorCard({
             <OrderDropdown {...{ orderValue, onOrderChange, orderOpts }} />
           </>
         )}
-        <SearchInput {...{ onSearchChange }} />
         {typeOptions !== undefined && (
           <TypeDropdown
             typeValue={typeValue}

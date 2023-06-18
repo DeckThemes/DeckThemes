@@ -24,7 +24,7 @@ export function OrderDropdown({
         ];
   return (
     <>
-      <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
+      <div className="flex flex-col rounded-md gap-2">
         <span>Order</span>
         <Select
           value={formattedOrderOpts.find((e) => e.value === orderValue) || formattedOrderOpts[0]}

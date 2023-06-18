@@ -49,3 +49,7 @@ h4 {
 .text-glow-lgDark {
   text-shadow: rgb(0, 0, 0) 0px 0 20px;
 }
+
+.page-shadow {
+	box-shadow: 0px 0px 30px hsl(220, 5%, 0%)
+}

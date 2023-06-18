@@ -44,7 +44,7 @@ export default function Home() {
           content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
         />
       </Head>
-      <main className="w-full flex flex-col items-center justify-center flex-grow gap-4">
+      <main className="flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
         {/* {!desktopMode && (
           <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
             <div className="w-full h-full bg-black overflow-hidden">
@@ -73,7 +73,7 @@ export default function Home() {
           </div>
         )} */}
         <div
-          className="flex flex-col w-full items-center gap-8 pt-10 text-center h-full relative sm:w-11/12"
+          className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >

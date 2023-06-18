@@ -65,8 +65,8 @@ export function HighlightCarousel({
 
   return (
     <>
-      <div className="flex flex-col w-full gap-4">
-        <div className="border-b-2 relative border-black dark:border-white w-full flex flex-col sm:flex-row items-center h-28 sm:h-16">
+      <div className="flex flex-col w-full gap-4 max-w-7xl">
+        <div className="border-b-[1px] relative border-black dark:border-borders-base1-dark w-full flex flex-col items-center py-8">
           {/* This is some cursed ass code but it lets me transition the titles so that the "header" section doesn't have to move with the rest of the carousel */}
           {options.map((e, i) => {
             return (
@@ -77,15 +77,15 @@ export function HighlightCarousel({
                 style={{
                   transitionDuration: `${animationDuration}`,
                 }}
-                className={`text-3xl font-semibold flex items-center h-16 absolute sm:left-0 transition-transform ${
+                className={`text-3xl font-semibold flex items-center absolute transition-transform ${
                   i === 0 ? "opacity-100" : "opacity-0"
                 }`}
               >
-                <h2>{e.title}</h2>
+                <h2 className="font-bold text-3xl md:text-5xl pt-4">{e.title}</h2>
               </div>
             );
           })}
-          <div className="mt-auto sm:mt-0 sm:ml-auto pb-4 sm:pb-0">
+          <div className="pt-24 pb-4">
             <OrderValueToggle
               {...{ orderValue, setOrderValue }}
               orderOptions={["Popular", "Recent"]}

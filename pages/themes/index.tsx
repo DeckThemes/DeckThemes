@@ -33,8 +33,8 @@ export default function Themes() {
       <Head>
         <title>DeckThemes | CSSLoader Themes</title>
       </Head>
-      <main className="flex flex-col items-center">
-        <div className="flex flex-col items-center justify-center">
+      <main className="flex flex-col items-center page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+        <div className="flex flex-col items-center mb-12">
           <h2 className="font-bold text-3xl md:text-5xl pt-4">CSS Themes</h2>
         </div>
         {defaults !== undefined && (
