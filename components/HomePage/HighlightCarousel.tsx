@@ -92,27 +92,31 @@ export function HighlightCarousel({
             />
           </div>
         </div>
-        <div>
-          <HighlightCardView
-            apiURL={`/themes?perPage=5&filters=${options[currentNumber].searchFilter}${orderUrl}`}
-            viewMoreURL={`${options[currentNumber].hrefLink + orderUrl}`}
-          />
-        </div>
-        <div className="flex self-center gap-4">
-          {options.map((_, i) => {
-            return (
-              <button
-                disabled={i === currentNumber || transitioning}
-                onClick={() => i !== currentNumber && handleCarouselShift(i)}
-                key={`Carousel_Dot_${i}`}
-                className={`w-4 h-4 ${
-                  i === currentNumber
-                    ? `bg-borderLight dark:bg-borderDark`
-                    : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
-                } rounded-full transition-colors duration-500`}
-              ></button>
-            );
-          })}
+        <div className="flex flex-col-reverse sm:flex-col w-full gap-4">
+          <div>
+            <HighlightCardView
+              apiURL={`/themes?perPage=5&filters=${options[currentNumber].searchFilter}${orderUrl}`}
+              viewMoreURL={`${options[currentNumber].hrefLink + orderUrl}`}
+            />
+          </div>
+          <div className="flex flex-col sm:flex-row self-center gap-4">
+            {options.map((e, i) => {
+              return (
+                <button
+                  disabled={i === currentNumber || transitioning}
+                  onClick={() => i !== currentNumber && handleCarouselShift(i)}
+                  key={`Carousel_Dot_${i}`}
+                  className={`w-32 h-8 ${
+                    i === currentNumber
+                      ? `bg-borderLight dark:bg-borderDark`
+                      : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
+                  } rounded-full transition-colors duration-500`}
+                >
+                  <span>{e.title.slice(0, e.title.indexOf(" "))}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
     </>
