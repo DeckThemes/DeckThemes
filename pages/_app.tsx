@@ -7,7 +7,6 @@ import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
@@ -26,8 +25,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
-
-  const router = useRouter();
 
   function initSetTheme(): void {
     //Sets dark theme based on browser preferences, but also allows for manual changing
@@ -105,7 +102,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     theme={theme}
                   />
                   <Component {...pageProps} />
-                  <div className="mt-auto pt-20">
+                  <div className="mt-auto">
                     <Footer />
                   </div>
                 </>

@@ -1,8 +1,9 @@
 import Image from "next/image";
 import { Permissions, UserInfo } from "../../types";
 import { BsWrench } from "react-icons/bs";
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+// import { Tooltip } from "react-tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "../Primitives";
 import { SupporterIcon } from "./SupporterIcon";
 
 export function PfpDisplay({ userData }: { userData?: UserInfo }) {
@@ -21,11 +22,9 @@ export function PfpDisplay({ userData }: { userData?: UserInfo }) {
           <div className="flex flex-row w-full text-3xl items-center justify-center">
             {userData?.permissions.includes(Permissions.admin) && (
               <>
-                <BsWrench id="maintainer-tt" />
                 <Tooltip
-                  anchorSelect="#maintainer-tt"
-                  content="DeckThemes Maintainer"
-                  place="bottom"
+                  triggerContent={<BsWrench />}
+                  content={<span>DeckThemes Maintainer</span>}
                 />
               </>
             )}

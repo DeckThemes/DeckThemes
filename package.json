@@ -13,6 +13,7 @@
     "@icons-pack/react-simple-icons": "^6.2.0",
     "@next/bundle-analyzer": "^13.1.4",
     "@next/font": "^13.0.3",
+    "@radix-ui/react-tooltip": "^1.0.6",
     "@types/lodash": "^4.14.191",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
@@ -36,6 +37,7 @@
     "react-select": "^5.7.0",
     "react-toastify": "^9.1.1",
     "react-tooltip": "^5.9.1",
+    "tailwind-merge": "^1.13.2",
     "typescript": "4.9.3"
   },
   "devDependencies": {
