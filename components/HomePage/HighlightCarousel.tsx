@@ -110,7 +110,7 @@ export function HighlightCarousel({
                     i === currentNumber
                       ? `bg-borderLight dark:bg-borderDark`
                       : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
-                  } rounded-full transition-colors duration-500`}
+                  } rounded-full transition-colors duration-500 font-fancy`}
                 >
                   <span>{e.title.slice(0, e.title.indexOf(" "))}</span>
                 </button>

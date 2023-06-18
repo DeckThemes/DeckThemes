@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRef, ReactNode, useContext } from "react";
-import { HighlightCarousel, HighlightReelView } from "../components";
+import { HighlightCarousel } from "../components";
 import { BsArrowDown } from "react-icons/bs";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";

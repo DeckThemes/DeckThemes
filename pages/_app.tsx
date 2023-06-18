@@ -1,12 +1,13 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Footer, MainNav } from "../components";
+import { Footer, LoadingPage, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { Theme, themeContext } from "../styles";
 import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
@@ -23,8 +24,10 @@ export const desktopModeContext = createContext<any>({
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState<Theme>("dark");
 
-  const [desktopMode, setDesktopMode] = useState<boolean>(false);
+  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
+
+  const router = useRouter();
 
   function initSetTheme(): void {
     //Sets dark theme based on browser preferences, but also allows for manual changing
@@ -58,21 +61,23 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("message", (event) => {
-      if (event.data === "enableDesktopAppMode") {
-        setDesktopMode(true);
-      }
+    // iFrame event handling
+    function handleMessage(event: any) {
       if (event.data === "themeInstalled") {
         setInstalling(false);
       }
-    });
-    window.parent.postMessage(
-      {
-        action: "isThisDesktopApp",
-        payload: undefined,
-      },
-      "*"
-    );
+    }
+    window.addEventListener("message", handleMessage);
+
+    // The enabling of desktop mode used to be through another iframe postMessage, however that led to ~100ms of seeing the wrong ui before it switched
+    // This properly renders the right version of the site on first page load
+    if (window && new URLSearchParams(window.location.search).get("desktop")) {
+      setDesktopMode(true);
+    } else {
+      setDesktopMode(false);
+    }
+
+    return () => window.removeEventListener("message", handleMessage);
   }, []);
 
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
@@ -85,22 +90,28 @@ export default function App({ Component, pageProps }: AppProps) {
         >
           <div className={`${theme}`}>
             <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
-              <MainNav />
-              <ToastContainer
-                position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme={theme}
-              />
-              <Component {...pageProps} />
-              <div className="mt-auto pt-20">
-                <Footer />
-              </div>
+              {desktopMode !== undefined ? (
+                <>
+                  <MainNav />
+                  <ToastContainer
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme={theme}
+                  />
+                  <Component {...pageProps} />
+                  <div className="mt-auto pt-20">
+                    <Footer />
+                  </div>
+                </>
+              ) : (
+                <LoadingPage />
+              )}
             </div>
           </div>
         </desktopModeContext.Provider>

@@ -47,65 +47,33 @@ export function MainNav() {
         }
         className="md:ml-auto flex mx-4 h-full items-center gap-4 md:gap-0"
       >
-        {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
-          <a
-            href={process.env.NEXT_PUBLIC_DISCORD_URL}
-            target="_blank"
-            rel="noreferrer"
-            style={
-              desktopMode
-                ? {
-                    borderRadius: "100%",
-                    height: "3rem",
-                    width: "3rem",
-                  }
-                : {}
-            }
-            className="md:bg-discordColor text-discordColor h-full w-4 md:w-16 md:text-textLight md:dark:text-textDark"
-          >
-            <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-              <Discord
-                size={31}
-                style={
-                  desktopMode
-                    ? {
-                        transform: "translateX(1px)",
-                      }
-                    : {}
-                }
-              />
-            </div>
-          </a>
-        )}
-        {!!process.env.NEXT_PUBLIC_PATREON_URL && (
-          <a
-            href={process.env.NEXT_PUBLIC_PATREON_URL}
-            target="_blank"
-            rel="noreferrer"
-            style={
-              desktopMode
-                ? {
-                    borderRadius: "100%",
-                    height: "3rem",
-                    width: "3rem",
-                  }
-                : {}
-            }
-            className="md:bg-patreonColor text-patreonColor flex flex-col items-center justify-center h-full w-8 md:w-16 md:text-textLight md:dark:text-textDark transition-colors"
-          >
-            <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-              <Patreon
-                size={31}
-                style={
-                  desktopMode
-                    ? {
-                        transform: "translateX(1px)",
-                      }
-                    : {}
-                }
-              />
-            </div>
-          </a>
+        {!desktopMode && (
+          <>
+            {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
+              <a
+                href={process.env.NEXT_PUBLIC_DISCORD_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="md:bg-discordColor text-discordColor h-full w-4 md:w-16 md:text-textLight md:dark:text-textDark"
+              >
+                <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
+                  <Discord size={31} />
+                </div>
+              </a>
+            )}
+            {!!process.env.NEXT_PUBLIC_PATREON_URL && (
+              <a
+                href={process.env.NEXT_PUBLIC_PATREON_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="md:bg-patreonColor text-patreonColor flex flex-col items-center justify-center h-full w-8 md:w-16 md:text-textLight md:dark:text-textDark transition-colors"
+              >
+                <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
+                  <Patreon size={31} />
+                </div>
+              </a>
+            )}
+          </>
         )}
       </div>
       <div className="ml-auto md:ml-0 mr-4 h-4/5 font-extrabold flex items-center">
