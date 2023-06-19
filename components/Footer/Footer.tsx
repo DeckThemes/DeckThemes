@@ -25,7 +25,7 @@ export function Footer() {
 
   return (
     <footer className="w-full h-fit flex flex-col mt-auto">
-      <div className="flex items-center w-full p-12">
+      <div className="flex items-center w-full px-12 py-6">
         <div className="max-w-xl text-[0.5rem] md:text-xs flex flex-col">
           <p>
             Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.

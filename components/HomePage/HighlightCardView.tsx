@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { ThemeQueryResponse } from "../../types";
 import { genericGET } from "../../apiHelpers";
-import { LoadingSpinner } from "../Generic";
 import { LoadingSkeletonCard, MiniThemeCardRoot, ViewMoreCard } from "../Themes";
 import { useVW } from "../../hooks";
 
@@ -14,7 +13,6 @@ export function HighlightCardView({
 }) {
   const [themeData, setData] = useState<ThemeQueryResponse>();
   const [loaded, setLoaded] = useState<boolean>(false);
-  const vw = useVW();
   useEffect(() => {
     setLoaded(false);
     genericGET(apiURL).then((data) => {
@@ -28,25 +26,23 @@ export function HighlightCardView({
     <div>
       <div className="flex justify-center items-center w-full">
         <div
-          className={`flex flex-wrap w-full justify-center gap-4 ${!loaded ? "items-center" : ""}`}
+          className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full justify-center gap-4 ${
+            !loaded ? "items-center" : ""
+          }`}
         >
           {loaded ? (
             <>
               {themeData?.total ? (
                 <>
-                  {themeData.items
-                    .filter((_, i) => {
-                      if (vw >= 1188 && vw < 1488) {
-                        return i <= 2;
-                      }
-                      if (vw >= 1488 && vw < 1790) {
-                        return i <= 3;
-                      }
-                      return true;
-                    })
-                    .map((e, i) => {
-                      return <MiniThemeCardRoot data={e} key={`Most download ${i}`} />;
-                    })}
+                  {themeData.items.map((e, i) => {
+                    return (
+                      <MiniThemeCardRoot
+                        data={e}
+                        key={`Most download ${i}`}
+                        className={i >= 5 ? "hidden lg:flex" : ""}
+                      />
+                    );
+                  })}
                   <ViewMoreCard href={viewMoreURL} />
                 </>
               ) : null}
@@ -54,7 +50,12 @@ export function HighlightCardView({
           ) : (
             Array(6)
               .fill("")
-              .map((_, i) => <LoadingSkeletonCard key={`Loading_Card_${i}`} />)
+              .map((_, i) => (
+                <LoadingSkeletonCard
+                  key={`Loading_Card_${i}`}
+                  className={i >= 5 ? "hidden lg:flex" : ""}
+                />
+              ))
           )}
         </div>
       </div>

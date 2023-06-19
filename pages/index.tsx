@@ -44,7 +44,7 @@ export default function Home() {
           content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
         />
       </Head>
-      <main className="flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+      <main className="flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
         {/* {!desktopMode && (
           <div className="w-full h-screenMinusHeader flex items-center justify-center relative text-zinc-300">
             <div className="w-full h-full bg-black overflow-hidden">

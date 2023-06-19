@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import { PartialCSSThemeInfo } from "../../../types";
 import Link from "next/link";
 
@@ -68,10 +69,14 @@ function CSSCardImage({ imageSrc }: { imageSrc: string }) {
 function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
   return (
     <>
-      <div className="flex flex-col items-start p-4">
-        <span className="font-fancy font-bold truncate w-full text-start">{data.name}</span>
+      <div className="flex flex-col items-start p-4 w-full">
+        <span className="font-fancy font-bold truncate w-full max-w-2xl text-start">
+          {data.name}
+        </span>
         <div className="font-fancy flex justify-between w-full">
-          <span className="flex-grow text-sm text-start truncate text-fore-9-dark">{data.specifiedAuthor}</span>
+          <span className="flex-grow text-sm text-start truncate text-fore-9-light dark:text-fore-9-dark">
+            {data.specifiedAuthor}
+          </span>
           <span className="flex text-sm">{data.version}</span>
         </div>
       </div>
@@ -82,9 +87,11 @@ function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
 export function MiniThemeCardRoot({
   data,
   submissionId = "",
+  className = "",
 }: {
   data: PartialCSSThemeInfo;
   submissionId?: string;
+  className?: string;
 }) {
   function imageSRCCreator(): string {
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
@@ -96,7 +103,7 @@ export function MiniThemeCardRoot({
 
   function InnerContent() {
     return (
-      <div className="bg-cardLight dark:bg-base-3-dark rounded-xl border-2 border-borders-base1-dark hover:border-borders-base2-dark transition">
+      <div className="bg-base-3-light dark:bg-base-3-dark rounded-xl border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition">
         {data.type === "Audio" ? (
           <>
             <AudioCardImage imageSrc={imageSRCCreator()} target={data.target} />
@@ -110,13 +117,13 @@ export function MiniThemeCardRoot({
   }
 
   return (
-    <div className="flex flex-1 w-full">
+    <div className={twMerge("flex flex-1 w-full", className)}>
       {submissionId ? (
         <div>
           <InnerContent />
         </div>
       ) : (
-        <div className="hover:-translate-y-1 transition-all hover:bg-cardLight dark:hover:bg-cardDark rounded-xl overflow-hidden w-full h-full">
+        <div className="hover:-translate-y-1 transition-all rounded-xl overflow-hidden w-full h-full">
           <Link href={`/${data.type === "Audio" ? "packs" : "themes"}/view?themeId=${data.id}`}>
             <InnerContent />
           </Link>

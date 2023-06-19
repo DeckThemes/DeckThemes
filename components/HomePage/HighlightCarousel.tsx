@@ -95,7 +95,7 @@ export function HighlightCarousel({
         <div className="flex flex-col-reverse sm:flex-col w-full gap-4">
           <div>
             <HighlightCardView
-              apiURL={`/themes?perPage=5&filters=${options[currentNumber].searchFilter}${orderUrl}`}
+              apiURL={`/themes?perPage=7&filters=${options[currentNumber].searchFilter}${orderUrl}`}
               viewMoreURL={`${options[currentNumber].hrefLink + orderUrl}`}
             />
           </div>
@@ -108,8 +108,8 @@ export function HighlightCarousel({
                   key={`Carousel_Dot_${i}`}
                   className={`w-32 h-8 ${
                     i === currentNumber
-                      ? `bg-borderLight dark:bg-borderDark`
-                      : `bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark`
+                      ? `bg-brandBlue`
+                      : `bg-base-3-light dark:bg-base-3-dark  hover:bg-base-4-light hover:dark:bg-base-4-dark`
                   } rounded-full transition-colors duration-500 font-fancy`}
                 >
                   <span>{e.title.slice(0, e.title.indexOf(" "))}</span>

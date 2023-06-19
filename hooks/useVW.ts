@@ -1,14 +1,22 @@
 import { useState, useEffect } from "react";
 
 export function useVW() {
-  const [vw, setVW] = useState<number>(typeof window === "undefined" ? 0 : window.innerWidth);
+  const [vw, setVW] = useState(window.innerWidth);
+
   useEffect(() => {
-    if (typeof window === "undefined") setVW(0);
+    let timeoutId: NodeJS.Timeout;
+
     function handleResize() {
-      setVW(window.innerWidth);
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setVW(window.innerWidth);
+      }, 100);
     }
+
     window.addEventListener("resize", handleResize);
+
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
