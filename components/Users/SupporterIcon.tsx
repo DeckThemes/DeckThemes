@@ -10,7 +10,7 @@ export function SupporterIcon({ author }: { author: UserInfo }) {
           <Tooltip
             triggerContent={
               <>
-                <svg width="0" height="0">
+                <svg className="" width="0" height="0">
                   <linearGradient id="medal-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
                     <stop
                       stopColor={
@@ -34,7 +34,7 @@ export function SupporterIcon({ author }: { author: UserInfo }) {
                     />
                   </linearGradient>
                 </svg>
-                <RiMedalFill id="supporter-tt" style={{ fill: "url(#medal-gradient)" }} />
+                <RiMedalFill id="supporter-tt" className="w-6 h-6 m-3" style={{ fill: "url(#medal-gradient)" }} />
               </>
             }
             content={<span>{`Tier ${author?.premiumTier?.slice(-1)} Patreon Supporter`}</span>}

@@ -60,48 +60,52 @@ export default function Account() {
         <Head>
           <title>DeckThemes | My Profile</title>
         </Head>
-        <main className="flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
-          <PfpDisplay userData={meInfo || accountInfo} />
-          <div className="mt-4" />
-          <ThemeCategoryDisplay
-            typeOptionPreset="All"
-            themeDataApiPath="/users/me/stars"
-            filterDataApiPath={`/users/me/stars/filters`}
-            title="Starred Themes"
-          />
-          <BigDivider />
-          <ThemeCategoryDisplay
-            typeOptionPreset="All"
-            themeDataApiPath="/users/me/themes"
-            filterDataApiPath={`/users/me/themes/filters`}
-            title="Your Approved Themes"
-          />
-          <BigDivider />
-          <ThemeCategoryDisplay
-            typeOptionPreset="All"
-            themeDataApiPath="/users/me/submissions"
-            filterDataApiPath={`/users/me/submissions/filters`}
-            title="Your Submissions"
-            useSubmissionCards
-            showFiltersWithZero
-            defaultFilter="AwaitingApproval"
-          />
-          <BigDivider />
-          <DeckTokenDisplay />
-          <div className="my-5 h-2 w-10/12 rounded-full bg-borderLight dark:bg-borderDark" />
-          <div className="flex gap-4 p-4">
-            <button
-              onClick={logOut}
-              className="mt-auto p-5 mb-5 font-medium text-xl bg-red-500 rounded-3xl"
-            >
-              Log Out This Device
-            </button>
-            <button
-              onClick={logOutAll}
-              className="mt-auto p-5 mb-5 font-medium text-xl border-red-500 border-2 rounded-3xl"
-            >
-              Log Out All Devices
-            </button>
+        <main className="font-fancy flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+          <div className="flex flex-col max-w-7xl w-full mx-auto gap-8">
+            <PfpDisplay userData={meInfo || accountInfo} />
+
+            <div className="mt-4" />
+            <ThemeCategoryDisplay
+              typeOptionPreset="All"
+              themeDataApiPath="/users/me/stars"
+              filterDataApiPath={`/users/me/stars/filters`}
+              title="Starred Themes"
+            />
+
+            <ThemeCategoryDisplay
+              typeOptionPreset="All"
+              themeDataApiPath="/users/me/themes"
+              filterDataApiPath={`/users/me/themes/filters`}
+              title="Your Approved Themes"
+            />
+
+            <ThemeCategoryDisplay
+              typeOptionPreset="All"
+              themeDataApiPath="/users/me/submissions"
+              filterDataApiPath={`/users/me/submissions/filters`}
+              title="Your Submissions"
+              useSubmissionCards
+              showFiltersWithZero
+              defaultFilter="AwaitingApproval"
+            />
+
+            <DeckTokenDisplay />
+			
+            <div className="flex flex-col gap-6 p-4">
+			<span className="text-xl font-semibold font-fancy">Log Out</span>
+              <button
+                onClick={logOut}
+                className="w-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 bg-red-500 hover:bg-red-600 select-none py-2 px-4 border border-borders-base3-dark rounded-full"
+              >
+                <div className="font-fancy text-xs font-bold">Log out</div>
+              </button>
+              <button
+                onClick={logOutAll}
+                className="w-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 border-red-500 hover:bg-red-600 select-none py-2 px-4 border rounded-full"
+              >
+                <div className="font-fancy text-xs font-bold">Log out other devices</div>
+              </button>
+            </div>
           </div>
         </main>
       </>
