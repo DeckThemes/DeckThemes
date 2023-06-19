@@ -11,12 +11,7 @@ import {
 import Head from "next/head";
 import { useHasCookie } from "../../hooks";
 import { UserInfo } from "../../types";
-
-function BigDivider() {
-  return (
-    <div className="h-2 bg-borderLight dark:bg-borderDark w-full my-4 md:w-10/12 md:rounded-3xl" />
-  );
-}
+import { HorizontalRadio } from "@components/Primitives/HorizontalRadio";
 
 export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
@@ -24,6 +19,8 @@ export default function Account() {
   const hasCookie = useHasCookie();
 
   const [meInfo, setMeInfo] = useState<UserInfo>();
+
+  const [radioValue, setRadioValue] = useState<string>("stars");
 
   useEffect(() => {
     genericGET(`/auth/me_full`, true).then((data) => {
@@ -65,34 +62,26 @@ export default function Account() {
             <PfpDisplay userData={meInfo || accountInfo} />
 
             <div className="mt-4" />
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath="/users/me/stars"
-              filterDataApiPath={`/users/me/stars/filters`}
-              title="Starred Themes"
+            <HorizontalRadio
+              options={[
+                { value: "stars", displayText: "Starred" },
+                { value: "themes", displayText: "Themes" },
+                { value: "submissions", displayText: "Submissions" },
+              ]}
+              value={radioValue}
+              onValueChange={setRadioValue}
             />
-
             <ThemeCategoryDisplay
               typeOptionPreset="All"
-              themeDataApiPath="/users/me/themes"
-              filterDataApiPath={`/users/me/themes/filters`}
-              title="Your Approved Themes"
-            />
-
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath="/users/me/submissions"
-              filterDataApiPath={`/users/me/submissions/filters`}
-              title="Your Submissions"
-              useSubmissionCards
-              showFiltersWithZero
-              defaultFilter="AwaitingApproval"
+              useSubmissionCards={radioValue === "submissions"}
+              themeDataApiPath={`/users/me/${radioValue}`}
+              filterDataApiPath={`/users/me/${radioValue}/filters`}
             />
 
             <DeckTokenDisplay />
-			
+
             <div className="flex flex-col gap-6 p-4">
-			<span className="text-xl font-semibold font-fancy">Log Out</span>
+              <span className="text-xl font-semibold font-fancy">Log Out</span>
               <button
                 onClick={logOut}
                 className="w-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 bg-red-500 hover:bg-red-600 select-none py-2 px-4 border border-borders-base3-dark rounded-full"
