@@ -1,9 +1,7 @@
-import Link from "next/link";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import { authContext, desktopModeContext } from "../../pages/_app";
 import { fetchDiscordUrl } from "../../apiHelpers";
 import { NavIcon } from "./NavIcon";
-
 import { TbUpload } from "react-icons/tb";
 import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
@@ -12,125 +10,73 @@ import { LoadingSpinner } from "../Generic";
 import { Discord, Patreon } from "@icons-pack/react-simple-icons";
 import { useHasCookie } from "../../hooks";
 import { ImBook } from "react-icons/im";
+import { NavIconLink } from "./NavIconLink";
+import { DesktopNav } from "../Desktop";
 
 export function MainNav() {
-  // const router = useRouter();
   const { accountInfo } = useContext(authContext);
   const { desktopMode } = useContext(desktopModeContext);
   const hasCookie = useHasCookie();
 
+  if (desktopMode) return <DesktopNav />;
+
   return (
-    <nav
-      className="w-full flex items-center justify-center"
-      style={
-        desktopMode
-          ? {
-              position: "absolute",
-              top: "0",
-              left: "0",
-              zIndex: "10",
-              backgroundColor: "transparent",
-            }
-          : {}
-      }
-    >
+    <nav className="w-full flex items-center justify-center">
       <div className="flex items-center max-w-7xl w-full py-8 mx-4">
         <div className="">
           <NavIcon />
         </div>
-        <div
-          style={
-            desktopMode
-              ? {
-                  gap: "1rem",
-                }
-              : {}
-          }
-          className="md:ml-auto flex ml-8 h-full items-center gap-8"
-        >
-          {!desktopMode && (
-            <>
-              {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
-                <a
-                  href={process.env.NEXT_PUBLIC_DISCORD_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="h-full w-4 md:w-16 md:text-textLight md:dark:text-textDark"
-                >
-                  <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-                    <Discord size={28} />
-                  </div>
-                </a>
-              )}
-              {!!process.env.NEXT_PUBLIC_PATREON_URL && (
-                <a
-                  href={process.env.NEXT_PUBLIC_PATREON_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex flex-col items-center justify-center h-full md:text-textLight md:dark:text-textDark transition-colors"
-                >
-                  <div className="w-full h-full md:hover:bg-cardLight md:dark:hover:bg-cardDark transition-colors flex flex-col items-center justify-center">
-                    <Patreon size={28} />
-                  </div>
-                </a>
-              )}
-            </>
-          )}
+        <div className="md:ml-auto flex ml-4 h-full items-center gap-8">
+          <>
+            {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
+              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL}>
+                <Discord size={28} />
+              </NavIconLink>
+            )}
+            {!!process.env.NEXT_PUBLIC_PATREON_URL && (
+              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL}>
+                <Patreon size={28} />
+              </NavIconLink>
+            )}
+          </>
         </div>
-        <div className="font-extrabold flex items-center h-full ml-auto md:ml-12">
-          {!desktopMode && (
-            <a
-              href={process.env.NEXT_PUBLIC_DOCS_URL}
-              rel="noreferrer"
-              target="_blank"
-              className="text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-            >
-              <ImBook size={28} />
-            </a>
-          )}
-          {!desktopMode && (
-            <>
-              {accountInfo?.username ? (
-                <>
-                  {accountInfo.permissions.includes(Permissions.viewSubs) && (
-                    <Link
-                      href="/submissions"
-                      className="mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+        <div className="font-extrabold flex items-center h-full ml-auto md:ml-8 gap-8">
+          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="hidden sm:flex">
+            <ImBook size={28} />
+          </NavIconLink>
+          <>
+            {accountInfo?.username ? (
+              <>
+                {accountInfo.permissions.includes(Permissions.viewSubs) && (
+                  <NavIconLink href={"/submissions"} isInternal>
+                    <RiAdminFill size={32} />
+                  </NavIconLink>
+                )}
+                <NavIconLink href={"/submit"} isInternal>
+                  <TbUpload size={32} className="scale-x-105" />
+                </NavIconLink>
+                {/* @ts-ignore */}
+                <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
+              </>
+            ) : (
+              <>
+                {hasCookie ? (
+                  <>
+                    <LoadingSpinner size={32} />
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="bg-discordColor px-4 py-2 h-full rounded-xl ml-8 flex items-center justify-center text-slate-800"
+                      onClick={fetchDiscordUrl}
                     >
-                      <RiAdminFill size={32} />
-                    </Link>
-                  )}
-                  <Link
-                    href="/submit"
-                    className="hidden md:flex mr-2 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-                  >
-                    <TbUpload size={32} className="scale-x-105" />
-                  </Link>
-                  {/* @ts-ignore */}
-                  <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
-                </>
-              ) : (
-                <>
-                  {hasCookie ? (
-                    <>
-                      <LoadingSpinner size={32} />
-                    </>
-                  ) : (
-                    <>
-                      <button
-                        className="bg-discordColor px-4 py-2 h-full rounded-xl ml-8 flex items-center justify-center text-slate-800"
-                        onClick={fetchDiscordUrl}
-                      >
-                        <span>
-                          Login with Discord
-                        </span>
-                      </button>
-                    </>
-                  )}
-                </>
-              )}
-            </>
-          )}
+                      <span>Login with Discord</span>
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </>
         </div>
       </div>
     </nav>

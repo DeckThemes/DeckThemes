@@ -48,7 +48,7 @@ export default function Home() {
           </h1>
           <div
             style={{ backgroundImage: `url(/hero.png)` }}
-            className="w-11/12 h-[50vh] bg-contain bg-no-repeat bg-center"
+            className="w-11/12 h-[30vh] sm:h-[50vh] lg:h-[70vh] bg-contain bg-no-repeat bg-center"
           />
           <h3 className="text-3xl font-semibold pb-2">Install</h3>
           <div className="flex gap-4">

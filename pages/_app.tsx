@@ -68,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
     // The enabling of desktop mode used to be through another iframe postMessage, however that led to ~100ms of seeing the wrong ui before it switched
     // This properly renders the right version of the site on first page load
-    if (window && new URLSearchParams(window.location.search).get("desktop")) {
+    if (window && window.location.pathname === "/desktop") {
       setDesktopMode(true);
     } else {
       setDesktopMode(false);
