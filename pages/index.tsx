@@ -59,8 +59,7 @@ export default function Home() {
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
 
-
-		{/* Experimental hero-gif inside of Steam Deck screen hero img */}
+          {/* Experimental hero-gif inside of Steam Deck screen hero img */}
           {/* <div
             style={{
               backgroundImage: `url(/overview_steamDeck_heroCrop.png)`,

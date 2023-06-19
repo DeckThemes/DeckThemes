@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Footer, LoadingPage, MainNav } from "../components";
+import { Footer, LandingFooter, LoadingPage, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { Theme, themeContext } from "../styles";
 import { AccountData, AuthContextContents } from "../types";
@@ -102,7 +102,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     theme={theme}
                   />
                   <Component {...pageProps} />
-                  <Footer />
+                  <LandingFooter />
                 </>
               ) : (
                 <LoadingPage />
