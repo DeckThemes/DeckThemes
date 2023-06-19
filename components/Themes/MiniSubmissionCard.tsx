@@ -11,7 +11,7 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
   return (
     <Link
       href={`/submissions/view?submissionId=${data.id}`}
-      className="max-w-[300px] flex flex-col items-center transition-all bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-3xl text-center "
+      className="flex flex-col w-fit items-center bg-cardLight dark:bg-base-5-dark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-xl text-center border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition"
     >
       <span className="text-xl mb-2">
         {data.newTheme.type === "Audio"
@@ -19,89 +19,48 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
           : FormattedSubmissionIntent[data.intent]}
       </span>
       <MiniThemeCardRoot data={data.newTheme} submissionId={data.id} />
-      {
-        (() => {
-          switch (data.status) {
-            case "Approved":
-              return (
-                <>
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center text-xl gap-2 mt-2">
-                      <BsCheckCircleFill className="text-emerald-600" />
-                      <span>Approved</span>
-                    </div>
-                    {data?.message ? (
-                      <span>
-                        <span className="text-textFadedLight dark:text-textFadedDark">
-                          Moderator Comment:
-                        </span>{" "}
-                        {data.message}
-                      </span>
-                    ) : (
-                      <span>No Message Provided</span>
-                    )}
-                  </div>
-                </>
-              );
-            case "Denied":
-              return (
-                <>
-                  <div className="flex flex-col items-center">
-                    <div className="flex items-center text-xl gap-2 mt-2">
-                      <BsXCircleFill className="text-red-500" />
-                      <span>Denied</span>
-                    </div>
-                    {data?.message ? (
-                      <>
-                        <span>
-                          <span className="text-textFadedLight dark:text-textFadedDark">
-                            Moderator Comment:
-                          </span>{" "}
-                          {data.message}
-                        </span>
-                      </>
-                    ) : (
-                      <span>No Message Provided</span>
-                    )}
-                  </div>
-                </>
-              );
-            case "Dead":
-              return (
-                <>
-                  <div>Dead</div>
-                </>
-              );
-            case "AwaitingApproval":
-              return (
-                <>
-                  <div className="flex flex-col items-center">
-                    <span>Awaiting Review</span>
-                    <span>Submitted On {new Date(data.submitted).toLocaleDateString()}</span>
-                    {data?.errors && data.errors.length > 0 ? (
-                      <>
-                        <span>
-                          {data.errors.length} Error{data.errors.length === 1 ? "" : "s"}
-                        </span>
-                      </>
-                    ) : (
-                      // TODO: put something here for audio packs or make it stretch
-                      <>
-                        {data.newTheme.type === "Audio" ? (
-                          <span>No Errors</span>
-                        ) : (
-                          <span>No Errors</span>
-                        )}
-                      </>
-                    )}
-                  </div>
-                </>
-              );
-            default:
-              return null;
-          }
-        })() // I LOOOOOOOOOOOOOOOOVE self-invoking anonymous functions!
-      }
+      <div className="flex flex-col items-center">
+        {(data.status === "Approved" || data.status === "Denied") && (
+          <>
+            <div className="flex items-center text-xl gap-2 mt-2">
+              {data.status === "Approved" ? (
+                <BsCheckCircleFill className="text-emerald-600" />
+              ) : (
+                <BsXCircleFill className="text-red-500" />
+              )}
+              <span>{data.status}</span>
+            </div>
+            {data?.message ? (
+              <span className="max-w-[300px] w-[300px] break-all">
+                <span className="text-textFadedLight dark:text-textFadedDark">
+                  Moderator Comment:
+                </span>{" "}
+                {data.message}
+              </span>
+            ) : (
+              <span>No Message Provided</span>
+            )}
+          </>
+        )}
+        {data.status === "AwaitingApproval" && (
+          <>
+            <span>Awaiting Review</span>
+            <span>Submitted On {new Date(data.submitted).toLocaleDateString()}</span>
+            {data?.errors && data.errors.length > 0 ? (
+              <>
+                <span>
+                  {data.errors.length} Error{data.errors.length === 1 ? "" : "s"}
+                </span>
+              </>
+            ) : (
+              // TODO: put something here for audio packs or make it stretch
+              <>
+                {data.newTheme.type === "Audio" ? <span>No Errors</span> : <span>No Errors</span>}
+              </>
+            )}
+          </>
+        )}
+      </div>
     </Link>
   );
 }
