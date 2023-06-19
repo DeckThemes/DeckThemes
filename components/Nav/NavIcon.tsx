@@ -14,9 +14,9 @@ export function NavIcon({ disabled = false }: { disabled?: boolean }) {
     return theme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png";
   };
   return (
-    <Link href={disabled ? "#" : "/"} className="flex items-center">
+    <Link href={disabled ? "#" : "/"} className="flex items-center select-none group hover:scale-95 transition duration-150 hover:active:scale-90 ">
       <>
-        <Image src={src()} height="24" width="24" alt="CSSLoader Logo" />
+        <Image src={src()} height="24" width="24" alt="CSSLoader Logo" className="group-hover:hue-rotate-180 group-hover:brightness-150 duration-1000 transition"/>
         <span className="font-fancy hidden md:flex font-semibold text-xl pl-4">DeckThemes</span>
       </>
     </Link>

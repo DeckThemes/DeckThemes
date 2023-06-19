@@ -39,27 +39,46 @@ export default function Home() {
       <main className="landing-page-bg flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
         {/* Hero */}
         <div className="w-full h-full flex flex-col items-center justify-center gap-6 pt-4 lg:pt-24 px-4">
-			{/* Headline */}
+          {/* Headline */}
           <h1 className="text-5xl text-center mx-auto max-w-4xl font-extrabold tracking-tight sm:text-6xl">
             <span className="bg-gradient-to-tr from-brandBlue to-brandBlue bg-clip-text text-transparent">
-              Level up <br className="block sm:hidden"/>
+              Level up <br className="block sm:hidden" />
             </span>{" "}
             your Steam
           </h1>
 
-			{/* Blurb */}
-		  <p className="font-fancy mx-auto mt-6 max-w-2xl text-lg font-medium text-fore-10-dark text-center">DeckThemes is the largest repository of custom themes, styles, and audio packs for Steam. Available for Steam Deck and Windows.</p>
+          {/* Blurb */}
+          <p className="font-fancy mx-auto mt-6 max-w-2xl text-lg font-medium text-fore-10-dark text-center">
+            DeckThemes is the largest repository of custom themes, styles, and audio packs for
+            Steam. Available for Steam Deck and Windows.
+          </p>
 
-			{/* Download Btns */}
-		  <div className="font-fancy flex mt-6 gap-2">
+          {/* Download Btns */}
+          <div className="font-fancy flex mt-6 gap-2">
             <DownloadButtonWithIcon iconName="steamdeck" />
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
 
-          <div
-            style={{ backgroundImage: `url(/hero.png)` }}
-            className="w-11/12 max-w-[92rem] aspect-video bg-contain bg-no-repeat bg-center"
-          />
+
+		{/* Experimental hero-gif inside of Steam Deck screen hero img */}
+          {/* <div
+            style={{
+              backgroundImage: `url(/overview_steamDeck_heroCrop.png)`,
+              height: "31.5vw",
+              maxHeight: "28.4rem",
+              width: "87.9vw",
+            }}
+            className="mt-8 hidden 2xl:block aspect-video bg-contain bg-no-repeat bg-center relative overflow-hidden"
+          >
+            <div className="absolute max-w-[692px] w-full max-h-[420px] top-3 h-full left-1/2 -translate-x-1/2 aspect-[4/3]">
+              <div
+                className="absolute max-w-[559px]"
+                style={{ width: "100%", top: "10%", left: "10%" }}
+              >
+                <img className="relative inset-0" src="https://deckthemes.com/hero_reel.gif" />
+              </div>
+            </div>
+          </div> */}
         </div>
 
         {/* Carousel */}
