@@ -27,15 +27,15 @@ export function RadioDropdown({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
         className={twMerge(
-          "flex items-center rounded-xl justify-center px-4 bg-base-3-light dark:bg-base-3-dark h-full w-[250px] border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition-all",
+          "h-12 flex items-center rounded-xl justify-center px-4 bg-base-3-light dark:bg-base-3-dark w-[250px] border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition-all",
           triggerClass
         )}
       >
         <>
-          <div className="flex flex-1 h-full justify-between items-center w-fit">
+          <div className="text-sm flex flex-1 h-full justify-between items-center w-fit">
             <span>{selected?.displayName || selected?.value}</span>
             {options.reduce((prev, cur) => (cur?.bubbleValue || prev ? true : false), false) && (
-              <span className="rounded-full h-8 flex items-center justify-center pr-2">
+              <span className="rounded-full flex items-center justify-center pr-2">
                 {selected?.bubbleValue}
               </span>
             )}
@@ -46,7 +46,7 @@ export function RadioDropdown({
 
       <DropdownMenu.Portal>
         <div className={`${theme}`}>
-          <DropdownMenu.Content className="text-sm radio-dropdown font-fancy select-none cursor-default overflow-hidden bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark transition-all">
+          <DropdownMenu.Content className="z-[9999] text-sm radio-dropdown font-fancy select-none cursor-default overflow-hidden bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark transition-all">
             <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
               {options.map((e) => (
                 <DropdownMenu.RadioItem

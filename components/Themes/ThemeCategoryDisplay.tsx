@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { generateParamStr, genericGET } from "../../apiHelpers";
 import { authContext } from "../../pages/_app";
 import {
@@ -115,33 +115,55 @@ export function ThemeCategoryDisplay({
     }
   }, [type]);
 
+  const [isSticky, setIsSticky] = useState(false);
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (componentRef.current) {
+      const rect = componentRef.current.getBoundingClientRect();
+      const isElementSticky = rect.top <= 0;
+
+      setIsSticky(isElementSticky);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       {themeData.total >= 0 ? (
-        <div className="flex flex-col w-full items-center px-4">
+        <div className="flex flex-col w-full items-center px-4 relative">
           <h4 className="text-2xl font-medium">{title}</h4>
-          <FilterSelectorCard
-            filterOpts={serverFilters.filters}
-            onFilterChange={(e) => {
-              setSearchOpts({ ...searchOpts, filters: e });
-            }}
-            filterValue={searchOpts.filters}
-            showFiltersWithZero={showFiltersWithZero}
-            orderOpts={serverFilters.order}
-            onOrderChange={(e) => {
-              setSearchOpts({ ...searchOpts, order: e });
-            }}
-            orderValue={searchOpts.order}
-            searchValue={searchOpts.search}
-            onSearchChange={(e) => {
-              setSearchOpts({ ...searchOpts, search: e.target.value });
-            }}
-            typeOptions={typePresets[typeOptionPreset]}
-            onTypeChange={(e) => {
-              setType(e);
-            }}
-            typeValue={type}
-          />
+		  {isSticky && <div className="fixed top-0 z-[9] w-full bg-base-2T-dark px-6 h-24 backdrop-blur-xl max-w-7xl rounded-b-xl blur-md pointer-events-none invisible lg:visible" aria-hidden={true}></div>}
+		  <div ref={componentRef} className="w-full flex items-center justify-center relative lg:sticky top-0 z-10">
+			<FilterSelectorCard
+				filterOpts={serverFilters.filters}
+				onFilterChange={(e) => {
+				setSearchOpts({ ...searchOpts, filters: e });
+				}}
+				filterValue={searchOpts.filters}
+				showFiltersWithZero={showFiltersWithZero}
+				orderOpts={serverFilters.order}
+				onOrderChange={(e) => {
+				setSearchOpts({ ...searchOpts, order: e });
+				}}
+				orderValue={searchOpts.order}
+				searchValue={searchOpts.search}
+				onSearchChange={(e) => {
+				setSearchOpts({ ...searchOpts, search: e.target.value });
+				}}
+				typeOptions={typePresets[typeOptionPreset]}
+				onTypeChange={(e) => {
+				setType(e);
+				}}
+				typeValue={type}
+			/>
+		  </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-7xl justify-center items-center md:items-stretch flex-wrap gap-4">
             {themeData.total === 0 && <span>No Results Found</span>}
             {useSubmissionCards ? (

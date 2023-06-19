@@ -31,7 +31,7 @@ export function FilterSelectorCard({
 }) {
   return (
     <>
-      <div className="w-full max-w-7xl flex flex-col md:flex-row gap-2 my-4 text-xl">
+      <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 z-10 pb-12 py-4">
 	  	<SearchInput {...{ onSearchChange }} />
         {!searchOnly && (
           <>

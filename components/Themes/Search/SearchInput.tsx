@@ -2,8 +2,8 @@ import { DebounceInput } from "react-debounce-input";
 
 export function SearchInput({ onSearchChange }: { onSearchChange?: (e: any) => any }) {
   return (
-    <div className="flex flex-col rounded-md gap-2 flex-1">
-      <span>Search</span>
+    <div className="font-fancy text-sm flex flex-col rounded-md gap-2 flex-1">
+      <div className="font-bold">Search</div>
       <DebounceInput
         minLength={1}
         debounceTimeout={300}
