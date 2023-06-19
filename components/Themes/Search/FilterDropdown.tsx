@@ -16,14 +16,14 @@ export function FilterDropdown({
   const formattedFilterOpts = [
     {
       value: "All",
-      displayName: "All",
+      displayText: "All",
       bubbleValue: Object.values(filterOpts).reduce((prev, cur) => Number(prev) + Number(cur), 0),
     },
     ...Object.entries(filterOpts)
       .filter(([_, itemCount]) => Number(itemCount) > 0 || true)
       .map(([filterName, itemCount]) => ({
         value: filterName,
-        displayName: filterName,
+        displayText: filterName,
         bubbleValue: itemCount,
       })),
   ];

@@ -12,17 +12,11 @@ export function TypeDropdown({
     value: string;
   }[];
 }) {
-  const formattedTypeOpts = typeOptions.map((e) => ({
-    value: e.value,
-    // TODO: fix this
-    displayName: e.displayText,
-  }));
-
   return (
     <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
       <div className="font-bold">Platform</div>
       <RadioDropdown
-        options={formattedTypeOpts}
+        options={typeOptions}
         value={typeValue}
         onValueChange={(e: any) => {
           onTypeChange && onTypeChange(e);
