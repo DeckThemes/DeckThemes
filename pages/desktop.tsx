@@ -12,27 +12,6 @@ export default function Home() {
     <>
       <Head>
         <title>DeckThemes</title>
-        <meta name="title" content="DeckThemes" />
-        <meta
-          name="description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
-        />
-
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://deckthemes.com/" />
-        <meta property="og:title" content="DeckThemes" />
-        <meta
-          property="og:description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
-        />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://deckthemes.com/" />
-        <meta property="twitter:title" content="DeckThemes" />
-        <meta
-          property="twitter:description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
-        />
       </Head>
       <main className="flex flex-1 flex-col items-center flex-grow gap-4 bg-base-2-light dark:bg-base-2-dark py-12 rounded-3xl">
         <div
