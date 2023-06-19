@@ -6,7 +6,8 @@ html,
 body {
   padding: 0;
   margin: 0;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   font-family: "Open Sans", "sans-serif";
   /* font-family: ""Open Sans""; */
   font-weight: "200";
@@ -42,18 +43,14 @@ h4 {
   }
 }
 
-.text-glow-mdDark {
-  text-shadow: rgb(0, 0, 0) 0px 0 10px;
-}
-
-.text-glow-lgDark {
-  text-shadow: rgb(0, 0, 0) 0px 0 20px;
-}
-
 .page-shadow {
 	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 1)
 }
 
 .landing-page-bg {
 	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(36, 36, 46, 0.5), transparent)
+}
+
+.radio-dropdown {
+	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 1)
 }

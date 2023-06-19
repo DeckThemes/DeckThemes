@@ -31,34 +31,38 @@ export function RadioDropdown({
           triggerClass
         )}
       >
-        <div className="flex flex-1 h-full justify-between items-center w-fit">
-          <span>{selected?.displayName || selected?.value}</span>
-          {options.reduce((prev, cur) => (cur?.bubbleValue || prev ? true : false), false) && (
-            <span className="rounded-full h-8 flex items-center justify-center pr-2">
-              {selected?.bubbleValue}
-            </span>
-          )}
-        </div>
-        <MdKeyboardArrowDown />
+        <>
+          <div className="flex flex-1 h-full justify-between items-center w-fit">
+            <span>{selected?.displayName || selected?.value}</span>
+            {options.reduce((prev, cur) => (cur?.bubbleValue || prev ? true : false), false) && (
+              <span className="rounded-full h-8 flex items-center justify-center pr-2">
+                {selected?.bubbleValue}
+              </span>
+            )}
+          </div>
+          <MdKeyboardArrowDown />
+        </>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
         <div className={`${theme}`}>
-          <DropdownMenu.Content className="bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark transition-all">
+          <DropdownMenu.Content className="text-sm radio-dropdown font-fancy select-none cursor-default overflow-hidden bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark transition-all">
             <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
               {options.map((e) => (
                 <DropdownMenu.RadioItem
                   value={e.value}
                   key={e.value}
-                  className="flex items-center justify-center px-4 pl-6 py-2 relative"
+                  className="flex items-center justify-center px-4 pl-8 py-2 relative hover:bg-brandBlue dark:hover:bg-brandBlue focus:bg-brandBlue dark:focus:bg-brandBlue outline-none m-1 rounded-lg"
                 >
                   <DropdownMenu.ItemIndicator className="absolute -left-1 top-1/2 -translate-y-1/2">
                     <BsDot size={36} />
                   </DropdownMenu.ItemIndicator>
                   <div className="w-full flex items-center justify-between gap-2">
-                    <span className="w-fit h-8 flex items-center">{e?.displayName || e.value}</span>
+                    <span className="font-semibold w-fit flex items-center">
+                      {e?.displayName || e.value}
+                    </span>
                     {e.bubbleValue !== undefined && (
-                      <span className="p-2 rounded-3xl h-8 justify-center">{e.bubbleValue}</span>
+                      <span className="font-semibold ">{e.bubbleValue}</span>
                     )}
                   </div>
                 </DropdownMenu.RadioItem>
