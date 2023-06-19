@@ -20,10 +20,13 @@ export function FilterDropdown({
       bubbleValue: Object.values(filterOpts).reduce((prev, cur) => Number(prev) + Number(cur), 0),
     },
     ...Object.entries(filterOpts)
-      .filter(([_, itemCount]) => Number(itemCount) > 0 || true)
+      .filter(([_, itemCount]) => Number(itemCount) > 0 || showFiltersWithZero)
       .map(([filterName, itemCount]) => ({
         value: filterName,
-        displayText: filterName,
+        displayText:
+          typeValue === "DESKTOP-CSS" && filterName.includes("Desktop-")
+            ? filterName.slice(filterName.indexOf("-") + 1)
+            : filterName,
         bubbleValue: itemCount,
       })),
   ];
