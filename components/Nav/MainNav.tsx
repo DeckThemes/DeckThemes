@@ -21,28 +21,31 @@ export function MainNav() {
   if (desktopMode) return <DesktopNav />;
 
   return (
-    <nav className="w-full flex items-center justify-center">
-      <div className="flex items-center max-w-7xl w-full py-8 mx-4">
+    <nav className="font-fancy w-full flex items-center justify-center">
+      <div className="flex items-center max-w-7xl w-full py-4 mx-4">
         <div className="">
           <NavIcon />
         </div>
-        <div className="md:ml-auto flex ml-4 h-full items-center gap-8">
+        <div className="md:ml-auto flex ml-8 h-full items-center gap-8">
           <>
             {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL}>
-                <Discord size={28} />
+              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL} className="flex items-center gap-2">
+                <Discord size={18} />
+				<div className="font-fancy text-xs font-bold hidden sm:flex ">Discord</div>
               </NavIconLink>
             )}
             {!!process.env.NEXT_PUBLIC_PATREON_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL}>
-                <Patreon size={28} />
+              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL} className="flex items-center gap-2">
+                <Patreon size={14} />
+				<div className="font-fancy text-xs font-bold hidden sm:flex">Patreon</div>
               </NavIconLink>
             )}
           </>
         </div>
         <div className="font-extrabold flex items-center h-full ml-auto md:ml-8 gap-8">
-          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="hidden sm:flex">
-            <ImBook size={28} />
+          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="flex items-center gap-2">
+            <ImBook size={14} />
+			<div className="font-fancy text-xs font-bold hidden sm:flex ">Documentation</div>
           </NavIconLink>
           <>
             {accountInfo?.username ? (
@@ -67,10 +70,10 @@ export function MainNav() {
                 ) : (
                   <>
                     <button
-                      className="bg-discordColor px-4 py-2 h-full rounded-xl ml-8 flex items-center justify-center text-slate-800"
+                      className="border border-borders-base3-dark rounded-full text-xs px-4 py-2 h-full flex items-center justify-center text-white"
                       onClick={fetchDiscordUrl}
                     >
-                      <span>Login with Discord</span>
+                      <div>Login <span className="hidden sm:inline-block">with Discord</span></div>
                     </button>
                   </>
                 )}

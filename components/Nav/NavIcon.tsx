@@ -16,8 +16,8 @@ export function NavIcon({ disabled = false }: { disabled?: boolean }) {
   return (
     <Link href={disabled ? "#" : "/"} className="flex items-center">
       <>
-        <Image src={src()} height="48" width="48" alt="CSSLoader Logo" />
-        <span className="font-fancy hidden md:flex font-semibold text-3xl pl-4">DeckThemes</span>
+        <Image src={src()} height="24" width="24" alt="CSSLoader Logo" />
+        <span className="font-fancy hidden md:flex font-semibold text-xl pl-4">DeckThemes</span>
       </>
     </Link>
   );

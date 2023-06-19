@@ -51,5 +51,9 @@ h4 {
 }
 
 .page-shadow {
-	box-shadow: 0px 0px 30px hsl(220, 5%, 0%)
+	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 1)
+}
+
+.landing-page-bg {
+	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(36, 36, 46, 0.5), transparent)
 }
