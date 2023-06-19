@@ -76,6 +76,8 @@ export default function Account() {
               useSubmissionCards={radioValue === "submissions"}
               themeDataApiPath={`/users/me/${radioValue}`}
               filterDataApiPath={`/users/me/${radioValue}/filters`}
+              // TODO: MAKE THIS OPTIONAL
+              title={""}
             />
 
             <DeckTokenDisplay />
