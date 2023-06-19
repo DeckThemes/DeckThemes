@@ -30,7 +30,7 @@ export function FilterDropdown({
   return (
     <>
       <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
-        <div className="font-bold">Filter</div>
+        <div className="font-bold">Category</div>
         <RadioDropdown
           options={formattedFilterOpts}
           value={filterValue}

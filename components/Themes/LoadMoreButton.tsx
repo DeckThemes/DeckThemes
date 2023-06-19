@@ -53,7 +53,7 @@ export function LoadMoreButton({
           ) : (
             <>
               <button
-                className="bg-cardLight dark:bg-cardDark p-2 px-4 rounded-3xl font-semibold text-2xl"
+                className="font-fancy bg-base-3-light dark:bg-base-3-dark p-2 px-4 rounded-3xl font-semibold"
                 onClick={loadMore}
               >
                 Load More

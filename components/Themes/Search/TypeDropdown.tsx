@@ -20,7 +20,7 @@ export function TypeDropdown({
 
   return (
     <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
-      <div className="font-bold">Type</div>
+      <div className="font-bold">Platform</div>
       <RadioDropdown
         options={formattedTypeOpts}
         value={typeValue}

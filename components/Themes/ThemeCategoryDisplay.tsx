@@ -140,7 +140,7 @@ export function ThemeCategoryDisplay({
         <div className="flex flex-col w-full items-center px-4 relative">
           <h4 className="text-2xl font-medium">{title}</h4>
 		  {isSticky && <div className="fixed top-0 z-[9] w-full bg-base-2T-dark px-6 h-24 backdrop-blur-xl max-w-7xl rounded-b-xl blur-md pointer-events-none invisible lg:visible" aria-hidden={true}></div>}
-		  <div ref={componentRef} className="w-full flex items-center justify-center relative lg:sticky top-0 z-10">
+		  <div ref={componentRef} className={`w-full max-w-7xl flex items-center justify-center relative lg:sticky top-0 z-10 transition-all ${isSticky ? 'px-4' : ''}`}>
 			<FilterSelectorCard
 				filterOpts={serverFilters.filters}
 				onFilterChange={(e) => {
@@ -183,7 +183,7 @@ export function ThemeCategoryDisplay({
               </>
             )}
           </div>
-          <div className="mt-4 mx-4">
+          <div className="mt-16 mx-4">
             <LoadMoreButton
               themeArr={themeData}
               setThemeArr={setThemeData}
