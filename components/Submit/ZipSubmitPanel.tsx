@@ -24,6 +24,7 @@ export function ZipSubmitPanel({
       <div className="flex flex-col items-center w-full justify-center">
         <div className="w-full md:w-1/2">
           <FilePond
+            className="bg-red-800"
             allowFileTypeValidation
             labelFileTypeNotAllowed="Invalid File Type!"
             fileValidateTypeLabelExpectedTypes="File must be a .zip archive"

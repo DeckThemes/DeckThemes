@@ -11,7 +11,7 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
   return (
     <Link
       href={`/submissions/view?submissionId=${data.id}`}
-      className="flex flex-col w-fit items-center bg-cardLight dark:bg-base-5-dark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-xl text-center border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition"
+      className="flex flex-col items-center bg-cardLight dark:bg-base-5-dark hover:bg-borderLight hover:dark:bg-borderDark p-4 rounded-xl text-center border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition"
     >
       <span className="text-xl mb-2">
         {data.newTheme.type === "Audio"
@@ -31,7 +31,7 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
               <span>{data.status}</span>
             </div>
             {data?.message ? (
-              <span className="max-w-[300px] w-[300px] break-all">
+              <span className="break-all">
                 <span className="text-textFadedLight dark:text-textFadedDark">
                   Moderator Comment:
                 </span>{" "}

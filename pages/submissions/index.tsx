@@ -15,7 +15,7 @@ export default function Submissions() {
         <Head>
           <title>DeckThemes | Submissions</title>
         </Head>
-        <main className="flex flex-col items-center">
+        <main className="flex flex-col items-center page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
           <div className="flex flex-col items-center justify-center px-10">
             <h2 className="font-bold text-5xl pt-8 pb-4">Submissions</h2>
             <ThemeCategoryDisplay

@@ -7,6 +7,7 @@ import {
   LogInPage,
   PfpDisplay,
   ThemeCategoryDisplay,
+  TransitionedCarouselTitle,
 } from "../../components";
 import Head from "next/head";
 import { useHasCookie } from "../../hooks";
@@ -21,6 +22,11 @@ export default function Account() {
   const [meInfo, setMeInfo] = useState<UserInfo>();
 
   const [radioValue, setRadioValue] = useState<string>("stars");
+  const radioOptions = [
+    { value: "stars", displayText: "Stars", title: "Your Stars" },
+    { value: "themes", displayText: "Themes", title: "Your Themes" },
+    { value: "submissions", displayText: "Submissions", title: "Your Submissions" },
+  ];
 
   useEffect(() => {
     genericGET(`/auth/me_full`, true).then((data) => {
@@ -58,30 +64,29 @@ export default function Account() {
           <title>DeckThemes | My Profile</title>
         </Head>
         <main className="font-fancy flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
-          <div className="flex flex-col max-w-7xl w-full mx-auto gap-8">
+          <div className="flex flex-col max-w-7xl w-full mx-auto gap-4">
             <PfpDisplay userData={meInfo || accountInfo} />
-
-            <div className="mt-4" />
+            <TransitionedCarouselTitle
+              className="pb-20"
+              titles={radioOptions.map((e) => e.title)}
+              currentTitle={
+                radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+              }
+            />
             <HorizontalRadio
-              options={[
-                { value: "stars", displayText: "Starred" },
-                { value: "themes", displayText: "Themes" },
-                { value: "submissions", displayText: "Submissions" },
-              ]}
+              rootClass="self-center pb-4"
+              options={radioOptions}
               value={radioValue}
               onValueChange={setRadioValue}
             />
             <ThemeCategoryDisplay
               typeOptionPreset="All"
+              themesPerPage={4}
               useSubmissionCards={radioValue === "submissions"}
               themeDataApiPath={`/users/me/${radioValue}`}
               filterDataApiPath={`/users/me/${radioValue}/filters`}
-              // TODO: MAKE THIS OPTIONAL
-              title={""}
             />
-
             <DeckTokenDisplay />
-
             <div className="flex flex-col gap-6 p-4">
               <span className="text-xl font-semibold font-fancy">Log Out</span>
               <button

@@ -70,7 +70,7 @@ function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
   return (
     <>
       <div className="flex flex-col items-start p-4 w-full">
-        <span className="font-fancy font-bold truncate w-full max-w-2xl text-start">
+        <span className="font-fancy font-bold w-full truncate max-w-full text-start">
           {data.name}
         </span>
         <div className="font-fancy flex justify-between w-full">
@@ -121,7 +121,7 @@ export function MiniThemeCardRoot({
   return (
     <div className={twMerge("flex flex-1 w-full items-center justify-center", className)}>
       {submissionId ? (
-        <div>
+        <div className="transition-all rounded-xl overflow-hidden w-full h-full">
           <InnerContent />
         </div>
       ) : (

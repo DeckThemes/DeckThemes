@@ -3,8 +3,14 @@ import { useContext, useState, useEffect } from "react";
 import { authContext } from "../_app";
 import { genericGET } from "../../apiHelpers";
 import { AccountData, Permissions } from "../../types";
-import { LoadingSpinner, PfpDisplay, ThemeCategoryDisplay } from "../../components";
+import {
+  LoadingSpinner,
+  PfpDisplay,
+  ThemeCategoryDisplay,
+  TransitionedCarouselTitle,
+} from "../../components";
 import Head from "next/head";
+import { HorizontalRadio } from "@components/Primitives";
 
 function BigDivider() {
   return (
@@ -26,6 +32,8 @@ export default function Account() {
   const [loaded, setLoaded] = useState<boolean>(false);
   const { accountInfo } = useContext(authContext);
   const [userInfo, setUserInfo] = useState<AccountData | undefined>();
+
+  const [radioValue, setRadioValue] = useState<string>("themes");
 
   useEffect(() => {
     if (parsedId) {
@@ -67,13 +75,20 @@ export default function Account() {
   }
 
   const calcDisplayName = () => {
-    const slicedName = userInfo.username.slice(0, userInfo.username.lastIndexOf("#"));
-    if (slicedName.slice(-1) === "s" || slicedName.slice(-1) === "S") {
+    const slicedName = userInfo.username.includes("#")
+      ? userInfo.username.slice(0, userInfo.username.lastIndexOf("#"))
+      : userInfo.username;
+    if (slicedName.slice(-1).toLowerCase() === "s") {
       return `${slicedName}'`;
     } else {
       return `${slicedName}'s`;
     }
   };
+  const radioOptions = [
+    { value: "themes", displayText: "Themes", title: `${calcDisplayName()} Themes` },
+    { value: "stars", displayText: "Stars", title: `${calcDisplayName()} Stars` },
+    { value: "submissions", displayText: "Submissions", title: `${calcDisplayName()} Submissions` },
+  ];
 
   return (
     <>
@@ -83,34 +98,30 @@ export default function Account() {
       <main className="flex flex-col items-center w-full">
         <PfpDisplay userData={userInfo} />
         <div className="mt-4" />
-        <ThemeCategoryDisplay
-          typeOptionPreset="All"
-          themeDataApiPath={`/users/${parsedId}/themes`}
-          filterDataApiPath={`/users/${parsedId}/themes/filters`}
-          title={`${calcDisplayName()} Themes`}
-          noAuthRequired
+        {/* If you're un-authed, this title will just always stay as "x's Themes" */}
+        <TransitionedCarouselTitle
+          className="pb-20"
+          titles={radioOptions.map((e) => e.title)}
+          currentTitle={
+            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+          }
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (
-          <>
-            <BigDivider />
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath={`/users/${parsedId}/stars`}
-              filterDataApiPath={`/users/${parsedId}/stars/filters`}
-              title={`${calcDisplayName()} Stars`}
-            />
-            <BigDivider />
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath={`/users/${parsedId}/submissions`}
-              filterDataApiPath={`/users/${parsedId}/submissions/filters`}
-              title={`${calcDisplayName()} Submissions`}
-              useSubmissionCards
-              showFiltersWithZero
-              defaultFilter="AwaitingApproval"
-            />
-          </>
+          <HorizontalRadio
+            rootClass="self-center pb-4"
+            options={radioOptions}
+            value={radioValue}
+            onValueChange={setRadioValue}
+          />
         )}
+        <ThemeCategoryDisplay
+          typeOptionPreset="All"
+          themesPerPage={4}
+          themeDataApiPath={`/users/${parsedId}/${radioValue}`}
+          filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
+          noAuthRequired={radioValue === "themes"}
+          useSubmissionCards={radioValue === "submissions"}
+        />
       </main>
     </>
   );

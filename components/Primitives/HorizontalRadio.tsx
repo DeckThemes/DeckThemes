@@ -4,6 +4,7 @@ export function HorizontalRadio({
   options,
   value,
   onValueChange,
+  rootClass = "",
 }: {
   options: {
     displayText: string;
@@ -12,9 +13,10 @@ export function HorizontalRadio({
   }[];
   onValueChange: any;
   value: string;
+  rootClass?: string;
 }) {
   return (
-    <RadioGroup.Root onValueChange={onValueChange}>
+    <RadioGroup.Root onValueChange={onValueChange} className={rootClass}>
       {options.map((e, i) => {
         const selected = value === e.value;
         return (

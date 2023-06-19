@@ -19,19 +19,21 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   return (
     <div className="flex flex-col gap-4 p-4 border-borderLight dark:border-borderDark">
       <span className="text-xl font-semibold font-fancy">Connect Your Steam Deck</span>
-      <div className="flex flex-col md:flex-row items-cente">
+      <div className="flex flex-col md:flex-row items-center">
         <button
           onClick={generateDeckToken}
           className="w-fit h-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 hover:bg-base-3-dark select-none py-2 px-4 border border-borders-base3-dark rounded-full"
         >
-			<RiRefreshLine />
-			<div className="font-fancy text-xs font-bold">{deckToken ? "Reg" : "G"}enerate Deck Token</div>
+          <RiRefreshLine />
+          <div className="font-fancy text-xs font-bold">
+            {deckToken ? "Reg" : "G"}enerate Deck Token
+          </div>
         </button>
         {deckToken ? (
           <>
             <div className="px-4 py-4 md:py-0 relative">
               {deckToken === "LOADING" ? (
-                <LoadingSpinner />
+                <LoadingSpinner size={24} />
               ) : (
                 <>
                   <div className="cursor-pointer underline">
