@@ -23,6 +23,7 @@ export async function checkAndRefreshToken() {
     debugEnv && console.log("Cookie Is Up To Date");
     return true;
   }
+  // TODO: I think this can be refactored using the new getCookieToken(), just haven't taken a good look yet
   // If it's been longer than a week (cookie expired and requires full re-log in)
   const cookieStr = document.cookie;
   if (cookieStr) {
@@ -33,7 +34,6 @@ export async function checkAndRefreshToken() {
         acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
         return acc;
       }, {});
-    console.log(Object.keys(cookieObj).indexOf("authToken"));
     if (Object.keys(cookieObj).indexOf("authToken") < 0) {
       clearCookie();
       // It still returns true as this needs to return for essential functions like the get discord url to work
@@ -73,6 +73,25 @@ export async function checkAndRefreshToken() {
     });
 }
 
+export function getCookieToken() {
+  const cookieStr = document.cookie;
+  if (cookieStr) {
+    const cookieObj = cookieStr
+      .split(";")
+      .map((v) => v.split("="))
+      .reduce((acc: any, v) => {
+        acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+        return acc;
+      }, {});
+    if (Object.keys(cookieObj).indexOf("authToken") <= 0) {
+      return cookieObj["authToken"];
+    }
+  } else {
+    // This is if there's no cookie
+    return false;
+  }
+}
+
 export async function genericGET(subPath: string, debug: boolean = false) {
   const debugEnv = process.env.NEXT_PUBLIC_DEV_MODE === "true";
   const waitForRefresh = await checkAndRefreshToken();
@@ -80,6 +99,11 @@ export async function genericGET(subPath: string, debug: boolean = false) {
     return await fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, {
       method: "GET",
       credentials: "include",
+      headers: debugEnv
+        ? {
+            Authorization: `Bearer ${getCookieToken()}`,
+          }
+        : {},
     })
       .then((res) => {
         debug && debugEnv && console.log(`${subPath} Fetch Res: `, res);

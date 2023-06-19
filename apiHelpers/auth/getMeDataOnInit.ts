@@ -1,9 +1,10 @@
 import { toast } from "react-toastify";
 import { AccountData } from "../../types";
-import { checkAndRefreshToken } from "../genericFetches";
+import { checkAndRefreshToken, getCookieToken } from "../genericFetches";
 
 export async function getMeDataOnInit(): Promise<AccountData | undefined> {
   const cookieStr = document.cookie;
+  const debugEnv = process.env.NEXT_PUBLIC_DEV_MODE === "true";
   process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log("cookies:", cookieStr);
   if (cookieStr) {
     const cookieObj = cookieStr
@@ -19,6 +20,11 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
         const meJson = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
           method: "GET",
           credentials: "include",
+          headers: debugEnv
+            ? {
+                Authorization: `Bearer ${getCookieToken()}`,
+              }
+            : {},
         })
           .then((res) => {
             if (res.status < 200 || res.status >= 300 || !res.ok) {
