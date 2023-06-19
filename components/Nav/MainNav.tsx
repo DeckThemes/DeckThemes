@@ -51,14 +51,16 @@ export function MainNav() {
             {accountInfo?.username ? (
               <>
                 {accountInfo.permissions.includes(Permissions.viewSubs) && (
-                  <NavIconLink href={"/submissions"} isInternal>
-                    <RiAdminFill size={32} />
+                  <NavIconLink href={"/submissions"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4" isInternal>
+                    <RiAdminFill size={14} />
+					<div className="font-fancy text-xs font-bold hidden sm:flex ">Admin <span className="opacity-50">(???)</span></div>
                   </NavIconLink>
                 )}
-                <NavIconLink href={"/submit"} isInternal>
-                  <TbUpload size={32} className="scale-x-105" />
+                <NavIconLink href={"/submit"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 hover:bg-base-3-dark select-none py-2 px-4  border border-borders-base3-dark rounded-full" isInternal>
+                  <TbUpload size={14} className="scale-x-105" />
+				  <div className="font-fancy text-xs font-bold hidden sm:block">Upload</div>
                 </NavIconLink>
-                {/* @ts-ignore */}
+                @ts-ignore
                 <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
               </>
             ) : (

@@ -48,13 +48,13 @@ export default function Home() {
           </h1>
 
           {/* Blurb */}
-          <p className="font-fancy mx-auto mt-6 max-w-2xl text-lg font-medium text-fore-10-dark text-center">
+          <p className="font-fancy mx-auto mt-6 max-w-2xl text-sm sm:text-lg leading-6 font-medium text-fore-10-dark text-center">
             DeckThemes is the largest repository of custom themes, styles, and audio packs for
             Steam. Available for Steam Deck and Windows.
           </p>
 
           {/* Download Btns */}
-          <div className="font-fancy flex mt-6 gap-2">
+          <div className="font-fancy flex flex-col sm:flex-row mt-6 gap-2">
             <DownloadButtonWithIcon iconName="steamdeck" />
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
