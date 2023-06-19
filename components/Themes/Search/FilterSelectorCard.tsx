@@ -29,7 +29,6 @@ export function FilterSelectorCard({
   onTypeChange?: (e: any) => void;
   searchOnly?: boolean;
 }) {
-  console.log("filtervaue", filterValue);
   return (
     <>
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 z-10 pb-12 py-4">

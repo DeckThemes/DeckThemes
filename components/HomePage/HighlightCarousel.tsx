@@ -2,6 +2,7 @@ import { createRef, useEffect, useMemo, useState } from "react";
 import { OrderValueToggle } from "./OrderValueToggle";
 import { HighlightCardView } from "./HighlightCardView";
 import { RadioDropdown } from "@components/Primitives";
+import { HorizontalRadio } from "@components/Primitives/HorizontalRadio";
 
 const animationDuration = 200;
 
@@ -10,32 +11,43 @@ export function HighlightCarousel({
 }: {
   options: {
     title: string;
+    buttonText?: string;
     searchFilter: string;
     hrefLink: string;
   }[];
 }) {
   const [orderValue, setOrderValue] = useState<string>("Popular");
-  const [currentNumber, setCurrentNumber] = useState<number>(0);
   const [transitioning, setTransitioning] = useState<boolean>(false);
   const orderUrl = useMemo(
     () => `&order=${orderValue === "Popular" ? "Most Downloaded" : "Last Updated"}`,
     [orderValue]
   );
+  const [selectedRadioOption, setRadioOption] = useState<string>(options[0].searchFilter);
+  const currentOption = useMemo(
+    () => options.find((e) => e.searchFilter === selectedRadioOption) || options[0],
+    [selectedRadioOption]
+  );
+
   // This gives each title a ref so that it can be animated later
   const [titleRefArr, setTitleRefArr] = useState<any[]>([]);
   useEffect(() => {
     setTitleRefArr(options.map(() => createRef()));
   }, [options]);
 
-  async function handleCarouselShift(newNumber: number) {
+  async function handleRadioChange(newValue: string) {
     setTransitioning(true);
     // This happens before the transition to account for the time it will take for the API call anyway
-    setCurrentNumber(newNumber);
-    await fadeOut(titleRefArr[currentNumber].current);
-    await fadeIn(titleRefArr[newNumber].current);
+    setRadioOption(newValue);
+    const oldIndex = options.indexOf(
+      options.find((e) => e.searchFilter === selectedRadioOption) || options[0]
+    );
+    const newIndex = options.indexOf(
+      options.find((e) => e.searchFilter === newValue) || options[0]
+    );
+    await fadeOut(titleRefArr[oldIndex].current);
+    await fadeIn(titleRefArr[newIndex].current);
     setTransitioning(false);
   }
-
   // These are only for the transitions on the title h2
   function fadeOut(target: any) {
     return new Promise<void>((resolve) => {
@@ -90,31 +102,23 @@ export function HighlightCarousel({
             <div className="flex flex-col sm:flex-row self-center gap-4">
               <RadioDropdown
                 triggerClass="flex md:hidden"
-                options={options.map((e) => ({ value: e.searchFilter, displayText: e.title }))}
-                value={options[currentNumber].searchFilter}
-                onValueChange={(value: string) => {
-                  const fullValueObj = options.find((e) => e.searchFilter === value) || options[0];
-                  const i = options.indexOf(fullValueObj);
-                  i !== currentNumber && handleCarouselShift(i);
-                }}
+                options={options.map((e) => ({
+                  value: e.searchFilter,
+                  displayText: e.title,
+                }))}
+                value={selectedRadioOption}
+                onValueChange={handleRadioChange}
               />
               <div className="hidden md:flex">
-                {options.map((e, i) => {
-                  return (
-                    <button
-                      disabled={i === currentNumber || transitioning}
-                      onClick={() => i !== currentNumber && handleCarouselShift(i)}
-                      key={`Carousel_Dot_${i}`}
-                      className={`w-32 h-10 m-1 ${
-                        i === currentNumber
-                          ? `bg-brandBlue`
-                          : `bg-base-3-light dark:bg-base-3-dark  hover:bg-base-4-light hover:dark:bg-base-4-dark`
-                      } rounded-full transition-colors duration-500 font-fancy`}
-                    >
-                      <span>{e.title.slice(0, e.title.indexOf(" "))}</span>
-                    </button>
-                  );
-                })}
+                <HorizontalRadio
+                  options={options.map((e) => ({
+                    value: e.searchFilter,
+                    displayText: e?.buttonText || e.title,
+                    disabled: transitioning,
+                  }))}
+                  value={selectedRadioOption}
+                  onValueChange={handleRadioChange}
+                />
               </div>
             </div>
             <OrderValueToggle
@@ -126,8 +130,8 @@ export function HighlightCarousel({
         <div className="flex flex-col-reverse sm:flex-col w-full gap-4">
           <div>
             <HighlightCardView
-              apiURL={`/themes?perPage=7&filters=${options[currentNumber].searchFilter}${orderUrl}`}
-              viewMoreURL={`${options[currentNumber].hrefLink + orderUrl}`}
+              apiURL={`/themes?perPage=7&filters=${currentOption.searchFilter}${orderUrl}`}
+              viewMoreURL={`${currentOption.hrefLink + orderUrl}`}
             />
           </div>
         </div>

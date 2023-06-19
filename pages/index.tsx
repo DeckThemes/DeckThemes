@@ -74,7 +74,10 @@ export default function Home() {
                 className="absolute max-w-[559px]"
                 style={{ width: "100%", top: "10%", left: "10%" }}
               >
-                <img className="relative inset-0" src="https://deckthemes.com/hero_reel.gif" />
+                <img
+                  className="relative inset-0 aspect-[16/10]"
+                  src="https://deckthemes.com/hero_reel.gif"
+                />
               </div>
             </div>
           </div> */}
@@ -92,14 +95,21 @@ export default function Home() {
                 title: "Desktop CSS Themes",
                 searchFilter: "DESKTOP-CSS",
                 hrefLink: "/themes?type=DESKTOP-CSS",
+                buttonText: "Desktop",
               },
               {
                 title: "BPM CSS Themes",
                 searchFilter: "BPM-CSS",
                 hrefLink: "/themes?type=BPM-CSS",
+                buttonText: "BPM",
               },
               // This has a trailing ? because the link filler only knows to add "&order="
-              { title: "AudioLoader Packs", searchFilter: "AUDIO", hrefLink: "/packs?" },
+              {
+                title: "AudioLoader Packs",
+                searchFilter: "AUDIO",
+                hrefLink: "/packs?",
+                buttonText: "Audio",
+              },
             ]}
           />
         </div>

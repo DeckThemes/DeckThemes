@@ -46,11 +46,6 @@ export function RadioDropdown({
     () => formattedOptions.find((e: any) => e.value === value) || formattedOptions[0],
     [formattedOptions, value]
   );
-  console.log(
-    selected,
-    value,
-    formattedOptions.map((e) => e.value)
-  );
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger
