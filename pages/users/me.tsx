@@ -60,7 +60,7 @@ export default function Account() {
         <Head>
           <title>DeckThemes | My Profile</title>
         </Head>
-        <main className="flex flex-col items-center w-full">
+        <main className="flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
           <PfpDisplay userData={meInfo || accountInfo} />
           <div className="mt-4" />
           <ThemeCategoryDisplay
