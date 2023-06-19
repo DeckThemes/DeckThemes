@@ -29,13 +29,13 @@ export function MainNav() {
         <div className="md:ml-auto flex ml-8 h-full items-center gap-8">
           <>
             {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL} className="flex items-center gap-2">
+              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
                 <Discord size={18} />
 				<div className="font-fancy text-xs font-bold hidden sm:flex ">Discord</div>
               </NavIconLink>
             )}
             {!!process.env.NEXT_PUBLIC_PATREON_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL} className="flex items-center gap-2">
+              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
                 <Patreon size={14} />
 				<div className="font-fancy text-xs font-bold hidden sm:flex">Patreon</div>
               </NavIconLink>
@@ -43,7 +43,7 @@ export function MainNav() {
           </>
         </div>
         <div className="font-extrabold flex items-center h-full ml-auto md:ml-8 gap-8">
-          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="flex items-center gap-2">
+          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
             <ImBook size={14} />
 			<div className="font-fancy text-xs font-bold hidden sm:flex ">Documentation</div>
           </NavIconLink>
@@ -70,7 +70,7 @@ export function MainNav() {
                 ) : (
                   <>
                     <button
-                      className="border border-borders-base3-dark rounded-full text-xs px-4 py-2 h-full flex items-center justify-center text-white"
+                      className="border border-borders-base3-dark rounded-full text-xs px-4 py-2 h-full justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark"
                       onClick={fetchDiscordUrl}
                     >
                       <div>Login <span className="hidden sm:inline-block">with Discord</span></div>
