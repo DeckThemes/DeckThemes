@@ -11,7 +11,10 @@ body {
   font-family: "Open Sans", "sans-serif";
   /* font-family: ""Open Sans""; */
   font-size: 15px;
-  overflow-x: hidden;
+}
+
+html, body, #__next {
+	overflow-x: hidden;
 }
 
 .font-default {
