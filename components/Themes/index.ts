@@ -7,3 +7,4 @@ export * from "./LoadMoreButton";
 export * from "./Search";
 export * from "./ThemeCategoryDisplay";
 export * from "./ThemeCards";
+export * from "./ThemeDownloadButton";

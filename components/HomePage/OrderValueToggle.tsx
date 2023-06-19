@@ -11,7 +11,7 @@ export function OrderValueToggle({
 }) {
   return (
     <>
-      <div className="h-10 flex relative gap-8 p-2 px-4 bg-elevation-1-light dark:bg-elevation-1-dark rounded-full font-fancy">
+      <div className="h-10 flex relative gap-8 p-2 px-4 bg-base-3-light dark:bg-base-3-dark rounded-full font-fancy">
         <button className="w-16 z-20" onClick={() => setOrderValue(orderOptions[0])}>
           <span>{orderOptions[0]}</span>
         </button>
@@ -19,7 +19,7 @@ export function OrderValueToggle({
           <span>{orderOptions[1]}</span>
         </button>
         <div
-          className={`z-10 bg-elevation-2-light dark:bg-elevation-2-dark w-24 h-10 rounded-3xl absolute top-0 transition-all duration-100`}
+          className={`z-10 bg-brandBlue w-24 h-10 rounded-3xl absolute top-0 transition-all duration-100`}
           style={{ left: orderValue === orderOptions[0] ? 0 : "50%" }}
         />
       </div>

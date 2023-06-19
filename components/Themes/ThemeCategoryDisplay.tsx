@@ -142,7 +142,7 @@ export function ThemeCategoryDisplay({
             }}
             typeValue={type}
           />
-          <div className="flex flex-col md:flex-row w-full justify-center items-center md:items-stretch flex-wrap gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-7xl justify-center items-center md:items-stretch flex-wrap gap-4">
             {themeData.total === 0 && <span>No Results Found</span>}
             {useSubmissionCards ? (
               <>

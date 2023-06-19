@@ -86,7 +86,7 @@ export default function App({ Component, pageProps }: AppProps) {
           value={{ desktopMode, setDesktopMode, installing, setInstalling }}
         >
           <div className={`${theme}`}>
-            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
+            <div className="bg-base-6-light dark:bg-base-6-dark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
               {desktopMode !== undefined ? (
                 <>
                   <MainNav />
@@ -102,9 +102,7 @@ export default function App({ Component, pageProps }: AppProps) {
                     theme={theme}
                   />
                   <Component {...pageProps} />
-                  <div className="mt-auto">
-                    <Footer />
-                  </div>
+                  <Footer />
                 </>
               ) : (
                 <LoadingPage />

@@ -3,3 +3,4 @@ export * from "./MiniDivider";
 export * from "./LoadingPage";
 export * from "./LogInPage";
 export * from "./UnauthorizedPage";
+export * from "./DownloadButtonWithIcon";
