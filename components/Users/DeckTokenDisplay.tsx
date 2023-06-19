@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { fetchWithRefresh, genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
+import { RiRefreshLine } from "react-icons/ri";
 
 export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   const [deckToken, setDeckToken] = useState<string | undefined>();
@@ -17,13 +18,14 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   }
   return (
     <div className="flex flex-col gap-4 p-4 border-borderLight dark:border-borderDark">
-      <span className="text-3xl font-semibold font-fancy text-center">Connect Your Steam Deck</span>
-      <div className="flex flex-col md:flex-row items-center bg-cardLight dark:bg-cardDark rounded-3xl">
+      <span className="text-xl font-semibold font-fancy">Connect Your Steam Deck</span>
+      <div className="flex flex-col md:flex-row items-cente">
         <button
           onClick={generateDeckToken}
-          className="w-full p-4 bg-borderLight dark:bg-borderDark rounded-3xl font-fancy"
+          className="w-fit h-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 hover:bg-base-3-dark select-none py-2 px-4 border border-borders-base3-dark rounded-full"
         >
-          {deckToken ? "Reg" : "G"}enerate Deck Token
+			<RiRefreshLine />
+			<div className="font-fancy text-xs font-bold">{deckToken ? "Reg" : "G"}enerate Deck Token</div>
         </button>
         {deckToken ? (
           <>
