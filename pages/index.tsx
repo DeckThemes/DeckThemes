@@ -35,27 +35,34 @@ export default function Home() {
           content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
         />
       </Head>
-      <main className="flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
-        <div className="w-full h-full flex flex-col items-center justify-center">
-          <h1 className="text-5xl font-bold text-center">
-            Take Steam
-            <br />
-            to the next
-            <br />
-            <span className="bg-gradient-to-tr from-cssPurple to-brandBlue bg-clip-text text-transparent text-6xl">
-              Level
-            </span>
+
+      <main className="landing-page-bg flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+        {/* Hero */}
+        <div className="w-full h-full flex flex-col items-center justify-center gap-6 pt-4 lg:pt-24 px-4">
+			{/* Headline */}
+          <h1 className="text-5xl text-center mx-auto max-w-4xl font-extrabold tracking-tight sm:text-6xl">
+            <span className="bg-gradient-to-tr from-brandBlue to-brandBlue bg-clip-text text-transparent">
+              Level up <br className="block sm:hidden"/>
+            </span>{" "}
+            your Steam
           </h1>
-          <div
-            style={{ backgroundImage: `url(/hero.png)` }}
-            className="w-11/12 h-[30vh] sm:h-[50vh] lg:h-[70vh] bg-contain bg-no-repeat bg-center"
-          />
-          <h3 className="text-3xl font-semibold pb-2">Install</h3>
-          <div className="flex gap-4">
+
+			{/* Blurb */}
+		  <p className="font-fancy mx-auto mt-6 max-w-2xl text-lg font-medium text-fore-10-dark text-center">DeckThemes is the largest repository of custom themes, styles, and audio packs for Steam. Available for Steam Deck and Windows.</p>
+
+			{/* Download Btns */}
+		  <div className="font-fancy flex mt-6 gap-2">
             <DownloadButtonWithIcon iconName="steamdeck" />
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
+
+          <div
+            style={{ backgroundImage: `url(/hero.png)` }}
+            className="w-11/12 max-w-[92rem] aspect-video bg-contain bg-no-repeat bg-center"
+          />
         </div>
+
+        {/* Carousel */}
         <div
           className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4"
           style={desktopMode ? { justifyContent: "center" } : {}}

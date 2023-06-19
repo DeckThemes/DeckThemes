@@ -2,15 +2,15 @@
 
 export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
   return (
-    <button className="p-2 group hover:-translate-y-1 bg-base-3-light dark:bg-base-3-dark rounded-xl border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition">
-      <div className="w-16 h-16 relative">
+    <button className="gap-2 mb-2 sm:mb-0 group no-underline inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-brandBlue text-white hover:bg-fore-11-dark hover:text-fore-contrast-dark active:opacity-60 active:text-blue-100 focus-visible:outline-[var(--borders-base1] mr-4 border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition">
+      <div className="w-4 h-4 relative">
         {iconName === "steamdeck" ? (
           <>
             <svg
               role="img"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute top-0 z-20 w-[64px] h-[64px] fill-black dark:fill-white group-hover:opacity-0 transition-opacity"
+              className="w-4 h-4 absolute top-0 left-0 z-20 fill-black dark:fill-white group-hover:opacity-0 transition-opacity"
             >
               <linearGradient id="Gradient1">
                 <stop offset="0%" stopColor="#1a9eff" />
@@ -23,7 +23,7 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
               role="img"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              className="absolute z-10 top-0 w-[64px] h-[64px] fill-[url(#Gradient1)]"
+              className="w-4 h-4 absolute z-10 top-0 left-0 fill-[url(#Gradient1)]"
             >
               <linearGradient id="Gradient1">
                 <stop offset="0%" stopColor="#1a9eff" />
@@ -39,7 +39,7 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
               role="img"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-[64px] h-[64px] fill-black dark:fill-white group-hover:fill-[#0078D4] group-hover:dark:fill-[#0078D4] transition-colors"
+              className="w-4 h-4 fill-black dark:fill-white group-hover:fill-[#0078D4] group-hover:dark:fill-[#0078D4] transition-colors"
             >
               <title>Windows 11</title>
               <path d="M0,0H11.377V11.372H0ZM12.623,0H24V11.372H12.623ZM0,12.623H11.377V24H0Zm12.623,0H24V24H12.623" />
@@ -47,6 +47,7 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
           </>
         )}
       </div>
+	  <div>Download for {iconName === "steamdeck" && <>Steam Deck</>} {iconName === "windows11" && <>Windows</>} </div>
     </button>
   );
 }
