@@ -83,7 +83,7 @@ export default function Home() {
 
         {/* Carousel */}
         <div
-          className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4"
+          className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4 mt-16"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >

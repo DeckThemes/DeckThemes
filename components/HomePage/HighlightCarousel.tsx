@@ -66,7 +66,7 @@ export function HighlightCarousel({
   return (
     <>
       <div className="flex flex-col w-full gap-4 max-w-7xl">
-        <div className="border-b-[1px] relative border-black dark:border-borders-base1-dark w-full flex flex-col items-center pb-4">
+        <div className="relative w-full flex flex-col items-center pb-4">
           {/* This is some cursed ass code but it lets me transition the titles so that the "header" section doesn't have to move with the rest of the carousel */}
           {options.map((e, i) => {
             return (
@@ -106,7 +106,7 @@ export function HighlightCarousel({
                   disabled={i === currentNumber || transitioning}
                   onClick={() => i !== currentNumber && handleCarouselShift(i)}
                   key={`Carousel_Dot_${i}`}
-                  className={`w-32 h-10 ${
+                  className={`w-32 h-10 m-1 ${
                     i === currentNumber
                       ? `bg-brandBlue`
                       : `bg-base-3-light dark:bg-base-3-dark  hover:bg-base-4-light hover:dark:bg-base-4-dark`
