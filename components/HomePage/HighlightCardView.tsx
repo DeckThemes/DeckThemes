@@ -39,7 +39,7 @@ export function HighlightCardView({
                       <MiniThemeCardRoot
                         data={e}
                         key={`Most download ${i}`}
-                        className={i >= 5 ? "hidden lg:flex" : ""}
+                        className={i >= 5 ? "hidden lg:inline" : "inline"}
                       />
                     );
                   })}
@@ -48,12 +48,12 @@ export function HighlightCardView({
               ) : null}
             </>
           ) : (
-            Array(6)
+            Array(8)
               .fill("")
               .map((_, i) => (
                 <LoadingSkeletonCard
                   key={`Loading_Card_${i}`}
-                  className={i >= 5 ? "hidden lg:flex" : ""}
+                  className={i >= 6 ? "hidden lg:inline" : "inline"}
                 />
               ))
           )}
