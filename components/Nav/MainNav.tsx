@@ -60,7 +60,6 @@ export function MainNav() {
                   <TbUpload size={14} className="scale-x-105" />
 				  <div className="font-fancy text-xs font-bold hidden sm:block">Upload</div>
                 </NavIconLink>
-                @ts-ignore
                 <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
               </>
             ) : (
