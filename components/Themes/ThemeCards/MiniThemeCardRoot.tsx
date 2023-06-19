@@ -94,6 +94,8 @@ export function MiniThemeCardRoot({
   className?: string;
 }) {
   function imageSRCCreator(): string {
+    if (data?.images === undefined) return `https://share.deckthemes.com/css_placeholder.png`;
+
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
     } else {
@@ -117,7 +119,7 @@ export function MiniThemeCardRoot({
   }
 
   return (
-    <div className={twMerge("flex flex-1 w-full", className)}>
+    <div className={twMerge("flex flex-1 w-full items-center justify-center", className)}>
       {submissionId ? (
         <div>
           <InnerContent />
