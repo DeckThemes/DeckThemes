@@ -123,13 +123,13 @@ export function ThemeCategoryDisplay({
           <FilterSelectorCard
             filterOpts={serverFilters.filters}
             onFilterChange={(e) => {
-              setSearchOpts({ ...searchOpts, filters: e.target.value });
+              setSearchOpts({ ...searchOpts, filters: e });
             }}
             filterValue={searchOpts.filters}
             showFiltersWithZero={showFiltersWithZero}
             orderOpts={serverFilters.order}
             onOrderChange={(e) => {
-              setSearchOpts({ ...searchOpts, order: e.target.value });
+              setSearchOpts({ ...searchOpts, order: e });
             }}
             orderValue={searchOpts.order}
             searchValue={searchOpts.search}
@@ -138,7 +138,7 @@ export function ThemeCategoryDisplay({
             }}
             typeOptions={typePresets[typeOptionPreset]}
             onTypeChange={(e) => {
-              setType(e.target.value);
+              setType(e);
             }}
             typeValue={type}
           />
