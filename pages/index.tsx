@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef, ReactNode, useContext } from "react";
-import { DownloadButtonWithIcon, HighlightCarousel } from "../components";
+import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
 
@@ -58,6 +58,8 @@ export default function Home() {
             <DownloadButtonWithIcon iconName="steamdeck" />
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
+
+		  <HeroReel />
 
           {/* Experimental hero-gif inside of Steam Deck screen hero img */}
           {/* <div
