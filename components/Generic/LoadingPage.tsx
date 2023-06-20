@@ -7,7 +7,7 @@ export function LoadingPage() {
       <Head>
         <title>DeckThemes | Loading</title>
       </Head>
-      <div className="flex-grow flex justify-center h-full w-full mt-8 text-center items-center text-3xl font-semibold gap-4">
+      <div className="flex-grow flex justify-center h-full w-full my-64 py-48 text-center items-center text-3xl font-semibold gap-4">
         <LoadingSpinner />
         <span>Loading</span>
       </div>
