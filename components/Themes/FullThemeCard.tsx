@@ -115,6 +115,7 @@ export function FullThemeCard({
                     </Link>
                     <div className="flex w-full md:w-fit items-center justify-center gap-4">
                       <button
+                        disabled={!accountInfo?.username}
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
