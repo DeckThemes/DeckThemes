@@ -11,9 +11,9 @@ html, body, #__next {
   font-size: 15px;
 }
 
-html, body, #__next {
+/* html, body, #__next {
 	overflow-x: hidden;
-}
+} */
 
 :root {
 	--scrollbar-dark: #ffffff;

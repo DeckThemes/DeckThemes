@@ -128,25 +128,26 @@ export function ThemeCategoryDisplay({
   }, [type]);
 
   const [isSticky, setIsSticky] = useState(false);
-  const componentRef = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (componentRef.current) {
-      const rect = componentRef.current.getBoundingClientRect();
-      const isElementSticky = rect.top <= 0;
-
-      setIsSticky(isElementSticky);
-    }
-  };
-
-  useSubmissionCards && console.log(themeData, loaded);
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+	const handleScroll = () => {
+		const rect = stickyHeaderRef?.current?.getBoundingClientRect();
+		const isElementSticky = rect?.top <= 0;
+  
+		setIsSticky(isElementSticky);
+		console.log('hit')
+	};
+  
+	window.addEventListener("scroll", handleScroll);
+	console.log('handlescroll mounted')
+  
+	return () => {
+	  window.removeEventListener("scroll", handleScroll);
+	};
+  }, []); // Empty dependency array to ensure the effect runs only once
+
+  useSubmissionCards && console.log(themeData, loaded);
 
   return (
     <>
@@ -160,8 +161,8 @@ export function ThemeCategoryDisplay({
             ></div>
           )}
           <div
-            ref={componentRef}
-            className={`w-full max-w-7xl flex items-center justify-center sticky top-0 z-10 transition-all ${
+            ref={stickyHeaderRef}
+            className={`w-full max-w-7xl flex items-center justify-center sticky top-0 z-10 transition-all duration-300 ${
               isSticky ? "px-4" : ""
             }`}
           >
