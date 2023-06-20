@@ -150,7 +150,7 @@ export function ThemeCategoryDisplay({
   return (
     <>
       {themeData.total >= 0 ? (
-        <div className="flex flex-col w-full items-center px-4 relative">
+        <div className="flex flex-col h-full w-full items-center relative px-4">
           {title && <h4 className="text-2xl font-medium">{title}</h4>}
           {isSticky && (
             <div
@@ -160,7 +160,7 @@ export function ThemeCategoryDisplay({
           )}
           <div
             ref={componentRef}
-            className={`w-full max-w-7xl flex items-center justify-center relative lg:sticky top-0 z-10 transition-all ${
+            className={`w-full max-w-7xl flex items-center justify-center sticky top-0 z-10 transition-all ${
               isSticky ? "px-4" : ""
             }`}
           >

@@ -32,7 +32,7 @@ export function FilterSelectorCard({
 }) {
   return (
     <>
-      <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 z-10 pb-12 py-4">
+      <div className="sticky top-0 w-full max-w-7xl flex flex-col lg:flex-row gap-4 py-12">
         <LabelledInput
           label="Search"
           debounce

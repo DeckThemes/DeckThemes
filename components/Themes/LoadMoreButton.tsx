@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, useEffect } from "react";
+import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { generateParamStr, genericGET } from "../../apiHelpers";
 import { ThemeQueryRequest, ThemeQueryResponse, ThemeSubmissionQueryResponse } from "../../types";
 import { LoadingSpinner } from "../Generic";
@@ -20,28 +20,70 @@ export function LoadMoreButton({
 }) {
   const [loadMoreCurPage, setLoadMorePage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
+  const loadMoreButtonRef = useRef<HTMLButtonElement>(null);
 
   function loadMore() {
     setLoading(true);
-    // This just changes "All" to "", as that is what the backend looks for
     let searchOptClone = { ...origSearchOpts };
     searchOptClone.page = loadMoreCurPage + 1;
     const searchOpts = generateParamStr(
       searchOptClone.filters !== "All" ? searchOptClone : { ...searchOptClone, filters: "" },
       paramStrFilterPrepend
     );
-    genericGET(`${fetchPath}${searchOpts}`, true).then((data) => {
-      if (data) {
-        setThemeArr({ total: themeArr.total, items: [...themeArr.items, ...data.items] });
-        setLoadMorePage((curPage) => curPage + 1);
-      }
-      setLoading(false);
-    });
+    genericGET(`${fetchPath}${searchOpts}`, true)
+      .then((data) => {
+        if (data) {
+          setThemeArr({ total: themeArr.total, items: [...themeArr.items, ...data.items] });
+          setLoadMorePage((curPage) => curPage + 1);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   useEffect(() => {
     setLoadMorePage(1);
   }, [origSearchOpts, type]);
+
+  //   this is jank central, i dont even think i have to do this, or if i even should have to
+  useEffect(() => {
+    setThemeArr({ total: 0, items: [] });
+  }, [type, setThemeArr]);
+
+  useEffect(() => {
+    const options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1.0,
+    };
+
+    const handleIntersection = (
+      entries: IntersectionObserverEntry[],
+      //   @ts-ignore
+      observer: IntersectionObserver
+    ) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          loadMore();
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(handleIntersection, options);
+
+    if (loadMoreButtonRef.current) {
+      observer.observe(loadMoreButtonRef.current);
+    }
+
+    return () => {
+      if (loadMoreButtonRef.current) {
+        observer.unobserve(loadMoreButtonRef.current);
+      }
+    };
+  }, [loadMoreButtonRef.current]);
+
+  //   can we do something about this
   return (
     <>
       {themeArr.items.length < themeArr.total ? (
@@ -53,6 +95,7 @@ export function LoadMoreButton({
           ) : (
             <>
               <button
+                ref={loadMoreButtonRef}
                 className="font-fancy bg-base-3-light dark:bg-base-3-dark p-2 px-4 rounded-3xl font-semibold"
                 onClick={loadMore}
               >
