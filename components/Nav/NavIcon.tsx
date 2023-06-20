@@ -6,11 +6,10 @@ import { useRouter } from "next/router";
 
 export function NavIcon({ disabled = false }: { disabled?: boolean }) {
   const router = useRouter();
-  const theme = useTheme();
+  const { theme, setTheme } = useTheme()
 
   const src = () => {
     if (router.pathname.includes("/packs")) {
-      // This works and the comparison is still valid, typescript is just not understanding for some reason
       // @ts-ignore
       return theme === "light" ? "/logo_audio_lightmode.png" : "/logo_audio_darkmode.png";
     }

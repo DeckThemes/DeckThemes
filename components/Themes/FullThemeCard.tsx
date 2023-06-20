@@ -119,7 +119,7 @@ export function FullThemeCard({
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
-                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 ${
+                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 ${
                           accountInfo?.username
                             ? "hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark cursor-pointer"
                             : "cursor-auto"
@@ -154,7 +154,7 @@ export function FullThemeCard({
                             pauseOnHover: false,
                           });
                         }}
-                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark`}
+                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark`}
                       >
                         <BsShare className="scale-x-90" /> <span className="">Share</span>
                       </button>
@@ -217,7 +217,7 @@ export function FullThemeCard({
                                   )}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark"
+                                  className="h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
                                 >
                                   <BiCode />
                                   Source code

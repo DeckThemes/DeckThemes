@@ -8,7 +8,7 @@ import { useTheme } from "next-themes";
 
 export function LandingFooter() {
   const router = useRouter();
-  const theme = useTheme();
+  const { theme, setTheme } = useTheme()
 
   const src = () => {
     if (router.pathname.includes("/packs")) {
@@ -42,11 +42,11 @@ export function LandingFooter() {
                 </span>
               </>
             </Link>
-            <p className="font-fancy text-sm text-fore-10-dark">
+            <p className="font-fancy text-sm text-fore-10-light dark:text-fore-10-dark">
               DeckThemes is the largest repository of custom themes, styles, and audio packs for
               Steam.
             </p>
-			<p className="font-fancy text-sm text-fore-5-dark max-w-2xl">
+			<p className="font-fancy text-sm text-fore-5-light dark:text-fore-5-dark max-w-2xl">
 				Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
 				Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
 				registered trademarks of Valve Corporation in the U.S. and/or other countries.
@@ -93,7 +93,17 @@ export function LandingFooter() {
 			
           </div>
         </div>
-        <div className=""></div>
+        <div className="">
+        <button
+          className="ml-auto pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+          onClick={() => {
+            theme === "light" ? setTheme("dark") : setTheme("light")
+          }}
+        >
+          {theme === "light" ? <FaRegSun className="w-8 h-8" /> : <FaRegMoon className="w-8 h-8" />}
+        </button>
+
+		</div>
       </div>
     </footer>
   );

@@ -71,7 +71,7 @@ export function MainNav() {
                 ) : (
                   <>
                     <button
-                      className="border border-borders-base3-dark rounded-full text-xs px-4 py-2 h-full justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark"
+                      className="h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
                       onClick={fetchDiscordUrl}
                     >
                       <div>Login <span className="hidden sm:inline-block">with Discord</span></div>

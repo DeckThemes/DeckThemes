@@ -48,7 +48,7 @@ export default function Home() {
           </h1>
 
           {/* Blurb */}
-          <p className="font-fancy mx-auto mt-6 max-w-2xl text-sm sm:text-lg leading-6 font-medium text-fore-10-dark text-center">
+          <p className="font-fancy mx-auto mt-6 max-w-2xl text-sm sm:text-lg leading-6 font-medium text-fore-10-light dark:text-fore-10-dark text-center">
             DeckThemes is the largest repository of custom themes, styles, and audio packs for
             Steam. Available for Steam Deck and Windows.
           </p>

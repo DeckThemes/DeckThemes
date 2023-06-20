@@ -56,12 +56,22 @@ h4 {
   }
 }
 
-.page-shadow {
+.dark .page-shadow {
 	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 1)
 }
 
-.landing-page-bg {
+
+.light .page-shadow {
+	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 0.2)
+}
+
+.dark .landing-page-bg {
 	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(36, 36, 46, 0.5), transparent)
+}
+
+
+.light .landing-page-bg {
+	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(203, 211, 238, 0.5), transparent)
 }
 
 .radio-dropdown {
@@ -79,7 +89,7 @@ html.dark, html.dark > body {
 }
 
 ::-webkit-scrollbar {
-	width: 14.5px;
+	width: 14px;
 	height: 0px;
 	background: transparent;
 }
