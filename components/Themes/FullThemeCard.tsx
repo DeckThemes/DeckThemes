@@ -118,11 +118,11 @@ export function FullThemeCard({
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
-                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark ${
+                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 ${
                           accountInfo?.username
-                            ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
+                            ? "hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark cursor-pointer"
                             : "cursor-auto"
-                        } transition-all`}
+                        }`}
                       >
                         {isStarred ? <BsStarFill /> : <BsStar />}{" "}
                         <span className="whitespace-nowrap">
