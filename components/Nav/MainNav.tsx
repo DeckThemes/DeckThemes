@@ -73,7 +73,7 @@ export function MainNav() {
                   >
                     <RiAdminFill size={14} />
                     <div className="font-fancy hidden text-xs font-bold sm:flex ">
-                      Admin <span className="opacity-50">(???)</span>
+                      Admin
                     </div>
                   </NavIconLink>
                 )}

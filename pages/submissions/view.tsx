@@ -22,6 +22,7 @@ import {
   ThemeSubmissionInfo,
 } from "../../types";
 import { authContext } from "../_app";
+import { LabelledTextArea } from "@components/Primitives";
 
 export default function FullSubmissionViewPage() {
   const { accountInfo } = useContext(authContext);
@@ -109,9 +110,9 @@ export default function FullSubmissionViewPage() {
       </Head>
       {submissionData ? (
         <>
-          <main className="flex w-full flex-grow flex-col items-center">
+          <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
             <div className="flex w-full flex-col items-center">
-              <h1 className="mt-4 -mb-4 text-3xl font-semibold md:text-4xl">
+              <h1 className="mt-4 mb-4 text-3xl font-black md:text-6xl">
                 {submissionData.newTheme.type === "Audio"
                   ? FormattedSubmissionIntentAudio[submissionData.intent]
                   : FormattedSubmissionIntent[submissionData.intent]}
@@ -157,8 +158,8 @@ export default function FullSubmissionViewPage() {
                           </>
                         ) : (
                           <>
-                            <div className="flex flex-col items-center gap-2">
-                              <div className="flex gap-2">
+                            <div className="font-fancy flex w-full flex-col items-center gap-2 md:w-1/4">
+                              <div className="flex gap-8">
                                 {accountInfo?.permissions.includes(
                                   Permissions.approveSubs
                                 ) && (
@@ -166,8 +167,8 @@ export default function FullSubmissionViewPage() {
                                     className={`${
                                       action === "approve"
                                         ? "bg-emerald-600"
-                                        : "bg-cardLight dark:bg-cardDark"
-                                    } flex items-center rounded-full p-2 transition-colors`}
+                                        : "bg-base-3-light dark:bg-base-3-dark"
+                                    } flex items-center rounded-full border-2 border-borders-base1-light p-2 transition-colors hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark`}
                                     onClick={() => {
                                       action !== "approve"
                                         ? setAction("approve")
@@ -190,8 +191,8 @@ export default function FullSubmissionViewPage() {
                                       className={`${
                                         action === "deny"
                                           ? "bg-red-500"
-                                          : "bg-cardLight dark:bg-cardDark"
-                                      } flex items-center rounded-full p-2 transition-colors`}
+                                          : "bg-base-3-light dark:bg-base-3-dark"
+                                      } flex items-center rounded-full border-2 border-borders-base1-light p-2 transition-colors hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark`}
                                       onClick={() => {
                                         action !== "deny"
                                           ? setAction("deny")
@@ -208,22 +209,20 @@ export default function FullSubmissionViewPage() {
                               </div>
                               {action && (
                                 <>
-                                  <div className="flex flex-col items-center gap-2 rounded-3xl border-4 border-borderLight p-4 dark:border-borderDark">
-                                    <span className="text-xl font-medium">
-                                      {action === "deny"
-                                        ? "Reason For Denial"
-                                        : "Leave A Message"}
-                                    </span>
-                                    <textarea
-                                      value={message}
-                                      onChange={(e) =>
-                                        setMessage(e.target.value)
+                                  <div className="flex w-full flex-col items-center gap-2 rounded-3xl">
+                                    <LabelledTextArea
+                                      placeholder="Message Here"
+                                      label={
+                                        action === "deny"
+                                          ? "Reason For Denial"
+                                          : "Leave A Message"
                                       }
-                                      className="rounded-3xl bg-cardLight p-2 px-4 dark:bg-cardDark"
+                                      value={message}
+                                      onValueChange={(e) => setMessage(e)}
                                     />
                                   </div>
                                   <button
-                                    className="rounded-3xl bg-amber-500 p-4"
+                                    className="rounded-3xl bg-brandBlue p-4"
                                     onClick={submitReview}
                                   >
                                     <span className="text-xl font-medium">

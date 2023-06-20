@@ -9,6 +9,7 @@ export function LabelledInput({
   rootClass = "",
   labelClass = "",
   debounce = false,
+  placeholder = "",
 }: {
   label: string;
   value: string;
@@ -16,6 +17,7 @@ export function LabelledInput({
   rootClass?: string;
   labelClass?: string;
   debounce?: boolean;
+  placeholder: string;
 }) {
   return (
     <div
@@ -31,6 +33,7 @@ export function LabelledInput({
       </Label.Root>
       {debounce ? (
         <DebounceInput
+          placeholder={placeholder}
           minLength={1}
           debounceTimeout={300}
           // @ts-ignore
@@ -39,6 +42,7 @@ export function LabelledInput({
         />
       ) : (
         <input
+          placeholder={placeholder}
           type="text"
           value={value}
           onChange={(e) => onValueChange(e.target.value)}

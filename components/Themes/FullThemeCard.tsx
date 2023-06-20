@@ -180,8 +180,12 @@ export function FullThemeCard({
                     )}
                   </div>
 
-                  <div className="my-4 self-center sm:self-start">
+                  <div className="my-4 self-center sm:self-start flex flex-col md:flex-row items-center justify-center gap-2">
                     <ThemeDownloadButton themeData={themeData} />
+                    <span className="font-fancy text-textFadedLight dark:text-textFadedDark">
+                      {themeData.download.downloadCount} Download
+                      {themeData.download.downloadCount === 1 ? "" : "s"}
+                    </span>
                   </div>
 
                   <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center">
