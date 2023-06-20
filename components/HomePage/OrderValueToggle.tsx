@@ -20,7 +20,7 @@ export function OrderValueToggle({
         </button>
         <div
           className={`z-10 bg-brandBlue m-1 w-[calc(100%-50%-8px)] h-[calc(100%-8px)] rounded-3xl absolute top-0 transition-all duration-100`}
-          style={{ left: orderValue === orderOptions[0] ? 0 : "50%" }}
+          style={{ left: orderValue === orderOptions[0] ? 0 : "50.5%" }}
         />
       </div>
     </>

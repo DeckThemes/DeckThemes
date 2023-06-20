@@ -1,15 +1,17 @@
-import { BiEditAlt } from "react-icons/bi";
-import { BsCloudUploadFill, BsThreeDotsVertical, BsXCircleFill } from "react-icons/bs";
-import Link from "next/link";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { authContext } from "../../pages/_app";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
 import { fetchWithRefresh } from "../../apiHelpers";
 import { toast } from "react-toastify";
+import { MenuDropdown } from "@components/Primitives";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
   const [showAdminModal, setShowAdminModal] = useState<boolean>(false);
+  const router = useRouter();
 
   function deleteTheme() {
     if (themeData) {
@@ -80,55 +82,33 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
       {themeData.author.id === accountInfo?.id ||
       accountInfo?.permissions.includes(Permissions.editAny) ? (
         <>
-          <div
-            className="absolute right-0 flex flex-col items-end transition-all"
-            onMouseEnter={() => setShowAdminModal(true)}
-            onMouseLeave={() => setShowAdminModal(false)}
-          >
-            <button
-              className="bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition-all p-2 rounded-full"
-              onClick={() => setShowAdminModal(!showAdminModal)}
-            >
-              <BsThreeDotsVertical />
-            </button>
-            {showAdminModal && (
-              <>
-                {/* <div
-                          className="bg-red-800 absolute w-[300vw] h-[300vh] z-10 translate-x-1/2 -translate-y-1/2"
-                          onClick={() => setShowAdminModal(false)}
-                        /> */}
-                {accountInfo.permissions.includes(Permissions.editAny) ? (
-                  <>
-                    <button
-                      className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                      onClick={changeMeta}
-                    >
-                      <BiEditAlt />
-                      <span>Change Meta</span>
-                    </button>
-                  </>
-                ) : null}
-                <button
-                  className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                  onClick={deleteTheme}
-                >
-                  <BsXCircleFill className="text-red-500" />
-                  <span>Delete Theme</span>
-                </button>
-                {themeData.author.id === accountInfo?.id && (
-                  <>
-                    <Link
-                      href="/submit"
-                      className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                    >
-                      <BsCloudUploadFill />
-                      <span>Update Theme</span>
-                    </Link>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+          <MenuDropdown
+            options={[
+              ...(themeData.author.id === accountInfo?.id
+                ? [
+                    {
+                      displayText: "Update Theme",
+                      icon: <AiOutlineCloudUpload size={20} />,
+                      onSelect: () => router.push("/submit"),
+                    },
+                  ]
+                : []),
+              ...(accountInfo.permissions.includes(Permissions.editAny)
+                ? [
+                    {
+                      displayText: "Change Theme Meta",
+                      icon: <BiEditAlt size={20} />,
+                      onSelect: () => changeMeta(),
+                    },
+                    {
+                      displayText: "Delete Theme",
+                      icon: <BiTrash size={20} />,
+                      onSelect: () => deleteTheme(),
+                    },
+                  ]
+                : []),
+            ]}
+          />
         </>
       ) : null}
     </>
