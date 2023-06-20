@@ -3,9 +3,11 @@ import { codeBlockClasses } from "./SubmitPageTailwindClasses";
 
 export function TosCheckboxes({
   setCheckValue,
+  checkValue,
   uploadType,
 }: {
   setCheckValue: Dispatch<SetStateAction<boolean>>;
+  checkValue: boolean;
   uploadType: "audio" | "css";
 }) {
   return (
@@ -85,6 +87,7 @@ export function TosCheckboxes({
           <span>By checking this box you agree to the above terms: </span>
           <input
             type="checkbox"
+            checked={checkValue}
             onChange={(e) => setCheckValue(e.target.checked)}
             className="w-5 h-5 rounded-3xl hover:ring-2 ring-offset-2 ring-offset-cardLight dark:ring-offset-cardDark"
           />

@@ -158,7 +158,7 @@ export default function Submit() {
               </span>
             </a>
           </div>
-          <div className="w-11/12 border-[1px] border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark rounded-3xl flex flex-col items-center h-[600px] max-w-7xl">
+          <div className="w-11/12 border-[1px] border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark rounded-3xl flex flex-col items-center min-h-[600px] max-w-7xl">
             {currentStep === 1 && (
               <>
                 <section className="p-4 py-16 w-full flex flex-col items-center">
@@ -215,8 +215,10 @@ export default function Submit() {
               </>
             )}
             {currentStep === 2 && (
-              <section className="p-4 w-full flex flex-col items-center">
-                <span className={partHeaderClasses}>Part 2: Add More Info</span>
+              <section className="p-4 py-16 w-full flex flex-col items-center">
+                <span className="font-fancy text-2xl md:text-4xl font-semibold text-center w-full pb-4">
+                  Add More Info
+                </span>
                 <MetaSubmitPanel
                   info={metaInfo}
                   setInfo={setMetaInfo}
@@ -227,41 +229,48 @@ export default function Submit() {
             )}
             {currentStep === 3 && (
               <>
-                <section className="p-4 w-full flex flex-col items-center">
-                  <span className={partHeaderClasses}>Part 3: Accept Terms</span>
-                  <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
-                </section>
-                <section className="p-4 w-full flex flex-col items-center">
-                  {checkIfReady() ? (
-                    <>
-                      <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                        <span
-                          className="text-textDark dark:text-textLight font-fancy"
-                          onClick={() => submitTheme()}
-                        >
-                          Submit
-                        </span>
-                      </button>
-                    </>
-                  ) : (
-                    <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                      <span>Add Info Before Submitting</span>
-                    </div>
-                  )}
+                <section className="p-4 py-16 w-full flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-4 justify-center w-full">
+                    <span className="font-fancy text-2xl md:text-4xl font-semibold text-center w-full">
+                      Accept Terms
+                    </span>
+                    <TosCheckboxes
+                      checkValue={hasAcceptedTos}
+                      setCheckValue={setHasAcceptedTos}
+                      uploadType={uploadType}
+                    />
+                    {checkIfReady() ? (
+                      <>
+                        <button className="bg-brandBlue p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                          <span
+                            className="text-textDark dark:text-textLight font-fancy"
+                            onClick={() => submitTheme()}
+                          >
+                            Submit
+                          </span>
+                        </button>
+                      </>
+                    ) : (
+                      <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                        <span>Add Info Before Submitting</span>
+                      </div>
+                    )}
+                  </div>
                 </section>
               </>
             )}
+            <HorizontalRadio
+              rootClass="pb-8"
+              value={currentStep + ""}
+              onValueChange={(e: string) => setStep(Number(e))}
+              itemClass="w-10"
+              options={[
+                { value: "1", displayText: "" },
+                { value: "2", displayText: "" },
+                { value: "3", displayText: "" },
+              ]}
+            />
           </div>
-          <HorizontalRadio
-            value={currentStep + ""}
-            onValueChange={(e: string) => setStep(Number(e))}
-            itemClass="w-10"
-            options={[
-              { value: "1", displayText: "" },
-              { value: "2", displayText: "" },
-              { value: "3", displayText: "" },
-            ]}
-          />
         </main>
       </>
     );

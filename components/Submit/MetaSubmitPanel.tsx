@@ -17,7 +17,7 @@ import {
   sectionContainerClasses,
 } from "./SubmitPageTailwindClasses";
 import { toast } from "react-toastify";
-import { RadioDropdown } from "@components/Primitives";
+import { LabelledTextArea, RadioDropdown } from "@components/Primitives";
 
 registerPlugin(
   FilePondPluginFileValidateSize,
@@ -94,7 +94,6 @@ export function MetaSubmitPanel({
                 }))}
               />
             </div>
-            <MiniDivider />
           </>
         )}
         <div className={`${metaFieldContainerClasses}`}>
@@ -167,20 +166,12 @@ export function MetaSubmitPanel({
             />
           </div>
         </div>
-        <MiniDivider />
-        <div className={`${metaFieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Description</span>
-          <textarea
-            value={info.description}
-            placeholder={`${
-              uploadMethod !== "css"
-                ? `Leave blank to use ${uploadType === "audio" ? "pack.json" : "theme.json"} value.`
-                : "Enter Description Here"
-            }`}
-            onChange={(e) => setInfo({ ...info, description: e.target.value })}
-            className={`${fieldClasses} h-32`}
-          />
-        </div>
+        <LabelledTextArea
+          label="Description"
+          rootClass="w-full md:w-1/2"
+          value={info.description}
+          onValueChange={(e) => setInfo({ ...info, description: e })}
+        />
       </div>
     </>
   );
