@@ -29,9 +29,11 @@ export default function Packs() {
       <Head>
         <title>DeckThemes | AudioLoader Packs</title>
       </Head>
-      <main className="flex flex-col items-center page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
-        <div className="flex flex-col items-center mb-12">
-          <h1 className="font-extrabold text-3xl md:text-5xl pt-4 lg:pt-24">CSS Themes</h1>
+      <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
+        <div className="mb-12 flex flex-col items-center">
+          <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">
+            CSS Themes
+          </h1>
         </div>
         {defaults !== undefined && (
           <ThemeCategoryDisplay
@@ -46,7 +48,11 @@ export default function Packs() {
               router.push(
                 {
                   pathname: "/packs",
-                  query: { filters: searchOpts.filters, order: searchOpts.order, type: type },
+                  query: {
+                    filters: searchOpts.filters,
+                    order: searchOpts.order,
+                    type: type,
+                  },
                 },
                 undefined,
                 { shallow: true }

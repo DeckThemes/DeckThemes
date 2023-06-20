@@ -25,7 +25,11 @@ export default function Account() {
   const radioOptions = [
     { value: "stars", displayText: "Stars", title: "Your Stars" },
     { value: "themes", displayText: "Themes", title: "Your Themes" },
-    { value: "submissions", displayText: "Submissions", title: "Your Submissions" },
+    {
+      value: "submissions",
+      displayText: "Submissions",
+      title: "Your Submissions",
+    },
   ];
 
   useEffect(() => {
@@ -43,7 +47,9 @@ export default function Account() {
   }
 
   function logOutAll() {
-    const isSure = confirm("This will remove all signed in web browsers and Steam Decks");
+    const isSure = confirm(
+      "This will remove all signed in web browsers and Steam Decks"
+    );
     if (isSure) {
       fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/logout_all`, {
         method: "POST",
@@ -63,14 +69,15 @@ export default function Account() {
         <Head>
           <title>DeckThemes | My Profile</title>
         </Head>
-        <main className="font-fancy flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
-          <div className="flex flex-col max-w-7xl w-full mx-auto gap-4">
+        <main className="font-fancy page-shadow mx-4 flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
+          <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
             <PfpDisplay userData={meInfo || accountInfo} />
             <TransitionedCarouselTitle
               className="pb-20"
               titles={radioOptions.map((e) => e.title)}
               currentTitle={
-                radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+                radioOptions.find((e) => e.value === radioValue)?.title ||
+                radioOptions[0].title
               }
             />
             <HorizontalRadio
@@ -88,18 +95,20 @@ export default function Account() {
             />
             <DeckTokenDisplay />
             <div className="flex flex-col gap-6 p-4">
-              <span className="text-xl font-semibold font-fancy">Log Out</span>
+              <span className="font-fancy text-xl font-semibold">Log Out</span>
               <button
                 onClick={logOut}
-                className="w-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 bg-red-500 hover:bg-red-600 select-none py-2 px-4 border border-borders-base3-dark rounded-full"
+                className="flex w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark bg-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
               >
                 <div className="font-fancy text-xs font-bold">Log out</div>
               </button>
               <button
                 onClick={logOutAll}
-                className="w-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 border-red-500 hover:bg-red-600 select-none py-2 px-4 border rounded-full"
+                className="flex w-fit select-none items-center gap-2 rounded-full border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
               >
-                <div className="font-fancy text-xs font-bold">Log out other devices</div>
+                <div className="font-fancy text-xs font-bold">
+                  Log out other devices
+                </div>
               </button>
             </div>
           </div>

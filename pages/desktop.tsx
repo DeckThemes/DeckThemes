@@ -13,9 +13,9 @@ export default function Home() {
       <Head>
         <title>DeckThemes</title>
       </Head>
-      <main className="flex flex-1 flex-col items-center flex-grow gap-4 bg-base-2-light dark:bg-base-2-dark py-12 rounded-3xl">
+      <main className="flex flex-1 flex-grow flex-col items-center gap-4 rounded-3xl bg-base-2-light py-12 dark:bg-base-2-dark">
         <div
-          className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4"
+          className="relative flex h-full w-full flex-col items-center gap-8 px-4 text-center"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >
@@ -32,7 +32,11 @@ export default function Home() {
                 hrefLink: "/themes?type=BPM-CSS",
               },
               // This has a trailing ? because the link filler only knows to add "&order="
-              { title: "AudioLoader Packs", searchFilter: "AUDIO", hrefLink: "/packs?" },
+              {
+                title: "AudioLoader Packs",
+                searchFilter: "AUDIO",
+                hrefLink: "/packs?",
+              },
             ]}
           />
         </div>

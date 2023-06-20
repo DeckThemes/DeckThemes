@@ -6,7 +6,9 @@ import { LoadingSpinner } from "../Generic";
 
 export function Footer() {
   const { theme, setTheme } = useContext(themeContext);
-  const [patreonPercentage, setPatreonPercentage] = useState<number | undefined>(undefined);
+  const [patreonPercentage, setPatreonPercentage] = useState<
+    number | undefined
+  >(undefined);
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEV_MODE === "true") {
@@ -24,13 +26,14 @@ export function Footer() {
   }, []);
 
   return (
-    <footer className="w-full h-fit flex flex-col mt-auto">
-      <div className="flex items-center w-full px-12 py-6">
-        <div className="max-w-xl text-[0.5rem] md:text-xs flex flex-col">
+    <footer className="mt-auto flex h-fit w-full flex-col">
+      <div className="flex w-full items-center px-12 py-6">
+        <div className="flex max-w-xl flex-col text-[0.5rem] md:text-xs">
           <p>
-            Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
-            Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
-            registered trademarks of Valve Corporation in the U.S. and/or other countries.
+            Decky Loader, CSS Loader, and Audio Loader are not affiliated with
+            Valve Corporation. Steam, the Steam logo, Steam Deck, and the Steam
+            Deck logo are trademarks and/or registered trademarks of Valve
+            Corporation in the U.S. and/or other countries.
           </p>
           <Link href="/tos" className="text-lg underline">
             Deckthemes Terms Of Use
@@ -49,7 +52,11 @@ export function Footer() {
             return;
           }}
         >
-          {theme === "light" ? <FaRegSun className="w-8 h-8" /> : <FaRegMoon className="w-8 h-8" />}
+          {theme === "light" ? (
+            <FaRegSun className="h-8 w-8" />
+          ) : (
+            <FaRegMoon className="h-8 w-8" />
+          )}
         </button>
       </div>
       {/* {!!patreonPercentage && (
@@ -72,10 +79,10 @@ export function Footer() {
         </div>
       )} */}
       {/* {!!patreonPercentage && ( */}
-      <div className="h-8 bg-cardLight dark:bg-cardDark flex items-center overflow-hidden relative">
+      <div className="relative flex h-8 items-center overflow-hidden bg-cardLight dark:bg-cardDark">
         {patreonPercentage !== undefined ? (
           <>
-            <div className="font-fancy flex items-center justify-between px-4 z-10 w-full">
+            <div className="font-fancy z-10 flex w-full items-center justify-between px-4">
               <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
               <Link
                 rel="noreferrer"
@@ -84,7 +91,7 @@ export function Footer() {
               >
                 {/* TODO: Probably can refactor this */}
                 {patreonPercentage < 100 ? (
-                  <span className="text-[#A24] dark:text-patreonColor underline font-medium">
+                  <span className="font-medium text-[#A24] underline dark:text-patreonColor">
                     Support Us!
                   </span>
                 ) : (
@@ -93,15 +100,16 @@ export function Footer() {
               </Link>
             </div>
             <div
-              className="scale-110 transition-all absolute left-0 h-8 z-0 bg-cardLight dark:bg-borderDark blur-lg"
+              className="absolute left-0 z-0 h-8 scale-110 bg-cardLight blur-lg transition-all dark:bg-borderDark"
               style={{
                 width: Math.min(patreonPercentage, 100) + "%",
-                backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
+                backgroundColor:
+                  patreonPercentage < 100 ? "#FF424D" : "#33aaff",
               }}
             />
           </>
         ) : (
-          <div className="w-full flex items-center justify-center gap-4">
+          <div className="flex w-full items-center justify-center gap-4">
             <LoadingSpinner size={20} />
             <span>Loading Contribution Data...</span>
           </div>

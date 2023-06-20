@@ -1,6 +1,10 @@
 import { useState, useRef, useEffect, Dispatch, SetStateAction } from "react";
 import { generateParamStr, genericGET } from "../../apiHelpers";
-import { ThemeQueryRequest, ThemeQueryResponse, ThemeSubmissionQueryResponse } from "../../types";
+import {
+  ThemeQueryRequest,
+  ThemeQueryResponse,
+  ThemeSubmissionQueryResponse,
+} from "../../types";
 import { LoadingSpinner } from "../Generic";
 import { LoadingSkeletonCard } from "./ThemeCards";
 import { twMerge } from "tailwind-merge";
@@ -29,13 +33,18 @@ export function LoadMoreButton({
     let searchOptClone = { ...origSearchOpts };
     searchOptClone.page = loadMoreCurPage + 1;
     const searchOpts = generateParamStr(
-      searchOptClone.filters !== "All" ? searchOptClone : { ...searchOptClone, filters: "" },
+      searchOptClone.filters !== "All"
+        ? searchOptClone
+        : { ...searchOptClone, filters: "" },
       paramStrFilterPrepend
     );
     genericGET(`${fetchPath}${searchOpts}`, true)
       .then((data) => {
         if (data) {
-          setThemeArr({ total: themeArr.total, items: [...themeArr.items, ...data.items] });
+          setThemeArr({
+            total: themeArr.total,
+            items: [...themeArr.items, ...data.items],
+          });
           setLoadMorePage((curPage) => curPage + 1);
         }
       })
@@ -120,7 +129,7 @@ export function LoadMoreButton({
             <>
               <button
                 ref={loadMoreButtonRef}
-                className="font-fancy bg-base-3-light dark:bg-base-3-dark p-2 px-4 rounded-3xl font-semibold"
+                className="font-fancy rounded-3xl bg-base-3-light p-2 px-4 font-semibold dark:bg-base-3-dark"
                 onClick={loadMore}
               >
                 Load More

@@ -17,14 +17,21 @@ export function LabelledTextArea({
   debounce?: boolean;
 }) {
   return (
-    <div className={twMerge("flex flex-col items-start justify-between gap-2 w-full", rootClass)}>
-      <Label.Root className={twMerge("font-bold font-fancy text-sm", labelClass)}>
+    <div
+      className={twMerge(
+        "flex w-full flex-col items-start justify-between gap-2",
+        rootClass
+      )}
+    >
+      <Label.Root
+        className={twMerge("font-fancy text-sm font-bold", labelClass)}
+      >
         {label}
       </Label.Root>
       <textarea
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
-        className="h-64 p-2 w-full bg-base-3-light dark:bg-base-3-dark rounded-xl border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark focus:border-borders-base3-light focus:dark:border-borders-base3-dark outline-none transition-all"
+        className="h-64 w-full rounded-xl border-2 border-borders-base1-light bg-base-3-light p-2 outline-none transition-all hover:border-borders-base2-light focus:border-borders-base3-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark focus:dark:border-borders-base3-dark"
       />
     </div>
   );

@@ -42,13 +42,19 @@ export function MetaSubmitPanel({
 }) {
   const [images, setImages] = useState<File>();
 
-  const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
+  const [targetOptions, setTargetOptions] = useState<string[]>([
+    "None",
+    "System-Wide",
+    "Snippet",
+  ]);
   async function getTargets() {
     const data = await genericGET(`/themes/filters?type=CSS`, true);
     if (data?.filters) {
       setTargetOptions([
         "None",
-        ...Object.keys(data.filters).filter((e) => !disallowedOverrideTargets.includes(e)),
+        ...Object.keys(data.filters).filter(
+          (e) => !disallowedOverrideTargets.includes(e)
+        ),
       ]);
     }
   }
@@ -63,13 +69,18 @@ export function MetaSubmitPanel({
     getTargets();
 
     // This ensures that you cant submit a theme/pack with a target designed for another theme/pack type.
-    if (uploadType === "css" && (info.target === "Music" || info.target === "Audio")) {
+    if (
+      uploadType === "css" &&
+      (info.target === "Music" || info.target === "Audio")
+    ) {
       setInfo({ ...info, target: "None" });
     }
     if (
       uploadType === "audio" &&
-      // @ts-ignore
-      (info.target !== "None" || info.target !== "Music" || info.target !== "Audio")
+      (info.target !== "None" ||
+        // @ts-ignore
+        info.target !== "Music" ||
+        info.target !== "Audio")
     ) {
       setInfo({ ...info, target: "None" });
     }
@@ -98,7 +109,7 @@ export function MetaSubmitPanel({
         )}
         <div className={`${metaFieldContainerClasses}`}>
           <span className={`${fieldTitleClasses}`}>Images</span>
-          <div className="flex flex-col w-full relative">
+          <div className="relative flex w-full flex-col">
             <FilePond
               allowFileTypeValidation
               labelFileTypeNotAllowed="Invalid File Type!"
@@ -113,7 +124,9 @@ export function MetaSubmitPanel({
               onremovefile={(_, file) => {
                 setInfo({
                   ...info,
-                  imageBlobs: info.imageBlobs.filter((e) => e !== file.serverId),
+                  imageBlobs: info.imageBlobs.filter(
+                    (e) => e !== file.serverId
+                  ),
                 });
               }}
               onreorderfiles={(files) => {
@@ -154,7 +167,9 @@ export function MetaSubmitPanel({
                           }
                         })
                         .catch((err) => {
-                          toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
+                          toast.error(
+                            `Error Uploading Image! ${JSON.stringify(err)}`
+                          );
                           error(err);
                         });
                     }

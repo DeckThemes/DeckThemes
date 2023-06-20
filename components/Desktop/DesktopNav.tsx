@@ -16,16 +16,20 @@ export function DesktopNav() {
   const router = useRouter();
 
   return (
-    <nav className="w-full flex items-center justify-center">
-      <div className="flex justify-between items-center max-w-7xl w-full py-8 mx-4">
+    <nav className="flex w-full items-center justify-center">
+      <div className="mx-4 flex w-full max-w-7xl items-center justify-between py-8">
         <div className="">
           {router.pathname === "/desktop" ? (
             <NavIcon disabled />
           ) : (
-            <FiArrowLeft className="cursor-pointer" size={48} onClick={() => router.back()} />
+            <FiArrowLeft
+              className="cursor-pointer"
+              size={48}
+              onClick={() => router.back()}
+            />
           )}
         </div>
-        <div className="font-extrabold flex items-center h-full ml-auto md:ml-8 gap-8">
+        <div className="ml-auto flex h-full items-center gap-8 font-extrabold md:ml-8">
           <>
             {accountInfo?.username ? (
               <>
@@ -45,7 +49,7 @@ export function DesktopNav() {
                   </>
                 ) : (
                   <>
-                    <button className="bg-brandBlue text-white px-4 py-2 h-full rounded-xl ml-8 flex items-center justify-center">
+                    <button className="ml-8 flex h-full items-center justify-center rounded-xl bg-brandBlue px-4 py-2 text-white">
                       <span>Login with Token</span>
                     </button>
                   </>

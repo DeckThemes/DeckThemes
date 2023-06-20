@@ -13,7 +13,7 @@ export function TypeDropdown({
   }[];
 }) {
   return (
-    <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
+    <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
       <RadioDropdown
         headingText="Platform"
         options={typeOptions}

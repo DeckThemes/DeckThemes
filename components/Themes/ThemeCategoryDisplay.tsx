@@ -58,7 +58,9 @@ export function ThemeCategoryDisplay({
     order: defaultOrder,
     search: "",
   });
-  const [themeData, setThemeData] = useState<ThemeQueryResponse | ThemeSubmissionQueryResponse>({
+  const [themeData, setThemeData] = useState<
+    ThemeQueryResponse | ThemeSubmissionQueryResponse
+  >({
     total: 0,
     items: [],
   });
@@ -74,7 +76,9 @@ export function ThemeCategoryDisplay({
     // Turns the object of orders/filters/etc into an actual html query string
     const searchOptStr = generateParamStr(
       // This just changes "All" to an empty string
-      searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
+      searchOpts.filters !== "All"
+        ? searchOpts
+        : { ...searchOpts, filters: "" },
       prependValue
     );
     return genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
@@ -94,11 +98,13 @@ export function ThemeCategoryDisplay({
   }, [searchOpts, accountInfo, type, noAuthRequired, themeDataApiPath]);
   useEffect(() => {
     if (accountInfo?.username || noAuthRequired) {
-      genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then((data) => {
-        if (data) {
-          setServerFilters(data);
+      genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then(
+        (data) => {
+          if (data) {
+            setServerFilters(data);
+          }
         }
-      });
+      );
     }
   }, [accountInfo, type, noAuthRequired, filterDataApiPath]);
 
@@ -147,24 +153,24 @@ export function ThemeCategoryDisplay({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []); 
+  }, []);
 
   useSubmissionCards && console.log(themeData, loaded);
 
   return (
     <>
       {themeData.total >= 0 ? (
-        <div className="flex flex-col h-full w-full items-center relative px-4">
+        <div className="relative flex h-full w-full flex-col items-center px-4">
           {title && <h4 className="text-2xl font-medium">{title}</h4>}
           {isSticky && (
             <div
-              className="fixed top-0 z-[9] w-full bg-base-2T-light dark:bg-base-2T-dark px-6 h-24 backdrop-blur-xl max-w-7xl rounded-b-xl blur-md pointer-events-none invisible lg:visible"
+              className="pointer-events-none invisible fixed top-0 z-[9] h-24 w-full max-w-7xl rounded-b-xl bg-base-2T-light px-6 blur-md backdrop-blur-xl dark:bg-base-2T-dark lg:visible"
               aria-hidden={true}
             ></div>
           )}
           <div
             ref={stickyHeaderRef}
-            className={`w-full max-w-7xl flex items-center justify-center lg:sticky lg:top-0 z-10 transition-all duration-300 ${
+            className={`z-10 flex w-full max-w-7xl items-center justify-center transition-all duration-300 lg:sticky lg:top-0 ${
               isSticky ? "lg:px-4" : ""
             }`}
           >
@@ -191,7 +197,7 @@ export function ThemeCategoryDisplay({
               typeValue={type}
             />
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full max-w-7xl justify-center items-center md:items-stretch flex-wrap gap-4">
+          <div className="grid w-full max-w-7xl grid-cols-1 flex-wrap items-center justify-center gap-4 sm:grid-cols-2 md:grid-cols-3 md:items-stretch lg:grid-cols-4">
             {loaded ? (
               <>
                 {themeData.total === 0 && <span>No Results Found</span>}
@@ -199,16 +205,26 @@ export function ThemeCategoryDisplay({
                 {useSubmissionCards && themeData?.items?.[0]?.newTheme ? (
                   <>
                     {themeData.items.map((e, i) => {
-                      //   This gives type errors bcus the fetch type is "Themes | Submissions", and despite the fact that I check for themes or submissions here, ts doesn't know that
-                      // @ts-ignore
-                      return <MiniSubmissionCard data={e} key={`Approved Theme ${i}`} />;
+                      return (
+                        <MiniSubmissionCard
+                          //   This gives type errors bcus the fetch type is "Themes | Submissions", and despite the fact that I check for themes or submissions here, ts doesn't know that
+                          // @ts-ignore
+                          data={e}
+                          key={`Approved Theme ${i}`}
+                        />
+                      );
                     })}
                   </>
                 ) : (
                   <>
                     {themeData.items.map((e, i) => {
-                      // @ts-ignore
-                      return <MiniThemeCardRoot data={e} key={`Approved Theme ${i}`} />;
+                      return (
+                        <MiniThemeCardRoot
+                          // @ts-ignore
+                          data={e}
+                          key={`Approved Theme ${i}`}
+                        />
+                      );
                     })}
                   </>
                 )}
@@ -216,7 +232,9 @@ export function ThemeCategoryDisplay({
                   themeArr={themeData}
                   setThemeArr={setThemeData}
                   fetchPath={themeDataApiPath}
-                  paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
+                  paramStrFilterPrepend={
+                    typeOptionPreset || type ? `${type}.` : ""
+                  }
                   origSearchOpts={searchOpts}
                   type={type}
                 />

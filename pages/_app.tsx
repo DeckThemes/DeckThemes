@@ -21,7 +21,9 @@ export const desktopModeContext = createContext<any>({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
+  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(
+    undefined
+  );
   const [installing, setInstalling] = useState<boolean>(false);
 
   async function initGetUserData(): Promise<void> {
@@ -55,7 +57,9 @@ export default function App({ Component, pageProps }: AppProps) {
     return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
+  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(
+    undefined
+  );
 
   return (
     <ThemeProvider attribute="class">
@@ -63,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <desktopModeContext.Provider
           value={{ desktopMode, setDesktopMode, installing, setInstalling }}
         >
-          <div className="bg-base-6-light dark:bg-base-6-dark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
+          <div className="relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark">
             {desktopMode !== undefined ? (
               <>
                 <MainNav />

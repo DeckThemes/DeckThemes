@@ -21,44 +21,71 @@ export function MainNav() {
   if (desktopMode) return <DesktopNav />;
 
   return (
-    <nav className="font-fancy w-full flex items-center justify-center">
-      <div className="flex items-center max-w-7xl w-full py-4 mx-4">
+    <nav className="font-fancy flex w-full items-center justify-center">
+      <div className="mx-4 flex w-full max-w-7xl items-center py-4">
         <div className="">
           <NavIcon />
         </div>
-        <div className="md:ml-auto flex ml-8 h-full items-center gap-8">
+        <div className="ml-8 flex h-full items-center gap-8 md:ml-auto">
           <>
             {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_DISCORD_URL} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
+              <NavIconLink
+                href={process.env.NEXT_PUBLIC_DISCORD_URL}
+                className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
+              >
                 <Discord size={18} />
-				<div className="font-fancy text-xs font-bold hidden sm:flex ">Discord</div>
+                <div className="font-fancy hidden text-xs font-bold sm:flex ">
+                  Discord
+                </div>
               </NavIconLink>
             )}
             {!!process.env.NEXT_PUBLIC_PATREON_URL && (
-              <NavIconLink href={process.env.NEXT_PUBLIC_PATREON_URL} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
+              <NavIconLink
+                href={process.env.NEXT_PUBLIC_PATREON_URL}
+                className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
+              >
                 <Patreon size={14} />
-				<div className="font-fancy text-xs font-bold hidden sm:flex">Patreon</div>
+                <div className="font-fancy hidden text-xs font-bold sm:flex">
+                  Patreon
+                </div>
               </NavIconLink>
             )}
           </>
         </div>
-        <div className="font-extrabold flex items-center h-full ml-auto md:ml-8 gap-8">
-          <NavIconLink href={process.env.NEXT_PUBLIC_DOCS_URL || "/"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4">
+        <div className="ml-auto flex h-full items-center gap-8 font-extrabold md:ml-8">
+          <NavIconLink
+            href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}
+            className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
+          >
             <ImBook size={14} />
-			<div className="font-fancy text-xs font-bold hidden sm:flex ">Documentation</div>
+            <div className="font-fancy hidden text-xs font-bold sm:flex ">
+              Documentation
+            </div>
           </NavIconLink>
           <>
             {accountInfo?.username ? (
               <>
                 {accountInfo.permissions.includes(Permissions.viewSubs) && (
-                  <NavIconLink href={"/submissions"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none py-4" isInternal>
+                  <NavIconLink
+                    href={"/submissions"}
+                    className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
+                    isInternal
+                  >
                     <RiAdminFill size={14} />
-					<div className="font-fancy text-xs font-bold hidden sm:flex ">Admin <span className="opacity-50">(???)</span></div>
+                    <div className="font-fancy hidden text-xs font-bold sm:flex ">
+                      Admin <span className="opacity-50">(???)</span>
+                    </div>
                   </NavIconLink>
                 )}
-                <NavIconLink href={"/submit"} className="flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 hover:bg-base-3-dark select-none py-2 px-4  border border-borders-base3-dark rounded-full" isInternal>
+                <NavIconLink
+                  href={"/submit"}
+                  className="flex select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 transition duration-150  hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
+                  isInternal
+                >
                   <TbUpload size={14} className="scale-x-105" />
-				  <div className="font-fancy text-xs font-bold hidden sm:block">Upload</div>
+                  <div className="font-fancy hidden text-xs font-bold sm:block">
+                    Upload
+                  </div>
                 </NavIconLink>
                 <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
               </>
@@ -71,10 +98,15 @@ export function MainNav() {
                 ) : (
                   <>
                     <button
-                      className="h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
+                      className="flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:text-fore-11-dark"
                       onClick={fetchDiscordUrl}
                     >
-                      <div>Login <span className="hidden sm:inline-block">with Discord</span></div>
+                      <div>
+                        Login{" "}
+                        <span className="hidden sm:inline-block">
+                          with Discord
+                        </span>
+                      </div>
                     </button>
                   </>
                 )}

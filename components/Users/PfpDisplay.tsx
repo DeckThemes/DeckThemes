@@ -10,29 +10,29 @@ import { RiPaintBrushFill, RiStarFill } from "react-icons/ri";
 export function PfpDisplay({ userData }: { userData?: UserInfo }) {
   if (userData) {
     return (
-      <div className="flex flex-col md:flex-row gap-8 bg-base-5-light dark:bg-base-3-dark p-8 mt-4 mb-16 rounded-2xl w-fit mx-auto shadow-2xl">
+      <div className="mx-auto mt-4 mb-16 flex w-fit flex-col gap-8 rounded-2xl bg-base-5-light p-8 shadow-2xl dark:bg-base-3-dark md:flex-row">
         <Image
           src={userData?.avatar || "/question_mark.png"}
           width="128"
           height="128"
           alt="Your Discord Profile Picture"
-          className="flex rounded-full aspect-square"
+          className="flex aspect-square rounded-full"
         />
         <div className="flex flex-col justify-center gap-4">
           <div className="flex flex-row items-center gap-4">
             <h1 className="text-3xl font-extrabold">{userData?.username}</h1>
-            <div className="flex flex-col sm:flex-row w-full items-center justify-center gap-2 dark:text-fore-11-dark dark:bg-base-2-dark rounded-full">
+            <div className="flex w-full flex-col items-center justify-center gap-2 rounded-full dark:bg-base-2-dark dark:text-fore-11-dark sm:flex-row">
               {userData?.permissions.includes(Permissions.admin) && (
-              <>
-                <Tooltip
-                  triggerContent={
-                    <>
-                      <BsWrench className="w-5 h-5 m-4" />
-                    </>
-                  }
-                  content={<span>DeckThemes Maintainer</span>}
-                />
-              </>
+                <>
+                  <Tooltip
+                    triggerContent={
+                      <>
+                        <BsWrench className="m-4 h-5 w-5" />
+                      </>
+                    }
+                    content={<span>DeckThemes Maintainer</span>}
+                  />
+                </>
               )}
               <SupporterIcon author={userData} />
             </div>

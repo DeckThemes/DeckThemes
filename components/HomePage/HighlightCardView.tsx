@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { ThemeQueryResponse } from "../../types";
 import { genericGET } from "../../apiHelpers";
-import { LoadingSkeletonCard, MiniThemeCardRoot, ViewMoreCard } from "../Themes";
+import {
+  LoadingSkeletonCard,
+  MiniThemeCardRoot,
+  ViewMoreCard,
+} from "../Themes";
 import { useVW } from "../../hooks";
 
 export function HighlightCardView({
@@ -24,9 +28,9 @@ export function HighlightCardView({
   }, [apiURL]);
   return (
     <div>
-      <div className="flex justify-center items-center w-full">
+      <div className="flex w-full items-center justify-center">
         <div
-          className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full justify-center gap-4 ${
+          className={`grid w-full grid-cols-1 justify-center gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 ${
             !loaded ? "items-center" : ""
           }`}
         >

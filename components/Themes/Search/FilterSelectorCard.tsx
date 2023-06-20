@@ -32,7 +32,7 @@ export function FilterSelectorCard({
 }) {
   return (
     <>
-      <div className="py-4 relative w-full max-w-7xl flex flex-col lg:flex-row gap-4">
+      <div className="relative flex w-full max-w-7xl flex-col gap-4 py-4 lg:flex-row">
         <LabelledInput
           label="Search"
           debounce
@@ -49,7 +49,13 @@ export function FilterSelectorCard({
         {!searchOnly && (
           <>
             <FilterDropdown
-              {...{ filterValue, filterOpts, onFilterChange, showFiltersWithZero, typeValue }}
+              {...{
+                filterValue,
+                filterOpts,
+                onFilterChange,
+                showFiltersWithZero,
+                typeValue,
+              }}
             />
             <OrderDropdown {...{ orderValue, onOrderChange, orderOpts }} />
           </>

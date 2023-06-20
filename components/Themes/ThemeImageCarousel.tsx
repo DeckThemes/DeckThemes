@@ -8,7 +8,10 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
   const [selectedImage, setSelected] = useState<number>(0);
 
   const currentImg = useMemo(() => {
-    if (data?.images[selectedImage]?.id && data.images[selectedImage].id !== "MISSING") {
+    if (
+      data?.images[selectedImage]?.id &&
+      data.images[selectedImage].id !== "MISSING"
+    ) {
       return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[selectedImage].id})`;
     } else {
       return `url(https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png)`;
@@ -49,24 +52,24 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
         {data.images?.length > 1 && (
           <>
             <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-50"
+              className="absolute left-4 top-1/2 z-50 -translate-y-1/2"
               onClick={decrementImg}
             >
               <BsArrowLeft size={48} />
             </button>
             <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-50"
+              className="absolute right-4 top-1/2 z-50 -translate-y-1/2"
               onClick={incrementImg}
             >
               <BsArrowRight size={48} />
             </button>
-            <div className="flex gap-2 absolute bottom-2 left-1/2 -translate-x-1/2 text-5xl">
+            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2 text-5xl">
               {data.images.map((_, i) => {
                 return (
                   <button
                     key={`Theme Image Carousel Button ${i}`}
                     onClick={() => setSelected(i)}
-                    className={`w-3 h-2 lg:w-6 lg:h-3 rounded-full border-b-2 border-r-2 border-[#0005] ${
+                    className={`h-2 w-3 rounded-full border-b-2 border-r-2 border-[#0005] lg:h-3 lg:w-6 ${
                       selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
                     } `}
                   />

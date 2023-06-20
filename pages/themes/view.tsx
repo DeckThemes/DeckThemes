@@ -20,7 +20,7 @@ export default function FullThemeViewPage() {
 
   if (!parsedId) {
     return (
-      <main className="w-full flex-grow flex items-center justify-center">
+      <main className="flex w-full flex-grow items-center justify-center">
         <span className="text-3xl">No Theme Found</span>
       </main>
     );
@@ -28,7 +28,7 @@ export default function FullThemeViewPage() {
 
   return (
     <>
-      <main className="flex flex-col items-center page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+      <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
         <FullThemeCard parsedId={parsedId} />
       </main>
     </>

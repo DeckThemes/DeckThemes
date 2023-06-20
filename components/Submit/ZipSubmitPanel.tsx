@@ -21,7 +21,7 @@ export function ZipSubmitPanel({
 
   return (
     <>
-      <div className="flex flex-col items-center w-full justify-center">
+      <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full md:w-1/2">
           <FilePond
             allowFileTypeValidation
@@ -70,7 +70,9 @@ export function ZipSubmitPanel({
                         }
                       })
                       .catch((err) => {
-                        toast.error(`Error Uploading File! ${JSON.stringify(err)}`);
+                        toast.error(
+                          `Error Uploading File! ${JSON.stringify(err)}`
+                        );
                         error(err);
                       });
                   }

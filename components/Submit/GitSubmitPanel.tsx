@@ -11,7 +11,7 @@ export function GitSubmitPanel({
 }) {
   return (
     <>
-      <div className="flex flex-col items-center justify-center w-full gap-4">
+      <div className="flex w-full flex-col items-center justify-center gap-4">
         <LabelledInput
           rootClass="w-full md:w-1/2"
           label="Repo URL"

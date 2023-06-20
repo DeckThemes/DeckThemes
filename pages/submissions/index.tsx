@@ -1,5 +1,10 @@
 import Head from "next/head";
-import { LoadingPage, UnauthorizedPage, LogInPage, ThemeCategoryDisplay } from "../../components";
+import {
+  LoadingPage,
+  UnauthorizedPage,
+  LogInPage,
+  ThemeCategoryDisplay,
+} from "../../components";
 import { useHasCookie } from "../../hooks";
 import { authContext } from "../_app";
 import { useContext } from "react";
@@ -15,9 +20,9 @@ export default function Submissions() {
         <Head>
           <title>DeckThemes | Submissions</title>
         </Head>
-        <main className="flex flex-col items-center page-shadow border-[1px] dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+        <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
           <div className="flex flex-col items-center justify-center px-10">
-            <h2 className="font-bold text-5xl pt-8 pb-4">Submissions</h2>
+            <h2 className="pt-8 pb-4 text-5xl font-bold">Submissions</h2>
             <ThemeCategoryDisplay
               themeDataApiPath="/submissions"
               filterDataApiPath="/submissions/filters"
@@ -34,7 +39,10 @@ export default function Submissions() {
     );
   }
 
-  if (accountInfo?.username && !accountInfo?.permissions?.includes(Permissions.viewSubs)) {
+  if (
+    accountInfo?.username &&
+    !accountInfo?.permissions?.includes(Permissions.viewSubs)
+  ) {
     return <UnauthorizedPage />;
   }
 

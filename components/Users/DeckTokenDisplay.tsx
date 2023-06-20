@@ -9,20 +9,24 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   function generateDeckToken() {
     setDeckToken("LOADING");
     fetchWithRefresh(() => {
-      genericGET(`/users/${userId ? userId : "me"}/token`, true).then((json) => {
-        if (json?.token) {
-          setDeckToken(json.token);
+      genericGET(`/users/${userId ? userId : "me"}/token`, true).then(
+        (json) => {
+          if (json?.token) {
+            setDeckToken(json.token);
+          }
         }
-      });
+      );
     });
   }
   return (
-    <div className="flex flex-col gap-4 p-4 border-borderLight dark:border-borderDark">
-      <span className="text-xl font-semibold font-fancy">Connect Your Steam Deck</span>
-      <div className="flex flex-col md:flex-row items-center">
+    <div className="flex flex-col gap-4 border-borderLight p-4 dark:border-borderDark">
+      <span className="font-fancy text-xl font-semibold">
+        Connect Your Steam Deck
+      </span>
+      <div className="flex flex-col items-center md:flex-row">
         <button
           onClick={generateDeckToken}
-          className="w-fit h-fit text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 hover:bg-base-3-dark select-none py-2 px-4 border border-borders-base3-dark rounded-full"
+          className="flex h-fit w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
         >
           <RiRefreshLine />
           <div className="font-fancy text-xs font-bold">
@@ -31,7 +35,7 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
         </button>
         {deckToken ? (
           <>
-            <div className="px-4 py-4 md:py-0 relative">
+            <div className="relative px-4 py-4 md:py-0">
               {deckToken === "LOADING" ? (
                 <LoadingSpinner size={24} />
               ) : (
@@ -48,7 +52,7 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
                       {deckToken}
                     </span>
                     <span
-                      className="w-full flex justify-center underline absolute left-1/2 -translate-x-1/2 top-[-0.15rem] text-blue-700 dark:text-blue-200 transition-opacity duration-75"
+                      className="absolute left-1/2 top-[-0.15rem] flex w-full -translate-x-1/2 justify-center text-blue-700 underline transition-opacity duration-75 dark:text-blue-200"
                       style={{ opacity: hover ? "100%" : "0%" }}
                       onClick={() => navigator.clipboard.writeText(deckToken)}
                       onMouseEnter={() => setHover(true)}

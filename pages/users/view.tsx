@@ -14,7 +14,7 @@ import { HorizontalRadio } from "@components/Primitives";
 
 function BigDivider() {
   return (
-    <div className="h-2 bg-borderLight dark:bg-borderDark w-full my-4 md:w-10/12 md:rounded-3xl" />
+    <div className="my-4 h-2 w-full bg-borderLight dark:bg-borderDark md:w-10/12 md:rounded-3xl" />
   );
 }
 
@@ -53,7 +53,7 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Loading</title>
         </Head>
-        <main className="flex justify-center flex-grow items-center text-center px-5">
+        <main className="flex flex-grow items-center justify-center px-5 text-center">
           <LoadingSpinner />
           <h1 className="text-4xl font-semibold">Loading</h1>
         </main>
@@ -67,8 +67,10 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Invalid User</title>
         </Head>
-        <main className="flex justify-center flex-grow items-center text-center px-5">
-          <h1 className="text-4xl font-semibold pt-20">Error! Invalid User ID</h1>
+        <main className="flex flex-grow items-center justify-center px-5 text-center">
+          <h1 className="pt-20 text-4xl font-semibold">
+            Error! Invalid User ID
+          </h1>
         </main>
       </>
     );
@@ -85,9 +87,21 @@ export default function Account() {
     }
   };
   const radioOptions = [
-    { value: "themes", displayText: "Themes", title: `${calcDisplayName()} Themes` },
-    { value: "stars", displayText: "Stars", title: `${calcDisplayName()} Stars` },
-    { value: "submissions", displayText: "Submissions", title: `${calcDisplayName()} Submissions` },
+    {
+      value: "themes",
+      displayText: "Themes",
+      title: `${calcDisplayName()} Themes`,
+    },
+    {
+      value: "stars",
+      displayText: "Stars",
+      title: `${calcDisplayName()} Stars`,
+    },
+    {
+      value: "submissions",
+      displayText: "Submissions",
+      title: `${calcDisplayName()} Submissions`,
+    },
   ];
 
   return (
@@ -95,7 +109,7 @@ export default function Account() {
       <Head>
         <title>{userInfo.username} | DeckThemes</title>
       </Head>
-      <main className="flex flex-col items-center w-full">
+      <main className="flex w-full flex-col items-center">
         <PfpDisplay userData={userInfo} />
         <div className="mt-4" />
         {/* If you're un-authed, this title will just always stay as "x's Themes" */}
@@ -103,7 +117,8 @@ export default function Account() {
           className="pb-20"
           titles={radioOptions.map((e) => e.title)}
           currentTitle={
-            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+            radioOptions.find((e) => e.value === radioValue)?.title ||
+            radioOptions[0].title
           }
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (

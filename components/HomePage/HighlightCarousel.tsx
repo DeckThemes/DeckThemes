@@ -17,26 +17,30 @@ export function HighlightCarousel({
   const [orderValue, setOrderValue] = useState<string>("Popular");
   const [transitioning, setTransitioning] = useState<boolean>(false);
   const orderUrl = useMemo(
-    () => `&order=${orderValue === "Popular" ? "Most Downloaded" : "Last Updated"}`,
+    () =>
+      `&order=${orderValue === "Popular" ? "Most Downloaded" : "Last Updated"}`,
     [orderValue]
   );
-  const [selectedRadioOption, setRadioOption] = useState<string>(options[0].searchFilter);
+  const [selectedRadioOption, setRadioOption] = useState<string>(
+    options[0].searchFilter
+  );
   const currentOption = useMemo(
-    () => options.find((e) => e.searchFilter === selectedRadioOption) || options[0],
+    () =>
+      options.find((e) => e.searchFilter === selectedRadioOption) || options[0],
     [selectedRadioOption]
   );
 
   return (
     <>
-      <div className="flex flex-col w-full gap-4 max-w-7xl">
-        <div className="w-full flex flex-col items-center pb-4">
+      <div className="flex w-full max-w-7xl flex-col gap-4">
+        <div className="flex w-full flex-col items-center pb-4">
           <TransitionedCarouselTitle
             setTransitioning={setTransitioning}
             titles={options.map((e) => e.title)}
             currentTitle={currentOption.title}
           />
-          <div className="pt-24 flex flex-col md:flex-row gap-4 items-center justify-between w-full ">
-            <div className="flex flex-col sm:flex-row self-center">
+          <div className="flex w-full flex-col items-center justify-between gap-4 pt-24 md:flex-row ">
+            <div className="flex flex-col self-center sm:flex-row">
               <RadioDropdown
                 triggerClass="flex md:hidden"
                 options={options.map((e) => ({
@@ -64,7 +68,7 @@ export function HighlightCarousel({
             />
           </div>
         </div>
-        <div className="flex flex-col-reverse sm:flex-col w-full gap-4">
+        <div className="flex w-full flex-col-reverse gap-4 sm:flex-col">
           <div>
             <HighlightCardView
               apiURL={`/themes?perPage=7&filters=${currentOption.searchFilter}${orderUrl}`}

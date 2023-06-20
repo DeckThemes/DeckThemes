@@ -62,27 +62,29 @@ export default function TaskView() {
       <Head>
         <title>DeckThemes | Task Status</title>
       </Head>
-      <main className="flex flex-col items-center p-4 justify-center flex-grow">
+      <main className="flex flex-grow flex-col items-center justify-center p-4">
         {typeof task === "string" ? (
           <>
             {apiStatus ? (
               <div className="flex flex-col items-center text-center">
-                <div className="flex flex-col items-center mb-8">
-                  <span className="text-2xl md:text-3xl font-semibold">
+                <div className="mb-8 flex flex-col items-center">
+                  <span className="text-2xl font-semibold md:text-3xl">
                     {convertToPascalCase(apiStatus.name)}
                   </span>
-                  <span className="text-xl font-medium">Task {task?.split("-")[0]}</span>
+                  <span className="text-xl font-medium">
+                    Task {task?.split("-")[0]}
+                  </span>
                 </div>
                 {apiStatus.completed ? (
                   <>
                     <div className="mb-4">
                       {apiStatus.success ? (
-                        <div className="flex items-center text-5xl gap-2">
+                        <div className="flex items-center gap-2 text-5xl">
                           <BsCheckCircleFill className="text-emerald-600" />
                           <span>Success</span>
                         </div>
                       ) : (
-                        <div className="flex items-center text-5xl gap-2">
+                        <div className="flex items-center gap-2 text-5xl">
                           <BsXCircleFill className="text-red-500" />
                           <span>Failed</span>
                         </div>
@@ -97,23 +99,25 @@ export default function TaskView() {
                       </b>
                       Seconds
                     </span>
-                    {!apiStatus.success && <span>{convertToPascalCase(apiStatus.status)}</span>}
+                    {!apiStatus.success && (
+                      <span>{convertToPascalCase(apiStatus.status)}</span>
+                    )}
                   </>
                 ) : (
                   <>
-                    <div className="flex items-center text-5xl gap-2">
-                      <ImSpinner5 className="text-amber-600 animate-spin" />
+                    <div className="flex items-center gap-2 text-5xl">
+                      <ImSpinner5 className="animate-spin text-amber-600" />
                       <span>Processing</span>
                     </div>
                     <span>{apiStatus.status}</span>
                   </>
                 )}
-                <div className="m-4 px-4 py-2 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors rounded-xl text-xl">
+                <div className="m-4 rounded-xl bg-cardLight px-4 py-2 text-xl transition-colors hover:bg-borderLight dark:bg-cardDark hover:dark:bg-borderDark">
                   <a
                     href="https://discord.gg/zSyf5GgdQY"
                     target="_blank"
                     rel="noreferrer"
-                    className="text-transparent bg-clip-text bg-gradient-to-tl from-violet-800 to-violet-500 p-1 rounded-3xl"
+                    className="rounded-3xl bg-gradient-to-tl from-violet-800 to-violet-500 bg-clip-text p-1 text-transparent"
                   >
                     Join our Discord <br className="flex md:hidden" />
                     <span className="text-textLight dark:text-textDark">

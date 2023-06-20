@@ -4,14 +4,19 @@ import { FullCSSThemeInfo } from "../../types";
 import { desktopModeContext } from "../../pages/_app";
 import { useContext } from "react";
 
-export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo }) {
-  const { desktopMode, installing, setInstalling } = useContext(desktopModeContext);
+export function ThemeDownloadButton({
+  themeData,
+}: {
+  themeData: FullCSSThemeInfo;
+}) {
+  const { desktopMode, installing, setInstalling } =
+    useContext(desktopModeContext);
   return (
     <>
       {themeData.download !== undefined ? (
         <>
           <button
-            className="w-fit gap-2 mb-2 sm:mb-0 group no-underline inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-brandBlue text-white hover:bg-fore-11-dark hover:text-fore-contrast-dark active:opacity-60 border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition"
+            className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
             onClick={() => {
               if (desktopMode) {
                 setInstalling(true);
@@ -30,20 +35,26 @@ export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo
                 );
             }}
           >
-            <div className="flex items-center justify-center  rounded-full w-6 h-6">
-              {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={12} />}
+            <div className="flex h-6 w-6  items-center justify-center rounded-full">
+              {installing && desktopMode ? (
+                <LoadingSpinner />
+              ) : (
+                <FiArrowDown size={12} />
+              )}
             </div>
             <div>
               {desktopMode ? (
                 <>
-                  <div className="flex flex-col items-center justify-center ml-2 mr-3">
-                    <span className="font-semibold font-fancy">Install</span>
+                  <div className="ml-2 mr-3 flex flex-col items-center justify-center">
+                    <span className="font-fancy font-semibold">Install</span>
                   </div>
                 </>
               ) : (
                 <>
-				<div className="flex flex-col items-center justify-center ml-2 mr-3">
-                    <span className="font-semibold font-fancy">Download .zip</span>
+                  <div className="ml-2 mr-3 flex flex-col items-center justify-center">
+                    <span className="font-fancy font-semibold">
+                      Download .zip
+                    </span>
                   </div>
                 </>
               )}

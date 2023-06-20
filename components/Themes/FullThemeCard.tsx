@@ -22,7 +22,9 @@ export function FullThemeCard({
   parsedId: string;
   hideAdminMenu?: boolean;
 }) {
-  const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
+  const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(
+    undefined
+  );
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   const { accountInfo } = useContext(authContext);
@@ -89,21 +91,23 @@ export function FullThemeCard({
   return (
     <>
       <Head>
-        <title>{themeData?.name ? `${themeData.name} | DeckThemes` : "DeckThemes"}</title>
+        <title>
+          {themeData?.name ? `${themeData.name} | DeckThemes` : "DeckThemes"}
+        </title>
       </Head>
-      <div className="font-fancy flex-grow flex justify-center h-full w-full text-center lg:text-left">
+      <div className="font-fancy flex h-full w-full flex-grow justify-center text-center lg:text-left">
         {themeData !== undefined ? (
           <>
             {/* bg-base-3-light dark:bg-base-3-dark */}
-            <div className="flex flex-col items-center h-fit w-full max-w-7xl rounded-3xl p-4">
+            <div className="flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl p-4">
               {/* Theme name and author */}
-              <div className="flex flex-col md:flex-row w-full gap-4 text-left flex-[75%]">
-                <div className="flex flex-col gap-2 w-full">
-                  <h1 className="font-extrabold text-3xl md:text-5xl text-center sm:text-left">
+              <div className="flex w-full flex-[75%] flex-col gap-4 text-left md:flex-row">
+                <div className="flex w-full flex-col gap-2">
+                  <h1 className="text-center text-3xl font-extrabold sm:text-left md:text-5xl">
                     {themeData.name}
                   </h1>
 
-                  <div className="flex flex-col sm:flex-row items-center just gap-4">
+                  <div className="just flex flex-col items-center gap-4 sm:flex-row">
                     <Link href={`/users/view?userId=${themeData.author.id}`}>
                       <div className="flex flex-row items-center gap-1">
                         by
@@ -113,21 +117,22 @@ export function FullThemeCard({
                         </div>
                       </div>
                     </Link>
-                    <div className="flex w-full md:w-fit items-center justify-center gap-4">
+                    <div className="flex w-full items-center justify-center gap-4 md:w-fit">
                       <button
                         disabled={!accountInfo?.username}
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
-                        className={`h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 ${
+                        className={`flex h-fit items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light dark:border-borders-base3-dark dark:text-fore-11-dark ${
                           accountInfo?.username
-                            ? "hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark cursor-pointer"
+                            ? "cursor-pointer select-none transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
                             : "cursor-auto"
                         }`}
                       >
                         {isStarred ? <BsStarFill /> : <BsStar />}{" "}
                         <span className="whitespace-nowrap">
-                          {themeData.starCount} {themeData.starCount > 1 ? "stars" : "star"}
+                          {themeData.starCount}{" "}
+                          {themeData.starCount > 1 ? "stars" : "star"}
                         </span>
                       </button>
                       <button
@@ -154,15 +159,16 @@ export function FullThemeCard({
                             pauseOnHover: false,
                           });
                         }}
-                        className={`h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark`}
+                        className={`flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark`}
                       >
-                        <BsShare className="scale-x-90" /> <span className="">Share</span>
+                        <BsShare className="scale-x-90" />{" "}
+                        <span className="">Share</span>
                       </button>
                       <ThemeAdminPanel themeData={themeData} />
                     </div>
                   </div>
 
-                  <div className="text-md text-center sm:text-left max-w-2xl my-4">
+                  <div className="text-md my-4 max-w-2xl text-center sm:text-left">
                     {themeData.description ? (
                       <span className="whitespace-pre-line break-words">
                         {themeData.description}
@@ -178,35 +184,39 @@ export function FullThemeCard({
                     <ThemeDownloadButton themeData={themeData} />
                   </div>
 
-                  <div className="flex flex-col items-center w-full max-w-7xl justify-center relative mt-8">
-                    <div className="flex flex-row w-full items-center justify-center flex-wrap gap-4 h-fit relative p-6 border border-borders-base2-light dark:border-borders-base3-dark rounded-xl">
-                      <div className="items-start flex flex-col gap-2 px-4 flex-1">
-                        <h3 className="font-bold text-sm">Category</h3>
-                        <p className="dark:text-fore-9-dark font-medium">{themeData.target}</p>
+                  <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center">
+                    <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark">
+                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Category</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
+                          {themeData.target}
+                        </p>
                       </div>
 
-                      <div className="items-start flex flex-col gap-2 px-4 flex-1">
-                        <h3 className="font-bold text-sm">Version</h3>
-                        <p className="dark:text-fore-9-dark font-medium">{themeData.version}</p>
+                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Version</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
+                          {themeData.version}
+                        </p>
                       </div>
 
-                      <div className="items-start flex flex-col gap-2 px-4 flex-1">
-                        <h3 className="font-bold text-sm">Published</h3>
-                        <p className="dark:text-fore-9-dark font-medium">
+                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Published</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
                           {new Date(themeData.submitted).toLocaleDateString()}
                         </p>
                       </div>
 
-                      <div className="items-start flex flex-col gap-2 px-4 flex-1">
-                        <h3 className="font-bold text-sm">Updated</h3>
-                        <p className="dark:text-fore-9-dark font-medium">
+                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Updated</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
                           {new Date(themeData.updated).toLocaleDateString()}
                         </p>
                       </div>
 
-                      <div className="items-center sm:items-start flex flex-col gap-2 px-4 flex-1 border-t sm:border-t-0 sm:border-l dark:border-borders-base2-dark pt-4 mt-2 sm:pt-0 sm:mt-0 sm:pl-8 sm:ml-8">
-                        <h3 className="font-bold text-sm">Resources</h3>
-                        <p className="dark:text-fore-9-dark font-medium">
+                      <div className="mt-2 flex flex-1 flex-col items-center gap-2 border-t px-4 pt-4 dark:border-borders-base2-dark sm:mt-0 sm:ml-8 sm:items-start sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
+                        <h3 className="text-sm font-bold">Resources</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
                           {themeData.source ? (
                             <>
                               {themeData.source.slice(0, 5) === "https" ? (
@@ -217,7 +227,7 @@ export function FullThemeCard({
                                   )}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
+                                  className="flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark"
                                 >
                                   <BiCode />
                                   Source code
@@ -235,7 +245,7 @@ export function FullThemeCard({
                       </div>
                     </div>
 
-                    <div className="w-full h-full flex items-center max-w-full mt-8">
+                    <div className="mt-8 flex h-full w-full max-w-full items-center">
                       <ThemeImageCarousel data={themeData} />
                     </div>
                   </div>

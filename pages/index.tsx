@@ -1,6 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef, ReactNode, useContext } from "react";
-import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
+import {
+  DownloadButtonWithIcon,
+  HighlightCarousel,
+  HeroReel,
+} from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
 
@@ -36,11 +40,11 @@ export default function Home() {
         />
       </Head>
 
-      <main className="landing-page-bg flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+      <main className="landing-page-bg page-shadow mx-4 flex flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
         {/* Hero */}
-        <div className="w-full h-full flex flex-col items-center justify-center gap-6 pt-4 lg:pt-24 px-4">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-4 pt-4 lg:pt-24">
           {/* Headline */}
-          <h1 className="text-5xl text-center mx-auto max-w-4xl font-extrabold tracking-tight sm:text-6xl">
+          <h1 className="mx-auto max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
             <span className="bg-gradient-to-tr from-brandBlue to-brandBlue bg-clip-text text-transparent">
               Level up <br className="block sm:hidden" />
             </span>{" "}
@@ -48,13 +52,13 @@ export default function Home() {
           </h1>
 
           {/* Blurb */}
-          <p className="font-fancy mx-auto mt-6 max-w-2xl text-sm sm:text-lg leading-6 font-medium text-fore-10-light dark:text-fore-10-dark text-center">
-            DeckThemes is the largest repository of custom themes, styles, and audio packs for
-            Steam. Available for Steam Deck and Windows.
+          <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
+            DeckThemes is the largest repository of custom themes, styles, and
+            audio packs for Steam. Available for Steam Deck and Windows.
           </p>
 
           {/* Download Btns */}
-          <div className="font-fancy flex flex-col sm:flex-row mt-6 gap-2">
+          <div className="font-fancy mt-6 flex flex-col gap-2 sm:flex-row">
             <DownloadButtonWithIcon iconName="steamdeck" />
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
@@ -87,7 +91,7 @@ export default function Home() {
 
         {/* Carousel */}
         <div
-          className="flex flex-col w-full items-center gap-8 text-center h-full relative px-4 mt-16"
+          className="relative mt-16 flex h-full w-full flex-col items-center gap-8 px-4 text-center"
           style={desktopMode ? { justifyContent: "center" } : {}}
           ref={contentRef}
         >

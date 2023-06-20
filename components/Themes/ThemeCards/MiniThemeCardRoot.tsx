@@ -4,17 +4,23 @@ import Link from "next/link";
 
 // This essentially just takes in the theme data and either returns an audio card or a css card
 
-function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string }) {
+function AudioCardImage({
+  imageSrc,
+  target,
+}: {
+  imageSrc: string;
+  target: string;
+}) {
   return (
-    <div className="relative rounded-xl w-full h-[162.5px] drop-shadow-lg bg-clip overflow-hidden">
+    <div className="bg-clip relative h-[162.5px] w-full overflow-hidden rounded-xl drop-shadow-lg">
       <div
-        className="rounded-xl bg-cover bg-center bg-no-repeat w-full h-[162.5px] drop-shadow-lg absolute"
+        className="absolute h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat drop-shadow-lg"
         style={{
           backgroundImage: `url(${imageSrc})`,
           filter: "blur(20px) saturate(4) brightness(50%)",
         }}
       />
-      <div className="w-full h-full flex items-center justify-center rounded-xl">
+      <div className="flex h-full w-full items-center justify-center rounded-xl">
         <div
           // I'm still using the format of div-with-a-bg-image, because I think that could make it a bit easier to add icons/text in front if we want
           className="AudioLoader_PackBrowser_SingleItem_PreviewImageContainer"
@@ -25,7 +31,7 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
           }}
         >
           <div
-            className="absolute left-0 w-3/4 h-full bg-cover z-30 rounded-sm"
+            className="absolute left-0 z-30 h-full w-3/4 rounded-sm bg-cover"
             style={{
               background:
                 target === "Music"
@@ -38,10 +44,10 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
             style={{
               backgroundImage: `url(${imageSrc})`,
             }}
-            className="absolute left-0 w-3/4 h-full z-20 rounded-sm bg-cover bg-center bg-no-repeat bg-[#21323d]"
+            className="absolute left-0 z-20 h-full w-3/4 rounded-sm bg-[#21323d] bg-cover bg-center bg-no-repeat"
           />
           <div
-            className="absolute right-[5%] w-1/5 h-full bg-right bg-cover z-10"
+            className="absolute right-[5%] z-10 h-full w-1/5 bg-cover bg-right"
             style={{
               backgroundImage:
                 target === "Music"
@@ -58,7 +64,7 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
 function CSSCardImage({ imageSrc }: { imageSrc: string }) {
   return (
     <div
-      className="rounded-xl bg-cover bg-center bg-no-repeat w-full aspect-video h-[162.5px] drop-shadow-lg"
+      className="aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat drop-shadow-lg"
       style={{
         backgroundImage: `url(${imageSrc})`,
       }}
@@ -69,12 +75,12 @@ function CSSCardImage({ imageSrc }: { imageSrc: string }) {
 function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
   return (
     <>
-      <div className="flex flex-col items-start p-4 w-full">
-        <span className="font-fancy font-bold w-full truncate max-w-full text-start">
+      <div className="flex w-full flex-col items-start p-4">
+        <span className="font-fancy w-full max-w-full truncate text-start font-bold">
           {data.name}
         </span>
-        <div className="font-fancy flex justify-between w-full">
-          <span className="flex-grow text-sm text-start truncate text-fore-9-light dark:text-fore-9-dark">
+        <div className="font-fancy flex w-full justify-between">
+          <span className="flex-grow truncate text-start text-sm text-fore-9-light dark:text-fore-9-dark">
             {data.specifiedAuthor}
           </span>
           <span className="flex text-sm">{data.version}</span>
@@ -94,7 +100,8 @@ export function MiniThemeCardRoot({
   className?: string;
 }) {
   function imageSRCCreator(): string {
-    if (data?.images === undefined) return `https://share.deckthemes.com/css_placeholder.png`;
+    if (data?.images === undefined)
+      return `https://share.deckthemes.com/css_placeholder.png`;
 
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
@@ -105,7 +112,7 @@ export function MiniThemeCardRoot({
 
   function InnerContent() {
     return (
-      <div className="bg-base-3-light dark:bg-base-3-dark rounded-xl border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition">
+      <div className="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark">
         {data.type === "Audio" ? (
           <>
             <AudioCardImage imageSrc={imageSRCCreator()} target={data.target} />
@@ -119,14 +126,23 @@ export function MiniThemeCardRoot({
   }
 
   return (
-    <div className={twMerge("flex flex-1 w-full items-center justify-center", className)}>
+    <div
+      className={twMerge(
+        "flex w-full flex-1 items-center justify-center",
+        className
+      )}
+    >
       {submissionId ? (
-        <div className="transition-all rounded-xl overflow-hidden w-full h-full">
+        <div className="h-full w-full overflow-hidden rounded-xl transition-all">
           <InnerContent />
         </div>
       ) : (
-        <div className="hover:-translate-y-1 transition-all rounded-xl overflow-hidden w-full h-full">
-          <Link href={`/${data.type === "Audio" ? "packs" : "themes"}/view?themeId=${data.id}`}>
+        <div className="h-full w-full overflow-hidden rounded-xl transition-all hover:-translate-y-1">
+          <Link
+            href={`/${
+              data.type === "Audio" ? "packs" : "themes"
+            }/view?themeId=${data.id}`}
+          >
             <InnerContent />
           </Link>
         </div>

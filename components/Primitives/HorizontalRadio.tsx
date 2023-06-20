@@ -19,7 +19,10 @@ export function HorizontalRadio({
   itemClass?: string;
 }) {
   return (
-    <RadioGroup.Root onValueChange={onValueChange} className={twMerge("flex", rootClass)}>
+    <RadioGroup.Root
+      onValueChange={onValueChange}
+      className={twMerge("flex", rootClass)}
+    >
       {options.map((e, i) => {
         const selected = value === e.value;
         return (
@@ -28,11 +31,11 @@ export function HorizontalRadio({
             value={e.value}
             key={`Carousel_Dot_${i}`}
             className={twMerge(
-              `w-32 h-10 m-1 ${
+              `m-1 h-10 w-32 ${
                 selected
                   ? `bg-brandBlue text-white`
-                  : `bg-base-3-light dark:bg-base-3-dark  hover:bg-base-4-light hover:dark:bg-base-4-dark`
-              } rounded-full transition-colors duration-200 font-bold font-fancy`,
+                  : `bg-base-3-light hover:bg-base-4-light  dark:bg-base-3-dark hover:dark:bg-base-4-dark`
+              } font-fancy rounded-full font-bold transition-colors duration-200`,
               itemClass
             )}
           >

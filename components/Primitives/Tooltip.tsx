@@ -1,7 +1,7 @@
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ReactElement, useContext } from "react";
 import { twMerge } from "tailwind-merge";
-import { useTheme } from 'next-themes'
+import { useTheme } from "next-themes";
 export function Tooltip({
   triggerContent,
   delayDuration = 100,
@@ -17,7 +17,7 @@ export function Tooltip({
   arrow?: boolean;
   content: ReactElement;
 }) {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
 
   return (
     <RadixTooltip.Provider>
@@ -28,7 +28,7 @@ export function Tooltip({
             <RadixTooltip.Content
               side={tooltipSide}
               className={twMerge(
-                "rounded-xl text-black dark:text-white p-2 px-4 font-fancy bg-fore-3-light dark:bg-fore-3-dark",
+                "font-fancy rounded-xl bg-fore-3-light p-2 px-4 text-black dark:bg-fore-3-dark dark:text-white",
                 contentClass
               )}
             >
