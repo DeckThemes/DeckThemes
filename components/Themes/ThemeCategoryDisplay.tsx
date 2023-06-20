@@ -131,21 +131,23 @@ export function ThemeCategoryDisplay({
   const stickyHeaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-	const handleScroll = () => {
-		const rect = stickyHeaderRef?.current?.getBoundingClientRect();
-		const isElementSticky = rect?.top <= 0;
-  
-		setIsSticky(isElementSticky);
-		console.log('hit')
-	};
-  
-	window.addEventListener("scroll", handleScroll);
-	console.log('handlescroll mounted')
-  
-	return () => {
-	  window.removeEventListener("scroll", handleScroll);
-	};
-  }, []); // Empty dependency array to ensure the effect runs only once
+    const handleScroll = () => {
+      if (stickyHeaderRef.current) {
+        const rect = stickyHeaderRef?.current?.getBoundingClientRect();
+        const isElementSticky = rect?.top <= 0;
+
+        setIsSticky(isElementSticky);
+        console.log("hit");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    console.log("handlescroll mounted");
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); 
 
   useSubmissionCards && console.log(themeData, loaded);
 
