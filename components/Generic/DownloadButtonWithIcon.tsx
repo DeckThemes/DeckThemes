@@ -10,7 +10,7 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
               role="img"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 absolute top-0 left-0 z-20 fill-black dark:fill-white group-hover:opacity-0 transition-opacity"
+              className="w-4 h-4 absolute top-0 left-0 z-20 fill-white group-hover:opacity-0 transition-opacity"
             >
               <linearGradient id="Gradient1">
                 <stop offset="0%" stopColor="#1a9eff" />
@@ -39,7 +39,7 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
               role="img"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 fill-black dark:fill-white group-hover:fill-[#0078D4] group-hover:dark:fill-[#0078D4] transition-colors"
+              className="w-4 h-4 fill-white group-hover:fill-[#0078D4] group-hover:dark:fill-[#0078D4] transition-colors"
             >
               <title>Windows 11</title>
               <path d="M0,0H11.377V11.372H0ZM12.623,0H24V11.372H12.623ZM0,12.623H11.377V24H0Zm12.623,0H24V24H12.623" />

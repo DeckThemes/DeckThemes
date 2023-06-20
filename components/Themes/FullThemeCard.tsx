@@ -119,7 +119,7 @@ export function FullThemeCard({
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
-                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 ${
+                        className={`h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 ${
                           accountInfo?.username
                             ? "hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark cursor-pointer"
                             : "cursor-auto"
@@ -154,7 +154,7 @@ export function FullThemeCard({
                             pauseOnHover: false,
                           });
                         }}
-                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark`}
+                        className={`h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark`}
                       >
                         <BsShare className="scale-x-90" /> <span className="">Share</span>
                       </button>
@@ -162,7 +162,7 @@ export function FullThemeCard({
                     </div>
                   </div>
 
-                  <div className="text-md text-center sm:text-left max-w-md">
+                  <div className="text-md text-center sm:text-left max-w-2xl my-4">
                     {themeData.description ? (
                       <span className="whitespace-pre-line break-words">
                         {themeData.description}
@@ -179,7 +179,7 @@ export function FullThemeCard({
                   </div>
 
                   <div className="flex flex-col items-center w-full max-w-7xl justify-center relative mt-8">
-                    <div className="flex flex-row w-full items-center justify-center  flex-wrap gap-4 h-fit relative p-6 border dark:border-borders-base3-dark rounded-xl">
+                    <div className="flex flex-row w-full items-center justify-center flex-wrap gap-4 h-fit relative p-6 border border-borders-base2-light dark:border-borders-base3-dark rounded-xl">
                       <div className="items-start flex flex-col gap-2 px-4 flex-1">
                         <h3 className="font-bold text-sm">Category</h3>
                         <p className="dark:text-fore-9-dark font-medium">{themeData.target}</p>
@@ -217,7 +217,7 @@ export function FullThemeCard({
                                   )}
                                   target="_blank"
                                   rel="noreferrer"
-                                  className="h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
+                                  className="h-fit font-bold border border-borders-base2-light dark:border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-fore-11-light dark:text-fore-11-dark flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark hover:text-fore-11-dark"
                                 >
                                   <BiCode />
                                   Source code

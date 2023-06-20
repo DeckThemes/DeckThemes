@@ -30,9 +30,9 @@ export function HorizontalRadio({
             className={twMerge(
               `w-32 h-10 m-1 ${
                 selected
-                  ? `bg-brandBlue`
+                  ? `bg-brandBlue text-white`
                   : `bg-base-3-light dark:bg-base-3-dark  hover:bg-base-4-light hover:dark:bg-base-4-dark`
-              } rounded-full transition-colors duration-500 font-fancy`,
+              } rounded-full transition-colors duration-200 font-bold font-fancy`,
               itemClass
             )}
           >

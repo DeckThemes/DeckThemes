@@ -11,7 +11,7 @@ export function OrderValueToggle({
 }) {
   return (
     <>
-      <div className="h-10 flex relative gap-8 p-2 px-4 bg-base-3-light dark:bg-base-5-dark rounded-full font-fancy border-2 border-borders-base2-light dark:border-borders-base2-dark ">
+      <div className="h-10 flex relative gap-8 p-2 px-4 bg-base-3-light dark:bg-base-5-dark rounded-full font-fancy border-2 border-borders-base1-light dark:border-borders-base2-dark ">
         <button className="relative w-16 z-20" onClick={() => setOrderValue(orderOptions[0])}>
           <span className="absolute -top-0.5 left-0">{orderOptions[0]}</span>
         </button>
