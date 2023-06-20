@@ -1,5 +1,5 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { themeContext } from "@styles/themeContext";
+import { useTheme } from 'next-themes'
 import { ReactNode, useContext } from "react";
 import { twMerge } from "tailwind-merge";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -14,7 +14,7 @@ export function MenuDropdown({
     onSelect: () => void;
   }[];
 }) {
-  const { theme } = useContext(themeContext);
+	const { theme } = useTheme()
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger className="h-fit w-12 font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark">

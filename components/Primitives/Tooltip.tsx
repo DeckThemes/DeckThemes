@@ -1,8 +1,7 @@
 import * as RadixTooltip from "@radix-ui/react-tooltip";
 import { ReactElement, useContext } from "react";
 import { twMerge } from "tailwind-merge";
-import { themeContext } from "../../styles";
-
+import { useTheme } from 'next-themes'
 export function Tooltip({
   triggerContent,
   delayDuration = 100,
@@ -18,7 +17,8 @@ export function Tooltip({
   arrow?: boolean;
   content: ReactElement;
 }) {
-  const { theme } = useContext(themeContext);
+  const { theme } = useTheme()
+
   return (
     <RadixTooltip.Provider>
       <RadixTooltip.Root delayDuration={delayDuration}>

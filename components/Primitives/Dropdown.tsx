@@ -1,6 +1,6 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useContext, useMemo } from "react";
-import { themeContext } from "../../styles";
+import { useTheme } from 'next-themes'
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { twMerge } from "tailwind-merge";
 import { BsDot } from "react-icons/bs";
@@ -51,7 +51,8 @@ export function RadioDropdown({
     }));
   }, [options]);
 
-  const { theme } = useContext(themeContext);
+  const { theme } = useTheme()
+  
   const selected = useMemo(
     () => formattedOptions.find((e: any) => e.value === value) || formattedOptions[0],
     [formattedOptions, value]

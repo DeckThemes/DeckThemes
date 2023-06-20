@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Footer, LandingFooter, LoadingPage, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
-import { Theme, themeContext } from "../styles";
+import { ThemeProvider } from "next-themes";
 import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
@@ -21,29 +21,8 @@ export const desktopModeContext = createContext<any>({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState<Theme>("dark");
-
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
-
-  function initSetTheme(): void {
-    //Sets dark theme based on browser preferences, but also allows for manual changing
-    if (localStorage?.theme) {
-      localStorage.theme === "light" || localStorage.theme === "dark"
-        ? setTheme(localStorage.theme)
-        : console.warn(
-            "Theme value in localStorage is not valid! Please set it to either 'light' or 'dark'"
-          );
-      return;
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-      localStorage.theme = "dark";
-      return;
-    }
-    setTheme("dark");
-    return;
-  }
 
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
@@ -53,7 +32,6 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   useEffect(() => {
-    initSetTheme();
     initGetUserData();
   }, []);
 
@@ -80,37 +58,34 @@ export default function App({ Component, pageProps }: AppProps) {
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
 
   return (
-    <themeContext.Provider value={{ theme, setTheme }}>
+    <ThemeProvider attribute="class">
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
         <desktopModeContext.Provider
           value={{ desktopMode, setDesktopMode, installing, setInstalling }}
         >
-          <div className={`${theme}`}>
-            <div className="bg-base-6-light dark:bg-base-6-dark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
-              {desktopMode !== undefined ? (
-                <>
-                  <MainNav />
-                  <ToastContainer
-                    position="bottom-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme={theme}
-                  />
-                  <Component {...pageProps} />
-                  <LandingFooter />
-                </>
-              ) : (
-                <LoadingPage />
-              )}
-            </div>
+          <div className="bg-base-6-light dark:bg-base-6-dark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
+            {desktopMode !== undefined ? (
+              <>
+                <MainNav />
+                <ToastContainer
+                  position="bottom-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop
+                  closeOnClick
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
+                <Component {...pageProps} />
+                <LandingFooter />
+              </>
+            ) : (
+              <LoadingPage />
+            )}
           </div>
         </desktopModeContext.Provider>
       </authContext.Provider>
-    </themeContext.Provider>
+    </ThemeProvider>
   );
 }

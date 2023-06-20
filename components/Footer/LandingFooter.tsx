@@ -1,21 +1,24 @@
-import { useContext } from "react";
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
-import { themeContext } from "../../styles";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { Discord, Patreon } from "@icons-pack/react-simple-icons";
 import { NavIconLink } from "@components/Nav";
+import { useTheme } from "next-themes";
 
 export function LandingFooter() {
   const router = useRouter();
-  const { theme } = useContext(themeContext);
+  const theme = useTheme();
+
   const src = () => {
     if (router.pathname.includes("/packs")) {
+      // @ts-ignore
       return theme === "light" ? "/logo_audio_lightmode.png" : "/logo_audio_darkmode.png";
     }
+    // @ts-ignore
     return theme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png";
   };
+
   return (
     <footer className="w-full h-fit flex flex-col mt-auto">
       <div className="w-full max-w-7xl mx-auto my-16">
