@@ -11,7 +11,7 @@ export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo
       {themeData.download !== undefined ? (
         <>
           <button
-            className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-xl md:text-3xl rounded-full justify-between mt-4"
+            className="w-fit gap-2 mb-2 sm:mb-0 group no-underline inline-flex items-center justify-center rounded-full py-2 px-4 text-sm font-semibold focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 bg-brandBlue text-white hover:bg-fore-11-dark hover:text-fore-contrast-dark active:opacity-60 border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition"
             onClick={() => {
               if (desktopMode) {
                 setInstalling(true);
@@ -30,8 +30,8 @@ export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo
                 );
             }}
           >
-            <div className="bg-lightenerLight dark:bg-lightenerDark p-2 rounded-full">
-              {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={48} />}
+            <div className="flex items-center justify-center  rounded-full w-6 h-6">
+              {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={12} />}
             </div>
             <div>
               {desktopMode ? (
@@ -42,13 +42,9 @@ export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo
                 </>
               ) : (
                 <>
-                  <span className="font-semibold ml-2 mr-1 md:mr-2">
-                    {themeData.download.downloadCount}
-                  </span>
-                  <span className="pr-3">
-                    Download
-                    {themeData.download.downloadCount !== 1 ? "s" : ""}
-                  </span>
+				<div className="flex flex-col items-center justify-center ml-2 mr-3">
+                    <span className="font-semibold font-fancy">Download .zip</span>
+                  </div>
                 </>
               )}
             </div>
