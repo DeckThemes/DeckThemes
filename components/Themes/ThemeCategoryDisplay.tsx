@@ -162,8 +162,8 @@ export function ThemeCategoryDisplay({
           )}
           <div
             ref={stickyHeaderRef}
-            className={`w-full max-w-7xl flex items-center justify-center sticky top-0 z-10 transition-all duration-300 ${
-              isSticky ? "px-4" : ""
+            className={`w-full max-w-7xl flex items-center justify-center lg:sticky lg:top-0 z-10 transition-all duration-300 ${
+              isSticky ? "lg:px-4" : ""
             }`}
           >
             <FilterSelectorCard
