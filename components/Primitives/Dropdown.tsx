@@ -84,10 +84,12 @@ export function RadioDropdown({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-        <div className={`${theme}`}>
-          <DropdownMenu.Content className="z-[9999] text-sm radio-dropdown font-fancy select-none cursor-default overflow-hidden bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark transition-all">
+        <div className={`${theme} contents`}>
+			{/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
+          <DropdownMenu.Content avoidCollisions collisionPadding={16} className="z-[9999] h-max overflow-y-auto text-sm font-fancy select-none cursor-default overflow-hidden transition-all radio-dropdown bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl my-1">
             <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
-              {formattedOptions.map((e) => (
+				<div className="max-h-[var(--radix-popper-available-height)]">
+				{formattedOptions.map((e) => (
                 <DropdownMenu.RadioItem
                   disabled={e.disabled}
                   value={e.value}
@@ -112,6 +114,8 @@ export function RadioDropdown({
                   </div>
                 </DropdownMenu.RadioItem>
               ))}
+
+				</div>
             </DropdownMenu.RadioGroup>
           </DropdownMenu.Content>
         </div>

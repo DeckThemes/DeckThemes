@@ -80,7 +80,7 @@ export function MetaSubmitPanel({
       <div className={`${sectionContainerClasses}`}>
         {uploadType !== "audio" && (
           <>
-            <div className={`${metaFieldContainerClasses} max-w-[250px]`}>
+            <div className={`${metaFieldContainerClasses} w-full`}>
               <RadioDropdown
                 headingText="Theme Target"
                 value={info.target}
