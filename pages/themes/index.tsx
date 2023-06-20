@@ -42,7 +42,6 @@ export default function Themes() {
             {...defaults}
             themeDataApiPath="/themes"
             filterDataApiPath="/themes/filters"
-            title=""
             typeOptionPreset="Desktop+BPM"
             themesPerPage={24}
             noAuthRequired

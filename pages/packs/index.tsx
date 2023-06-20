@@ -27,11 +27,11 @@ export default function Packs() {
   return (
     <>
       <Head>
-        <title>DeckThemes | CSSLoader Themes</title>
+        <title>DeckThemes | AudioLoader Packs</title>
       </Head>
-      <main className="flex flex-col items-center">
-        <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-3xl md:text-5xl pt-4">AudioLoader Packs</h2>
+      <main className="flex flex-col items-center page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+        <div className="flex flex-col items-center mb-12">
+          <h1 className="font-extrabold text-3xl md:text-5xl pt-4 lg:pt-24">CSS Themes</h1>
         </div>
         {defaults !== undefined && (
           <ThemeCategoryDisplay

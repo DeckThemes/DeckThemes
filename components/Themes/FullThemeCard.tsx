@@ -107,52 +107,67 @@ export function FullThemeCard({
               {/* Theme name and author */}
               <div className="flex flex-col md:flex-row w-full gap-4 text-left flex-[75%]">
                 <div className="flex flex-col gap-2 w-full">
-                  <h1 className="font-extrabold text-3xl md:text-5xl">{themeData.name}</h1>
-                  <Link
-                    href={`/users/view?userId=${themeData.author.id}`}
-                    className="flex flex-row items-center gap-4"
-                  >
-                    <div className="flex flex-row items-center gap-1">
-                      by
-                      <div className="flex items-center">
-                        <div className="">{themeData.specifiedAuthor}</div>
-                        <SupporterIcon author={themeData.author} />
+                  <h1 className="font-extrabold text-3xl md:text-5xl text-center sm:text-left">
+                    {themeData.name}
+                  </h1>
+                  <div className="flex flex-col sm:flex-row items-center just gap-4">
+                    <Link href={`/users/view?userId=${themeData.author.id}`}>
+                      <div className="flex flex-row items-center gap-1">
+                        by
+                        <div className="flex items-center">
+                          <div className="">{themeData.specifiedAuthor}</div>
+                          <SupporterIcon author={themeData.author} />
+                        </div>
                       </div>
+                    </Link>
+                    <div className="flex w-full md:w-fit items-center justify-center gap-4">
+                      <button
+                        onClick={() => {
+                          if (accountInfo?.username) toggleStar();
+                        }}
+                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark ${
+                          accountInfo?.username
+                            ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
+                            : "cursor-auto"
+                        } transition-all`}
+                      >
+                        {isStarred ? <BsStarFill /> : <BsStar />}{" "}
+                        <span className="whitespace-nowrap">
+                          {themeData.starCount} {themeData.starCount > 1 ? "stars" : "star"}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          // @ts-ignore
+                          if (navigator.canShare) {
+                            navigator
+                              .share({
+                                title: "DeckThemes",
+                                text: themeData.name,
+                                url: `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`,
+                              })
+                              .catch((err) => {
+                                console.log("error", err);
+                              });
+                            return;
+                          }
+                          navigator.clipboard.writeText(
+                            `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`
+                          );
+                          toast("🔗 Link Copied To Clipboard", {
+                            autoClose: 2000,
+                            hideProgressBar: true,
+                            pauseOnHover: false,
+                          });
+                        }}
+                        className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark`}
+                      >
+                        <BsShare className="scale-x-90" /> <span className="">Share</span>
+                      </button>
                     </div>
+                  </div>
 
-                    <button
-                      onClick={() => {
-                        if (accountInfo?.username) toggleStar();
-                      }}
-                      className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark ${
-                        accountInfo?.username
-                          ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
-                          : "cursor-auto"
-                      } transition-all`}
-                    >
-                      {isStarred ? <BsStarFill /> : <BsStar />}{" "}
-                      <span className="whitespace-nowrap">
-                        {themeData.starCount} {themeData.starCount > 1 ? "stars" : "star"}
-                      </span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`
-                        );
-                        toast("🔗 Link Copied To Clipboard", {
-                          autoClose: 2000,
-                          hideProgressBar: true,
-                          pauseOnHover: false,
-                        });
-                      }}
-                      className={`h-fit font-bold border border-borders-base3-dark rounded-full text-xs px-4 py-2 justify-center text-white flex items-center gap-2 hover:scale-95 transition duration-150 hover:active:scale-90 select-none hover:bg-base-3-dark`}
-                    >
-                      <BsShare className="scale-x-90" /> <span className="">Share</span>
-                    </button>
-                  </Link>
-
-                  <div className="text-md max-w-md">
+                  <div className="text-md text-center sm:text-left max-w-md">
                     {themeData.description ? (
                       <span className="whitespace-pre-line break-words">
                         {themeData.description}
@@ -164,7 +179,7 @@ export function FullThemeCard({
                     )}
                   </div>
 
-                  <div className="my-4">
+                  <div className="my-4 self-center sm:self-start">
                     <ThemeDownloadButton themeData={themeData} />
                   </div>
 
