@@ -31,6 +31,10 @@ module.exports = {
             dark: "hsla(220, 12%, 8%, 0.7)",
             light: "hsla(264, 100%, 100%, 0.7)",
           },
+          2.5: {
+            dark: "#0B0D0F",
+            light: "#EEEEEE",
+          },
           "3T": {
             dark: "hsla(220, 9%, 60%, 0.1)",
             light: "hsla(264, 100%, 100%, 0.7)",

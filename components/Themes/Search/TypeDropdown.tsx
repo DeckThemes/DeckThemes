@@ -14,8 +14,8 @@ export function TypeDropdown({
 }) {
   return (
     <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
-      <div className="font-bold">Platform</div>
       <RadioDropdown
+        headingText="Platform"
         options={typeOptions}
         value={typeValue}
         onValueChange={(e: any) => {

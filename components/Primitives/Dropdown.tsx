@@ -16,11 +16,17 @@ export function RadioDropdown({
   value,
   onValueChange,
   triggerClass = "",
+  headingText,
+  headingClass = "",
 }: {
-  options: { value: string; displayText?: string; bubbleValue?: string | number }[] | string[];
+  options:
+    | { value: string; displayText?: string; bubbleValue?: string | number; disabled?: boolean }[]
+    | string[];
   value: string;
-  onValueChange: any;
+  onValueChange: (e: string) => void;
   triggerClass?: string;
+  headingText?: string;
+  headingClass?: string;
 }) {
   const formattedOptions = useMemo(() => {
     if (typeof options[0] === "string") {
@@ -28,9 +34,11 @@ export function RadioDropdown({
         value: e,
         displayText: e,
         bubbleValue: undefined,
+        disabled: false,
       }));
     }
     // God they need to hook typescript up to a brain interface so it can learn THIS IS INTENDED
+    // TODO: figure out the typerrors
     return options.map((e) => ({
       // @ts-ignore
       value: e.value,
@@ -38,6 +46,8 @@ export function RadioDropdown({
       displayText: e?.displayText || e.value,
       // @ts-ignore
       bubbleValue: e?.bubbleValue ?? undefined,
+      // @ts-ignore
+      disabled: e?.disabled ?? false,
     }));
   }, [options]);
 
@@ -48,13 +58,16 @@ export function RadioDropdown({
   );
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger
-        className={twMerge(
-          "h-12 flex items-center rounded-xl justify-center px-4 bg-base-3-light dark:bg-base-3-dark min-w-[250px] border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition-all",
-          triggerClass
+      <DropdownMenu.Trigger className="w-full flex flex-col gap-2">
+        {headingText && (
+          <span className={twMerge("font-bold w-full text-left", headingClass)}>{headingText}</span>
         )}
-      >
-        <>
+        <div
+          className={twMerge(
+            "h-12 flex items-center rounded-xl justify-center px-4 bg-base-3-light dark:bg-base-3-dark min-w-[250px] border-2 border-borders-base1-light hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark transition-all",
+            triggerClass
+          )}
+        >
           <div className="text-sm flex flex-1 h-full justify-between items-center w-fit">
             <span>{selected?.displayText || selected?.value}</span>
             {formattedOptions.reduce(
@@ -67,7 +80,7 @@ export function RadioDropdown({
             )}
           </div>
           <MdKeyboardArrowDown />
-        </>
+        </div>
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
@@ -76,6 +89,7 @@ export function RadioDropdown({
             <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
               {formattedOptions.map((e) => (
                 <DropdownMenu.RadioItem
+                  disabled={e.disabled}
                   value={e.value}
                   key={e.value}
                   className="flex items-center justify-center px-4 pl-8 py-2 relative hover:bg-brandBlue dark:hover:bg-brandBlue focus:bg-brandBlue dark:focus:bg-brandBlue outline-none m-1 rounded-lg"
@@ -84,8 +98,13 @@ export function RadioDropdown({
                     <BsDot size={36} />
                   </DropdownMenu.ItemIndicator>
                   <div className="w-full flex items-center justify-between gap-2">
-                    <span className="font-semibold w-fit flex items-center">
-                      {e?.displayText || e.value}
+                    <span
+                      className={twMerge(
+                        "font-semibold w-fit flex items-center",
+                        e.disabled ? "text-textFadedLight dark:text-textFadedDark" : ""
+                      )}
+                    >
+                      {e.displayText}
                     </span>
                     {e.bubbleValue !== undefined && (
                       <span className="font-semibold ">{e.bubbleValue}</span>

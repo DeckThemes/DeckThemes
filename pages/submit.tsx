@@ -18,6 +18,7 @@ import {
 import { useHasCookie } from "../hooks";
 import { authContext } from "./_app";
 import { toast } from "react-toastify";
+import { HorizontalRadio, RadioDropdown } from "@components/Primitives";
 
 const BigDivider = () => {
   return <div className="h-2 w-full bg-borderLight dark:bg-borderDark my-2" />;
@@ -117,6 +118,8 @@ export default function Submit() {
     }
   }
 
+  const [currentStep, setStep] = useState<number>(1);
+
   const [uploadMethod, setUploadMethod] = useState<string>("git");
   if (accountInfo?.username) {
     return (
@@ -128,15 +131,18 @@ export default function Submit() {
           {`
         
         .dark .filepond--panel-root {
-          background-color: #2e2e2e;
+          background-color: hsla(220, 9%, 60%, 0.1);
         }
+
         .dark .filepond--drop-label {
           color: #fff;
         }
         `}
         </style>
-        <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
-          <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
+        <main className="flex flex-1 flex-col items-center flex-grow gap-4 page-shadow border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark py-12 mx-4 rounded-3xl">
+          <div className="flex flex-col items-center mb-12">
+            <h1 className="font-extrabold text-3xl md:text-5xl pt-4 lg:pt-24">Submit A Theme</h1>
+          </div>
           <div className="m-4 px-4 py-2 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors rounded-xl text-xl">
             <a
               href={process.env.NEXT_PUBLIC_DOCS_URL}
@@ -152,95 +158,111 @@ export default function Submit() {
               </span>
             </a>
           </div>
-          <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
-            <section className="p-4 w-full flex flex-col items-center">
-              <div className="flex flex-col items-center gap-4 justify-center mb-4">
-                <span className={partHeaderClasses}>Part 1: Upload Your Theme</span>
-                <div className="flex flex-col md:flex-row gap-2">
-                  <div className="flex flex-col h-20">
-                    <span>Upload Method</span>
-                    <select
-                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
-                      value={uploadMethod}
-                      onChange={({ target: { value } }) => {
-                        setUploadMethod(value);
-                        if (value === "css") {
-                          setUploadType("css");
-                        }
-                      }}
-                    >
-                      <option value="git">Link Git Repo</option>
-                      <option value="zip">Upload Zip</option>
-                      <option value="css">Paste CSS Snippet</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col h-20">
-                    <span>Target Plugin</span>
-                    <select
-                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
-                      value={uploadType}
-                      onChange={({ target: { value } }) => {
-                        if (value === "css" || value === "audio") {
-                          setUploadType(value);
-                        }
-                      }}
-                    >
-                      <option value="css">CSS Loader</option>
-                      <option value="audio" disabled={uploadMethod === "css"}>
-                        Audio Loader
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <MiniDivider />
-              <div className="pb-4" />
-              {uploadMethod === "zip" && (
-                <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
-              )}
-              {uploadMethod === "git" && (
-                <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
-              )}
-              {uploadMethod === "css" && (
-                <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
-              )}
-            </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              <span className={partHeaderClasses}>Part 2: Add More Info</span>
-              <MetaSubmitPanel
-                info={metaInfo}
-                setInfo={setMetaInfo}
-                uploadType={uploadType}
-                uploadMethod={uploadMethod}
-              />
-            </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              <span className={partHeaderClasses}>Part 3: Accept Terms</span>
-              <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
-            </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              {checkIfReady() ? (
-                <>
-                  <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                    <span
-                      className="text-textDark dark:text-textLight font-fancy"
-                      onClick={() => submitTheme()}
-                    >
-                      Submit
+          <div className="w-11/12 border-[1px] border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark rounded-3xl flex flex-col items-center h-[600px] max-w-7xl">
+            {currentStep === 1 && (
+              <>
+                <section className="p-4 py-16 w-full flex flex-col items-center">
+                  <div className="flex flex-col items-center gap-4 justify-center w-full">
+                    <span className="font-fancy text-2xl md:text-4xl font-semibold text-center w-full">
+                      Upload Your Theme
                     </span>
-                  </button>
-                </>
-              ) : (
-                <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                  <span>Add Info Before Submitting</span>
-                </div>
-              )}
-            </section>
-          </main>
-        </div>
+                    <div className="flex flex-col md:flex-row gap-2 w-full md:w-1/2 pb-4">
+                      <RadioDropdown
+                        headingText="Upload Method"
+                        value={uploadMethod}
+                        onValueChange={(value) => {
+                          setUploadMethod(value);
+                          if (value === "css") {
+                            setUploadType("css");
+                          }
+                        }}
+                        options={[
+                          { value: "git", displayText: "Link Git Repo" },
+                          { value: "zip", displayText: "Upload Zip" },
+                          { value: "css", displayText: "Paste CSS Snippet" },
+                        ]}
+                      />
+                      <RadioDropdown
+                        headingText="Target Plugin"
+                        value={uploadType}
+                        onValueChange={(value) => {
+                          // The if is only here for type validity
+                          if (value === "css" || value === "audio") {
+                            setUploadType(value);
+                          }
+                        }}
+                        options={[
+                          { value: "css", displayText: "CSSLoader" },
+                          {
+                            value: "audio",
+                            displayText: "AudioLoader",
+                            disabled: uploadMethod === "css",
+                          },
+                        ]}
+                      />
+                    </div>
+                  </div>
+                  {uploadMethod === "zip" && (
+                    <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
+                  )}
+                  {uploadMethod === "git" && (
+                    <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
+                  )}
+                  {uploadMethod === "css" && (
+                    <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
+                  )}
+                </section>
+              </>
+            )}
+            {currentStep === 2 && (
+              <section className="p-4 w-full flex flex-col items-center">
+                <span className={partHeaderClasses}>Part 2: Add More Info</span>
+                <MetaSubmitPanel
+                  info={metaInfo}
+                  setInfo={setMetaInfo}
+                  uploadType={uploadType}
+                  uploadMethod={uploadMethod}
+                />
+              </section>
+            )}
+            {currentStep === 3 && (
+              <>
+                <section className="p-4 w-full flex flex-col items-center">
+                  <span className={partHeaderClasses}>Part 3: Accept Terms</span>
+                  <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
+                </section>
+                <section className="p-4 w-full flex flex-col items-center">
+                  {checkIfReady() ? (
+                    <>
+                      <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                        <span
+                          className="text-textDark dark:text-textLight font-fancy"
+                          onClick={() => submitTheme()}
+                        >
+                          Submit
+                        </span>
+                      </button>
+                    </>
+                  ) : (
+                    <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
+                      <span>Add Info Before Submitting</span>
+                    </div>
+                  )}
+                </section>
+              </>
+            )}
+          </div>
+          <HorizontalRadio
+            value={currentStep + ""}
+            onValueChange={(e: string) => setStep(Number(e))}
+            itemClass="w-10"
+            options={[
+              { value: "1", displayText: "" },
+              { value: "2", displayText: "" },
+              { value: "3", displayText: "" },
+            ]}
+          />
+        </main>
       </>
     );
   }

@@ -12,8 +12,8 @@ export function OrderDropdown({
   return (
     <>
       <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
-        <div className="font-bold">Sort by</div>
         <RadioDropdown
+          headingText="Sort by"
           options={orderOpts}
           value={orderValue}
           onValueChange={(e: any) => {

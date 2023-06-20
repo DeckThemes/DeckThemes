@@ -116,7 +116,12 @@ export function ThemeCategoryDisplay({
     if (type.includes("BPM") && searchOpts.filters.includes("Desktop")) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
-    if (type.includes("AUDIO") && searchOpts.filters !== "All") {
+    if (
+      type.includes("AUDIO") &&
+      searchOpts.filters !== "All" &&
+      // This is here to not break /submissions
+      searchOpts.filters !== "AwaitingApproval"
+    ) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
   }, [type]);
@@ -173,7 +178,7 @@ export function ThemeCategoryDisplay({
               orderValue={searchOpts.order}
               searchValue={searchOpts.search}
               onSearchChange={(e) => {
-                setSearchOpts({ ...searchOpts, search: e.target.value });
+                setSearchOpts({ ...searchOpts, search: e });
               }}
               typeOptions={typePresets[typeOptionPreset]}
               onTypeChange={(e) => {

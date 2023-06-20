@@ -1,4 +1,5 @@
-import { FilterDropdown, OrderDropdown, SearchInput, TypeDropdown, TypeOptions } from ".";
+import { LabelledInput } from "@components/Primitives";
+import { FilterDropdown, OrderDropdown, TypeDropdown, TypeOptions } from ".";
 
 export function FilterSelectorCard({
   filterOpts = ["ERROR"],
@@ -32,7 +33,12 @@ export function FilterSelectorCard({
   return (
     <>
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 z-10 pb-12 py-4">
-        <SearchInput {...{ onSearchChange }} />
+        <LabelledInput
+          label="Search"
+          debounce
+          value={searchValue}
+          onValueChange={(e) => onSearchChange && onSearchChange(e)}
+        />
         {typeOptions !== undefined && (
           <TypeDropdown
             typeValue={typeValue}

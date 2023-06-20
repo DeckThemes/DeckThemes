@@ -36,7 +36,7 @@ export function HighlightCarousel({
             currentTitle={currentOption.title}
           />
           <div className="pt-24 flex flex-col md:flex-row gap-4 items-center justify-between w-full ">
-            <div className="flex flex-col sm:flex-row self-center gap-4">
+            <div className="flex flex-col sm:flex-row self-center">
               <RadioDropdown
                 triggerClass="flex md:hidden"
                 options={options.map((e) => ({

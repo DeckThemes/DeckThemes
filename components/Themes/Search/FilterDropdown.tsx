@@ -33,8 +33,8 @@ export function FilterDropdown({
   return (
     <>
       <div className="font-fancy text-sm flex flex-col rounded-md gap-2">
-        <div className="font-bold">Category</div>
         <RadioDropdown
+          headingText="Category"
           options={formattedFilterOpts}
           value={filterValue}
           onValueChange={(e: any) => {

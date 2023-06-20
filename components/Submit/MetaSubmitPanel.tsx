@@ -17,6 +17,7 @@ import {
   sectionContainerClasses,
 } from "./SubmitPageTailwindClasses";
 import { toast } from "react-toastify";
+import { RadioDropdown } from "@components/Primitives";
 
 registerPlugin(
   FilePondPluginFileValidateSize,
@@ -79,23 +80,19 @@ export function MetaSubmitPanel({
       <div className={`${sectionContainerClasses}`}>
         {uploadType !== "audio" && (
           <>
-            <div className={`${metaFieldContainerClasses}`}>
-              <span className={`${fieldTitleClasses}`}>Target</span>
-              <div className="flex justify-center w-full">
-                <select
-                  className="bg-bgLight dark:bg-bgDark rounded-md p-2 px-4 text-xl"
-                  value={info.target}
-                  onChange={({ target: { value } }) => {
-                    setInfo({ ...info, target: value });
-                  }}
-                >
-                  {targetOptions.map((e) => (
-                    <option value={e} key={e} disabled={e === "None" && uploadMethod === "css"}>
-                      {e !== "None" ? e : "Use JSON Value"}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className={`${metaFieldContainerClasses} max-w-[250px]`}>
+              <RadioDropdown
+                headingText="Theme Target"
+                value={info.target}
+                onValueChange={(value) => {
+                  setInfo({ ...info, target: value });
+                }}
+                options={targetOptions.sort().map((e) => ({
+                  value: e,
+                  displayText: e !== "None" ? e : "Use JSON Value",
+                  disabled: e === "None" && uploadMethod === "css",
+                }))}
+              />
             </div>
             <MiniDivider />
           </>
@@ -106,7 +103,7 @@ export function MetaSubmitPanel({
             <FilePond
               allowFileTypeValidation
               labelFileTypeNotAllowed="Invalid File Type!"
-              fileValidateTypeLabelExpectedTypes="Images must be in .JPG format"
+              fileValidateTypeLabelExpectedTypes="Images must be in .JPG or .PNG format"
               acceptedFileTypes={["image/jpeg", "image/png"]}
               allowFileSizeValidation
               allowImagePreview
