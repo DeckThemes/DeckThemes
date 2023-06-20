@@ -79,10 +79,9 @@ html.dark, html.dark > body {
 }
 
 ::-webkit-scrollbar {
-	width: 15px;
+	width: 14.5px;
 	height: 0px;
 	background: transparent;
-	padding-right: 8px;
 }
 
 ::-webkit-scrollbar-thumb {

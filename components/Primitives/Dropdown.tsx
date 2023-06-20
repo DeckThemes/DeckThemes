@@ -52,14 +52,14 @@ export function RadioDropdown({
   }, [options]);
 
   const { theme } = useTheme()
-  
+
   const selected = useMemo(
     () => formattedOptions.find((e: any) => e.value === value) || formattedOptions[0],
     [formattedOptions, value]
   );
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="w-full flex flex-col gap-2">
+      <DropdownMenu.Trigger className="w-full flex flex-col gap-2 select-none">
         {headingText && (
           <span className={twMerge("font-bold w-full text-left", headingClass)}>{headingText}</span>
         )}
