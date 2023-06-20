@@ -16,6 +16,7 @@ import {
   TypeOptionPreset,
   typePresets,
 } from ".";
+import { twMerge } from "tailwind-merge";
 
 export function ThemeCategoryDisplay({
   themeDataApiPath,
@@ -208,26 +209,38 @@ export function ThemeCategoryDisplay({
                     })}
                   </>
                 )}
+                <LoadMoreButton
+                  themeArr={themeData}
+                  setThemeArr={setThemeData}
+                  fetchPath={themeDataApiPath}
+                  paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
+                  origSearchOpts={searchOpts}
+                  type={type}
+                />
               </>
             ) : (
               <>
                 {Array(4)
                   .fill("")
                   .map((_, i) => (
-                    <LoadingSkeletonCard key={`Skeleton_Card_${i}`} />
+                    <LoadingSkeletonCard
+                      key={`Skeleton_Card_${i}`}
+                      className={twMerge(
+                        "hidden",
+                        `${
+                          i === 1
+                            ? "sm:inline"
+                            : i === 2
+                            ? "md:inline"
+                            : i === 3
+                            ? "lg:inline"
+                            : "inline"
+                        }`
+                      )}
+                    />
                   ))}
               </>
             )}
-          </div>
-          <div className="mt-16 mx-4">
-            <LoadMoreButton
-              themeArr={themeData}
-              setThemeArr={setThemeData}
-              fetchPath={themeDataApiPath}
-              paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
-              origSearchOpts={searchOpts}
-              type={type}
-            />
           </div>
         </div>
       ) : null}

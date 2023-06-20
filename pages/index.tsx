@@ -59,7 +59,7 @@ export default function Home() {
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
 
-		  <HeroReel />
+          <HeroReel />
 
           {/* Experimental hero-gif inside of Steam Deck screen hero img */}
           {/* <div
