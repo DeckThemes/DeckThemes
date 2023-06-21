@@ -6,6 +6,7 @@ import { NavIconLink } from "@components/Nav";
 import { useTheme } from "next-themes";
 import { useContext } from "react";
 import { desktopModeContext } from "@pages/_app";
+import { PatreonFooterBar } from "./PatreonFooterBar";
 
 export function LandingFooter() {
   const router = useRouter();
@@ -94,7 +95,6 @@ export function LandingFooter() {
                 </ul>
               </div>
             )}
-
             <div className="flex flex-col items-start">
               <span className="text-brandBlue">Policies</span>
               <ul className="my-4 flex w-max flex-col gap-4">
@@ -107,6 +107,7 @@ export function LandingFooter() {
             </div>
           </div>
         </div>
+        <PatreonFooterBar />
       </div>
     </footer>
   );
