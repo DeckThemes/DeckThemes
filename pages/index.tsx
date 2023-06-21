@@ -1,10 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRef, ReactNode, useContext } from "react";
-import {
-  DownloadButtonWithIcon,
-  HighlightCarousel,
-  HeroReel,
-} from "../components";
+import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
 
@@ -53,8 +49,8 @@ export default function Home() {
 
           {/* Blurb */}
           <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
-            DeckThemes is the largest repository of custom themes, styles, and
-            audio packs for Steam. Available for Steam Deck and Windows.
+            DeckThemes is the largest repository of custom themes, styles, and audio packs for
+            Steam. Available for Steam Deck and Windows.
           </p>
 
           {/* Download Btns */}
@@ -64,7 +60,7 @@ export default function Home() {
           </div>
 
           <HeroReel />
-
+          {/* <img src="/hero.png" className="h-[600px] w-[800px] object-contain" /> */}
           {/* Experimental hero-gif inside of Steam Deck screen hero img */}
           {/* <div
             style={{

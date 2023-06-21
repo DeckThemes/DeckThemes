@@ -27,28 +27,39 @@ export function LandingFooter() {
         <div className="flex flex-col justify-between gap-20 px-8 lg:flex-row">
           {/* logo section */}
           <div className="flex flex-col items-start gap-6">
-            <Link
-              href={"/"}
-              className="group flex select-none items-center transition duration-150 hover:scale-95 hover:active:scale-90 "
-            >
-              <>
-                <Image
-                  src={src()}
-                  height="24"
-                  width="24"
-                  alt="CSSLoader Logo"
-                  className="transition duration-1000 group-hover:brightness-150 group-hover:hue-rotate-180"
-                />
-                <span className="font-fancy hidden pl-4 text-xl font-semibold md:flex">
-                  DeckThemes
-                </span>
-              </>
-            </Link>
+            <div className="flex items-center gap-4">
+              <Link
+                href={"/"}
+                className="group flex select-none items-center transition duration-150 hover:scale-95 hover:active:scale-90 "
+              >
+                <>
+                  <Image
+                    src={src()}
+                    height="24"
+                    width="24"
+                    alt="CSSLoader Logo"
+                    className="transition duration-1000 group-hover:brightness-150 group-hover:hue-rotate-180"
+                  />
+                  <span className="font-fancy hidden pl-4 text-xl font-semibold md:flex">
+                    DeckThemes
+                  </span>
+                </>
+              </Link>
+              <button
+                className=" text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
+                onClick={() => {
+                  theme === "light" ? setTheme("dark") : setTheme("light");
+                }}
+              >
+                {theme === "light" ? <FaRegSun size={32} /> : <FaRegMoon size={32} />}
+              </button>
+            </div>
+
             <p className="font-fancy text-sm text-fore-10-light dark:text-fore-10-dark">
               DeckThemes is the largest repository of custom themes, styles, and audio packs for
               Steam.
             </p>
-            <p className="font-fancy max-w-2xl text-sm text-fore-5-light dark:text-fore-5-dark">
+            <p className="font-fancy max-w-2xl text-sm text-fore-6-light dark:text-fore-5-dark">
               Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
               Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
               registered trademarks of Valve Corporation in the U.S. and/or other countries.
@@ -84,7 +95,7 @@ export function LandingFooter() {
               </div>
             )}
 
-            <div className="flex flex-col">
+            <div className="flex flex-col items-start">
               <span className="text-brandBlue">Policies</span>
               <ul className="my-4 flex w-max flex-col gap-4">
                 <li className="list-none">
@@ -95,20 +106,6 @@ export function LandingFooter() {
               </ul>
             </div>
           </div>
-        </div>
-        <div className="">
-          <button
-            className="ml-auto pl-4 pr-1 text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
-            onClick={() => {
-              theme === "light" ? setTheme("dark") : setTheme("light");
-            }}
-          >
-            {theme === "light" ? (
-              <FaRegSun className="h-8 w-8" />
-            ) : (
-              <FaRegMoon className="h-8 w-8" />
-            )}
-          </button>
         </div>
       </div>
     </footer>
