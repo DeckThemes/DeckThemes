@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { LandingFooter, LoadingPage, MainNav } from "../components";
+import { LandingFooter, LoadingPage, MainNav, StylizedToastContainer } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData, AuthContextContents } from "../types";
@@ -8,6 +8,7 @@ import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logInWithToken } from "apiHelpers/auth/logInWithToken";
+import { IoMdClose } from "react-icons/io";
 import { PatreonFloatingActionButton } from "@components/Generic";
 
 export const authContext = createContext<AuthContextContents>({
@@ -23,14 +24,10 @@ export const desktopModeContext = createContext<any>({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(
-    undefined
-  );
+  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
 
-  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(
-    undefined
-  );
+  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
 
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
@@ -50,6 +47,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setInstalling(false);
       }
       if (event.data.action === "logInWithToken") {
+        console.log("TOKEN", event.data.payload);
         const meJson = await logInWithToken(event.data.payload);
         if (meJson?.username) {
           setAccountInfo(meJson);
@@ -84,6 +82,9 @@ export default function App({ Component, pageProps }: AppProps) {
                   autoClose={5000}
                   hideProgressBar={false}
                   newestOnTop
+                  closeButton={<IoMdClose />}
+                  toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+                  bodyClassName="rounded-xl font-fancy text-black dark:text-white"
                   closeOnClick
                   pauseOnFocusLoss
                   draggable
