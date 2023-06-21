@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
 import { toast } from "react-toastify";
-import { checkAndRefreshToken } from "../../apiHelpers";
+import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
 
 export default function TaskView() {
@@ -16,17 +16,7 @@ export default function TaskView() {
     if (task) {
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/tasks/${task}`, {
-          method: "GET",
-          credentials: "include",
-        })
-          .then((res) => {
-            process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
-            if (res.status < 200 || res.status >= 300 || !res.ok) {
-              throw new Error("Response Not OK");
-            }
-            return res.json();
-          })
+        genericGET(`/tasks/${task}`)
           .then((json) => {
             setStatus(json);
           })

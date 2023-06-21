@@ -8,14 +8,10 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   const [hover, setHover] = useState<boolean>(false);
   function generateDeckToken() {
     setDeckToken("LOADING");
-    fetchWithRefresh(() => {
-      genericGET(`/users/${userId ? userId : "me"}/token`, true).then(
-        (json) => {
-          if (json?.token) {
-            setDeckToken(json.token);
-          }
-        }
-      );
+    genericGET(`/users/${userId ? userId : "me"}/token`).then((json) => {
+      if (json?.token) {
+        setDeckToken(json.token);
+      }
     });
   }
   return (

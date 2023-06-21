@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../_app";
-import { clearCookie, genericGET } from "../../apiHelpers";
+import { clearCookie, genericFetch, genericGET } from "../../apiHelpers";
 import {
   DeckTokenDisplay,
   LoadingPage,
@@ -33,7 +33,7 @@ export default function Account() {
   ];
 
   useEffect(() => {
-    genericGET(`/auth/me_full`, true).then((data) => {
+    genericGET(`/auth/me_full`).then((data) => {
       if (data) {
         setMeInfo(data);
       }
@@ -51,15 +51,14 @@ export default function Account() {
       "This will remove all signed in web browsers and Steam Decks"
     );
     if (isSure) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/logout_all`, {
-        method: "POST",
-        credentials: "include",
-      }).then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          setAccountInfo(undefined);
-          clearCookie();
+      genericFetch("/users/me/logout_all", { method: "POST" }, true).then(
+        (success) => {
+          if (success) {
+            setAccountInfo(undefined);
+            clearCookie();
+          }
         }
-      });
+      );
     }
   }
 

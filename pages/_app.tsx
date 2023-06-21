@@ -7,6 +7,7 @@ import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
@@ -25,6 +26,7 @@ export default function App({ Component, pageProps }: AppProps) {
     undefined
   );
   const [installing, setInstalling] = useState<boolean>(false);
+  const router = useRouter();
 
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
@@ -56,6 +58,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return () => window.removeEventListener("message", handleMessage);
   }, []);
+
+  useEffect(() => {
+    console.log("window", window.location.pathname, router.pathname);
+  }, [router.pathname]);
 
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(
     undefined

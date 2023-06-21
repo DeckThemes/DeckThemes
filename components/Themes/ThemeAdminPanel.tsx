@@ -2,7 +2,7 @@ import { BiEditAlt, BiTrash } from "react-icons/bi";
 import { authContext } from "../../pages/_app";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
-import { fetchWithRefresh } from "../../apiHelpers";
+import { genericFetch } from "../../apiHelpers";
 import { toast } from "react-toastify";
 import { MenuDropdown } from "@components/Primitives";
 import { AiOutlineCloudUpload } from "react-icons/ai";
@@ -23,15 +23,19 @@ export function ThemeAdminPanel({
         `Are you sure you want to delete this theme? \nType "${themeData.name}" below to confirm.`
       );
       if (enteredName === themeData.name) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData.id}`, {
-          method: "DELETE",
-          credentials: "include",
-        })
-          .then((res) => {
-            if (res.ok && res.status === 200) {
+        genericFetch(
+          `/themes/${themeData.id}`,
+          {
+            method: "DELETE",
+          },
+          true
+        )
+          .then((success) => {
+            if (success) {
               alert("Theme Successfully Deleted");
+              return;
             }
-            throw new Error(`Res Not OK! Error Code ${res.status}`);
+            throw new Error(`Res Not OK!`);
           })
           .catch((err) => {
             toast.error(`Error Deleting Theme! ${JSON.stringify(err)}`);
@@ -57,10 +61,10 @@ export function ThemeAdminPanel({
     if (!target) {
       target = null;
     }
-    fetchWithRefresh(() => {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData?.id}`, {
+    genericFetch(
+      `/themes/${themeData.id}`,
+      {
         method: "PATCH",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -69,18 +73,19 @@ export function ThemeAdminPanel({
           target: target,
           author: author,
         }),
+      },
+      true
+    )
+      .then((success) => {
+        if (success) {
+          alert("Edited Successfully");
+          location.reload();
+        }
       })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
-            alert("Edited Successfully");
-            location.reload();
-          }
-        })
-        .catch((err) => {
-          toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
-          console.error(err);
-        });
-    });
+      .catch((err) => {
+        toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
+        console.error(err);
+      });
   }
 
   return (

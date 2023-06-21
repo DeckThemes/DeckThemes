@@ -47,6 +47,11 @@ export async function checkAndRefreshToken() {
   return await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/refresh_token`, {
     method: "POST",
     credentials: "include",
+    headers: debugEnv
+      ? {
+          Authorization: `Bearer ${getCookieToken()}`,
+        }
+      : {},
   })
     .then((res) => {
       debugEnv && console.log("New Token Fetch Res", res);
@@ -63,7 +68,9 @@ export async function checkAndRefreshToken() {
         return true;
       } else {
         clearCookie();
-        toast.error(`Error re-authenticating! ${json?.message || "Unknown Error!"}`);
+        toast.error(
+          `Error re-authenticating! ${json?.message || "Unknown Error!"}`
+        );
         return false;
       }
     })
@@ -89,6 +96,50 @@ export function getCookieToken() {
   } else {
     // This is if there's no cookie
     return false;
+  }
+}
+
+export async function genericFetch(
+  subPath: string,
+  options: RequestInit = { method: "GET" },
+  noReturn: boolean = false
+) {
+  const debugEnv = process.env.NEXT_PUBLIC_DEV_MODE === "true";
+
+  // This just ensures that no user provided options overwrite the necessary ones
+  let formattedOptions: RequestInit = { ...options, credentials: "include" };
+  if (!formattedOptions?.method) formattedOptions.method = "GET";
+  formattedOptions.headers = {
+    ...options?.headers,
+    ...(debugEnv
+      ? {
+          Authorization: `Bearer ${getCookieToken()}`,
+        }
+      : {}),
+  };
+  console.log("formattedOptions", formattedOptions);
+
+  const waitForRefresh = await checkAndRefreshToken();
+  if (waitForRefresh) {
+    const command = fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}${subPath}`,
+      formattedOptions
+    );
+
+    if (noReturn) {
+      return await command.then((res) => {
+        if (res.status < 200 || res.status >= 300 || !res.ok) {
+          throw new Error("Response Not OK");
+        }
+        return true;
+      });
+    }
+    return await command.then((res) => {
+      if (res.status < 200 || res.status >= 300 || !res.ok) {
+        throw new Error("Response Not OK");
+      }
+      return res.json();
+    });
   }
 }
 

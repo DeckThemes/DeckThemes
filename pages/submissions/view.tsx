@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import {
   checkAndRefreshToken,
   fetchWithRefresh,
+  genericFetch,
   genericGET,
 } from "../../apiHelpers";
 import {
@@ -44,24 +45,23 @@ export default function FullSubmissionViewPage() {
       setSubmitting(true);
       const waitForRefresh = await checkAndRefreshToken();
       if (waitForRefresh) {
-        fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/submissions/${parsedId}/${action}`,
+        genericFetch(
+          `/submissions/${parsedId}/${action}`,
           {
             method: "PUT",
-            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
               message: message,
             }),
-          }
+          },
+          true
         )
-          .then((res) => {
-            if (res.ok && res.status === 200) {
+          .then((success) => {
+            if (success) {
               setReviewSubmitted(true);
               setSubmitting(false);
-
               return;
             }
             throw new Error("Res Not OK!");
@@ -89,7 +89,7 @@ export default function FullSubmissionViewPage() {
 
   useEffect(() => {
     async function getData() {
-      genericGET(`/submissions/${parsedId}`, true).then((data) => {
+      genericGET(`/submissions/${parsedId}`).then((data) => {
         setSubData(data);
         setLoaded(true);
       });

@@ -2,7 +2,11 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
-import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
+import {
+  checkAndRefreshToken,
+  genericFetch,
+  genericGET,
+} from "../../apiHelpers";
 import {
   LoadingPage,
   SupporterIcon,
@@ -56,12 +60,13 @@ export function FullThemeCard({
   async function toggleStar() {
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/stars/${parsedId}`, {
-        method: isStarred ? "DELETE" : "POST",
-        credentials: "include",
-      })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
+      genericFetch(
+        `/users/me/stars/${parsedId}`,
+        { method: isStarred ? "DELETE" : "POST" },
+        true
+      )
+        .then((success) => {
+          if (success) {
             if (themeData) {
               setThemeData({
                 ...themeData,
@@ -180,7 +185,7 @@ export function FullThemeCard({
                     )}
                   </div>
 
-                  <div className="my-4 self-center sm:self-start flex flex-col md:flex-row items-center justify-center gap-2">
+                  <div className="my-4 flex flex-col items-center justify-center gap-2 self-center sm:self-start md:flex-row">
                     <ThemeDownloadButton themeData={themeData} />
                     <span className="font-fancy text-textFadedLight dark:text-textFadedDark">
                       {themeData.download.downloadCount} Download

@@ -37,7 +37,7 @@ export default function Account() {
 
   useEffect(() => {
     if (parsedId) {
-      genericGET(`/users/${parsedId}`, true).then((data) => {
+      genericGET(`/users/${parsedId}`).then((data) => {
         if (data) {
           setUserInfo(data);
         }

@@ -7,7 +7,11 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
+import {
+  checkAndRefreshToken,
+  genericFetch,
+  genericGET,
+} from "../../apiHelpers";
 import { MetaInfo } from "../../types";
 import { MiniDivider } from "../Generic";
 import {
@@ -48,7 +52,7 @@ export function MetaSubmitPanel({
     "Snippet",
   ]);
   async function getTargets() {
-    const data = await genericGET(`/themes/filters?type=CSS`, true);
+    const data = await genericGET(`/themes/filters?type=CSS`);
     if (data?.filters) {
       setTargetOptions([
         "None",
@@ -144,36 +148,25 @@ export function MetaSubmitPanel({
                 process: (_, file, __, load, error) => {
                   const formData = new FormData();
                   formData.append("File", file);
-                  checkAndRefreshToken().then((bool) => {
-                    if (bool) {
-                      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blobs`, {
-                        method: "POST",
-                        body: formData,
-                        credentials: "include",
-                      })
-                        .then((res) => {
-                          if (res.status >= 200 && res.status <= 300) {
-                            return res.json();
-                          }
-                          error("Res Not OK!");
-                        })
-                        .then((json) => {
-                          if (json?.id) {
-                            setInfo((info) => ({
-                              ...info,
-                              imageBlobs: [json.id, ...info.imageBlobs],
-                            }));
-                            load(json.id);
-                          }
-                        })
-                        .catch((err) => {
-                          toast.error(
-                            `Error Uploading Image! ${JSON.stringify(err)}`
-                          );
-                          error(err);
-                        });
-                    }
-                  });
+                  genericFetch("/blobs", {
+                    method: "POST",
+                    body: formData,
+                  })
+                    .then((json) => {
+                      if (json?.id) {
+                        setInfo((info) => ({
+                          ...info,
+                          imageBlobs: [json.id, ...info.imageBlobs],
+                        }));
+                        load(json.id);
+                      }
+                    })
+                    .catch((err) => {
+                      toast.error(
+                        `Error Uploading Image! ${JSON.stringify(err)}`
+                      );
+                      error(err);
+                    });
                 },
               }}
               name="File"

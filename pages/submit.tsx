@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
-import { checkAndRefreshToken, fetchDiscordUrl } from "../apiHelpers";
+import { genericFetch } from "../apiHelpers";
 import * as Progress from "@radix-ui/react-progress";
 import {
   CSSSubmissionInfo,
@@ -15,15 +15,13 @@ import {
   LoadingPage,
   LogInPage,
   MetaSubmitPanel,
-  MiniDivider,
-  partHeaderClasses,
   TosCheckboxes,
   ZipSubmitPanel,
 } from "../components";
 import { useHasCookie } from "../hooks";
 import { authContext } from "./_app";
 import { toast } from "react-toastify";
-import { HorizontalRadio, RadioDropdown } from "@components/Primitives";
+import { RadioDropdown } from "@components/Primitives";
 
 const BigDivider = () => {
   return <div className="my-2 h-2 w-full bg-borderLight dark:bg-borderDark" />;
@@ -90,42 +88,26 @@ export default function Submit() {
       description: metaInfo.description || null,
       target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
-    const waitForRefresh = await checkAndRefreshToken();
-    if (waitForRefresh) {
-      fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/submissions/${uploadType}_${uploadMethod}`,
-        {
-          method: "POST",
-          credentials: "include",
-          body: JSON.stringify({ ...data(), meta: formattedMeta }),
-          headers: {
-            "Content-Type": "application/json",
-          },
+    genericFetch(`/submissions/${uploadType}_${uploadMethod}`, {
+      method: "POST",
+      body: JSON.stringify({ ...data(), meta: formattedMeta }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((json) => {
+        process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
+        if (json?.task) {
+          router.push(`/taskStatus/view?task=${json.task}`);
+        } else {
+          alert(`Error Submitting Theme: ${json?.message || "Unknown Error"}`);
+          throw new Error("No task in response");
         }
-      )
-        .then((res) => {
-          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
-          if (res.status < 200 || res.status >= 300 || !res.ok) {
-            console.log("Submission POST Not OK!, Error Code ", res.status);
-          }
-          return res.json();
-        })
-        .then((json) => {
-          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
-          if (json?.task) {
-            router.push(`/taskStatus/view?task=${json.task}`);
-          } else {
-            alert(
-              `Error Submitting Theme: ${json?.message || "Unknown Error"}`
-            );
-            throw new Error("No task in response");
-          }
-        })
-        .catch((err) => {
-          toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
-          console.error("Error Submitting Theme!", err);
-        });
-    }
+      })
+      .catch((err) => {
+        toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
+        console.error("Error Submitting Theme!", err);
+      });
   }
 
   const [currentStep, setStep] = useState<number>(1);
@@ -360,8 +342,8 @@ export default function Submit() {
                     </button>
 
                     <button
-                      disabled={checkIfReady()}
-                      onClick={() => submitTheme()}
+                      disabled={!checkIfReady()}
+                      onClick={submitTheme}
                       className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
                     >
                       Submit

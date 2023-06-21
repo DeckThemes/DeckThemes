@@ -38,7 +38,7 @@ export function LoadMoreButton({
         : { ...searchOptClone, filters: "" },
       paramStrFilterPrepend
     );
-    genericGET(`${fetchPath}${searchOpts}`, true)
+    genericGET(`${fetchPath}${searchOpts}`)
       .then((data) => {
         if (data) {
           setThemeArr({
