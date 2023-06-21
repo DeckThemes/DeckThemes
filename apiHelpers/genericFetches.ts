@@ -90,8 +90,8 @@ export function getCookieToken() {
         acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
         return acc;
       }, {});
-    if (Object.keys(cookieObj).indexOf("authToken") <= 0) {
-      return cookieObj["authToken"];
+    if (cookieObj?.authToken) {
+      return cookieObj.authToken;
     }
   } else {
     // This is if there's no cookie

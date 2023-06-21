@@ -1,13 +1,13 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Footer, LandingFooter, LoadingPage, MainNav } from "../components";
+import { LandingFooter, LoadingPage, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData, AuthContextContents } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useRouter } from "next/router";
+import { logInWithToken } from "apiHelpers/auth/logInWithToken";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
@@ -26,7 +26,10 @@ export default function App({ Component, pageProps }: AppProps) {
     undefined
   );
   const [installing, setInstalling] = useState<boolean>(false);
-  const router = useRouter();
+
+  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(
+    undefined
+  );
 
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
@@ -41,9 +44,15 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     // iFrame event handling
-    function handleMessage(event: any) {
-      if (event.data === "themeInstalled") {
+    async function handleMessage(event: any) {
+      if (event.data.action === "themeInstalled") {
         setInstalling(false);
+      }
+      if (event.data.action === "logInWithToken") {
+        const meJson = await logInWithToken(event.data.payload);
+        if (meJson?.username) {
+          setAccountInfo(meJson);
+        }
       }
     }
     window.addEventListener("message", handleMessage);
@@ -58,14 +67,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
     return () => window.removeEventListener("message", handleMessage);
   }, []);
-
-  useEffect(() => {
-    console.log("window", window.location.pathname, router.pathname);
-  }, [router.pathname]);
-
-  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(
-    undefined
-  );
 
   return (
     <ThemeProvider attribute="class">

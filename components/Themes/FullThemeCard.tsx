@@ -113,7 +113,10 @@ export function FullThemeCard({
                   </h1>
 
                   <div className="just flex flex-col items-center gap-4 sm:flex-row">
-                    <Link href={`/users/view?userId=${themeData.author.id}`}>
+                    <Link
+                      href={`/users/view?userId=${themeData.author.id}`}
+                      className="w-fit"
+                    >
                       <div className="flex flex-row items-center gap-1">
                         by
                         <div className="flex items-center">
@@ -122,7 +125,7 @@ export function FullThemeCard({
                         </div>
                       </div>
                     </Link>
-                    <div className="flex w-full items-center justify-center gap-4 md:w-fit">
+                    <div className="flex w-full items-center justify-center gap-4 sm:w-fit">
                       <button
                         disabled={!accountInfo?.username}
                         onClick={() => {
@@ -166,8 +169,7 @@ export function FullThemeCard({
                         }}
                         className={`flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark`}
                       >
-                        <BsShare className="scale-x-90" />{" "}
-                        <span className="">Share</span>
+                        <BsShare className="scale-x-90" /> <span>Share</span>
                       </button>
                       <ThemeAdminPanel themeData={themeData} />
                     </div>
@@ -185,7 +187,7 @@ export function FullThemeCard({
                     )}
                   </div>
 
-                  <div className="my-4 flex flex-col items-center justify-center gap-2 self-center sm:self-start md:flex-row">
+                  <div className="my-4 flex flex-col items-center justify-center gap-2 self-center sm:flex-row sm:self-start">
                     <ThemeDownloadButton themeData={themeData} />
                     <span className="font-fancy text-textFadedLight dark:text-textFadedDark">
                       {themeData.download.downloadCount} Download
