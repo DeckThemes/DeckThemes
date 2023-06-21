@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { LandingFooter, LoadingPage, MainNav, StylizedToastContainer } from "../components";
+import { LandingFooter, LoadingPage, MainNav } from "../components";
 import { createContext, useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData, AuthContextContents } from "../types";
