@@ -8,6 +8,7 @@ import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logInWithToken } from "apiHelpers/auth/logInWithToken";
+import { PatreonFloatingActionButton } from "@components/Generic";
 
 export const authContext = createContext<AuthContextContents>({
   accountInfo: undefined,
@@ -90,6 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <Component {...pageProps} />
                 <LandingFooter />
+				<PatreonFloatingActionButton />
               </>
             ) : (
               <LoadingPage />
