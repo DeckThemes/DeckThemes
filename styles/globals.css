@@ -62,16 +62,44 @@ h4 {
 
 
 .light .page-shadow {
-	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 0.2)
+	box-shadow: 0px 0px 30px hsla(220, 5%, 89%, 0.4)
 }
 
 .dark .landing-page-bg {
 	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(36, 36, 46, 0.5), transparent)
 }
 
+.landing-page-bg > * {
+	z-index: 1;
+}
 
-.light .landing-page-bg {
-	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(203, 211, 238, 0.5), transparent)
+.landing-page-bg:before {
+	--page-edge: calc(100vw / 10);
+	content: "";
+    position: absolute;
+    opacity: 0;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100vw - 48px);
+    height: 100vh;
+    filter: blur(120px);
+	z-index: 0;
+	background: radial-gradient( 400px circle at calc(100% - var(--page-edge) - 10%) 45%, var(--color-a), 70%, transparent ), radial-gradient(400px circle at 50% 50%,var(--color-b),60%,transparent), radial-gradient(350px circle at calc(var(--page-edge) + 15%) 40%,var(--color-c),60%,transparent)
+}
+
+.light .landing-page-bg:before {
+	--color-a: #db8585;
+    --color-b: #8dbfed;
+    --color-c: #c65df7;
+	opacity: 0.4;
+}
+
+.dark .landing-page-bg:before {
+	--color-a: #8599db;
+    --color-b: #dd8ded;
+    --color-c: #f75dc4;
+	opacity: 0.17;
 }
 
 .radio-dropdown {
