@@ -106,6 +106,28 @@ h4 {
 	box-shadow: 0px 0px 30px hsla(220, 5%, 0%, 1)
 }
 
+@keyframes mobile-filter-animate-in {
+	0% {
+		max-height: 0;
+		opacity: 0;
+		transform: translateY(-22px);
+		gap: 0px;
+	}
+
+	100% {
+		max-height: 255px;
+		opacity: 1;
+		transform: none;
+		gapx: 16px;
+	}
+}
+
+.mobile-filter-animate-in {
+	animation: mobile-filter-animate-in 660ms forwards;
+	animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+
+}
+
 /* Note: the classes below are not supported in firefox */
 html.dark, html.dark > body {
 	color-scheme: dark;
