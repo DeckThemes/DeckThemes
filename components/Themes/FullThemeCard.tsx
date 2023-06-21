@@ -165,7 +165,7 @@ export function FullThemeCard({
                     </div>
                   </div>
 
-                  <div className="text-md my-4 max-w-2xl text-center sm:text-left">
+                  <div className="text-md mb-4 max-w-2xl text-center sm:text-left">
                     {themeData.description ? (
                       <span className="whitespace-pre-line break-words">
                         {themeData.description}
@@ -185,33 +185,33 @@ export function FullThemeCard({
                     </span>
                   </div>
 
-                  <div className="relative mt-8 flex w-full max-w-7xl flex-col-reverse items-center justify-center gap-6 sm:flex-col">
-                    <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark">
-                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                  <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row">
+                    <div className="flex h-full w-full max-w-full items-center">
+                      <ThemeImageCarousel data={themeData} />
+                    </div>
+                    <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark md:h-full md:w-fit md:flex-col md:items-start md:justify-between lg:py-10">
+                      <div className="flex flex-col items-start gap-2 px-4">
                         <h3 className="text-sm font-bold">Category</h3>
                         <p className="font-medium dark:text-fore-9-dark">{themeData.target}</p>
                       </div>
-
-                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                      <div className="flex flex-col items-start gap-2 px-4">
                         <h3 className="text-sm font-bold">Version</h3>
                         <p className="font-medium dark:text-fore-9-dark">{themeData.version}</p>
                       </div>
-
-                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                      <div className="flex flex-col items-start gap-2 px-4">
                         <h3 className="text-sm font-bold">Published</h3>
                         <p className="font-medium dark:text-fore-9-dark">
                           {new Date(themeData.submitted).toLocaleDateString()}
                         </p>
                       </div>
-
-                      <div className="flex flex-1 flex-col items-start gap-2 px-4">
+                      <div className="flex flex-col items-start gap-2 px-4">
                         <h3 className="text-sm font-bold">Updated</h3>
                         <p className="font-medium dark:text-fore-9-dark">
                           {new Date(themeData.updated).toLocaleDateString()}
                         </p>
                       </div>
                       {!desktopMode && (
-                        <div className="mt-2 flex flex-1 flex-col items-center gap-2 border-t px-4 pt-4 dark:border-borders-base2-dark sm:mt-0 sm:ml-8 sm:items-start sm:border-t-0 sm:border-l sm:pt-0 sm:pl-8">
+                        <div className="mt-2 flex flex-col items-center gap-2 px-4 sm:mt-0 sm:items-start">
                           <h3 className="text-sm font-bold">Resources</h3>
                           <p className="font-medium dark:text-fore-9-dark">
                             {themeData.source ? (
@@ -241,10 +241,6 @@ export function FullThemeCard({
                           </p>
                         </div>
                       )}
-                    </div>
-
-                    <div className="mt-8 flex h-full w-full max-w-full items-center">
-                      <ThemeImageCarousel data={themeData} />
                     </div>
                   </div>
                 </div>
