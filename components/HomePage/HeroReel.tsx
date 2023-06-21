@@ -18,7 +18,7 @@ export function HeroReel() {
 
   return (
     <>
-      <div className="relative mt-16 h-96 max-w-[100vw] overflow-hidden sm:mt-24 sm:h-96">
+      <div className="relative mt-16 h-96 max-w-[calc(100vw-48px)] overflow-hidden sm:mt-24 sm:h-96">
         <div className="img-section flex justify-center gap-5 overflow-visible py-4 px-4 sm:gap-8">
           {imageNames.map((imageName, index) => (
             <div

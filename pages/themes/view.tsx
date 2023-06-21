@@ -28,7 +28,7 @@ export default function FullThemeViewPage() {
 
   return (
     <>
-      <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
+      <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] py-12 border-borders-base3-light dark:border-borders-base1-dark dark:bg-base-2-dark">
         <FullThemeCard parsedId={parsedId} />
       </main>
     </>
