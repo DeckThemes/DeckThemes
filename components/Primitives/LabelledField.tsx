@@ -17,7 +17,7 @@ export function LabelledInput({
   rootClass?: string;
   labelClass?: string;
   debounce?: boolean;
-  placeholder: string;
+  placeholder?: string;
 }) {
   return (
     <div
