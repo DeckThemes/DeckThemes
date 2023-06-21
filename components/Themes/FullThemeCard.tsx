@@ -185,7 +185,7 @@ export function FullThemeCard({
                     </span>
                   </div>
 
-                  <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center">
+                  <div className="relative mt-8 flex w-full max-w-7xl flex-col-reverse items-center justify-center gap-6 sm:flex-col">
                     <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark">
                       <div className="flex flex-1 flex-col items-start gap-2 px-4">
                         <h3 className="text-sm font-bold">Category</h3>
