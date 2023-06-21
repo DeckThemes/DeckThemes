@@ -3,6 +3,7 @@ import { UserInfo } from "../../types";
 import { Tooltip } from "../Primitives";
 
 export function SupporterIcon({ author }: { author: UserInfo }) {
+  const randId = Math.trunc(Math.random() * 69420);
   return (
     <>
       {author?.premiumTier !== "None" && (
@@ -12,7 +13,7 @@ export function SupporterIcon({ author }: { author: UserInfo }) {
               <>
                 <svg className="" width="0" height="0">
                   <linearGradient
-                    id="medal-gradient"
+                    id={`medal-gradient-${randId}`}
                     x1="100%"
                     y1="100%"
                     x2="0%"
@@ -43,15 +44,11 @@ export function SupporterIcon({ author }: { author: UserInfo }) {
                 <RiMedalFill
                   id="supporter-tt"
                   className="m-3 h-6 w-6"
-                  style={{ fill: "url(#medal-gradient)" }}
+                  style={{ fill: `url(#medal-gradient-${randId})` }}
                 />
               </>
             }
-            content={
-              <span>{`Tier ${author?.premiumTier?.slice(
-                -1
-              )} Patreon Supporter`}</span>
-            }
+            content={<span>{`Tier ${author?.premiumTier?.slice(-1)} Patreon Supporter`}</span>}
           />
         </>
       )}

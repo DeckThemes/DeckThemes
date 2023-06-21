@@ -102,8 +102,26 @@ export function FullThemeCard({
                     {themeData.name}
                   </h1>
 
-                  <div className="just flex flex-col items-center gap-4 sm:flex-row">
+                  <div className="flex w-full flex-col items-center gap-4 self-center pb-4 sm:hidden">
                     <Link href={`/users/view?userId=${themeData.author.id}`} className="w-fit">
+                      <div className="flex flex-row items-center gap-1">
+                        by
+                        <div className="flex items-center">
+                          <div>{themeData.specifiedAuthor}</div>
+                          <SupporterIcon author={themeData.author} />
+                        </div>
+                      </div>
+                    </Link>
+                    <div className="flex h-full w-full max-w-full items-center">
+                      <ThemeImageCarousel data={themeData} />
+                    </div>
+                  </div>
+
+                  <div className="just flex flex-col items-center gap-4 sm:flex-row">
+                    <Link
+                      href={`/users/view?userId=${themeData.author.id}`}
+                      className="hidden w-fit sm:flex"
+                    >
                       <div className="flex flex-row items-center gap-1">
                         by
                         <div className="flex items-center">
@@ -112,6 +130,7 @@ export function FullThemeCard({
                         </div>
                       </div>
                     </Link>
+
                     <div className="flex w-full items-center justify-center gap-4 sm:w-fit">
                       <button
                         disabled={!accountInfo?.username}
@@ -186,7 +205,7 @@ export function FullThemeCard({
                   </div>
 
                   <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row">
-                    <div className="flex h-full w-full max-w-full items-center">
+                    <div className="hidden h-full w-full max-w-full items-center sm:flex">
                       <ThemeImageCarousel data={themeData} />
                     </div>
                     <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark md:h-full md:w-fit md:flex-col md:items-start md:justify-between lg:py-10">
