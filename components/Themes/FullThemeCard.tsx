@@ -15,7 +15,13 @@ import { authContext, desktopModeContext } from "../../pages/_app";
 import { toast } from "react-toastify";
 import { BiCode } from "react-icons/bi";
 
-export function FullThemeCard({ parsedId }: { parsedId: string }) {
+export function FullThemeCard({
+  parsedId,
+  hideAdminMenu = false,
+}: {
+  parsedId: string;
+  hideAdminMenu?: boolean;
+}) {
   const { desktopMode } = useContext(desktopModeContext);
 
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
@@ -155,7 +161,7 @@ export function FullThemeCard({ parsedId }: { parsedId: string }) {
                       >
                         <BsShare className="scale-x-90" /> <span>Share</span>
                       </button>
-                      <ThemeAdminPanel themeData={themeData} />
+                      {!hideAdminMenu && <ThemeAdminPanel themeData={themeData} />}
                     </div>
                   </div>
 

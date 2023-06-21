@@ -58,9 +58,7 @@ export function ThemeCategoryDisplay({
     order: defaultOrder,
     search: "",
   });
-  const [themeData, setThemeData] = useState<
-    ThemeQueryResponse | ThemeSubmissionQueryResponse
-  >({
+  const [themeData, setThemeData] = useState<ThemeQueryResponse | ThemeSubmissionQueryResponse>({
     total: 0,
     items: [],
   });
@@ -76,9 +74,7 @@ export function ThemeCategoryDisplay({
     // Turns the object of orders/filters/etc into an actual html query string
     const searchOptStr = generateParamStr(
       // This just changes "All" to an empty string
-      searchOpts.filters !== "All"
-        ? searchOpts
-        : { ...searchOpts, filters: "" },
+      searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
       prependValue
     );
     return genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
@@ -98,13 +94,11 @@ export function ThemeCategoryDisplay({
   }, [searchOpts, accountInfo, type, noAuthRequired, themeDataApiPath]);
   useEffect(() => {
     if (accountInfo?.username || noAuthRequired) {
-      genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then(
-        (data) => {
-          if (data) {
-            setServerFilters(data);
-          }
+      genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then((data) => {
+        if (data) {
+          setServerFilters(data);
         }
-      );
+      });
     }
   }, [accountInfo, type, noAuthRequired, filterDataApiPath]);
 
@@ -219,11 +213,13 @@ export function ThemeCategoryDisplay({
                   <>
                     {themeData.items.map((e, i) => {
                       return (
-                        <MiniThemeCardRoot
-                          // @ts-ignore
-                          data={e}
-                          key={`Approved Theme ${i}`}
-                        />
+                        <>
+                          <MiniThemeCardRoot
+                            // @ts-ignore
+                            data={e}
+                            key={`Approved Theme ${i}`}
+                          />
+                        </>
                       );
                     })}
                   </>
@@ -232,9 +228,7 @@ export function ThemeCategoryDisplay({
                   themeArr={themeData}
                   setThemeArr={setThemeData}
                   fetchPath={themeDataApiPath}
-                  paramStrFilterPrepend={
-                    typeOptionPreset || type ? `${type}.` : ""
-                  }
+                  paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
                   origSearchOpts={searchOpts}
                   type={type}
                 />
