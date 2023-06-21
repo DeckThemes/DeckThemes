@@ -49,6 +49,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setInstalling(false);
       }
       if (event.data.action === "logInWithToken") {
+        console.log('TOKEN', event.data.payload)
         const meJson = await logInWithToken(event.data.payload);
         if (meJson?.username) {
           setAccountInfo(meJson);

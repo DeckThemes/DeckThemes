@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
 
 export function generateAuthCookie(token: string) {
+  console.log('GENERATE COOKIE', token)
+
   if (token) {
     const d = new Date();
     d.setTime(d.getTime() + (7 * 24 - 1) * 60 * 60 * 1000);
@@ -13,6 +15,8 @@ export function generateAuthCookie(token: string) {
   } else {
     toast.error("Unable to save account cookie!");
   }
+
+  console.log('DOCUMENT COOKIE AFTER GEN', document.cookie)
 
   return true;
 }
