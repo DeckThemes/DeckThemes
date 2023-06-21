@@ -27,20 +27,20 @@ export function PatreonFloatingActionButton() {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed bottom-6 right-6 z-[9998] flex h-16 w-fit max-w-[calc(100vw-24px)] origin-right select-none items-center justify-center rounded-[5rem] bg-[#f56042] px-8 font-bold shadow-2xl transition-all delay-150 duration-300 ${
+        className={`fixed bottom-6 right-6 z-[9998] flex h-16 w-fit max-w-[calc(100vw-24px)] origin-right select-none items-center justify-center rounded-[5rem] bg-[#f56042] px-8 font-bold shadow-2xl transition-all delay-[125ms] duration-[250ms] overflow-hidden ${
           isHovered ? "py-12" : "scale-75"
         }`}
       >
         <Patreon className="min-h-6 min-w-6 flex flex-shrink-0" />
         <div
-          className={`transition-all delay-150 duration-300 ${
+          className={`transition-all delay-150 duration-150 ${
             isHovered ? "max-w-0 opacity-0" : "md:ml-4 max-w-[4rem]"
           }`}
         >
           <span className="hidden md:block">Donate</span>
         </div>
         <div
-          className={`overflow-hidden transition-all delay-150 duration-300 md:whitespace-nowrap ${
+          className={`overflow-hidden transition-all delay-150 duration-150 md:whitespace-nowrap ${
             isHovered
               ? "opacity-1 ml-4 max-h-[48rem] max-w-[33rem]"
               : "max-h-0 max-w-0 opacity-0"
