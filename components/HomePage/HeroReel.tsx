@@ -69,12 +69,21 @@ export function HeroReel() {
                   <span className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 scale-75 text-lg font-semibold opacity-0 transition-all group-hover:translate-y-10 group-hover:scale-100 group-hover:opacity-100">
                     {data.name}
                   </span>
-                  <Image
+                  <div
+                    className="absolute z-10 h-full w-full overflow-hidden rounded-xl"
+                    style={{
+                      backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0]?.id})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  {/* <Image
                     className="z-0 overflow-hidden rounded-xl"
                     src={`${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0]?.id}`}
                     alt={`Hero Image ${index + 1}`}
                     fill={true}
-                  />
+                  /> */}
                 </Link>
               ))}
               {themeData.items.map((data, index) => (
@@ -88,12 +97,21 @@ export function HeroReel() {
                   <span className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 scale-75 text-lg font-semibold opacity-0 transition-all group-hover:translate-y-10 group-hover:scale-100 group-hover:opacity-100">
                     {data.name}
                   </span>
-                  <Image
+                  <div
+                    className="z-0 h-full w-full rounded-xl"
+                    style={{
+                      backgroundImage: `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0]?.id})`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  {/* <Image
                     className="z-0 overflow-hidden rounded-xl"
                     src={`${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0]?.id}`}
                     alt={`Hero Image ${index + 1}`}
                     fill={true}
-                  />
+                  />   */}
                 </Link>
               ))}
             </>
