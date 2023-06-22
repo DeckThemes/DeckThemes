@@ -96,17 +96,18 @@ export default function Home() {
           <HighlightCarousel
             options={[
               {
-                title: "Desktop CSS Themes",
-                searchFilter: "DESKTOP-CSS",
-                hrefLink: "/themes?type=DESKTOP-CSS",
-                buttonText: "Desktop",
-              },
-              {
                 title: "BPM CSS Themes",
                 searchFilter: "BPM-CSS",
                 hrefLink: "/themes?type=BPM-CSS",
                 buttonText: "BPM",
               },
+              {
+                title: "Desktop CSS Themes",
+                searchFilter: "DESKTOP-CSS",
+                hrefLink: "/themes?type=DESKTOP-CSS",
+                buttonText: "Desktop",
+              },
+
               // This has a trailing ? because the link filler only knows to add "&order="
               {
                 title: "AudioLoader Packs",

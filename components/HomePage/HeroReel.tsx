@@ -52,7 +52,7 @@ export function HeroReel() {
         <div
           className="img-section flex justify-start gap-5 overflow-visible py-4 px-4 sm:gap-8"
           style={{
-            animation: "hero-reel-scroll 30s infinite ease-in",
+            animation: "hero-reel-scroll 30s infinite linear",
           }}
         >
           {loaded ? (
