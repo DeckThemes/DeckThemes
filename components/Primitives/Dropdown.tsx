@@ -94,6 +94,7 @@ export function RadioDropdown({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
+		{/* hot take, i actually think that forcing the dropdowns to be in dark mode has better contrast */}
         <div className={`${theme} contents`}>
           {/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
           <DropdownMenu.Content
