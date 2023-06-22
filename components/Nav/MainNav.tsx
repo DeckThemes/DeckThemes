@@ -32,6 +32,7 @@ export function MainNav() {
           <>
             {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
               <NavIconLink
+                ariaLabel="Our Discord"
                 href={process.env.NEXT_PUBLIC_DISCORD_URL}
                 className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
               >
@@ -48,6 +49,7 @@ export function MainNav() {
             )}
             {!!process.env.NEXT_PUBLIC_PATREON_URL && (
               <NavIconLink
+                ariaLabel="Our Patreon"
                 href={process.env.NEXT_PUBLIC_PATREON_URL}
                 className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
               >
@@ -66,6 +68,7 @@ export function MainNav() {
         </div>
         <div className="ml-auto flex h-full items-center gap-8 font-extrabold md:ml-8">
           <NavIconLink
+            ariaLabel="View Documentation"
             href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}
             className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
           >
@@ -77,6 +80,7 @@ export function MainNav() {
               <>
                 {accountInfo.permissions.includes(Permissions.viewSubs) && (
                   <NavIconLink
+                    ariaLabel="View Submissions"
                     href={"/submissions"}
                     className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
                     isInternal
@@ -86,6 +90,7 @@ export function MainNav() {
                   </NavIconLink>
                 )}
                 <NavIconLink
+                  ariaLabel="Upload A Theme"
                   href={"/submit"}
                   className="flex select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 transition duration-150  hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
                   isInternal

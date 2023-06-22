@@ -1,17 +1,14 @@
-import Image from "next/image";
-import { type } from "os";
 import { useMemo, useState } from "react";
 import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import { FullCSSThemeInfo } from "../../types";
+import Image from "next/image";
+import { HorizontalRadio } from "@components/Primitives";
 
 export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
   const [selectedImage, setSelected] = useState<number>(0);
 
   const currentImg = useMemo(() => {
-    if (
-      data?.images[selectedImage]?.id &&
-      data.images[selectedImage].id !== "MISSING"
-    ) {
+    if (data?.images[selectedImage]?.id && data.images[selectedImage].id !== "MISSING") {
       return `url(${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[selectedImage].id})`;
     } else {
       return `url(https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png)`;
@@ -35,46 +32,41 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
   return (
     <>
       <div
-        className="bg-cover"
+        className="rounded-2xl bg-cover"
         style={{
           width: "100%",
           aspectRatio: data?.type === "Audio" ? "1 / 1" : "16 / 10",
           position: "relative",
-          borderRadius: "1em",
-          backgroundSize: "cover !important",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          // DONT make this just 'background', because it overwrites all of the above
-          backgroundImage: currentImg,
           maxHeight: "80vh",
         }}
       >
+        <Image
+          alt={`${data.name} Image ${selectedImage}`}
+          fill
+          src={currentImg.slice(4, -1)}
+          className="z-10 rounded-2xl object-cover"
+        />
         {data.images?.length > 1 && (
           <>
             <button
-              className="absolute left-4 top-1/2 z-50 -translate-y-1/2"
+              className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-xl border-2 border-borders-base1-light bg-base-3-light p-2 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
               onClick={decrementImg}
             >
               <BsArrowLeft size={48} />
             </button>
             <button
-              className="absolute right-4 top-1/2 z-50 -translate-y-1/2"
+              className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-xl border-2 border-borders-base1-light bg-base-3-light p-2 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
               onClick={incrementImg}
             >
               <BsArrowRight size={48} />
             </button>
-            <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2 text-5xl">
-              {data.images.map((_, i) => {
-                return (
-                  <button
-                    key={`Theme Image Carousel Button ${i}`}
-                    onClick={() => setSelected(i)}
-                    className={`h-2 w-3 rounded-full border-b-2 border-r-2 border-[#0005] lg:h-3 lg:w-6 ${
-                      selectedImage === i ? "bg-[#ffff]" : "bg-[#fffa]"
-                    } `}
-                  />
-                );
-              })}
+            <div className="absolute bottom-2 left-1/2 z-50 flex -translate-x-1/2 gap-2 text-5xl">
+              <HorizontalRadio
+                itemClass="w-10"
+                value={selectedImage + ""}
+                onValueChange={(e) => setSelected(Number(e))}
+                options={data.images.map((e, i) => ({ value: i + "", displayText: "" }))}
+              />
             </div>
           </>
         )}

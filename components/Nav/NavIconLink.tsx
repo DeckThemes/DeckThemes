@@ -6,16 +6,19 @@ export function NavIconLink({
   href,
   isInternal = false,
   className = "",
+  ariaLabel = "",
 }: {
   children: ReactNode;
   href: string;
   isInternal?: boolean;
   className?: string;
+  ariaLabel: string;
 }) {
   return (
     <>
       {isInternal ? (
         <Link
+          aria-label={ariaLabel}
           href={href}
           className={twMerge(
             "text-textLight transition-colors hover:text-bgDark dark:text-textDark dark:hover:text-bgLight",
@@ -26,6 +29,7 @@ export function NavIconLink({
         </Link>
       ) : (
         <a
+          aria-label={ariaLabel}
           href={href}
           target="_blank"
           rel="noreferrer"

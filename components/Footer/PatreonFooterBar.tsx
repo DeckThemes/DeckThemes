@@ -25,7 +25,7 @@ export function PatreonFooterBar() {
     <div>
       {patreonPercentage !== undefined ? (
         <div className="flex w-full flex-col gap-2 px-8 pt-10">
-          <div className="relative z-10 h-2 w-full rounded-xl bg-base-3-light dark:bg-base-3-dark">
+          <div className="relative z-10 h-2 w-full rounded-xl bg-base-4-light dark:bg-base-3-dark">
             <div
               className={twMerge(
                 "absolute left-0 top-0 z-0 h-2 rounded-xl",
@@ -48,36 +48,5 @@ export function PatreonFooterBar() {
         </div>
       )}
     </div>
-    // <div>
-    //   {patreonPercentage !== undefined ? (
-    //     <>
-    //       <div className="font-fancy z-10 flex w-full items-center justify-between px-4">
-    //         <span>Server Costs: {patreonPercentage}% Covered</span>{" "}
-    //         <a rel="noreferrer" target="_blank" href={process.env.NEXT_PUBLIC_PATREON_URL || ""}>
-    //           {/* TODO: Probably can refactor this */}
-    //           {patreonPercentage < 100 ? (
-    //             <span className="font-medium text-[#A24] underline dark:text-patreonColor">
-    //               Support Us!
-    //             </span>
-    //           ) : (
-    //             <span>Support Us!</span>
-    //           )}
-    //         </a>
-    //       </div>
-    //       <div
-    //         className="absolute left-0 z-0 h-8 scale-110 bg-cardLight blur-lg transition-all dark:bg-borderDark"
-    //         style={{
-    //           width: Math.min(patreonPercentage, 100) + "%",
-    //           backgroundColor: patreonPercentage < 100 ? "#FF424D" : "#33aaff",
-    //         }}
-    //       />
-    //     </>
-    //   ) : (
-    //     <div className="flex w-full items-center justify-center gap-4">
-    //       <LoadingSpinner size={20} />
-    //       <span>Loading Contribution Data...</span>
-    //     </div>
-    //   )}
-    // </div>
   );
 }
