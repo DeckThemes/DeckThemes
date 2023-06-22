@@ -36,7 +36,7 @@ export function HeroReel() {
   }, []);
   return (
     <>
-      <div className="relative mt-0 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden md:h-[36rem]">
+      <div className="relative mt-0 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden md:mt-12 md:h-[30rem]">
         <style>
           {`
           @keyframes hero-reel-scroll {
