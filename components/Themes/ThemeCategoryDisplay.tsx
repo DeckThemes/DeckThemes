@@ -158,7 +158,7 @@ export function ThemeCategoryDisplay({
           {title && <h4 className="text-2xl font-medium">{title}</h4>}
           {isSticky && (
             <div
-              className="pointer-events-none invisible fixed top-0 z-[9] h-24 w-full max-w-7xl rounded-b-xl bg-base-2T-light px-6 blur-md backdrop-blur-xl dark:bg-base-2T-dark lg:visible"
+              className="category-sticky-header-blur"
               aria-hidden={true}
             ></div>
           )}

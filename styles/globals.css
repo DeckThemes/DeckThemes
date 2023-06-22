@@ -179,3 +179,52 @@ html.dark, html.dark > body {
 ::-webkit-scrollbar-corner {
 	background: transparent;
 }
+
+
+/* Optimized header blur for theme display */
+.dark .category-sticky-header-blur {
+	--mask-visible: #000000;
+    --mask-hidden: transparent;
+	--bg: #0c0e10;
+	--transparent: transparent;
+}
+
+.category-sticky-header-blur {
+	/* account for scrollbar and padding on <main> */
+	--body-margin-left: max(16px, env(safe-area-inset-left));
+    --body-margin-right: max(24px, env(safe-area-inset-right));
+
+    position: relative;
+
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
+
+    --h: 128px;
+    position: sticky;
+    width: calc(100%);
+    /* margin-left: calc(); */
+    height: var(--h);
+    z-index: 1;
+
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    opacity: .99;
+
+    -webkit-mask-image: linear-gradient(var(--direction),var(--mask-visible) 25%,var(--mask-hidden));
+    mask-image: linear-gradient(var(--direction),var(--mask-visible) 25%,var(--mask-hidden));
+}
+
+.category-sticky-header-blur:first-child {
+    margin-bottom: calc(-1 * var(--h));
+    top: 0;
+    --direction: to bottom;
+}
+
+.category-sticky-header-blur:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: red;
+    background: linear-gradient(var(--direction),var(--bg),var(--transparent));
+}
