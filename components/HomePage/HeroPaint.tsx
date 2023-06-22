@@ -25,8 +25,8 @@ export default function HeroPaint() {
   return (
     <>
 		{/* calc'ed width accounts for scrollbar and prevents overflow */}
-      <div className="relative w-full min-w-[calc(100vw-16px)] overflow-hidden h-full aspect-video rounded-2xl my-12">
-		<div className="landing-gradients mx-4 relative md:scale-[0.95] sm:scale-[0.80] overflow-hidden h-full aspect-video dark:bg-base-3-dark rounded-2xl ring-[1px] ring-borders-base3-light dark:ring-borders-base1-dark">
+      <div className="relative w-full min-w-[calc(100vw-16px)] mr-8 overflow-hidden h-full aspect-video rounded-2xl my-12">
+		<div className="landing-gradients mx-4 relative scale-[0.75]  md:scale-[0.95] sm:scale-[0.80] overflow-hidden h-full aspect-video dark:bg-base-3-dark rounded-2xl ring-[1px] ring-borders-base3-light dark:ring-borders-base1-dark">
 		
 		{/* experiment with mix-blend-mode glowy stuff and blur */}
 		{/* <div
