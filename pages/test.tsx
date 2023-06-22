@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { animated } from "@react-spring/web";
 
 export default function Test() {
   const [mousePos, setMousePos] = useState({});
@@ -27,8 +28,10 @@ export default function Test() {
             backgroundPosition: "center",
             backgroundSize: "cover",
             backgroundRepeat: "no-repeat",
+            WebkitMaskImage: "url('/test.png')",
+            WebkitMaskPosition: 100 - 100 * (mousePercent / 100) + "%",
+            WebkitMaskSize: "200%",
             maskImage: "url('/test.png')",
-            maskMode: "luminance",
             maskPosition: 100 - 100 * (mousePercent / 100) + "%",
             maskSize: "200%",
           }}
@@ -42,7 +45,7 @@ export default function Test() {
             backgroundRepeat: "no-repeat",
           }}
         ></div>
-        <div
+        <animated.div
           className="absolute top-0 z-20 h-[800px] w-[500px]"
           style={{
             left: 100 * (mousePercent / 100) - 10 + "%",
@@ -51,7 +54,7 @@ export default function Test() {
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
           }}
-        ></div>
+        ></animated.div>
       </div>
     </>
   );
