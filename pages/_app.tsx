@@ -67,7 +67,7 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" disableTransitionOnChange={true} >
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
         <desktopModeContext.Provider
           value={{ desktopMode, setDesktopMode, installing, setInstalling }}
