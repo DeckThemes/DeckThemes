@@ -22,11 +22,7 @@ export function DesktopNav() {
           {router.pathname === "/desktop" ? (
             <NavIcon disabled />
           ) : (
-            <FiArrowLeft
-              className="cursor-pointer"
-              size={48}
-              onClick={() => router.back()}
-            />
+            <FiArrowLeft className="cursor-pointer" size={48} onClick={() => router.back()} />
           )}
         </div>
         <div className="ml-auto flex h-full items-center gap-8 font-extrabold md:ml-8">
@@ -34,7 +30,7 @@ export function DesktopNav() {
             {accountInfo?.username ? (
               <>
                 {accountInfo.permissions.includes(Permissions.viewSubs) && (
-                  <NavIconLink href={"/submissions"} isInternal>
+                  <NavIconLink ariaLabel="View Submissions" href={"/submissions"} isInternal>
                     <RiAdminFill size={32} />
                   </NavIconLink>
                 )}
