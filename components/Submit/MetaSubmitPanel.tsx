@@ -7,11 +7,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import {
-  checkAndRefreshToken,
-  genericFetch,
-  genericGET,
-} from "../../apiHelpers";
+import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
 import { MetaInfo } from "../../types";
 import { MiniDivider } from "../Generic";
 import {
@@ -46,19 +42,13 @@ export function MetaSubmitPanel({
 }) {
   const [images, setImages] = useState<File>();
 
-  const [targetOptions, setTargetOptions] = useState<string[]>([
-    "None",
-    "System-Wide",
-    "Snippet",
-  ]);
+  const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
   async function getTargets() {
     const data = await genericGET(`/themes/filters?type=CSS`);
     if (data?.filters) {
       setTargetOptions([
         "None",
-        ...Object.keys(data.filters).filter(
-          (e) => !disallowedOverrideTargets.includes(e)
-        ),
+        ...Object.keys(data.filters).filter((e) => !disallowedOverrideTargets.includes(e)),
       ]);
     }
   }
@@ -73,10 +63,7 @@ export function MetaSubmitPanel({
     getTargets();
 
     // This ensures that you cant submit a theme/pack with a target designed for another theme/pack type.
-    if (
-      uploadType === "css" &&
-      (info.target === "Music" || info.target === "Audio")
-    ) {
+    if (uploadType === "css" && (info.target === "Music" || info.target === "Audio")) {
       setInfo({ ...info, target: "None" });
     }
     if (
@@ -97,6 +84,7 @@ export function MetaSubmitPanel({
           <>
             <div className={`${metaFieldContainerClasses} w-full`}>
               <RadioDropdown
+                ariaLabel="Theme Target Dropdown"
                 headingText="Theme Target"
                 value={info.target}
                 onValueChange={(value) => {
@@ -128,9 +116,7 @@ export function MetaSubmitPanel({
               onremovefile={(_, file) => {
                 setInfo({
                   ...info,
-                  imageBlobs: info.imageBlobs.filter(
-                    (e) => e !== file.serverId
-                  ),
+                  imageBlobs: info.imageBlobs.filter((e) => e !== file.serverId),
                 });
               }}
               onreorderfiles={(files) => {
@@ -162,9 +148,7 @@ export function MetaSubmitPanel({
                       }
                     })
                     .catch((err) => {
-                      toast.error(
-                        `Error Uploading Image! ${JSON.stringify(err)}`
-                      );
+                      toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
                       error(err);
                     });
                 },

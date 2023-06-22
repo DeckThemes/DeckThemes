@@ -3,12 +3,7 @@ import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import { genericFetch } from "../apiHelpers";
 import * as Progress from "@radix-ui/react-progress";
-import {
-  CSSSubmissionInfo,
-  GitSubmissionInfo,
-  MetaInfo,
-  ZipSubmissionInfo,
-} from "../types";
+import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 import {
   CSSSubmitPanel,
   GitSubmitPanel,
@@ -175,9 +170,7 @@ export default function Submit() {
               rel="noreferrer"
               className="rounded-3xl bg-gradient-to-tl from-blue-800 to-blue-500 bg-clip-text p-1 text-transparent"
             >
-              <span className="text-textLight dark:text-textDark">
-                Need help?{" "}
-              </span>
+              <span className="text-textLight dark:text-textDark">Need help? </span>
               <br className="flex md:hidden" />
               View the docs <br className="flex md:hidden" />
               <span className="text-textLight dark:text-textDark">
@@ -218,6 +211,7 @@ export default function Submit() {
                     </div>
                     <div className="mb-4 flex w-full flex-col gap-4 md:w-1/2 md:flex-row">
                       <RadioDropdown
+                        ariaLabel="Upload Method Dropdown"
                         headingText="Upload Method"
                         value={uploadMethod}
                         onValueChange={(value) => {
@@ -233,6 +227,7 @@ export default function Submit() {
                         ]}
                       />
                       <RadioDropdown
+                        ariaLabel="Target Plugin Dropdown"
                         headingText="Target Plugin"
                         value={uploadType}
                         onValueChange={(value) => {
@@ -253,22 +248,13 @@ export default function Submit() {
                     </div>
                   </div>
                   {uploadMethod === "zip" && (
-                    <ZipSubmitPanel
-                      info={zipUploadInfo}
-                      setInfo={setZipUploadInfo}
-                    />
+                    <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
                   )}
                   {uploadMethod === "git" && (
-                    <GitSubmitPanel
-                      info={gitUploadInfo}
-                      setInfo={setGitUploadInfo}
-                    />
+                    <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
                   )}
                   {uploadMethod === "css" && (
-                    <CSSSubmitPanel
-                      info={cssUploadInfo}
-                      setInfo={setCSSUploadInfo}
-                    />
+                    <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
                   )}
 
                   <div className="absolute bottom-8 flex flex-row gap-4">

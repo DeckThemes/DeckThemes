@@ -18,6 +18,7 @@ export function RadioDropdown({
   triggerClass = "",
   headingText,
   headingClass = "",
+  ariaLabel = "",
 }: {
   options:
     | {
@@ -32,6 +33,7 @@ export function RadioDropdown({
   triggerClass?: string;
   headingText?: string;
   headingClass?: string;
+  ariaLabel: string;
 }) {
   const formattedOptions = useMemo(() => {
     if (typeof options[0] === "string") {
@@ -59,22 +61,21 @@ export function RadioDropdown({
   const { theme } = useTheme();
 
   const selected = useMemo(
-    () =>
-      formattedOptions.find((e: any) => e.value === value) ||
-      formattedOptions[0],
+    () => formattedOptions.find((e: any) => e.value === value) || formattedOptions[0],
     [formattedOptions, value]
   );
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex w-full select-none flex-col gap-2">
+      <DropdownMenu.Trigger
+        aria-label={ariaLabel}
+        className="flex w-full select-none flex-col gap-2"
+      >
         {headingText && (
-          <span className={twMerge("w-full text-left font-bold", headingClass)}>
-            {headingText}
-          </span>
+          <span className={twMerge("w-full text-left font-bold", headingClass)}>{headingText}</span>
         )}
         <div
           className={twMerge(
-            "flex w-full h-12 min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
+            "flex h-12 w-full min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
             triggerClass
           )}
         >
@@ -94,7 +95,7 @@ export function RadioDropdown({
       </DropdownMenu.Trigger>
 
       <DropdownMenu.Portal>
-		{/* hot take, i actually think that forcing the dropdowns to be in dark mode has better contrast */}
+        {/* hot take, i actually think that forcing the dropdowns to be in dark mode has better contrast */}
         <div className={`${theme} contents`}>
           {/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
           <DropdownMenu.Content
@@ -102,10 +103,7 @@ export function RadioDropdown({
             collisionPadding={16}
             className="font-fancy radio-dropdown z-[9999] my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
           >
-            <DropdownMenu.RadioGroup
-              value={value}
-              onValueChange={onValueChange}
-            >
+            <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
               <div className="max-h-[var(--radix-popper-available-height)]">
                 {formattedOptions.map((e) => (
                   <DropdownMenu.RadioItem
@@ -121,9 +119,7 @@ export function RadioDropdown({
                       <span
                         className={twMerge(
                           "flex w-fit items-center font-semibold",
-                          e.disabled
-                            ? "text-textFadedLight dark:text-textFadedDark"
-                            : ""
+                          e.disabled ? "text-textFadedLight dark:text-textFadedDark" : ""
                         )}
                       >
                         {e.displayText}

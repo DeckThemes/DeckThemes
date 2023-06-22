@@ -17,10 +17,7 @@ export function FilterDropdown({
     {
       value: "All",
       displayText: "All",
-      bubbleValue: Object.values(filterOpts).reduce(
-        (prev, cur) => Number(prev) + Number(cur),
-        0
-      ),
+      bubbleValue: Object.values(filterOpts).reduce((prev, cur) => Number(prev) + Number(cur), 0),
     },
     ...Object.entries(filterOpts)
       .filter(([_, itemCount]) => Number(itemCount) > 0 || showFiltersWithZero)
@@ -37,6 +34,7 @@ export function FilterDropdown({
     <>
       <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
         <RadioDropdown
+          ariaLabel="Theme Category Dropdown"
           headingText="Category"
           options={formattedFilterOpts}
           value={filterValue}

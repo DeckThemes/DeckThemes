@@ -17,16 +17,12 @@ export function HighlightCarousel({
   const [orderValue, setOrderValue] = useState<string>("Popular");
   const [transitioning, setTransitioning] = useState<boolean>(false);
   const orderUrl = useMemo(
-    () =>
-      `&order=${orderValue === "Popular" ? "Most Downloaded" : "Last Updated"}`,
+    () => `&order=${orderValue === "Popular" ? "Most Downloaded" : "Last Updated"}`,
     [orderValue]
   );
-  const [selectedRadioOption, setRadioOption] = useState<string>(
-    options[0].searchFilter
-  );
+  const [selectedRadioOption, setRadioOption] = useState<string>(options[0].searchFilter);
   const currentOption = useMemo(
-    () =>
-      options.find((e) => e.searchFilter === selectedRadioOption) || options[0],
+    () => options.find((e) => e.searchFilter === selectedRadioOption) || options[0],
     [selectedRadioOption]
   );
 
@@ -42,6 +38,7 @@ export function HighlightCarousel({
           <div className="flex w-full flex-col items-center justify-between gap-4 pt-24 md:flex-row ">
             <div className="flex flex-col self-center sm:flex-row">
               <RadioDropdown
+                ariaLabel="Theme Type Dropdown"
                 triggerClass="flex md:hidden"
                 options={options.map((e) => ({
                   value: e.searchFilter,

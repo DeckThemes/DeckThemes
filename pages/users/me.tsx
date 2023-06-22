@@ -76,6 +76,7 @@ export default function Account() {
               }
             />
             <RadioDropdown
+              ariaLabel="Your Theme Types Dropdown"
               triggerClass="flex md:hidden mx-4"
               options={radioOptions}
               value={radioValue}

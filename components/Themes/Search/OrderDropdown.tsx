@@ -13,6 +13,7 @@ export function OrderDropdown({
     <>
       <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
         <RadioDropdown
+          ariaLabel="Theme Sort Dropdown"
           headingText="Sort by"
           options={orderOpts}
           value={orderValue}
