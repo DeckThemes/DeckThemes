@@ -36,7 +36,7 @@ export function HeroReel() {
   }, []);
   return (
     <>
-      <div className="relative mt-16 h-96 max-w-[calc(100vw-48px)] overflow-hidden sm:mt-24 sm:h-96">
+      <div className="relative mt-16 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden sm:mt-24 md:h-[36rem]">
         <style>
           {`
           @keyframes hero-reel-scroll {
@@ -52,7 +52,7 @@ export function HeroReel() {
         <div
           className="img-section flex justify-start gap-5 overflow-visible py-4 px-4 sm:gap-8"
           style={{
-            animation: "hero-reel-scroll 30s infinite linear",
+            animation: "hero-reel-scroll 55s infinite linear",
           }}
         >
           {loaded ? (
@@ -62,7 +62,7 @@ export function HeroReel() {
                   // ref={index === 0 ? firstCardRef : null}
                   href={`/themes/view?themeId=${data.id}`}
                   key={index}
-                  className={`img-shadow group relative aspect-[16/10] w-[32rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl ${getRandomRotationClass(
+                  className={`img-shadow group relative aspect-[16/10] w-[24rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem] ${getRandomRotationClass(
                     index
                   )}`}
                 >
@@ -81,7 +81,7 @@ export function HeroReel() {
                 <Link
                   href={`/themes/view?themeId=${data.id}`}
                   key={index}
-                  className={`img-shadow group relative aspect-[16/10] w-[32rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl ${getRandomRotationClass(
+                  className={`img-shadow group relative aspect-[16/10] w-[24rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem] ${getRandomRotationClass(
                     index
                   )}`}
                 >
