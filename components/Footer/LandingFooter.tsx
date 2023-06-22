@@ -52,7 +52,7 @@ export function LandingFooter() {
                   theme === "light" ? setTheme("dark") : setTheme("light");
                 }}
               >
-                {theme === "light" ? <FaRegSun size={32} /> : <FaRegMoon size={32} />}
+                {theme === "light" ? <FaRegSun size={18} /> : <FaRegMoon size={18} />}
               </button>
             </div>
 

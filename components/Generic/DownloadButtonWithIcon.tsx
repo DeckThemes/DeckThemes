@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
   return (
-    <a tabIndex={0} href={iconName === "steamdeck" ? 'https://docs.deckthemes.com/CSSLoader/Install/#install' : 'https://docs.deckthemes.com/CSSLoader/Install/#windows'} className="relative select-none group mb-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:ring-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0">
+    <Link tabIndex={0} href={iconName === "steamdeck" ? '/download/deck' : 'download/windows'} className="relative select-none group mb-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:ring-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0">
       <div className="relative h-4 w-4">
         {iconName === "steamdeck" ? (
           <>
@@ -52,6 +52,6 @@ export function DownloadButtonWithIcon({ iconName }: { iconName: string }) {
         Download for {iconName === "steamdeck" && <>Steam Deck</>}{" "}
         {iconName === "windows11" && <>Windows</>}{" "}
       </div>
-    </a>
+    </Link>
   );
 }
