@@ -47,6 +47,7 @@ export function LandingFooter() {
                 </>
               </Link>
               <button
+                aria-label={`Enter ${theme} mode`}
                 className=" text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
                 onClick={() => {
                   theme === "light" ? setTheme("dark") : setTheme("light");
