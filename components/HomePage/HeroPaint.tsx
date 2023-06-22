@@ -27,12 +27,12 @@ export default function HeroPaint() {
       <div className="relative my-12 mr-8 aspect-video h-full w-full min-w-[calc(100vw-16px)] overflow-hidden rounded-2xl">
         <div className="landing-gradients relative mx-4 aspect-video  h-full scale-[0.75] overflow-hidden rounded-2xl ring-[1px] ring-borders-base3-light dark:bg-base-3-dark dark:ring-borders-base1-dark sm:scale-[0.80] md:scale-[0.95]">
           {/* experiment with mix-blend-mode glowy stuff and blur */}
-          {/* <div
-          className="absolute top-32 -left-10 z-20 h-full w-20 hidden md:block overflow-hidden blur-3xl backdrop-blur-2xl max-h-[860px]"
-          style={{
-            transform: `translate3d(${mousePos.x}px,0px,0px)`,
-          }}
-        ></div> */}
+          <div
+            className="absolute top-32 -left-10 z-20 hidden h-full max-h-[860px] w-20 overflow-hidden blur-3xl backdrop-blur-2xl md:block"
+            style={{
+              transform: `translate3d(${mousePos.x}px,0px,0px)`,
+            }}
+          ></div>
 
           {/* could clean up the brush stroke or use a css-based transitioner ^ */}
           <div
@@ -49,7 +49,7 @@ export default function HeroPaint() {
               }deg)`,
             }}
           ></div>
-          <div
+          {/* <div
             className="absolute -top-1 left-0 z-20 hidden aspect-video w-full overflow-hidden md:block "
             style={{
               backgroundImage: "url('/brush.png')",
@@ -62,7 +62,7 @@ export default function HeroPaint() {
                 (mousePercent - 20) * 0.02 + 5
               }deg)`,
             }}
-          ></div>
+          ></div> */}
 
           <div
             className="absolute top-0 left-0 right-0 bottom-0 z-10 w-full overflow-hidden md:-top-4"

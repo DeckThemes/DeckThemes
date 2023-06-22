@@ -38,7 +38,7 @@ export function PatreonFooterBar() {
           </div>
           <div className="flex w-full items-center justify-between text-sm">
             <span>Server Costs: {patreonPercentage}% Covered</span>
-            <span>Support DeckThemes</span>
+            <a href={process.env.NEXT_PUBLIC_PATREON_URL}>Support DeckThemes</a>
           </div>
         </div>
       ) : (
