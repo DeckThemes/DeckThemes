@@ -7,16 +7,18 @@ import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
-import { Discord, Patreon } from "@icons-pack/react-simple-icons";
 import { useHasCookie } from "../../hooks";
 import { ImBook } from "react-icons/im";
 import { NavIconLink } from "./NavIconLink";
 import { DesktopNav } from "../Desktop";
+import { useTheme } from "next-themes";
+import Image from "next/image";
 
 export function MainNav() {
   const { accountInfo } = useContext(authContext);
   const { desktopMode } = useContext(desktopModeContext);
   const hasCookie = useHasCookie();
+  const { theme } = useTheme();
 
   if (desktopMode) return <DesktopNav />;
 
@@ -33,10 +35,15 @@ export function MainNav() {
                 href={process.env.NEXT_PUBLIC_DISCORD_URL}
                 className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
               >
-                <Discord size={18} />
-                <div className="font-fancy hidden text-xs font-bold sm:flex ">
-                  Discord
-                </div>
+                <Image
+                  alt="Discord Logo"
+                  height="18"
+                  width="18"
+                  src={`https://cdn.simpleicons.org/discord/${
+                    theme === "light" ? "black" : "white"
+                  }`}
+                />
+                <div className="font-fancy hidden text-xs font-bold sm:flex ">Discord</div>
               </NavIconLink>
             )}
             {!!process.env.NEXT_PUBLIC_PATREON_URL && (
@@ -44,10 +51,15 @@ export function MainNav() {
                 href={process.env.NEXT_PUBLIC_PATREON_URL}
                 className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
               >
-                <Patreon size={14} />
-                <div className="font-fancy hidden text-xs font-bold sm:flex">
-                  Patreon
-                </div>
+                <Image
+                  alt="Patreon Logo"
+                  height="14"
+                  width="14"
+                  src={`https://cdn.simpleicons.org/patreon/${
+                    theme === "light" ? "black" : "white"
+                  }`}
+                />
+                <div className="font-fancy hidden text-xs font-bold sm:flex">Patreon</div>
               </NavIconLink>
             )}
           </>
@@ -58,9 +70,7 @@ export function MainNav() {
             className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
           >
             <ImBook size={14} />
-            <div className="font-fancy hidden text-xs font-bold sm:flex ">
-              Documentation
-            </div>
+            <div className="font-fancy hidden text-xs font-bold sm:flex ">Documentation</div>
           </NavIconLink>
           <>
             {accountInfo?.username ? (
@@ -72,9 +82,7 @@ export function MainNav() {
                     isInternal
                   >
                     <RiAdminFill size={14} />
-                    <div className="font-fancy hidden text-xs font-bold sm:flex ">
-                      Admin
-                    </div>
+                    <div className="font-fancy hidden text-xs font-bold sm:flex ">Admin</div>
                   </NavIconLink>
                 )}
                 <NavIconLink
@@ -83,9 +91,7 @@ export function MainNav() {
                   isInternal
                 >
                   <TbUpload size={14} className="scale-x-105" />
-                  <div className="font-fancy hidden text-xs font-bold sm:block">
-                    Upload
-                  </div>
+                  <div className="font-fancy hidden text-xs font-bold sm:block">Upload</div>
                 </NavIconLink>
                 <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
               </>
@@ -102,10 +108,7 @@ export function MainNav() {
                       onClick={fetchDiscordUrl}
                     >
                       <div>
-                        Login{" "}
-                        <span className="hidden sm:inline-block">
-                          with Discord
-                        </span>
+                        Login <span className="hidden sm:inline-block">with Discord</span>
                       </div>
                     </button>
                   </>

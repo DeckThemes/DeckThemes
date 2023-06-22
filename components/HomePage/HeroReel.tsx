@@ -1,31 +1,33 @@
-import { ThemeQueryResponse } from "../../types/CSSThemeTypes";
+import { ThemeQueryResponse } from "@customTypes/CSSThemeTypes";
 import { genericGET } from "apiHelpers";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export function HeroReel() {
   const [themeData, setThemeData] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
+  const firstCardRef = useRef();
   const rotations = ["rotate-2", "-rotate-2"];
-  const repeatFactor = 4;
+  const numHeroCards = 4;
 
+  // console.log(firstCardRef?.current?.);
   const randomSeed = useMemo(
     () =>
-      Array(repeatFactor)
+      Array(numHeroCards)
         .fill("")
-        .map((e) => Math.random()),
-    []
+        .map(() => Math.random()),
+    [numHeroCards]
   );
 
   const getRandomRotationClass = (index: number) => {
-    const randomIndex = Math.floor(randomSeed[index % repeatFactor] * rotations.length);
+    const randomIndex = Math.floor(randomSeed[index % numHeroCards] * rotations.length);
     return rotations[randomIndex];
   };
 
   useEffect(() => {
-    genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${repeatFactor}`).then((data) => {
+    genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${numHeroCards}`).then((data) => {
       if (data) {
         setLoaded(true);
         setThemeData(data);
@@ -42,7 +44,7 @@ export function HeroReel() {
               transform: translateX(0px);
             }
             100% {
-              transform: translateX(-${490.177 * repeatFactor + 20 * repeatFactor}px);
+              transform: translateX(-${490.177 * numHeroCards + 20 * numHeroCards}px);
             }
           }
           `}
@@ -50,13 +52,14 @@ export function HeroReel() {
         <div
           className="img-section flex justify-start gap-5 overflow-visible py-4 px-4 sm:gap-8"
           style={{
-            animation: "hero-reel-scroll 20s infinite linear",
+            animation: "hero-reel-scroll 30s infinite ease-in",
           }}
         >
           {loaded ? (
             <>
               {themeData.items.map((data, index) => (
                 <Link
+                  // ref={index === 0 ? firstCardRef : null}
                   href={`/themes/view?themeId=${data.id}`}
                   key={index}
                   className={`img-shadow group relative aspect-[16/10] w-[32rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl ${getRandomRotationClass(
