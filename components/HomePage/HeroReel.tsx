@@ -1,19 +1,10 @@
-import { ThemeQueryResponse } from "@types/CSSThemeTypes";
+import { ThemeQueryResponse } from "../../types/CSSThemeTypes";
 import { genericGET } from "apiHelpers";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
 export function HeroReel() {
-  const imageNames = [
-    "hero_reel.png",
-    "hero_reel15.png",
-    "hero_reel9.png",
-    "hero_reel8.png",
-    "hero_reel5.png",
-    "hero_reel6.png",
-  ];
-
   const [themeData, setThemeData] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
