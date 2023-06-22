@@ -75,6 +75,7 @@ export function LandingFooter() {
                   <li className="list-none">
                     {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
                       <NavIconLink
+                        ariaLabel="Our Discord"
                         href={process.env.NEXT_PUBLIC_DISCORD_URL}
                         className="flex items-center gap-2"
                       >
@@ -85,6 +86,7 @@ export function LandingFooter() {
                   <li>
                     {!!process.env.NEXT_PUBLIC_PATREON_URL && (
                       <NavIconLink
+                        ariaLabel="Our Patreon"
                         href={process.env.NEXT_PUBLIC_PATREON_URL}
                         className="flex items-center gap-2"
                       >
