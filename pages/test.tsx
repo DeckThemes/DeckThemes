@@ -22,14 +22,14 @@ export default function Test() {
     <>
       <div className="relative w-full">
         <div
-          className="absolute top-0 left-0 z-20 h-[800px] w-64 "
+          className="absolute top-0 left-0 z-20 h-[800px] w-96 "
           style={{
             backgroundImage: "url('/roller2.png')",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
-            transform: `translate3d(${mousePos.x - 100}px,${mousePos.y / 20}px,0px) rotateZ(${
-              (mousePercent - 50) * 0.2 + 90
+            transform: `translate3d(${mousePos.x - 200}px,${mousePos.y / 20}px,0px) rotateZ(${
+              (mousePercent - 50) * 0.2
             }deg)`,
           }}
         ></div>
@@ -46,7 +46,7 @@ export default function Test() {
 
               backgroundImage: "url('/before.png')",
               backgroundPosition: "center",
-              backgroundSize: "cover",
+              backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
             }}
           ></div>
@@ -64,7 +64,7 @@ export default function Test() {
 
               backgroundImage: "url('/after.png')",
               backgroundPosition: "center",
-              backgroundSize: "cover",
+              backgroundSize: "contain",
               backgroundRepeat: "no-repeat",
             }}
           ></div>
