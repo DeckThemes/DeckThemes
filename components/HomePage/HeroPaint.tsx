@@ -40,7 +40,7 @@ export default function HeroPaint() {
 		<div
           className="absolute -top-1 left-0 z-20 aspect-video w-full hidden md:block overflow-hidden "
           style={{
-            backgroundImage: "url('/roller.png')",
+            backgroundImage: "url('/roller2.png')",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundPosition: "center",
