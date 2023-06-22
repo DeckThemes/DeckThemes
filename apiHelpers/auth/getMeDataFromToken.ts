@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { AccountData } from "../../types";
+import { AccountData } from "@customTypes/AccountData";
 
 export async function getMeDataFromToken(token: string): Promise<AccountData> {
   const meJson = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
