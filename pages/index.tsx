@@ -3,6 +3,7 @@ import { useRef, ReactNode, useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
+import HeroPaint from "@components/HomePage/HeroPaint";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -41,7 +42,7 @@ export default function Home() {
         <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-4 pt-4 lg:pt-24">
           {/* Headline */}
           <h1 className="mx-auto max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
-            <span className="bg-gradient-to-tr from-brandBlue to-brandBlue bg-clip-text text-transparent">
+            <span className="">
               Level up <br className="block sm:hidden" />
             </span>{" "}
             your Steam
@@ -60,7 +61,8 @@ export default function Home() {
           </div>
 
           {/* <HeroReel /> */}
-          <img src="/hero.png" className="aspect-[4/3] max-h-4xl max-h-2xl object-contain" />
+		  <HeroPaint />
+          {/* <img src="/hero.png" className="aspect-[4/3] max-h-4xl max-h-2xl object-contain" /> */}
           {/* Experimental hero-gif inside of Steam Deck screen hero img */}
           {/* <div
             style={{

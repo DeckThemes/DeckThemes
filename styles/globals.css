@@ -69,11 +69,31 @@ h4 {
 	background: radial-gradient(ellipse 80% 70% at 50% -10%, rgba(36, 36, 46, 0.5), transparent)
 }
 
+.dark .landing-gradients {
+	background-image: radial-gradient(circle at 1px 1px, #373742 1px, transparent 0);
+	background-size: 24px 24px;
+}
+
+.light .landing-gradients {
+	background-image: radial-gradient(circle at 1px 1px, #bebebe 1px, transparent 0);
+	background-size: 24px 24px;
+}
+
+.dark .landing-dots {
+	background-image: radial-gradient(circle at 1px 1px, #373742 1px, transparent 0);
+	background-size: 24px 24px;
+}
+
+.light .landing-dots {
+	background-image: radial-gradient(circle at 1px 1px, #bebebe 1px, transparent 0);
+	background-size: 24px 24px;
+}
+
 .landing-page-bg > * {
 	z-index: 1;
 }
 
-.landing-page-bg:before {
+.landing-gradients:before {
 	--page-edge: calc(100vw / 10);
 	content: "";
     position: absolute;
@@ -85,17 +105,17 @@ h4 {
     height: 100vh;
     filter: blur(120px);
 	z-index: 0;
-	background: radial-gradient( 400px circle at calc(100% - var(--page-edge) - 10%) 45%, var(--color-a), 70%, transparent ), radial-gradient(400px circle at 50% 50%,var(--color-b),60%,transparent), radial-gradient(350px circle at calc(var(--page-edge) + 15%) 40%,var(--color-c),60%,transparent)
+	background: radial-gradient(400px circle at calc(100% - var(--page-edge) - 10%) 55%, var(--color-a), 70%, transparent ), radial-gradient(400px circle at 50% 70%,var(--color-b),60%,transparent), radial-gradient(350px circle at calc(var(--page-edge) + 15%) 47%,var(--color-c),60%,transparent)
 }
 
-.light .landing-page-bg:before {
+.light .landing-gradients:before {
 	--color-a: #db8585;
     --color-b: #8dbfed;
     --color-c: #c65df7;
 	opacity: 0.4;
 }
 
-.dark .landing-page-bg:before {
+.dark .landing-gradients:before {
 	--color-a: #8599db;
     --color-b: #dd8ded;
     --color-c: #f75dc4;
