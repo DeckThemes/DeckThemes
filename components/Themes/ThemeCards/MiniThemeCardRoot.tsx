@@ -64,7 +64,7 @@ function AudioCardImage({
 function CSSCardImage({ imageSrc }: { imageSrc: string }) {
   return (
     <div
-      className="aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat drop-shadow-lg"
+      className="aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat"
       style={{
         backgroundImage: `url(${imageSrc})`,
       }}
