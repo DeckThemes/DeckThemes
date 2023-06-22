@@ -60,7 +60,10 @@ export default function Home() {
             <DownloadButtonWithIcon iconName="windows11" />
           </div>
 
-          <HeroReel />
+			<div className="landing-gradients">
+				<HeroReel />
+			</div>
+   
           {/* <HeroPaint /> */}
           {/* <img src="/hero.png" className="aspect-[4/3] max-h-4xl max-h-2xl object-contain" /> */}
           {/* Experimental hero-gif inside of Steam Deck screen hero img */}
