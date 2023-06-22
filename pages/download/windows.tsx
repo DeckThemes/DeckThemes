@@ -55,11 +55,11 @@ export default function WindowsDownload() {
 				</InstallSection.Header>
 
 				<InstallSection.Content>
-				<div className="flex flex-row items-center flex-wrap">Here's a quick rundown of how to use the CSSLoader Desktop app.</div>
+				<div className="w-full">Here's a quick rundown of how to use the CSSLoader Desktop app.</div>
 					<ul className="flex w-full flex-col gap-4 list-disc">
 						<li>
 							<div className="flex flex-row items-center">
-								Manage your themems on the Themes page. Toggle them on or off using the switch, or customize them under the Theme Settings button.
+								Manage your themes on the Themes page. Toggle them on or off using the switch, or customize them under the Theme Settings button.
 							</div>
 						</li>
 
