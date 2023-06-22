@@ -189,6 +189,13 @@ html.dark, html.dark > body {
 	--transparent: transparent;
 }
 
+.light .category-sticky-header-blur {
+	--mask-visible: #000000;
+    --mask-hidden: transparent;
+	--bg: #ffffffcc;
+	--transparent: transparent;
+}
+
 .category-sticky-header-blur {
 	/* account for scrollbar and padding on <main> */
 	--body-margin-left: max(16px, env(safe-area-inset-left));
