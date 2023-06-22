@@ -97,6 +97,8 @@ h4 {
   --page-edge: calc(100vw / 10);
   content: "";
   position: absolute;
+  pointer-events: none;
+  user-select: none;
   opacity: 0;
   top: 40%;
   left: 50%;
