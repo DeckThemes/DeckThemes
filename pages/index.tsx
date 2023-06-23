@@ -5,8 +5,6 @@ import Head from "next/head";
 import { desktopModeContext } from "./_app";
 import { ThemeQueryResponse } from "@customTypes/CSSThemeTypes";
 
-export const config = { runtime: "edge" };
-
 export async function getServerSideProps() {
   const res = await fetch(
     "https://api.deckthemes.com/themes?filters=CSS&order=Last Updated&perPage=4"
