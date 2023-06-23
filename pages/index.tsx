@@ -5,7 +5,7 @@ import Head from "next/head";
 import { desktopModeContext } from "./_app";
 import { ThemeQueryResponse } from "@customTypes/CSSThemeTypes";
 
-export const config = { runtime: "experimental-edge" };
+export const config = { runtime: "edge" };
 
 export async function getServerSideProps() {
   const res = await fetch(
