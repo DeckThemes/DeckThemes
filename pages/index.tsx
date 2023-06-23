@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, ReactNode, useContext } from "react";
+import { useRef, useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
-import HeroPaint from "@components/HomePage/HeroPaint";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);

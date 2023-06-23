@@ -31,9 +31,7 @@ export default function Packs() {
       </Head>
       <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
         <div className="mb-12 flex flex-col items-center">
-          <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">
-            CSS Themes
-          </h1>
+          <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">Audio Packs</h1>
         </div>
         {defaults !== undefined && (
           <ThemeCategoryDisplay

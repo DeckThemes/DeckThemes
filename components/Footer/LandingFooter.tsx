@@ -1,8 +1,7 @@
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { NavIconLink } from "@components/Nav";
+import { NavIcon, NavIconLink } from "@components/Nav";
 import { useTheme } from "next-themes";
 import { useContext } from "react";
 import { desktopModeContext } from "@pages/_app";
@@ -13,15 +12,6 @@ export function LandingFooter() {
   const { theme, setTheme } = useTheme();
   const { desktopMode } = useContext(desktopModeContext);
 
-  const src = () => {
-    if (router.pathname.includes("/packs")) {
-      // @ts-ignore
-      return theme === "light" ? "/logo_audio_lightmode.png" : "/logo_audio_darkmode.png";
-    }
-    // @ts-ignore
-    return theme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png";
-  };
-
   return (
     <footer className="mt-auto flex h-fit w-full flex-col">
       <div className="mx-auto my-16 w-full max-w-7xl">
@@ -29,23 +19,8 @@ export function LandingFooter() {
           {/* logo section */}
           <div className="flex flex-col items-start gap-6">
             <div className="flex items-center gap-4">
-              <Link
-                href={"/"}
-                className="group flex select-none items-center transition duration-150 hover:scale-95 hover:active:scale-90 "
-              >
-                <>
-                  <Image
-                    src={src()}
-                    height="24"
-                    width="24"
-                    alt="CSSLoader Logo"
-                    className="transition duration-1000 group-hover:brightness-150 group-hover:hue-rotate-180"
-                  />
-                  <span className="font-fancy hidden pl-4 text-xl font-semibold md:flex">
-                    DeckThemes
-                  </span>
-                </>
-              </Link>
+              <NavIcon />
+
               <button
                 aria-label={`Enter ${theme} mode`}
                 className=" text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
