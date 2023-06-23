@@ -4,9 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-export function HeroReel() {
-  const [themeData, setThemeData] = useState<ThemeQueryResponse>({ total: 0, items: [] });
-  const [loaded, setLoaded] = useState<boolean>(false);
+export function HeroReel({ themeData }: { themeData: ThemeQueryResponse }) {
+  // const [themeData, setThemeData] = useState<ThemeQueryResponse>({ total: 0, items: [] });
+  const [loaded, setLoaded] = useState<boolean>(true);
 
   const firstCardRef = useRef();
   const rotations = ["rotate-2", "-rotate-2"];
@@ -26,14 +26,14 @@ export function HeroReel() {
     return rotations[randomIndex];
   };
 
-  useEffect(() => {
-    genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${numHeroCards}`).then((data) => {
-      if (data) {
-        setLoaded(true);
-        setThemeData(data);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${numHeroCards}`).then((data) => {
+  //     if (data) {
+  //       setLoaded(true);
+  //       setThemeData(data);
+  //     }
+  //   });
+  // }, []);
   return (
     <>
       <div className="relative mt-0 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden md:mt-12 md:h-[30rem]">

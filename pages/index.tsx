@@ -3,8 +3,18 @@ import { useRef, useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "./_app";
+import { ThemeQueryResponse } from "@customTypes/CSSThemeTypes";
 
-export default function Home() {
+export async function getServerSideProps() {
+  const res = await fetch(
+    "https://api.deckthemes.com/themes?filters=CSS&order=Last Updated&perPage=4"
+  );
+  const data = await res.json();
+
+  return { props: { heroReelData: data } };
+}
+
+export default function Home({ heroReelData }: { heroReelData: ThemeQueryResponse }) {
   const contentRef = useRef<HTMLDivElement>(null);
 
   const { desktopMode } = useContext(desktopModeContext);
@@ -60,7 +70,7 @@ export default function Home() {
           </div>
 
           <div className="landing-gradients">
-            <HeroReel />
+            <HeroReel themeData={heroReelData} />
           </div>
 
           {/* <HeroPaint /> */}
