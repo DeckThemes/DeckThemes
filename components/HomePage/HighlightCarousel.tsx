@@ -1,7 +1,6 @@
 import { useMemo, useState } from "react";
-import { OrderValueToggle } from "./OrderValueToggle";
 import { HighlightCardView } from "./HighlightCardView";
-import { RadioDropdown, HorizontalRadio } from "@components/Primitives";
+import { RadioDropdown, HorizontalRadio, TwoItemToggle } from "@components/Primitives";
 import { TransitionedCarouselTitle } from "..";
 
 export function HighlightCarousel({
@@ -59,9 +58,13 @@ export function HighlightCarousel({
                 />
               </div>
             </div>
-            <OrderValueToggle
-              {...{ orderValue, setOrderValue }}
-              orderOptions={["Popular", "Recent"]}
+            <TwoItemToggle
+              options={[
+                { value: "Popular", displayText: "Popular" },
+                { value: "Recent", displayText: "Recent" },
+              ]}
+              value={orderValue}
+              onValueChange={setOrderValue}
             />
           </div>
         </div>
