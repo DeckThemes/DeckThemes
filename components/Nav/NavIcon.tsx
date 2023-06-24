@@ -18,6 +18,7 @@ export function NavIcon({ disabled = false }: { disabled?: boolean }) {
   // };
   return (
     <Link
+      aria-label="DeckThemes Logo Linking To The HomePage"
       href={disabled ? "#" : "/"}
       className="group flex select-none items-center transition duration-150 hover:scale-95 hover:active:scale-90 "
     >

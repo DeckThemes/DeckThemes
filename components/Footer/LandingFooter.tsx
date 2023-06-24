@@ -36,7 +36,7 @@ export function LandingFooter() {
               DeckThemes is the largest repository of custom themes, styles, and audio packs for
               Steam.
             </p>
-            <p className="font-fancy max-w-2xl text-sm text-fore-6-light dark:text-fore-5-dark">
+            <p className="font-fancy max-w-2xl text-sm text-fore-9-light dark:text-fore-5-dark">
               Decky Loader, CSS Loader, and Audio Loader are not affiliated with Valve Corporation.
               Steam, the Steam logo, Steam Deck, and the Steam Deck logo are trademarks and/or
               registered trademarks of Valve Corporation in the U.S. and/or other countries.

@@ -10,6 +10,14 @@ body,
   height: 100%;
   font-family: "Montserrat", "sans-serif";
   font-size: 15px;
+  background-color: hsl(264, 3%, 95%);
+}
+
+/* Note: the classes below are not supported in firefox */
+html.dark,
+html.dark > body {
+  color-scheme: dark;
+  background: #090a0c;
 }
 
 #__next {
@@ -163,13 +171,6 @@ h4 {
 .mobile-filter-animate-in {
   animation: mobile-filter-animate-in 660ms forwards;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Note: the classes below are not supported in firefox */
-html.dark,
-html.dark > body {
-  color-scheme: dark;
-  background: #090a0c;
 }
 
 ::-webkit-scrollbar-thumb {
