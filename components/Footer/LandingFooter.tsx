@@ -9,7 +9,7 @@ import { PatreonFooterBar } from "./PatreonFooterBar";
 
 export function LandingFooter() {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const { desktopMode } = useContext(desktopModeContext);
 
   return (
@@ -22,13 +22,13 @@ export function LandingFooter() {
               <NavIcon />
 
               <button
-                aria-label={`Enter ${theme} mode`}
+                aria-label={`Enter ${resolvedTheme} mode`}
                 className=" text-textLight hover:text-bgDark dark:text-textDark dark:hover:text-bgLight"
                 onClick={() => {
-                  theme === "light" ? setTheme("dark") : setTheme("light");
+                  resolvedTheme === "light" ? setTheme("dark") : setTheme("light");
                 }}
               >
-                {theme === "light" ? <FaRegSun size={18} /> : <FaRegMoon size={18} />}
+                {resolvedTheme === "light" ? <FaRegSun size={18} /> : <FaRegMoon size={18} />}
               </button>
             </div>
 

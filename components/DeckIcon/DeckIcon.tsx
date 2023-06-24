@@ -1,9 +1,9 @@
 import { useTheme } from "next-themes";
 
-export function DeckIcon ({ iconName } : { iconName: string}) {
-	const { theme } = useTheme();
-	const iconSrc = `/deck-icons/${iconName}-${theme === 'light' ? 'dark' : 'light'}.svg`;
+export function DeckIcon({ iconName }: { iconName: string }) {
+  const { resolvedTheme } = useTheme();
+  const iconSrc = `/deck-icons/${iconName}-${resolvedTheme}.svg`;
 
-	// eslint-disable-next-line @next/next/no-img-element
-	return <img className="mx-2 max-w-4 max-h-4" alt="Steam Deck icon" src={iconSrc} />;
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img className="max-w-4 mx-2 max-h-4" alt="Steam Deck icon" src={iconSrc} />;
 }

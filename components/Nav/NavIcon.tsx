@@ -1,22 +1,21 @@
 import Link from "next/link";
 import { useTheme } from "next-themes";
 
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { ThemedLogoVector } from "..";
 
 export function NavIcon({ disabled = false }: { disabled?: boolean }) {
   const router = useRouter();
-  const { theme } = useTheme();
+  // const { resolvedTheme } = useTheme();
 
-  const src = () => {
-    if (router.pathname.includes("/packs")) {
-      // @ts-ignore
-      return theme === "light" ? "/logo_audio_lightmode.png" : "/logo_audio_darkmode.png";
-    }
-    // @ts-ignore
-    return theme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png";
-  };
+  // const src = () => {
+  //   if (router.pathname.includes("/packs")) {
+  //     // @ts-ignore
+  //     return resolvedTheme === "light" ? "/logo_audio_lightmode.png" : "/logo_audio_darkmode.png";
+  //   }
+  //   // @ts-ignore
+  //   return resolvedTheme === "light" ? "/logo_css_lightmode.png" : "/logo_css_darkmode.png";
+  // };
   return (
     <Link
       href={disabled ? "#" : "/"}
