@@ -1,16 +1,11 @@
 import { twMerge } from "tailwind-merge";
 import { PartialCSSThemeInfo } from "../../../types";
 import Link from "next/link";
+import Image from "next/image";
 
 // This essentially just takes in the theme data and either returns an audio card or a css card
 
-function AudioCardImage({
-  imageSrc,
-  target,
-}: {
-  imageSrc: string;
-  target: string;
-}) {
+function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string }) {
   return (
     <div className="bg-clip relative h-[162.5px] w-full overflow-hidden rounded-xl drop-shadow-lg">
       <div
@@ -63,12 +58,9 @@ function AudioCardImage({
 
 function CSSCardImage({ imageSrc }: { imageSrc: string }) {
   return (
-    <div
-      className="aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat"
-      style={{
-        backgroundImage: `url(${imageSrc})`,
-      }}
-    />
+    <div className="relative aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat">
+      <Image alt="" src={`${imageSrc}/thumb`} fill className="rounded-xl object-cover" />
+    </div>
   );
 }
 
@@ -100,8 +92,7 @@ export function MiniThemeCardRoot({
   className?: string;
 }) {
   function imageSRCCreator(): string {
-    if (data?.images === undefined)
-      return `https://share.deckthemes.com/css_placeholder.png`;
+    if (data?.images === undefined) return `https://share.deckthemes.com/css_placeholder.png`;
 
     if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
       return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
@@ -126,23 +117,14 @@ export function MiniThemeCardRoot({
   }
 
   return (
-    <div
-      className={twMerge(
-        "flex w-full flex-1 items-center justify-center",
-        className
-      )}
-    >
+    <div className={twMerge("flex w-full flex-1 items-center justify-center", className)}>
       {submissionId ? (
         <div className="h-full w-full overflow-hidden rounded-xl transition-all">
           <InnerContent />
         </div>
       ) : (
         <div className="h-full w-full overflow-hidden rounded-xl transition-all hover:-translate-y-1">
-          <Link
-            href={`/${
-              data.type === "Audio" ? "packs" : "themes"
-            }/view?themeId=${data.id}`}
-          >
+          <Link href={`/${data.type === "Audio" ? "packs" : "themes"}/view?themeId=${data.id}`}>
             <InnerContent />
           </Link>
         </div>
