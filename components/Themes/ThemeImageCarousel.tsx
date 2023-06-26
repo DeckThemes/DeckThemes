@@ -35,7 +35,12 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
         className="rounded-2xl bg-cover"
         style={{
           width: "100%",
-          aspectRatio: data?.type === "Audio" ? "1 / 1" : "16 / 10",
+          aspectRatio:
+            data?.type === "Audio"
+              ? "1 / 1"
+              : data?.target?.toLowerCase()?.includes("desktop")
+              ? "16 / 9"
+              : "16 / 10",
           position: "relative",
           maxHeight: "80vh",
         }}
