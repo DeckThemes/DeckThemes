@@ -158,7 +158,7 @@ export function ThemeCategoryDisplay({
           {title && <h4 className="text-2xl font-medium">{title}</h4>}
           {isSticky && (
             <div
-              className="category-sticky-header-blur"
+              className="category-sticky-header-blur lg:block hidden"
               aria-hidden={true}
             ></div>
           )}
