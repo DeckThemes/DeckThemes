@@ -54,7 +54,7 @@ export function DesktopNav() {
                           "*"
                         );
                       }}
-                      className="ml-8 flex h-full items-center justify-center rounded-xl bg-brandBlue px-4 py-2 text-white"
+                      className="ml-8 flex h-full items-center justify-center rounded-xl bg-base-3-light px-4 py-2 text-white dark:bg-base-3-dark"
                     >
                       <span>Login with Token</span>
                     </button>
