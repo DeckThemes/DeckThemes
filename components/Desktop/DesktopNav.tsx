@@ -45,9 +45,19 @@ export function DesktopNav() {
                   </>
                 ) : (
                   <>
-                    <div className="ml-8 flex h-full items-center justify-center rounded-xl bg-brandBlue px-4 py-2 text-white">
+                    <button
+                      onClick={() => {
+                        window.parent.postMessage(
+                          {
+                            action: "tokenRedirect",
+                          },
+                          "*"
+                        );
+                      }}
+                      className="ml-8 flex h-full items-center justify-center rounded-xl bg-brandBlue px-4 py-2 text-white"
+                    >
                       <span>Login with Token</span>
-                    </div>
+                    </button>
                   </>
                 )}
               </>
