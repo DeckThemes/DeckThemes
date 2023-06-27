@@ -20,9 +20,9 @@ export function DesktopNav() {
       <div className="mx-4 flex w-full max-w-7xl items-center justify-between py-8">
         <div className="">
           {router.pathname === "/desktop" ? (
-            <NavIcon disabled />
+            <></>
           ) : (
-            <FiArrowLeft className="cursor-pointer" size={48} onClick={() => router.back()} />
+            <FiArrowLeft className="cursor-pointer" size={24} onClick={() => router.back()} />
           )}
         </div>
         <div className="ml-auto flex h-full items-center gap-8 font-extrabold md:ml-8">
