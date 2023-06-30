@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
-import { authContext } from "../_app";
+import { authContext } from "contexts";
 import { genericGET } from "../../apiHelpers";
 import { AccountData, Permissions } from "../../types";
 import {
@@ -68,9 +68,7 @@ export default function Account() {
           <title>DeckThemes | Invalid User</title>
         </Head>
         <main className="flex flex-grow items-center justify-center px-5 text-center">
-          <h1 className="pt-20 text-4xl font-semibold">
-            Error! Invalid User ID
-          </h1>
+          <h1 className="pt-20 text-4xl font-semibold">Error! Invalid User ID</h1>
         </main>
       </>
     );
@@ -117,8 +115,7 @@ export default function Account() {
           className="pb-20"
           titles={radioOptions.map((e) => e.title)}
           currentTitle={
-            radioOptions.find((e) => e.value === radioValue)?.title ||
-            radioOptions[0].title
+            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
           }
         />
         {accountInfo?.permissions.includes(Permissions.admin) && (

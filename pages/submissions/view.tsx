@@ -3,12 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { toast } from "react-toastify";
-import {
-  checkAndRefreshToken,
-  fetchWithRefresh,
-  genericFetch,
-  genericGET,
-} from "../../apiHelpers";
+import { checkAndRefreshToken, fetchWithRefresh, genericFetch, genericGET } from "../../apiHelpers";
 import {
   FullThemeCard,
   LoadingPage,
@@ -22,7 +17,7 @@ import {
   Permissions,
   ThemeSubmissionInfo,
 } from "../../types";
-import { authContext } from "../_app";
+import { authContext } from "contexts";
 import { LabelledTextArea } from "@components/Primitives";
 
 export default function FullSubmissionViewPage() {
@@ -68,21 +63,15 @@ export default function FullSubmissionViewPage() {
           })
           .catch((err) => {
             console.error("Error Submitting Theme Review!", err);
-            toast.error(
-              `Error Submitting Theme Review! ${JSON.stringify(err)}`
-            );
+            toast.error(`Error Submitting Theme Review! ${JSON.stringify(err)}`);
           });
       }
     }
   }
 
-  const [submissionData, setSubData] = useState<
-    ThemeSubmissionInfo | undefined
-  >(undefined);
+  const [submissionData, setSubData] = useState<ThemeSubmissionInfo | undefined>(undefined);
 
-  const [action, setAction] = useState<undefined | "approve" | "deny">(
-    undefined
-  );
+  const [action, setAction] = useState<undefined | "approve" | "deny">(undefined);
   const [message, setMessage] = useState<string>("");
 
   const [reviewSubmitted, setReviewSubmitted] = useState<boolean>(false);
@@ -117,10 +106,7 @@ export default function FullSubmissionViewPage() {
                   ? FormattedSubmissionIntentAudio[submissionData.intent]
                   : FormattedSubmissionIntent[submissionData.intent]}
               </h1>
-              <FullThemeCard
-                parsedId={submissionData.newTheme.id}
-                hideAdminMenu
-              />
+              <FullThemeCard parsedId={submissionData.newTheme.id} hideAdminMenu />
             </div>
             <div className="flex w-full flex-col items-center">
               <h2 className="my-4 border-b-4 border-textLight text-3xl font-semibold dark:border-textDark md:text-4xl">
@@ -132,10 +118,7 @@ export default function FullSubmissionViewPage() {
                     <span className="text-2xl">Errors:</span>
                     <div className="flex max-h-64 flex-col items-center overflow-y-scroll rounded-3xl border-4 border-borderLight px-8 text-center dark:border-borderDark">
                       {submissionData.errors.map((e, i) => (
-                        <span
-                          key={`Submission Error ${i}`}
-                          className="max-w-[60vw]"
-                        >
+                        <span key={`Submission Error ${i}`} className="max-w-[60vw]">
                           <b>{i + 1}:</b> {e}
                         </span>
                       ))}
@@ -160,9 +143,7 @@ export default function FullSubmissionViewPage() {
                           <>
                             <div className="font-fancy flex w-full flex-col items-center gap-2 md:w-1/4">
                               <div className="flex gap-8">
-                                {accountInfo?.permissions.includes(
-                                  Permissions.approveSubs
-                                ) && (
+                                {accountInfo?.permissions.includes(Permissions.approveSubs) && (
                                   <button
                                     className={`${
                                       action === "approve"
@@ -176,16 +157,11 @@ export default function FullSubmissionViewPage() {
                                     }}
                                   >
                                     <BsCheckCircleFill size={36} />
-                                    <span className="ml-2 mr-1 text-xl font-medium">
-                                      Approve
-                                    </span>
+                                    <span className="ml-2 mr-1 text-xl font-medium">Approve</span>
                                   </button>
                                 )}
-                                {accountInfo?.permissions.includes(
-                                  Permissions.approveSubs
-                                ) ||
-                                submissionData.newTheme.author.id ===
-                                  accountInfo?.id ? (
+                                {accountInfo?.permissions.includes(Permissions.approveSubs) ||
+                                submissionData.newTheme.author.id === accountInfo?.id ? (
                                   <>
                                     <button
                                       className={`${
@@ -200,9 +176,7 @@ export default function FullSubmissionViewPage() {
                                       }}
                                     >
                                       <BsXCircleFill size={36} />
-                                      <span className="ml-2 mr-1 text-xl font-medium">
-                                        Deny
-                                      </span>
+                                      <span className="ml-2 mr-1 text-xl font-medium">Deny</span>
                                     </button>
                                   </>
                                 ) : null}
@@ -213,9 +187,7 @@ export default function FullSubmissionViewPage() {
                                     <LabelledTextArea
                                       placeholder="Message Here"
                                       label={
-                                        action === "deny"
-                                          ? "Reason For Denial"
-                                          : "Leave A Message"
+                                        action === "deny" ? "Reason For Denial" : "Leave A Message"
                                       }
                                       value={message}
                                       onValueChange={(e) => setMessage(e)}
@@ -225,9 +197,7 @@ export default function FullSubmissionViewPage() {
                                     className="rounded-3xl bg-brandBlue p-4"
                                     onClick={submitReview}
                                   >
-                                    <span className="text-xl font-medium">
-                                      Submit Review
-                                    </span>
+                                    <span className="text-xl font-medium">Submit Review</span>
                                   </button>
                                 </>
                               )}
@@ -257,18 +227,13 @@ export default function FullSubmissionViewPage() {
                     )}
                     <div className="mb-2 flex flex-col items-center">
                       {/* <span className="text-2xl font-medium pt-2">Message</span> */}
-                      <span className="py-2 text-xl">
-                        {submissionData.message}
-                      </span>
+                      <span className="py-2 text-xl">{submissionData.message}</span>
                     </div>
                     {submissionData?.reviewedBy ? (
                       <div className="flex items-center gap-2">
                         <span>Reviewed By:</span>
                         <div>
-                          <MiniPfpDisplay
-                            accountInfo={submissionData.reviewedBy}
-                            dark
-                          />
+                          <MiniPfpDisplay accountInfo={submissionData.reviewedBy} dark />
                         </div>
                       </div>
                     ) : null}

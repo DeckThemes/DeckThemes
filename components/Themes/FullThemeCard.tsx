@@ -11,7 +11,7 @@ import {
   ThemeImageCarousel,
 } from "..";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext, desktopModeContext } from "../../pages/_app";
+import { authContext, desktopModeContext } from "contexts";
 import { toast } from "react-toastify";
 import { BiCode } from "react-icons/bi";
 

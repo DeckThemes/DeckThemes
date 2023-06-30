@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { authContext } from "../pages/_app";
+import { authContext } from "contexts";
 
 export function useHasCookie() {
   const { accountInfo } = useContext(authContext);

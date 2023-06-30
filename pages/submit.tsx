@@ -14,7 +14,7 @@ import {
   ZipSubmitPanel,
 } from "../components";
 import { useHasCookie } from "../hooks";
-import { authContext } from "./_app";
+import { authContext } from "contexts";
 import { toast } from "react-toastify";
 import { RadioDropdown } from "@components/Primitives";
 

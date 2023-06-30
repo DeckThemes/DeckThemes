@@ -1,30 +1,21 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { LandingFooter, LoadingPage, MainNav } from "../components";
-import { createContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
-import { AccountData, AuthContextContents } from "../types";
+import { AccountData } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logInWithToken } from "apiHelpers/auth/logInWithToken";
 import { IoMdClose } from "react-icons/io";
-
-export const authContext = createContext<AuthContextContents>({
-  accountInfo: undefined,
-  setAccountInfo: () => {},
-});
-
-export const desktopModeContext = createContext<any>({
-  desktopMode: false,
-  setDesktopMode: () => {},
-  installing: false,
-  setInstalling: () => {},
-});
+import { authContext, desktopModeContext } from "contexts";
+import { InstalledTheme } from "@customTypes/DesktopModeTypes";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
+  const [installedThemes, setInstalledThemes] = useState<InstalledTheme[]>([]);
 
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
 
@@ -46,7 +37,6 @@ export default function App({ Component, pageProps }: AppProps) {
         setInstalling(false);
       }
       if (event.data.action === "logInWithToken") {
-        console.log("TOKEN", event.data.payload);
         const meJson = await logInWithToken(event.data.payload);
         if (meJson?.username) {
           setAccountInfo(meJson);
@@ -70,7 +60,14 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeProvider attribute="class" disableTransitionOnChange={true}>
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
         <desktopModeContext.Provider
-          value={{ desktopMode, setDesktopMode, installing, setInstalling }}
+          value={{
+            desktopMode,
+            setDesktopMode,
+            installing,
+            setInstalling,
+            installedThemes,
+            setInstalledThemes,
+          }}
         >
           <div className="relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark">
             {desktopMode !== undefined ? (

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { generateParamStr, genericGET } from "../../apiHelpers";
-import { authContext } from "../../pages/_app";
+import { authContext } from "contexts";
 import {
   FilterQueryResponse,
   ThemeQueryRequest,
@@ -157,10 +157,7 @@ export function ThemeCategoryDisplay({
         <div className="relative flex h-full w-full flex-col items-center px-4">
           {title && <h4 className="text-2xl font-medium">{title}</h4>}
           {isSticky && (
-            <div
-              className="category-sticky-header-blur lg:block hidden"
-              aria-hidden={true}
-            ></div>
+            <div className="category-sticky-header-blur hidden lg:block" aria-hidden={true}></div>
           )}
           <div
             ref={stickyHeaderRef}

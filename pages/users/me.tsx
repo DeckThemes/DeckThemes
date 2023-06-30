@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { authContext } from "../_app";
+import { authContext } from "contexts";
 import { clearCookie, genericFetch, genericGET } from "../../apiHelpers";
 import {
   DeckTokenDisplay,

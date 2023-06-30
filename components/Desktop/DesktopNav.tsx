@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { authContext } from "../../pages/_app";
+import { authContext } from "contexts";
 
 import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";

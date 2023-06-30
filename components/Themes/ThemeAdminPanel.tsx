@@ -1,5 +1,5 @@
 import { BiEditAlt, BiTrash } from "react-icons/bi";
-import { authContext } from "../../pages/_app";
+import { authContext } from "contexts";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
 import { genericFetch } from "../../apiHelpers";
@@ -8,11 +8,7 @@ import { MenuDropdown } from "@components/Primitives";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { useRouter } from "next/router";
 
-export function ThemeAdminPanel({
-  themeData,
-}: {
-  themeData: FullCSSThemeInfo;
-}) {
+export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
   const [showAdminModal, setShowAdminModal] = useState<boolean>(false);
   const router = useRouter();
@@ -47,9 +43,7 @@ export function ThemeAdminPanel({
     }
   }
   function changeMeta() {
-    let description = prompt(
-      "Enter A New Description (Leave blank to not change)"
-    );
+    let description = prompt("Enter A New Description (Leave blank to not change)");
     let author = prompt("Enter A New Author ID (Leave blank to not change)");
     let target = prompt("Enter A New Target Field (Leave blank to not change)");
     if (!description) {

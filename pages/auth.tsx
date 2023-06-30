@@ -4,7 +4,7 @@ import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { generateAuthCookie, getMeDataFromToken } from "../apiHelpers";
 import { LoadingSpinner } from "../components";
-import { authContext } from "./_app";
+import { authContext } from "contexts";
 
 export default function Auth() {
   const router = useRouter();

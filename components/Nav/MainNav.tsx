@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { authContext, desktopModeContext } from "../../pages/_app";
+import { authContext, desktopModeContext } from "contexts";
 import { fetchDiscordUrl } from "../../apiHelpers";
 import { NavIcon } from "./NavIcon";
 import { TbUpload } from "react-icons/tb";
