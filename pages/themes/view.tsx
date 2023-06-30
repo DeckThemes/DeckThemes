@@ -1,11 +1,10 @@
 import { useRouter } from "next/router";
 import { FullThemeCard, LoadingSpinner } from "../../components";
 import { useState, useEffect, useContext } from "react";
-import Head from "next/head";
 import { desktopModeContext } from "contexts";
 
 export default function FullThemeViewPage() {
-  const { desktopMode, setDesktopMode } = useContext(desktopModeContext);
+  const { desktopMode } = useContext(desktopModeContext);
   const router = useRouter();
   let { themeId } = router.query;
   const [parsedId, setParsedId] = useState<string>("");

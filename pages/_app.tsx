@@ -43,6 +43,7 @@ export default function App({ Component, pageProps }: AppProps) {
         }
       }
       if (event.data.action === "provideInstallState") {
+        console.log("received test");
         setInstalledThemes(event.data.payload);
       }
     }

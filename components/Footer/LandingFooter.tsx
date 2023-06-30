@@ -1,6 +1,5 @@
 import { FaRegMoon, FaRegSun } from "react-icons/fa";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { NavIcon, NavIconLink } from "@components/Nav";
 import { useTheme } from "next-themes";
 import { useContext } from "react";
@@ -8,7 +7,6 @@ import { desktopModeContext } from "contexts";
 import { PatreonFooterBar } from "./PatreonFooterBar";
 
 export function LandingFooter() {
-  const router = useRouter();
   const { resolvedTheme, setTheme } = useTheme();
   const { desktopMode } = useContext(desktopModeContext);
 

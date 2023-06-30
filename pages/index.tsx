@@ -1,12 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRef, useContext } from "react";
+import { useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
 import { desktopModeContext } from "contexts";
 
 export default function Home() {
-  const contentRef = useRef<HTMLDivElement>(null);
-
   const { desktopMode } = useContext(desktopModeContext);
 
   return (
@@ -62,38 +60,12 @@ export default function Home() {
           <div className="landing-gradients">
             <HeroReel />
           </div>
-
-          {/* <HeroPaint /> */}
-          {/* <img src="/hero.png" className="aspect-[4/3] max-h-4xl max-h-2xl object-contain" /> */}
-          {/* Experimental hero-gif inside of Steam Deck screen hero img */}
-          {/* <div
-            style={{
-              backgroundImage: `url(/overview_steamDeck_heroCrop.png)`,
-              height: "31.5vw",
-              maxHeight: "28.4rem",
-              width: "87.9vw",
-            }}
-            className="mt-8 hidden 2xl:block aspect-video bg-contain bg-no-repeat bg-center relative overflow-hidden"
-          >
-            <div className="absolute max-w-[692px] w-full max-h-[420px] top-3 h-full left-1/2 -translate-x-1/2 aspect-[4/3]">
-              <div
-                className="absolute max-w-[559px]"
-                style={{ width: "100%", top: "10%", left: "10%" }}
-              >
-                <img
-                  className="relative inset-0 aspect-[16/10]"
-                  src="https://deckthemes.com/hero_reel.gif"
-                />
-              </div>
-            </div>
-          </div> */}
         </div>
 
         {/* Carousel */}
         <div
           className="relative mt-16 flex h-full w-full flex-col items-center gap-8 px-4 text-center"
           style={desktopMode ? { justifyContent: "center" } : {}}
-          ref={contentRef}
         >
           <HighlightCarousel
             options={[
@@ -109,7 +81,6 @@ export default function Home() {
                 hrefLink: "/themes?type=DESKTOP-CSS",
                 buttonText: "Desktop",
               },
-
               // This has a trailing ? because the link filler only knows to add "&order="
               {
                 title: "AudioLoader Packs",
