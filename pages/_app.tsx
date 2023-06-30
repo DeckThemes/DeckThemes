@@ -32,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     // iFrame event handling
-    async function handleMessage(event: any) {
+    async function handleMessage(event: MessageEvent<{ action: string; payload: any }>) {
       if (event.data.action === "themeInstalled") {
         setInstalling(false);
       }
@@ -41,6 +41,9 @@ export default function App({ Component, pageProps }: AppProps) {
         if (meJson?.username) {
           setAccountInfo(meJson);
         }
+      }
+      if (event.data.action === "provideInstallState") {
+        setInstalledThemes(event.data.payload);
       }
     }
     window.addEventListener("message", handleMessage);

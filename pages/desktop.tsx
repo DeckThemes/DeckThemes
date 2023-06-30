@@ -2,7 +2,7 @@
 import { useRef, useContext, useEffect } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel } from "../components";
 import Head from "next/head";
-import { desktopModeContext } from "./_app";
+import { desktopModeContext } from "contexts";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -13,7 +13,7 @@ export default function Home() {
       <Head>
         <title>DeckThemes</title>
       </Head>
-      <main className="py-32 flex flex-1 flex-grow flex-col items-center gap-4 bg-base-2-light dark:bg-base-2-dark">
+      <main className="flex flex-1 flex-grow flex-col items-center gap-4 bg-base-2-light py-32 dark:bg-base-2-dark">
         <div
           className="relative flex h-full w-full flex-col items-center gap-8 px-4 text-center"
           style={desktopMode ? { justifyContent: "center" } : {}}

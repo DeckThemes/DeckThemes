@@ -1,16 +1,11 @@
 import { FiArrowDown } from "react-icons/fi";
 import { LoadingSpinner } from "../Generic";
 import { FullCSSThemeInfo } from "../../types";
-import { desktopModeContext } from "../../pages/_app";
+import { desktopModeContext } from "contexts";
 import { useContext } from "react";
 
-export function ThemeDownloadButton({
-  themeData,
-}: {
-  themeData: FullCSSThemeInfo;
-}) {
-  const { desktopMode, installing, setInstalling } =
-    useContext(desktopModeContext);
+export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo }) {
+  const { desktopMode, installing, setInstalling } = useContext(desktopModeContext);
   return (
     <>
       {themeData.download !== undefined ? (
@@ -36,11 +31,7 @@ export function ThemeDownloadButton({
             }}
           >
             <div className="flex h-6 w-6  items-center justify-center rounded-full">
-              {installing && desktopMode ? (
-                <LoadingSpinner />
-              ) : (
-                <FiArrowDown size={12} />
-              )}
+              {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={12} />}
             </div>
             <div>
               {desktopMode ? (
@@ -52,9 +43,7 @@ export function ThemeDownloadButton({
               ) : (
                 <>
                   <div className="ml-2 mr-3 flex flex-col items-center justify-center">
-                    <span className="font-fancy font-semibold">
-                      Download .zip
-                    </span>
+                    <span className="font-fancy font-semibold">Download .zip</span>
                   </div>
                 </>
               )}

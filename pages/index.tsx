@@ -2,7 +2,7 @@
 import { useRef, useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
-import { desktopModeContext } from "./_app";
+import { desktopModeContext } from "contexts";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);

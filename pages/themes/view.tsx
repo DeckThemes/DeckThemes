@@ -2,10 +2,10 @@ import { useRouter } from "next/router";
 import { FullThemeCard, LoadingSpinner } from "../../components";
 import { useState, useEffect, useContext } from "react";
 import Head from "next/head";
-import { desktopModeContext } from "@pages/_app";
+import { desktopModeContext } from "contexts";
 
 export default function FullThemeViewPage() {
-const { desktopMode, setDesktopMode } = useContext(desktopModeContext);
+  const { desktopMode, setDesktopMode } = useContext(desktopModeContext);
   const router = useRouter();
   let { themeId } = router.query;
   const [parsedId, setParsedId] = useState<string>("");
@@ -30,7 +30,13 @@ const { desktopMode, setDesktopMode } = useContext(desktopModeContext);
 
   return (
     <>
-      <main className={`flex flex-col items-center dark:bg-base-2-dark ${desktopMode ? 'py-24' : 'py-12 page-shadow mx-4  rounded-3xl border-[1px] border-borders-base3-light dark:border-borders-base1-dark'}`}>
+      <main
+        className={`flex flex-col items-center dark:bg-base-2-dark ${
+          desktopMode
+            ? "py-24"
+            : "page-shadow mx-4 rounded-3xl  border-[1px] border-borders-base3-light py-12 dark:border-borders-base1-dark"
+        }`}
+      >
         <FullThemeCard parsedId={parsedId} />
       </main>
     </>
