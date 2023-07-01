@@ -129,7 +129,7 @@ export default function Submit() {
   useEffect(() => {
     calculateProgress();
   }, [currentStep]);
-
+  console.log(router.query);
   const [uploadMethod, setUploadMethod] = useState<string>("git");
   if (accountInfo?.username) {
     return (
@@ -162,6 +162,13 @@ export default function Submit() {
 		}
         `}
         </style>
+        {router?.query?.update && (
+          <div className="text-lg font-bold">
+            <span className="">
+              To update a theme, submit a new theme with the same name as the original
+            </span>
+          </div>
+        )}
         <div className="m-4 rounded-xl bg-cardLight px-4 py-2 text-xl transition-colors hover:bg-borderLight dark:bg-cardDark hover:dark:bg-borderDark">
           <a
             href={process.env.NEXT_PUBLIC_DOCS_URL}

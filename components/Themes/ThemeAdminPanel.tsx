@@ -94,7 +94,7 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
                     {
                       displayText: "Update Theme",
                       icon: <AiOutlineCloudUpload size={20} />,
-                      onSelect: () => router.push("/submit"),
+                      onSelect: () => router.push("/submit?update=1"),
                     },
                   ]
                 : []),
