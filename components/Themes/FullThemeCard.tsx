@@ -98,7 +98,7 @@ export function FullThemeCard({
             <div className="flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl p-4">
               {/* Theme name and author */}
               <div className="flex w-full flex-[75%] flex-col gap-4 text-left md:flex-row">
-                <div className="flex w-full flex-col gap-2">
+                <div className="flex w-full flex-col gap-4">
                   <h1 className="text-center text-3xl font-extrabold sm:text-left md:text-5xl">
                     {themeData.name}
                   </h1>
@@ -246,7 +246,7 @@ export function FullThemeCard({
                                     )}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark"
+                                    className="flex h-fit select-none items-center justify-center gap-2 whitespace-nowrap rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark"
                                   >
                                     <BiCode />
                                     Source code
