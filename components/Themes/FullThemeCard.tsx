@@ -81,6 +81,7 @@ export function FullThemeCard({
         });
     }
   }
+
   if (!loaded) {
     return <LoadingPage />;
   }
@@ -145,7 +146,8 @@ export function FullThemeCard({
                       >
                         {isStarred ? <BsStarFill /> : <BsStar />}{" "}
                         <span className="whitespace-nowrap">
-                          {themeData.starCount} {themeData.starCount > 1 ? "stars" : "star"}
+                          {themeData.starCount}{" "}
+                          {themeData.starCount > 1 || themeData.starCount === 0 ? "stars" : "star"}
                         </span>
                       </button>
                       <button
@@ -160,6 +162,7 @@ export function FullThemeCard({
                               pauseOnHover: false,
                             });
                           }
+
                           // @ts-ignore
                           if (navigator.canShare) {
                             navigator
