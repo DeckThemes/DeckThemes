@@ -4,7 +4,7 @@ import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
 import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
 import {
-  LoadingPage,
+  ThemeViewLoadingPage,
   SupporterIcon,
   ThemeAdminPanel,
   ThemeDownloadButton,
@@ -83,7 +83,7 @@ export function FullThemeCard({
   }
 
   if (!loaded) {
-    return <LoadingPage />;
+    return <ThemeViewLoadingPage />;
   }
 
   return (
@@ -187,7 +187,7 @@ export function FullThemeCard({
                     </div>
                   </div>
 
-                  <div className="text-md mb-4 max-w-2xl text-center sm:text-left">
+                  <div className="text-md mb-4 max-w-2xl text-left">
                     {themeData.description ? (
                       <span className="whitespace-pre-line break-words">
                         {themeData.description}
