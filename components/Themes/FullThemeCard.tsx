@@ -156,7 +156,7 @@ export function FullThemeCard({
                             navigator.clipboard.writeText(
                               `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData!.id}`
                             );
-                            toast("🔗 Link Copied To Clipboard", {
+                            toast.info("🔗 Link Copied To Clipboard", {
                               autoClose: 2000,
                               hideProgressBar: true,
                               pauseOnHover: false,

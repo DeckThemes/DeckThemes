@@ -34,7 +34,7 @@ export default function Home() {
         />
       </Head>
 
-      <main className="landing-page-bg page-shadow mx-4 flex flex-1 flex-grow flex-col items-center gap-4 rounded-3xl border-[1px] border-borders-base3-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
+      <div className="landing-page-bg">
         {/* Hero */}
         <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-4 pt-4 lg:pt-24">
           {/* Headline */}
@@ -91,7 +91,7 @@ export default function Home() {
             ]}
           />
         </div>
-      </main>
+      </div>
     </>
   );
 }

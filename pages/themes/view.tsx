@@ -29,15 +29,9 @@ export default function FullThemeViewPage() {
 
   return (
     <>
-      <main
-        className={`flex flex-col items-center dark:bg-base-2-dark ${
-          desktopMode
-            ? "py-24"
-            : "page-shadow mx-4 rounded-3xl  border-[1px] border-borders-base3-light py-12 dark:border-borders-base1-dark"
-        }`}
-      >
+      <div className="flex h-full w-full items-center justify-center py-12">
         <FullThemeCard parsedId={parsedId} />
-      </main>
+      </div>
     </>
   );
 }

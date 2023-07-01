@@ -6,8 +6,7 @@ import { ThemeCategoryDisplay } from "../../components";
 export default function Themes() {
   const router = useRouter();
   const [defaults, setDefaults] = useState<
-    | { defaultFilter: string; defaultOrder: string; defaultType: string }
-    | undefined
+    { defaultFilter: string; defaultOrder: string; defaultType: string } | undefined
   >(undefined);
   useEffect(() => {
     if (router.isReady) {
@@ -34,37 +33,33 @@ export default function Themes() {
       <Head>
         <title>DeckThemes | CSSLoader Themes</title>
       </Head>
-      <main className="page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light py-12 dark:border-borders-base1-dark dark:bg-base-2-dark">
-        <div className="mb-12 flex flex-col items-center">
-          <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">
-            CSS Themes
-          </h1>
-        </div>
-        {defaults !== undefined && (
-          <ThemeCategoryDisplay
-            {...defaults}
-            themeDataApiPath="/themes"
-            filterDataApiPath="/themes/filters"
-            typeOptionPreset="Desktop+BPM"
-            themesPerPage={24}
-            noAuthRequired
-            onSearchOptsChange={(searchOpts, type) => {
-              router.push(
-                {
-                  pathname: "/themes",
-                  query: {
-                    filters: searchOpts.filters,
-                    order: searchOpts.order,
-                    type: type,
-                  },
+      <div className="mb-12 flex flex-col items-center">
+        <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">CSS Themes</h1>
+      </div>
+      {defaults !== undefined && (
+        <ThemeCategoryDisplay
+          {...defaults}
+          themeDataApiPath="/themes"
+          filterDataApiPath="/themes/filters"
+          typeOptionPreset="Desktop+BPM"
+          themesPerPage={24}
+          noAuthRequired
+          onSearchOptsChange={(searchOpts, type) => {
+            router.push(
+              {
+                pathname: "/themes",
+                query: {
+                  filters: searchOpts.filters,
+                  order: searchOpts.order,
+                  type: type,
                 },
-                undefined,
-                { shallow: true }
-              );
-            }}
-          />
-        )}
-      </main>
+              },
+              undefined,
+              { shallow: true }
+            );
+          }}
+        />
+      )}
     </>
   );
 }

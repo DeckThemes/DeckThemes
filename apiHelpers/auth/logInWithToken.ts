@@ -10,38 +10,31 @@ export async function logInWithToken(shortTokenValue: string) {
       body: JSON.stringify({ token: shortTokenValue }),
     })
       .then((res) => {
-        console.log('AUTHENTICATE RES')
-
         // @ts-ignore
         return res.json();
       })
       .then((json) => {
-        console.log('AUTHENTICATE JSON', json)
-
         if (json) {
           return json;
         }
         throw new Error(`No json returned!`);
       })
       .then((data) => {
-        console.log('FULL TOKEN GRABBED', data)
-
         if (data && data?.token) {
-
           generateAuthCookie(data.token);
           return genericGET("/auth/me").catch((err) => {
             toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
             console.error("Error Fetching User Data!", err);
           });
         } else {
-          toast("Error Authenticating");
+          toast.error("Error Authenticating");
         }
       })
       .catch((err) => {
         console.error(`Error authenticating from short token.`, err);
       });
   } else {
-    toast("Invalid Token");
+    toast.error("Invalid Token");
   }
   return {};
 }

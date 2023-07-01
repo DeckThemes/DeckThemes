@@ -5,20 +5,21 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { logInWithToken } from "apiHelpers/auth/logInWithToken";
 import { IoMdClose } from "react-icons/io";
 import { authContext, desktopModeContext } from "contexts";
 import { InstalledTheme } from "@customTypes/DesktopModeTypes";
+import { useRouter } from "next/router";
+import { twMerge } from "tailwind-merge";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
   const [installedThemes, setInstalledThemes] = useState<InstalledTheme[]>([]);
-
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
-
+  const router = useRouter();
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
     if (meJson?.username) {
@@ -90,7 +91,16 @@ export default function App({ Component, pageProps }: AppProps) {
                   draggable
                   pauseOnHover
                 />
-                <Component {...pageProps} />
+                <main
+                  className={twMerge(
+                    "flex flex-col items-center overflow-x-hidden rounded-3xl bg-base-2-light pb-12 dark:bg-base-2-dark",
+                    router.pathname !== "/" && "py-12",
+                    !desktopMode &&
+                      "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light dark:border-borders-base1-dark"
+                  )}
+                >
+                  <Component {...pageProps} />
+                </main>
                 <LandingFooter />
               </>
             ) : (

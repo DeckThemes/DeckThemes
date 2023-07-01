@@ -107,34 +107,32 @@ export default function Account() {
       <Head>
         <title>{userInfo.username} | DeckThemes</title>
       </Head>
-      <main className="flex w-full flex-col items-center">
-        <PfpDisplay userData={userInfo} />
-        <div className="mt-4" />
-        {/* If you're un-authed, this title will just always stay as "x's Themes" */}
-        <TransitionedCarouselTitle
-          className="pb-20"
-          titles={radioOptions.map((e) => e.title)}
-          currentTitle={
-            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
-          }
+      <PfpDisplay userData={userInfo} />
+      <div className="mt-4" />
+      {/* If you're un-authed, this title will just always stay as "x's Themes" */}
+      <TransitionedCarouselTitle
+        className="pb-20"
+        titles={radioOptions.map((e) => e.title)}
+        currentTitle={
+          radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+        }
+      />
+      {accountInfo?.permissions.includes(Permissions.admin) && (
+        <HorizontalRadio
+          rootClass="self-center pb-4"
+          options={radioOptions}
+          value={radioValue}
+          onValueChange={setRadioValue}
         />
-        {accountInfo?.permissions.includes(Permissions.admin) && (
-          <HorizontalRadio
-            rootClass="self-center pb-4"
-            options={radioOptions}
-            value={radioValue}
-            onValueChange={setRadioValue}
-          />
-        )}
-        <ThemeCategoryDisplay
-          typeOptionPreset="All"
-          themesPerPage={4}
-          themeDataApiPath={`/users/${parsedId}/${radioValue}`}
-          filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
-          noAuthRequired={radioValue === "themes"}
-          useSubmissionCards={radioValue === "submissions"}
-        />
-      </main>
+      )}
+      <ThemeCategoryDisplay
+        typeOptionPreset="All"
+        themesPerPage={4}
+        themeDataApiPath={`/users/${parsedId}/${radioValue}`}
+        filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
+        noAuthRequired={radioValue === "themes"}
+        useSubmissionCards={radioValue === "submissions"}
+      />
     </>
   );
 }

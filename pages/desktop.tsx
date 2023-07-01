@@ -13,30 +13,28 @@ export default function Home() {
       <Head>
         <title>DeckThemes</title>
       </Head>
-      <main className="flex flex-1 flex-grow flex-col items-center gap-4 bg-base-2-light py-32 dark:bg-base-2-dark">
-        <div
-          className="relative flex h-full w-full flex-col items-center gap-8 px-4 text-center"
-          style={desktopMode ? { justifyContent: "center" } : {}}
-          ref={contentRef}
-        >
-          <HighlightCarousel
-            options={[
-              {
-                title: "Desktop Themes",
-                searchFilter: "DESKTOP-CSS",
-                hrefLink: "/themes?type=DESKTOP-CSS",
-                buttonText: "Desktop",
-              },
-              {
-                title: "BPM Themes",
-                searchFilter: "BPM-CSS",
-                hrefLink: "/themes?type=BPM-CSS",
-                buttonText: "BPM",
-              },
-            ]}
-          />
-        </div>
-      </main>
+      <div
+        className="relative flex h-full w-full flex-col items-center gap-8 px-4 text-center"
+        style={desktopMode ? { justifyContent: "center" } : {}}
+        ref={contentRef}
+      >
+        <HighlightCarousel
+          options={[
+            {
+              title: "Desktop Themes",
+              searchFilter: "DESKTOP-CSS",
+              hrefLink: "/themes?type=DESKTOP-CSS",
+              buttonText: "Desktop",
+            },
+            {
+              title: "BPM Themes",
+              searchFilter: "BPM-CSS",
+              hrefLink: "/themes?type=BPM-CSS",
+              buttonText: "BPM",
+            },
+          ]}
+        />
+      </div>
     </>
   );
 }
