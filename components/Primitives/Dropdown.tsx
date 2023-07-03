@@ -109,7 +109,7 @@ export function RadioDropdown({
 
       <DropdownMenu.Portal>
         <>
-          <div className="radio-dropdown-backdrop pointer-events-none absolute inset-0 bg-app-backdropUmbra-light transition dark:bg-app-backdropUmbra-dark sm:hidden"></div>
+          <div className="radio-dropdown-backdrop pointer-events-none fixed inset-0 bg-app-backdropUmbra-light transition dark:bg-app-backdropUmbra-dark sm:hidden"></div>
           <div className={`${resolvedTheme} contents`}>
             {/* bg-base-3-light dark:bg-base-3-dark w-[250px] text-black dark:text-white rounded-xl border-2 border-borders-base2-light dark:border-borders-base2-dark  */}
             <DropdownMenu.Content
