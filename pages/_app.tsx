@@ -13,6 +13,7 @@ import { authContext, desktopModeContext } from "contexts";
 import { InstalledTheme } from "@customTypes/DesktopModeTypes";
 import { useRouter } from "next/router";
 import { twMerge } from "tailwind-merge";
+import Image from "next/image";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
@@ -20,6 +21,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [installedThemes, setInstalledThemes] = useState<InstalledTheme[]>([]);
   const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
   const router = useRouter();
+
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
     if (meJson?.username) {
@@ -48,6 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setInstalledThemes(event.data.payload);
       }
     }
+
     window.addEventListener("message", handleMessage);
 
     // The enabling of desktop mode used to be through another iframe postMessage, however that led to ~100ms of seeing the wrong ui before it switched
@@ -104,7 +107,9 @@ export default function App({ Component, pageProps }: AppProps) {
                 <LandingFooter />
               </>
             ) : (
-              <LoadingPage />
+              <>
+
+              </>
             )}
           </div>
         </desktopModeContext.Provider>
