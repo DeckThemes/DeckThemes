@@ -96,7 +96,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <main
                   className={twMerge(
-                    "flex flex-col items-center overflow-x-hidden rounded-3xl bg-base-2-light pb-12 dark:bg-base-2-dark",
+                    "flex flex-col items-center rounded-3xl bg-base-2-light pb-12 dark:bg-base-2-dark",
                     router.pathname !== "/" && "py-12",
                     !desktopMode &&
                       "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light dark:border-borders-base1-dark"
@@ -107,9 +107,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 <LandingFooter />
               </>
             ) : (
-              <>
-
-              </>
+              <></>
             )}
           </div>
         </desktopModeContext.Provider>
