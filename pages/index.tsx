@@ -36,7 +36,7 @@ export default function Home() {
 
       <div className="landing-page-bg w-full rounded-t-3xl">
         {/* Hero */}
-        <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-4 pt-4 lg:pt-24">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-6 px-4 pt-16 lg:pt-24">
           {/* Headline */}
           <h1 className="mx-auto max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
             <span className="">
