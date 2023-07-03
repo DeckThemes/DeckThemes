@@ -296,3 +296,33 @@ h4 {
 .loading-animation {
     animation: hue-rotate 4s linear infinite forwards;
 }
+
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /*    [data-radix-popper-content-wrapper] {*/
+    /*        height: 100vh;*/
+    /*    }*/
+    .radio-dropdown {
+        width: calc(100vw - 32px) !important;
+        /*        margin-left: -16px !important;*/
+        border-radius: 12px 12px 12px 12px !important;
+        animation: scaleIn 440ms;
+        animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+        margin-top: auto;
+    }
+
+    .radio-dropdown-backdrop {
+        z-index: 9998;
+    }
+}
