@@ -3,6 +3,10 @@ import { PartialCSSThemeInfo } from "../../../types";
 import Link from "next/link";
 import Image from "next/image";
 
+//This looks large, but it's as optimized as I can make it without looking terrible.
+const cssCardBlurDataUrl: string =
+  "data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABAQEBAREBIUFBIZGxgbGSUiHx8iJTgoKygrKDhVNT41NT41VUtbSkVKW0uHal5eaoecg3yDnL2pqb3u4u7///8BEBAQEBEQEhQUEhkbGBsZJSIfHyIlOCgrKCsoOFU1PjU1PjVVS1tKRUpbS4dqXl5qh5yDfIOcvampve7i7v/////AABEIAF8AjgMBIgACEQEDEQH/xABjAAADAQEBAQAAAAAAAAAAAAACAwQBBQAGEAEAAwEBAQEBAAAAAAAAAAAAAQISAxMRFGEBAAMBAQEAAAAAAAAAAAAAAAABAgMEBREBAQEBAQEBAAAAAAAAAAAAAAECERIhMf/aAAwDAQACEQMRAD8A+MyzKjLJq6PCOpsvfD8hyPA6V8eybluR4HSstydFRxRNyE+BYVRzHHNNgRxzF5ro5GeLDWuNJHM8wzR1J4lTyGddFjnYbhZ5vRzaJiXDcLI5N80XTWYDFXpoorVs1enxz8RzQGVk1BkuKmU2W5UZeyVVMExU2tRxUyIZ0rnjIqZFBQbVjqIerQ2OYqnR8cm5et8ETzKnku+QGYgYPbnzye8l01hmYbX8Rn9RxzZPNX8gFnPa68z4ih6S9Mmz2PTkkFIQzLPqbpckG0vTdM7pfwbfpentF1ls+JNiyPQ4umuddWx0Xc6Og/VjrLXNdDbNoPUM9SmT1p0PSAz0QeoZ6qsTm/V09Cpuk9QT0YXLrzv4KIbk2lFEcnb6c3UOQzV0vEq3JN0fpD8e+KJ5hwi6Hor4GVGAzUvRX6nZoVoKkekcHpuyWfTB22bJ+tgFaZp77LIgeTLofshmTMhmqeKm3Y5QvpSHO5XdDn0hdKU7EEdKQo3BF7wzqklqF5NtaC9Jqnsl2qbou1kKSXhNMKekp5k4mg+MmBslXUFfB1hg6qiNHUqfFAUUwuMbSZoTaqySLHwSl06/FVe7jego6yXXTx3P0f0Fu7j+0vT2lNN0p7A9XO9WeqTdP1DPVzvVk9C4fVVrlTZPN2bHCqnT02Tbe2OJ4f8ARVsl02LnCsdGtzo6OZFzPRcqLh0J6E2ul9ATc+lMP//Z";
+
 // This essentially just takes in the theme data and either returns an audio card or a css card
 
 function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string }) {
@@ -59,7 +63,14 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
 function CSSCardImage({ imageSrc }: { imageSrc: string }) {
   return (
     <div className="relative aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat">
-      <Image alt="" src={`${imageSrc}/thumb`} fill className="rounded-xl object-cover" />
+      <Image
+        alt=""
+        src={`${imageSrc}/thumb`}
+        placeholder={"blur"}
+        blurDataURL={cssCardBlurDataUrl}
+        fill
+        className="rounded-xl object-cover"
+      />
     </div>
   );
 }
