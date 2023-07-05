@@ -29,7 +29,7 @@ export default function FullThemeViewPage() {
 
   return (
     <>
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="flex h-full w-full items-center justify-center px-4">
         <FullThemeCard parsedId={parsedId} />
       </div>
     </>
