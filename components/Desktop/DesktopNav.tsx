@@ -18,7 +18,7 @@ export function DesktopNav() {
   return (
     <>
       <nav className="absolute flex w-full items-center justify-center px-4">
-        <div className="flex w-full max-w-7xl items-center justify-between pb-8 pt-8">
+        <div className="flex w-full max-w-7xl items-center justify-between pb-4 pt-4">
           <div className="">
             {router.pathname === "/desktop" ? (
               <></>

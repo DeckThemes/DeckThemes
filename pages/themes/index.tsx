@@ -33,9 +33,9 @@ export default function Themes() {
       <Head>
         <title>DeckThemes | CSSLoader Themes</title>
       </Head>
-      <div className="mb-12 flex flex-col items-center">
+      {/* <div className="mb-12 flex flex-col items-center">
         <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">CSS Themes</h1>
-      </div>
+      </div> */}
       {defaults !== undefined && (
         <ThemeCategoryDisplay
           {...defaults}
