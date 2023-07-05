@@ -96,10 +96,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <main
                   className={twMerge(
-                    "flex flex-col items-center rounded-3xl bg-base-2-light pb-12 dark:bg-base-2-dark",
+                    "flex flex-col items-center",
                     router.pathname !== "/" && "py-12",
+                    desktopMode && "pt-0",
                     !desktopMode &&
-                      "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light dark:border-borders-base1-dark"
+                      "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
                   )}
                 >
                   <Component {...pageProps} />

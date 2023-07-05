@@ -24,7 +24,7 @@ export function TwoItemToggle({
   const { resolvedTheme } = useTheme();
   return (
     <>
-      <div className={twMerge("flex flex-col items-start gap-1", rootClass)}>
+      <div className={twMerge("flex flex-col items-start gap-1 font-bold", rootClass)}>
         {label && <span className="font-fancy text-sm font-bold">{label}</span>}
         <div
           className={twMerge(

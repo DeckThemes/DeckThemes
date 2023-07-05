@@ -8,7 +8,7 @@ export function ThemeViewLoadingPage() {
       </Head>
       <div className="font-fancy flex h-full w-full flex-grow justify-center text-center lg:text-left">
         <>
-          <div className="themeview-skeleton flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl p-4">
+          <div className="themeview-skeleton flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl">
             <div className="flex w-full flex-[75%] animate-pulse flex-col gap-4 text-left md:flex-row">
               <div className="flex w-full flex-col gap-4">
                 <div className="h-12 w-full max-w-[32rem] rounded-full bg-base-4-light dark:bg-base-4-dark"></div>
@@ -27,8 +27,8 @@ export function ThemeViewLoadingPage() {
                 </div>
 
                 <div className="flex w-full flex-col items-center gap-4 self-center pb-4 md:flex-row">
-                  <div className="flex h-12 w-[12rem] flex-row items-center gap-1 rounded-full bg-base-4-light dark:bg-base-4-dark"></div>
-                  <div className="flex h-6 w-[12rem] flex-row items-center gap-1 rounded-full bg-base-4-light dark:bg-base-4-dark"></div>
+                  <div className="flex h-10 w-[8rem] flex-row items-center gap-1 rounded-full bg-base-4-light dark:bg-base-4-dark"></div>
+                  <div className="flex h-6 w-[10rem] flex-row items-center gap-1 rounded-full bg-base-4-light dark:bg-base-4-dark"></div>
                 </div>
 
                 <div

@@ -95,7 +95,7 @@ export function FullThemeCard({
         {themeData !== undefined ? (
           <>
             {/* bg-base-3-light dark:bg-base-3-dark */}
-            <div className="flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl p-4">
+            <div className="flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl">
               {/* Theme name and author */}
               <div className="flex w-full flex-[75%] flex-col gap-4 text-left md:flex-row">
                 <div className="flex w-full flex-col gap-4">

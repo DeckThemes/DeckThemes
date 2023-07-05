@@ -1,10 +1,4 @@
-import {
-  Dispatch,
-  SetStateAction,
-  createRef,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, createRef, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 export function TransitionedCarouselTitle({
@@ -79,12 +73,7 @@ export function TransitionedCarouselTitle({
   if (titleRefArr.length === 0) return null;
   return (
     <>
-      <div
-        className={twMerge(
-          "relative flex w-full flex-col items-center",
-          className
-        )}
-      >
+      <div className={twMerge("relative flex w-full flex-col", className)}>
         {titles.map((e, i) => {
           return (
             // Rewrote this to be a container div as that way I wouldn't need to touch translateY, makes my life easier
@@ -94,11 +83,11 @@ export function TransitionedCarouselTitle({
               style={{
                 transitionDuration: `${animationDuration}`,
               }}
-              className={`absolute flex items-center text-3xl font-semibold transition-transform ${
+              className={`absolute flex items-center text-3xl font-extrabold transition-transform ${
                 i === 0 ? "opacity-100" : "opacity-0"
               }`}
             >
-              <h2 className="pt-4 text-3xl font-bold md:text-5xl">{e}</h2>
+              <h2 className="text-3xl md:text-5xl">{e}</h2>
             </div>
           );
         })}

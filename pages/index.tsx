@@ -64,7 +64,7 @@ export default function Home() {
 
         {/* Carousel */}
         <div
-          className="relative mt-16 flex h-full w-full flex-col items-center gap-8 px-4 text-center"
+          className="relative mt-16 flex h-full w-full flex-col items-center gap-8 px-4 pb-12 text-center"
           style={desktopMode ? { justifyContent: "center" } : {}}
         >
           <HighlightCarousel
