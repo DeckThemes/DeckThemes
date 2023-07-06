@@ -67,7 +67,7 @@ export function DesktopNav() {
           </div>
         </div>
       </nav>
-      <div className="h-[96px] w-full" aria-hidden></div>
+      <div className="h-[72px] w-full" aria-hidden></div>
     </>
   );
 }

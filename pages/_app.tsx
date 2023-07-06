@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { LandingFooter, LoadingPage, MainNav } from "../components";
+import { LandingFooter, DesktopFooter, MainNav } from "../components";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData } from "../types";
@@ -96,16 +96,16 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <main
                   className={twMerge(
-                    "flex flex-col items-center",
-                    router.pathname !== "/" && "py-12",
-                    desktopMode && "pt-0",
-                    !desktopMode &&
-                      "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
+                    "page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px]  border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark",
+                    router.pathname !== "/" && "py-12"
+                    // desktopMode && "pt-0",
+                    // !desktopMode &&
+                    //   "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
                   )}
                 >
                   <Component {...pageProps} />
                 </main>
-                <LandingFooter />
+                {desktopMode ? <DesktopFooter /> : <LandingFooter />}
               </>
             ) : (
               <></>
