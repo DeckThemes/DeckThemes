@@ -10,7 +10,7 @@ import {
   TransitionedCarouselTitle,
 } from "../../components";
 import Head from "next/head";
-import { HorizontalRadio } from "@components/Primitives";
+import { HorizontalRadio, RadioDropdown } from "@components/Primitives";
 
 function BigDivider() {
   return (
@@ -111,19 +111,32 @@ export default function Account() {
       <div className="mt-4" />
       {/* If you're un-authed, this title will just always stay as "x's Themes" */}
       <TransitionedCarouselTitle
-        className="pb-20"
+        className="px-4 pb-20"
         titles={radioOptions.map((e) => e.title)}
         currentTitle={
           radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
         }
       />
+
       {accountInfo?.permissions.includes(Permissions.admin) && (
-        <HorizontalRadio
-          rootClass="self-center pb-4"
-          options={radioOptions}
-          value={radioValue}
-          onValueChange={setRadioValue}
-        />
+        <>
+          <div className="block w-full px-4 md:hidden">
+            <RadioDropdown
+              ariaLabel="Your Theme Types Dropdown"
+              options={radioOptions}
+              value={radioValue}
+              onValueChange={setRadioValue}
+            />
+          </div>
+          <div className="hidden w-full items-center justify-center md:flex">
+            <HorizontalRadio
+              rootClass="self-center pb-4"
+              options={radioOptions}
+              value={radioValue}
+              onValueChange={setRadioValue}
+            />
+          </div>
+        </>
       )}
       <ThemeCategoryDisplay
         typeOptionPreset="All"
