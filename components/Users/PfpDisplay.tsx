@@ -10,7 +10,7 @@ import { RiPaintBrushFill, RiStarFill } from "react-icons/ri";
 export function PfpDisplay({ userData }: { userData?: UserInfo }) {
   if (userData) {
     return (
-      <div className="mx-auto mt-4 mb-16 flex w-fit flex-col gap-8 rounded-2xl bg-base-5-light p-8 shadow-2xl dark:bg-base-3-dark md:flex-row">
+      <div className="mx-auto mt-4 mb-16 flex w-fit flex-col items-center gap-8 rounded-2xl bg-base-5-light p-8 shadow-2xl dark:bg-base-3-dark md:flex-row">
         <Image
           src={userData?.avatar || "/question_mark.png"}
           width="128"

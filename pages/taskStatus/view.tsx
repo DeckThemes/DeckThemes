@@ -86,7 +86,7 @@ export default function TaskView() {
                     </b>
                     Seconds
                   </span>
-                  {!apiStatus.success && <span>{convertToPascalCase(apiStatus.status)}</span>}
+                  {!apiStatus.success && <span>{apiStatus.status}</span>}
                 </>
               ) : (
                 <>
