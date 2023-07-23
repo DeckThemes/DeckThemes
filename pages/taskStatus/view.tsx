@@ -6,9 +6,12 @@ import { ImSpinner5 } from "react-icons/im";
 import { toast } from "react-toastify";
 import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
+import Image from "next/image";
+import { useTheme } from "next-themes";
 
 export default function TaskView() {
   const router = useRouter();
+  const { resolvedTheme } = useTheme();
   let { task } = router.query;
 
   const [apiStatus, setStatus] = useState<TaskQueryResponse | null>(null);
@@ -89,19 +92,24 @@ export default function TaskView() {
                   <span>{apiStatus.status}</span>
                 </>
               )}
-              <div className="m-4 rounded-xl bg-cardLight px-4 py-2 text-xl transition-colors hover:bg-borderLight dark:bg-cardDark hover:dark:bg-borderDark">
-                <a
-                  href="https://discord.gg/zSyf5GgdQY"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-3xl bg-gradient-to-tl from-violet-800 to-violet-500 bg-clip-text p-1 text-transparent"
-                >
-                  Join our Discord <br className="flex md:hidden" />
-                  <span className="text-textLight dark:text-textDark">
-                    to keep updated on your submission&apos;s status!
-                  </span>
-                </a>
-              </div>
+              <a
+                href="https://discord.gg/zSyf5GgdQY"
+                target="_blank"
+                rel="noreferrer"
+                className="m-4 flex items-center justify-center gap-4 rounded-xl bg-base-3-light px-4 py-2 text-left text-xl transition-colors hover:bg-base-4-light dark:bg-base-3-dark dark:hover:bg-base-4-dark"
+              >
+                <Image
+                  alt="Discord Logo"
+                  height="32"
+                  width="32"
+                  src={`https://cdn.simpleicons.org/discord/${
+                    resolvedTheme === "light" ? "black" : "white"
+                  }`}
+                />
+                <span className="text-md rounded-3xl">
+                  Join our Discord for support and updates on your submission
+                </span>
+              </a>
             </div>
           ) : (
             <>
