@@ -37,15 +37,7 @@ export default function TaskView() {
 
   useEffect(() => {
     getStatus();
-    // See above
   }, [task]);
-
-  function convertToPascalCase(str: string) {
-    return str
-      .split(" ")
-      .map((e) => e[0].toUpperCase() + e.slice(1))
-      .join(" ");
-  }
 
   return (
     <>
@@ -57,8 +49,8 @@ export default function TaskView() {
           {apiStatus ? (
             <div className="flex flex-col items-center text-center">
               <div className="mb-8 flex flex-col items-center">
-                <span className="text-2xl font-semibold md:text-3xl">
-                  {convertToPascalCase(apiStatus.name)}
+                <span className="text-2xl font-semibold capitalize md:text-3xl">
+                  {apiStatus.name}
                 </span>
                 <span className="text-xl font-medium">Task {task?.split("-")[0]}</span>
               </div>
