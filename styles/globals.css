@@ -300,7 +300,7 @@ h4 {
 }
 
 
-@keyframes scaleIn {
+/* @keyframes scaleIn {
     from {
         opacity: 0;
         transform: scale(0.96);
@@ -309,6 +309,10 @@ h4 {
         opacity: 1;
         transform: scale(1);
     }
+} */
+
+.patreon-link {
+    background: radial-gradient(150.43% 150.43% at -11.89% 9.47%, #E7BA45 0%, #CD334F 100%);
 }
 
 @media screen and (max-width: 768px) {

@@ -1,0 +1,205 @@
+// @ts-nocheck
+// This is a terrible mess, but it can be cleaned later
+import React from "react";
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
+import { twMerge } from "tailwind-merge";
+import { useContext } from "react";
+import { authContext, desktopModeContext } from "contexts";
+import { fetchDiscordUrl } from "../../apiHelpers";
+import { NavIcon } from "./NavIcon";
+import { TbUpload } from "react-icons/tb";
+import { RiAdminFill } from "react-icons/ri";
+import { Permissions } from "../../types";
+import { MiniPfpDisplay } from "../Users";
+import { LoadingSpinner } from "../Generic";
+import { useHasCookie } from "../../hooks";
+import { NavIconLink } from "./NavIconLink";
+import { DesktopNav } from "../Desktop";
+import { FaCaretDown } from "react-icons/fa";
+import Link from "next/link";
+
+const Nav = () => {
+  const { accountInfo } = useContext(authContext);
+  const { desktopMode } = useContext(desktopModeContext);
+  const hasCookie = useHasCookie();
+
+  if (desktopMode) return <DesktopNav />;
+
+  return (
+    <>
+      <NavigationMenu.Root
+        delayDuration={0}
+        className="relative !z-[9999] my-8 w-full px-4 text-xs font-bold"
+      >
+        <div className="mx-auto flex max-w-7xl justify-between">
+          <div className="flex items-center">
+            <NavIcon />
+          </div>
+
+          <NavigationMenu.List className="center shadow-blackA7 m-0 flex list-none rounded-lg p-1">
+            <NavigationMenu.Item>
+              <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
+                Browse{" "}
+                <FaCaretDown
+                  className="relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
+                  aria-hidden
+                />
+              </NavigationMenu.Trigger>
+              <NavigationMenu.Content className="absolute top-0 left-0 w-full sm:w-auto">
+                {/* Note, these don't work if you're already on the /themes page. ugh */}
+                <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
+                  <ListItem
+                    title="Desktop Themes"
+                    href="themes?filters=All&order=Most+Downloaded&type=DESKTOP-CSS"
+                  >
+                    Steam on Windows and Linux
+                  </ListItem>
+                  <ListItem
+                    title="Big Picture Mode Themes"
+                    href="/themes?filters=All&order=Most+Downloaded&type=BPM-CSS"
+                  >
+                    Steam Deck and Big Picture Mode
+                  </ListItem>
+                  <ListItem
+                    title="Audio Packs"
+                    href="/packs?filters=All&order=Most+Downloaded&type=AUDIO"
+                  >
+                    Steam Deck and Big Picture Mode
+                  </ListItem>
+                </ul>
+              </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            <NavigationMenu.Item>
+              <NavigationMenu.Trigger className="group flex select-none items-center  justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
+                Social{" "}
+                <FaCaretDown
+                  className="relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
+                  aria-hidden
+                />
+              </NavigationMenu.Trigger>
+              <NavigationMenu.Content className="absolute top-0 left-0 w-full data-[motion=from-start]:animate-enterFromLeft data-[motion=from-end]:animate-enterFromRight data-[motion=to-start]:animate-exitToLeft data-[motion=to-end]:animate-exitToRight sm:w-auto">
+                <div className="grid sm:grid-cols-[0.75fr_1fr]">
+                  {/* <ul className="flex-1 h-full flex p-4">
+                    <ListItem className="patreon-link h-full w-full min-w-[350px]" title="Patreon" href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}>
+                      Keep DeckThemes running by supporting us on Patreon
+                    </ListItem>
+                  </ul> */}
+                  <li className="grid p-4">
+                    <NavigationMenu.Link asChild>
+                      <a
+                        className="patreon-link flex flex-col justify-end h-full w-full min-w-[250px] rounded-xl p-4"
+                        href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}
+                      >
+                        <div className="mb-[5px] font-bold leading-[1.2] text-lg">
+                          Patreon
+                        </div>
+                        <p className="text-sm font-medium leading-[1.4] opacity-80">
+                          Keep DeckThemes running by supporting us on Patreon
+                        </p>
+                      </a>
+                    </NavigationMenu.Link>
+                  </li>
+                  <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
+                    <ListItem href="https://github.com/beebls/DeckThemes" title="GitHub">
+                      Contribute to DeckThemes and CSSLoader on our GitHub
+                    </ListItem>
+                    {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
+                      <ListItem href={process.env.NEXT_PUBLIC_DISCORD_URL} title="Discord">
+                        Get updates, support, and chat with the community
+                      </ListItem>
+                    )}
+                    <ListItem title="Documentation" href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}>
+                      Learn how to make your own themes and packs
+                    </ListItem>
+                  </ul>
+                </div>
+              </NavigationMenu.Content>
+            </NavigationMenu.Item>
+
+            {/* Nav arrow thing */}
+            <NavigationMenu.Indicator className="top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
+              <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-black" />
+            </NavigationMenu.Indicator>
+          </NavigationMenu.List>
+
+          <div className="absolute top-full left-0 !z-[9999] flex w-full justify-center">
+            <NavigationMenu.Viewport className="relative !z-[9999] mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-2xl bg-black !text-white transition-all duration-300 data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+          </div>
+
+          {/* Account, Upload, Submissions */}
+          <div className="flex items-center gap-8 font-extrabold">
+            <>
+              {accountInfo?.username ? (
+                <>
+                  {accountInfo.permissions.includes(Permissions.viewSubs) && (
+                    <NavIconLink
+                      ariaLabel="View Submissions"
+                      href={"/submissions"}
+                      className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
+                      isInternal
+                    >
+                      <RiAdminFill size={14} />
+                      <div className="font-fancy hidden text-xs font-bold sm:flex ">Admin</div>
+                    </NavIconLink>
+                  )}
+                  <NavIconLink
+                    ariaLabel="Upload A Theme"
+                    href={"/submit"}
+                    className="flex select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 transition duration-150  hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
+                    isInternal
+                  >
+                    <TbUpload size={14} className="scale-x-105" />
+                    <div className="font-fancy hidden text-xs font-bold sm:block">Upload</div>
+                  </NavIconLink>
+                  <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
+                </>
+              ) : (
+                <>
+                  {hasCookie ? (
+                    <>
+                      <LoadingSpinner size={32} />
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:text-fore-11-dark"
+                        onClick={fetchDiscordUrl}
+                      >
+                        <div>
+                          Login <span className="hidden sm:inline-block">with Discord</span>
+                        </div>
+                      </button>
+                    </>
+                  )}
+                </>
+              )}
+            </>
+          </div>
+        </div>
+      </NavigationMenu.Root>
+    </>
+  );
+};
+
+// @ts-ignore
+const ListItem = React.forwardRef(({ className, children, title, ...props }, forwardedRef) => (
+  <li>
+    <NavigationMenu.Link asChild>
+      <Link
+        className={twMerge(
+          "block select-none rounded-[6px] p-3 text-[15px] leading-none no-underline outline-none transition-colors hover:bg-base-4-dark focus:shadow-[0_0_0_2px]",
+          className
+        )}
+        {...props}
+        // @ts-ignore
+        ref={forwardedRef}
+      >
+        <div className="mb-[5px] font-bold leading-[1.2]">{title}</div>
+        <p className="text-sm font-medium leading-[1.4] opacity-80">{children}</p>
+      </Link>
+    </NavigationMenu.Link>
+  </li>
+));
+
+export default Nav;

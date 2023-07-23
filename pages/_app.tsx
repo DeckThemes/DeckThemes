@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { LandingFooter, DesktopFooter, MainNav } from "../components";
+import Nav from "@components/Nav/Nav";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData } from "../types";
@@ -80,7 +81,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <div className="relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark">
             {desktopMode !== undefined ? (
               <>
-                <MainNav />
+                <Nav />
                 <ToastContainer
                   position="bottom-center"
                   autoClose={5000}

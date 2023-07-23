@@ -24,7 +24,7 @@ export function NavIcon({ disabled = false }: { disabled?: boolean }) {
     >
       <>
         <ThemedLogoVector
-          size={28}
+          size={24}
           className="transition duration-[750ms] group-hover:brightness-150 group-hover:hue-rotate-180"
         />
         <span className="font-fancy hidden pl-4 text-xl font-semibold md:flex">DeckThemes</span>
