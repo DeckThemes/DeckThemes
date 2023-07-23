@@ -7,7 +7,7 @@ import { desktopModeContext } from "contexts";
 
 export default function Home() {
   const contentRef = useRef<HTMLDivElement>(null);
-  const { desktopMode, setDesktopMode } = useContext(desktopModeContext);
+  const { desktopMode } = useContext(desktopModeContext);
 
   return (
     <>

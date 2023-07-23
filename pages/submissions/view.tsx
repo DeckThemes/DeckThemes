@@ -99,7 +99,7 @@ export default function FullSubmissionViewPage() {
       </Head>
       {submissionData ? (
         <>
-          <div className="flex w-full flex-col items-center">
+          <div className="flex w-full flex-col items-center px-4">
             <h1 className="mt-4 mb-4 text-3xl font-black md:text-6xl">
               {submissionData.newTheme.type === "Audio"
                 ? FormattedSubmissionIntentAudio[submissionData.intent]
@@ -140,7 +140,7 @@ export default function FullSubmissionViewPage() {
                         </>
                       ) : (
                         <>
-                          <div className="font-fancy flex w-full flex-col items-center gap-2 md:w-1/4">
+                          <div className="font-fancy flex w-full flex-col items-center gap-2 md:w-1/3">
                             <div className="flex gap-8">
                               {accountInfo?.permissions.includes(Permissions.approveSubs) && (
                                 <button
@@ -176,7 +176,7 @@ export default function FullSubmissionViewPage() {
                             </div>
                             {action && (
                               <>
-                                <div className="flex w-full flex-col items-center gap-2 rounded-3xl">
+                                <div className="flex w-full flex-col items-center justify-center gap-4 px-4">
                                   <LabelledTextArea
                                     placeholder="Message Here"
                                     label={
@@ -185,13 +185,28 @@ export default function FullSubmissionViewPage() {
                                     value={message}
                                     onValueChange={(e) => setMessage(e)}
                                   />
+                                  {accountInfo?.permissions.includes(Permissions.approveSubs) &&
+                                    submissionData.newTheme.type === "Audio" &&
+                                    action === "deny" && (
+                                      <button
+                                        onClick={() => {
+                                          setMessage(
+                                            "We don't accept music packs containing copyright video game OSTs where there is no permission from the developer and/or the developer has not expressed that they are okay with reuploads. If you do have permission, feel free to message a reviewer on Discord."
+                                          );
+                                        }}
+                                        className="w-full rounded-3xl bg-red-300 p-4 dark:bg-red-900"
+                                      >
+                                        Use Copyright Boilerplate
+                                      </button>
+                                    )}
+
+                                  <button
+                                    className="w-full rounded-3xl bg-brandBlue px-4 py-2"
+                                    onClick={submitReview}
+                                  >
+                                    <span className="text-xl font-medium">Submit Review</span>
+                                  </button>
                                 </div>
-                                <button
-                                  className="rounded-3xl bg-brandBlue p-4"
-                                  onClick={submitReview}
-                                >
-                                  <span className="text-xl font-medium">Submit Review</span>
-                                </button>
                               </>
                             )}
                           </div>
@@ -220,7 +235,7 @@ export default function FullSubmissionViewPage() {
                   )}
                   <div className="mb-2 flex flex-col items-center">
                     {/* <span className="text-2xl font-medium pt-2">Message</span> */}
-                    <span className="py-2 text-xl">{submissionData.message}</span>
+                    <span className="py-2 px-4 text-xl">{submissionData.message}</span>
                   </div>
                   {submissionData?.reviewedBy ? (
                     <div className="flex items-center gap-2">
