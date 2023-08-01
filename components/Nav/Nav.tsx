@@ -18,7 +18,7 @@ import { DesktopNav } from "../Desktop";
 import { FaCaretDown } from "react-icons/fa";
 import Link from "next/link";
 
-const Nav = () => {
+export default function Nav() {
   const { accountInfo } = useContext(authContext);
   const { desktopMode } = useContext(desktopModeContext);
   const hasCookie = useHasCookie();
@@ -88,12 +88,10 @@ const Nav = () => {
                   <li className="grid p-4">
                     <NavigationMenu.Link asChild>
                       <a
-                        className="patreon-link flex flex-col justify-end h-full w-full min-w-[250px] rounded-xl p-4"
+                        className="patreon-link flex h-full w-full min-w-[250px] flex-col justify-end rounded-xl p-4"
                         href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}
                       >
-                        <div className="mb-[5px] font-bold leading-[1.2] text-lg">
-                          Patreon
-                        </div>
+                        <div className="mb-[5px] text-lg font-bold leading-[1.2]">Patreon</div>
                         <p className="text-sm font-medium leading-[1.4] opacity-80">
                           Keep DeckThemes running by supporting us on Patreon
                         </p>
@@ -180,9 +178,8 @@ const Nav = () => {
       </NavigationMenu.Root>
     </>
   );
-};
+}
 
-// @ts-ignore
 const ListItem = React.forwardRef(({ className, children, title, ...props }, forwardedRef) => (
   <li>
     <NavigationMenu.Link asChild>
@@ -201,5 +198,4 @@ const ListItem = React.forwardRef(({ className, children, title, ...props }, for
     </NavigationMenu.Link>
   </li>
 ));
-
-export default Nav;
+ListItem.displayName = "ListItem";

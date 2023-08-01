@@ -41,7 +41,7 @@ export function HeroReel() {
         // ref={index === 0 ? firstCardRef : null}
         href={loaded ? `/themes/view?themeId=${data.id}` : "#"}
         key={index}
-        className={`img-shadow group relative aspect-[16/10] w-[24rem] flex-none overflow-hidden rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem] ${getRandomRotationClass(
+        className={`img-shadow overflow group relative aspect-[16/10] w-[24rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem] ${getRandomRotationClass(
           index
         )}`}
       >
