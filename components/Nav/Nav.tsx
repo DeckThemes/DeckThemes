@@ -89,7 +89,7 @@ export default function Nav() {
                     <NavigationMenu.Link asChild>
                       <a
                         className="patreon-link flex h-full w-full min-w-[250px] flex-col justify-end rounded-xl p-4"
-                        href={process.env.NEXT_PUBLIC_DOCS_URL || "/"}
+                        href={process.env.NEXT_PUBLIC_PATREON_URL || "/"}
                       >
                         <div className="mb-[5px] text-lg font-bold leading-[1.2]">Patreon</div>
                         <p className="text-sm font-medium leading-[1.4] opacity-80">
