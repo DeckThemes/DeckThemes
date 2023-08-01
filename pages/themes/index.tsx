@@ -1,10 +1,12 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeCategoryDisplay } from "../../components";
+import { desktopModeContext } from "contexts";
 
 export default function Themes() {
   const router = useRouter();
+  const { desktopMode } = useContext(desktopModeContext);
   const [defaults, setDefaults] = useState<
     { defaultFilter: string; defaultOrder: string; defaultType: string } | undefined
   >(undefined);
@@ -45,18 +47,20 @@ export default function Themes() {
           themesPerPage={24}
           noAuthRequired
           onSearchOptsChange={(searchOpts, type) => {
-            router.push(
-              {
-                pathname: "/themes",
-                query: {
-                  filters: searchOpts.filters,
-                  order: searchOpts.order,
-                  type: type,
+            if (!desktopMode) {
+              router.push(
+                {
+                  pathname: "/themes",
+                  query: {
+                    filters: searchOpts.filters,
+                    order: searchOpts.order,
+                    type: type,
+                  },
                 },
-              },
-              undefined,
-              { shallow: true }
-            );
+                undefined,
+                { shallow: true }
+              );
+            }
           }}
         />
       )}

@@ -14,7 +14,6 @@ import { authContext, desktopModeContext } from "contexts";
 import { InstalledTheme } from "@customTypes/DesktopModeTypes";
 import { useRouter } from "next/router";
 import { twMerge } from "tailwind-merge";
-import Image from "next/image";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
