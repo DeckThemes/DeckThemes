@@ -126,14 +126,14 @@ export default function Nav() {
               </NavigationMenu.Item>
 
               {/* Nav arrow thing */}
-              <NavigationMenu.Indicator className="top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
-                <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-black" />
-              </NavigationMenu.Indicator>
+              {/* <NavigationMenu.Indicator className="top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
+                <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-black dark:bg-white" />
+              </NavigationMenu.Indicator> */}
             </NavigationMenu.List>
           </div>
 
           <div
-            className="absolute top-full left-0 !z-[9999] flex w-full"
+            className="absolute top-full left-1/2 !z-[9999] flex w-full max-w-7xl -translate-x-1/2"
             style={{ justifyContent: alignValue }}
           >
             <NavigationMenu.Viewport className="relative !z-[9999] mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-2xl bg-black !text-white transition-all duration-300 data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut sm:w-[var(--radix-navigation-menu-viewport-width)]" />
