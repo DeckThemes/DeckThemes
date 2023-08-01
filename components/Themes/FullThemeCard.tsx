@@ -9,6 +9,7 @@ import {
   ThemeAdminPanel,
   ThemeDownloadButton,
   ThemeImageCarousel,
+  MiniThemeCardRoot,
 } from "..";
 import { FullCSSThemeInfo } from "../../types";
 import { authContext, desktopModeContext } from "contexts";
@@ -25,6 +26,7 @@ export function FullThemeCard({
   const { desktopMode } = useContext(desktopModeContext);
 
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
+  const [depData, setDepData] = useState<FullCSSThemeInfo[] | undefined>([]);
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
   const { accountInfo } = useContext(authContext);
@@ -41,13 +43,26 @@ export function FullThemeCard({
     }
   }
 
-  useEffect(() => {
+  async function getThemeData() {
     if (parsedId) {
-      genericGET(`/themes/${parsedId}`).then((data) => {
-        setThemeData(data);
-        setLoaded(true);
-      });
+      const data: FullCSSThemeInfo = await genericGET(`/themes/${parsedId}`);
+      if (!data) return;
+      setThemeData(data);
+      if (data.dependencies.length === 0) {
+        setDepData([]);
+      } else {
+        const depData = await Promise.all(
+          data.dependencies.map((e) => genericGET(`/themes/${e.id}`))
+        );
+        depData && setDepData(depData);
+      }
     }
+    setLoaded(true);
+  }
+
+  useEffect(() => {
+    setLoaded(false);
+    getThemeData();
     if (accountInfo?.username) {
       getStarredStatus();
     }
@@ -276,6 +291,17 @@ export function FullThemeCard({
                     <ThemeImageCarousel data={themeData} />
                   </div> */}
               </>
+
+              {depData && depData.length > 0 && (
+                <div className="flex w-full flex-col items-center gap-4 pt-20 sm:items-start">
+                  <span className="text-3xl font-bold">Dependencies</span>
+                  <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {depData?.map((e, i) => {
+                      return <MiniThemeCardRoot data={e} key={`DEP_${i}`} />;
+                    })}
+                  </div>
+                </div>
+              )}
 
               {/* everything else */}
               {/* <div className="text-sm max-w-[640px]">
