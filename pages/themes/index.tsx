@@ -26,7 +26,7 @@ export default function Themes() {
       setDefaults({
         defaultFilter: urlFilters || "",
         defaultOrder: urlOrder || "",
-        defaultType: urlType || "",
+        defaultType: urlType || "CSS",
       });
     }
   }, [router.query, router.pathname, router.isReady]);
