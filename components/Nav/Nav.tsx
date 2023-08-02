@@ -7,13 +7,10 @@ import { useContext } from "react";
 import { authContext, desktopModeContext } from "contexts";
 import { fetchDiscordUrl } from "../../apiHelpers";
 import { NavIcon } from "./NavIcon";
-import { TbUpload } from "react-icons/tb";
-import { RiAdminFill } from "react-icons/ri";
 import { Permissions } from "../../types";
 import { MiniPfpDisplay } from "../Users";
 import { LoadingSpinner } from "../Generic";
 import { useHasCookie } from "../../hooks";
-import { NavIconLink } from "./NavIconLink";
 import { DesktopNav } from "../Desktop";
 import { FaCaretDown } from "react-icons/fa";
 import Link from "next/link";
@@ -54,25 +51,18 @@ export default function Nav() {
                   />
                 </NavigationMenu.Trigger>
                 <NavigationMenu.Content className="absolute top-0 left-0 w-full sm:w-auto">
-                  {/* Note, these don't work if you're already on the /themes page. ugh */}
-                  <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
+                  <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[320px] sm:grid-flow-col sm:grid-rows-2">
                     <ListItem
-                      title="Desktop Themes"
-                      href="/themes?filters=All&order=Most+Downloaded&type=DESKTOP-CSS"
+                      title="CSS Themes"
+                      href="/themes?filters=All&order=Most+Downloaded&type=CSS"
                     >
-                      Steam on Windows and Linux
-                    </ListItem>
-                    <ListItem
-                      title="Big Picture Mode Themes"
-                      href="/themes?filters=All&order=Most+Downloaded&type=BPM-CSS"
-                    >
-                      Steam Deck and Big Picture Mode
+                      Steam Deck, Desktop, and Big Picture
                     </ListItem>
                     <ListItem
                       title="Audio Packs"
                       href="/packs?filters=All&order=Most+Downloaded&type=AUDIO"
                     >
-                      Steam Deck and Big Picture Mode
+                      Steam Deck and Big Picture
                     </ListItem>
                   </ul>
                 </NavigationMenu.Content>
@@ -155,7 +145,7 @@ export default function Nav() {
                       </NavigationMenu.Trigger>
                       <NavigationMenu.Content className="absolute top-0 right-0 w-full sm:w-auto">
                         {/* Note, these don't work if you're already on the /themes page. ugh */}
-                        <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
+                        <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-4">
                           <ListItem title="Profile" href="/users/me">
                             View Your Profile
                           </ListItem>
@@ -173,29 +163,6 @@ export default function Nav() {
                   </NavigationMenu.List>
                 </>
               ) : (
-                // <>
-                //   {accountInfo.permissions.includes(Permissions.viewSubs) && (
-                //     <NavIconLink
-                //       ariaLabel="View Submissions"
-                //       href={"/submissions"}
-                //       className="flex select-none items-center gap-2 py-4 transition duration-150 hover:scale-95 hover:active:scale-90"
-                //       isInternal
-                //     >
-                //       <RiAdminFill size={14} />
-                //       <div className="font-fancy hidden text-xs font-bold sm:flex ">Admin</div>
-                //     </NavIconLink>
-                //   )}
-                //   <NavIconLink
-                //     ariaLabel="Upload A Theme"
-                //     href={"/submit"}
-                //     className="flex select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 transition duration-150  hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
-                //     isInternal
-                //   >
-                //     <TbUpload size={14} className="scale-x-105" />
-                //     <div className="font-fancy hidden text-xs font-bold sm:block">Upload</div>
-                //   </NavIconLink>
-                //   <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
-                // </>
                 <>
                   {hasCookie ? (
                     <>

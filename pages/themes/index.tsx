@@ -22,12 +22,12 @@ export default function Themes() {
       if (typeof router.query?.type === "string") {
         urlType = router.query.type;
       }
+
       setDefaults({
         defaultFilter: urlFilters || "",
         defaultOrder: urlOrder || "",
         defaultType: urlType || "",
       });
-      // This ready here makes sure that themes aren't fetched until the initial url values have been pre-filled
     }
   }, [router.query, router.pathname, router.isReady]);
   return (
