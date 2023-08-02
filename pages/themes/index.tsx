@@ -25,7 +25,7 @@ export default function Themes() {
       setDefaults({
         defaultFilter: urlFilters || "",
         defaultOrder: urlOrder || "",
-        defaultType: urlType || "",
+        defaultType: urlType || "CSS",
       });
       // This ready here makes sure that themes aren't fetched until the initial url values have been pre-filled
     }
