@@ -145,7 +145,7 @@ export default function Nav() {
                       </NavigationMenu.Trigger>
                       <NavigationMenu.Content className="absolute top-0 right-0 w-full sm:w-auto">
                         {/* Note, these don't work if you're already on the /themes page. ugh */}
-                        <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-4">
+                        <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
                           <ListItem title="Profile" href="/users/me">
                             View Your Profile
                           </ListItem>

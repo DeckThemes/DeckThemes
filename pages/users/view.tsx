@@ -107,45 +107,46 @@ export default function Account() {
       <Head>
         <title>{userInfo.username} | DeckThemes</title>
       </Head>
-      <PfpDisplay userData={userInfo} />
-      <div className="mt-4" />
-      {/* If you're un-authed, this title will just always stay as "x's Themes" */}
-      <TransitionedCarouselTitle
-        className="px-4 pb-20"
-        titles={radioOptions.map((e) => e.title)}
-        currentTitle={
-          radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
-        }
-      />
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
+        <PfpDisplay userData={userInfo} />
+        {/* If you're un-authed, this title will just always stay as "x's Themes" */}
+        <TransitionedCarouselTitle
+          className="px-4 pb-20"
+          titles={radioOptions.map((e) => e.title)}
+          currentTitle={
+            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+          }
+        />
 
-      {accountInfo?.permissions.includes(Permissions.admin) && (
-        <>
-          <div className="block w-full px-4 md:hidden">
-            <RadioDropdown
-              ariaLabel="Your Theme Types Dropdown"
-              options={radioOptions}
-              value={radioValue}
-              onValueChange={setRadioValue}
-            />
-          </div>
-          <div className="hidden w-full items-center justify-center md:flex">
-            <HorizontalRadio
-              rootClass="self-center pb-4"
-              options={radioOptions}
-              value={radioValue}
-              onValueChange={setRadioValue}
-            />
-          </div>
-        </>
-      )}
-      <ThemeCategoryDisplay
-        typeOptionPreset="All"
-        themesPerPage={4}
-        themeDataApiPath={`/users/${parsedId}/${radioValue}`}
-        filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
-        noAuthRequired={radioValue === "themes"}
-        useSubmissionCards={radioValue === "submissions"}
-      />
+        {accountInfo?.permissions.includes(Permissions.admin) && (
+          <>
+            <div className="block w-full px-4 md:hidden">
+              <RadioDropdown
+                ariaLabel="Your Theme Types Dropdown"
+                options={radioOptions}
+                value={radioValue}
+                onValueChange={setRadioValue}
+              />
+            </div>
+            <div className="hidden w-full items-center justify-center md:flex">
+              <HorizontalRadio
+                rootClass="self-center pb-4"
+                options={radioOptions}
+                value={radioValue}
+                onValueChange={setRadioValue}
+              />
+            </div>
+          </>
+        )}
+        <ThemeCategoryDisplay
+          typeOptionPreset="All"
+          themesPerPage={4}
+          themeDataApiPath={`/users/${parsedId}/${radioValue}`}
+          filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
+          noAuthRequired={radioValue === "themes"}
+          useSubmissionCards={radioValue === "submissions"}
+        />
+      </div>
     </>
   );
 }
