@@ -1,5 +1,4 @@
-import { ReactSelectCustomClasses, ReactSelectCustomLabel } from "../../CustomDropdowns";
-import Select from "react-select";
+import { RadioDropdown } from "../../Primitives";
 
 export function FilterDropdown({
   filterOpts = ["ERROR"],
@@ -17,49 +16,31 @@ export function FilterDropdown({
   const formattedFilterOpts = [
     {
       value: "All",
-      label: (
-        <ReactSelectCustomLabel
-          mainText="All"
-          bubbleValue={Object.values(filterOpts).reduce(
-            (prev, cur) => Number(prev) + Number(cur),
-            0
-          )}
-        />
-      ),
+      displayText: "All",
+      bubbleValue: Object.values(filterOpts).reduce((prev, cur) => Number(prev) + Number(cur), 0),
     },
     ...Object.entries(filterOpts)
-      .filter(([_, itemCount]) => Number(itemCount) > 0 || true)
+      .filter(([_, itemCount]) => Number(itemCount) > 0 || showFiltersWithZero)
       .map(([filterName, itemCount]) => ({
         value: filterName,
-        label: (
-          <ReactSelectCustomLabel
-            // TODO: Refactor
-            // This is a little bit of cursed logic that will convert target names like "Desktop-Library" to just "Library"
-            mainText={
-              typeValue &&
-              typeValue?.toLowerCase()?.includes("desktop") &&
-              filterName.toLowerCase().includes(`desktop-`)
-                ? `${filterName.slice(filterName.indexOf("-") + 1)}`
-                : filterName
-            }
-            bubbleValue={itemCount}
-          />
-        ),
+        displayText:
+          typeValue === "DESKTOP-CSS" && filterName.includes("Desktop-")
+            ? filterName.slice(filterName.indexOf("-") + 1)
+            : filterName,
+        bubbleValue: itemCount,
       })),
   ];
   return (
     <>
-      <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
-        <span>Filter</span>
-        <Select
-          // This sets initial value to "All" if not pre-set
-          value={formattedFilterOpts.find((e) => e.value === filterValue) || formattedFilterOpts[0]}
-          onChange={(e) => {
-            onFilterChange && onFilterChange({ target: e });
-          }}
-          {...ReactSelectCustomClasses}
-          isSearchable={false}
+      <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
+        <RadioDropdown
+          ariaLabel="Theme Category Dropdown"
+          headingText="Category"
           options={formattedFilterOpts}
+          value={filterValue}
+          onValueChange={(e: any) => {
+            onFilterChange && onFilterChange(e);
+          }}
         />
       </div>
     </>

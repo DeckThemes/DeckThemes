@@ -11,15 +11,18 @@ export function PageSelector({
   currentPage: number;
   onChoose: (page: number) => void;
 }) {
-  const totalPages = Math.trunc(total / perPage) + (total % perPage === 0 ? 0 : 1);
+  const totalPages =
+    Math.trunc(total / perPage) + (total % perPage === 0 ? 0 : 1);
   return (
     <>
-      <div className="flex flex-wrap gap-2 items-center justify-center">
+      <div className="flex flex-wrap items-center justify-center gap-2">
         {total > perPage ? (
           <>
             <button
               className={`text-xl ${
-                currentPage !== 1 ? "cursor-pointer visible" : "cursor-default invisible"
+                currentPage !== 1
+                  ? "visible cursor-pointer"
+                  : "invisible cursor-default"
               }`}
               onClick={() => {
                 currentPage !== 1 && onChoose(currentPage - 1);
@@ -36,7 +39,7 @@ export function PageSelector({
                     currentPage === i + 1
                       ? "bg-borderLight dark:bg-borderDark"
                       : "bg-cardLight dark:bg-cardDark"
-                  } h-8 w-8 flex items-center justify-center rounded-3xl`}
+                  } flex h-8 w-8 items-center justify-center rounded-3xl`}
                   onClick={() => onChoose(i + 1)}
                 >
                   {i + 1}
@@ -44,7 +47,9 @@ export function PageSelector({
               ))}
             <button
               className={`text-xl ${
-                currentPage !== totalPages ? "cursor-pointer visible" : "cursor-default invisible"
+                currentPage !== totalPages
+                  ? "visible cursor-pointer"
+                  : "invisible cursor-default"
               }`}
               onClick={() => {
                 currentPage !== totalPages && onChoose(currentPage + 1);

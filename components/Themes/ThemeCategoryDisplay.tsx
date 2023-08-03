@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from "react";
-import { generateParamStr, genericGET } from "../../api";
-import { authContext } from "../../pages/_app";
+import { useState, useEffect, useContext, useRef } from "react";
+import { generateParamStr, genericGET } from "../../apiHelpers";
+import { authContext } from "contexts";
 import {
   FilterQueryResponse,
   ThemeQueryRequest,
@@ -10,11 +10,13 @@ import {
 import {
   FilterSelectorCard,
   LoadMoreButton,
+  LoadingSkeletonCard,
   MiniSubmissionCard,
   MiniThemeCardRoot,
   TypeOptionPreset,
   typePresets,
 } from ".";
+import { twMerge } from "tailwind-merge";
 
 export function ThemeCategoryDisplay({
   themeDataApiPath,
@@ -32,7 +34,7 @@ export function ThemeCategoryDisplay({
 }: {
   themeDataApiPath: string;
   filterDataApiPath: string;
-  title: string;
+  title?: string;
   typeOptionPreset?: TypeOptionPreset;
   useSubmissionCards?: boolean;
   themesPerPage?: number;
@@ -62,7 +64,11 @@ export function ThemeCategoryDisplay({
   });
   const [type, setType] = useState<string>(defaultType);
 
-  function fetchNewData() {
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  async function fetchNewData() {
+    setLoaded(false);
+
     // If there is a prepend value AND a filter, the generateParamStr function will separate them with a '.'
     const prependValue = typeOptionPreset || type ? `${type}` : "";
     // Turns the object of orders/filters/etc into an actual html query string
@@ -71,9 +77,10 @@ export function ThemeCategoryDisplay({
       searchOpts.filters !== "All" ? searchOpts : { ...searchOpts, filters: "" },
       prependValue
     );
-    genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
+    return genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
       if (data) {
         setThemeData(data);
+        setLoaded(true);
       }
     });
   }
@@ -84,7 +91,7 @@ export function ThemeCategoryDisplay({
       fetchNewData();
       onSearchOptsChange(searchOpts, type);
     }
-  }, [searchOpts, accountInfo, type, noAuthRequired]);
+  }, [searchOpts, accountInfo, type, noAuthRequired, themeDataApiPath]);
   useEffect(() => {
     if (accountInfo?.username || noAuthRequired) {
       genericGET(`${filterDataApiPath}${type ? `?type=${type}` : ""}`).then((data) => {
@@ -93,7 +100,7 @@ export function ThemeCategoryDisplay({
         }
       });
     }
-  }, [accountInfo, type, noAuthRequired]);
+  }, [accountInfo, type, noAuthRequired, filterDataApiPath]);
 
   useEffect(() => {
     // This ensures if you switch types, that it resets your filter so that you see all entries again
@@ -110,66 +117,142 @@ export function ThemeCategoryDisplay({
     if (type.includes("BPM") && searchOpts.filters.includes("Desktop")) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
-    if (type.includes("AUDIO") && searchOpts.filters !== "All") {
+    if (
+      type.includes("AUDIO") &&
+      searchOpts.filters !== "All" &&
+      // This is here to not break /submissions
+      searchOpts.filters !== "AwaitingApproval"
+    ) {
       setSearchOpts({ ...searchOpts, filters: "All" });
     }
   }, [type]);
 
+  const [isSticky, setIsSticky] = useState(false);
+  const stickyHeaderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (stickyHeaderRef.current) {
+        const rect = stickyHeaderRef?.current?.getBoundingClientRect();
+        const isElementSticky = rect?.top <= 0;
+
+        setIsSticky(isElementSticky);
+        console.log("hit");
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    console.log("handlescroll mounted");
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useSubmissionCards && console.log(themeData, loaded);
+
   return (
     <>
       {themeData.total >= 0 ? (
-        <div className="flex flex-col w-full items-center px-4">
-          <h4 className="text-2xl font-medium">{title}</h4>
-          <FilterSelectorCard
-            filterOpts={serverFilters.filters}
-            onFilterChange={(e) => {
-              setSearchOpts({ ...searchOpts, filters: e.target.value });
-            }}
-            filterValue={searchOpts.filters}
-            showFiltersWithZero={showFiltersWithZero}
-            orderOpts={serverFilters.order}
-            onOrderChange={(e) => {
-              setSearchOpts({ ...searchOpts, order: e.target.value });
-            }}
-            orderValue={searchOpts.order}
-            searchValue={searchOpts.search}
-            onSearchChange={(e) => {
-              setSearchOpts({ ...searchOpts, search: e.target.value });
-            }}
-            typeOptions={typePresets[typeOptionPreset]}
-            onTypeChange={(e) => {
-              setType(e.target.value);
-            }}
-            typeValue={type}
-          />
-          <div className="flex flex-col md:flex-row w-full justify-center items-center md:items-stretch flex-wrap gap-4">
-            {themeData.total === 0 && <span>No Results Found</span>}
-            {useSubmissionCards ? (
+        <div className="relative flex h-full w-full flex-col items-center px-4">
+          {title && <h4 className="text-2xl font-medium">{title}</h4>}
+          {isSticky && (
+            <div className="category-sticky-header-blur hidden lg:block" aria-hidden={true}></div>
+          )}
+          <div
+            ref={stickyHeaderRef}
+            className={`z-10 flex w-full max-w-7xl items-center justify-center transition-all duration-300 lg:sticky lg:top-0 ${
+              isSticky ? "lg:px-4" : ""
+            }`}
+          >
+            <FilterSelectorCard
+              filterOpts={serverFilters.filters}
+              onFilterChange={(e) => {
+                setSearchOpts({ ...searchOpts, filters: e });
+              }}
+              filterValue={searchOpts.filters}
+              showFiltersWithZero={showFiltersWithZero}
+              orderOpts={serverFilters.order}
+              onOrderChange={(e) => {
+                setSearchOpts({ ...searchOpts, order: e });
+              }}
+              orderValue={searchOpts.order}
+              searchValue={searchOpts.search}
+              onSearchChange={(e) => {
+                setSearchOpts({ ...searchOpts, search: e });
+              }}
+              typeOptions={typePresets[typeOptionPreset]}
+              onTypeChange={(e) => {
+                setType(e);
+              }}
+              typeValue={type}
+            />
+          </div>
+          <div className="grid w-full max-w-7xl grid-cols-1 flex-wrap items-center justify-center gap-4 sm:grid-cols-2 md:grid-cols-3 md:items-stretch lg:grid-cols-4">
+            {loaded ? (
               <>
-                {themeData.items.map((e, i) => {
-                  //   This gives type errors bcus the fetch type is "Themes | Submissions", and despite the fact that I check for themes or submissions here, ts doesn't know that
-                  // @ts-ignore
-                  return <MiniSubmissionCard data={e} key={`Approved Theme ${i}`} />;
-                })}
+                {themeData.total === 0 && <span>No Results Found</span>}
+                {/* @ts-ignore */}
+                {useSubmissionCards && themeData?.items?.[0]?.newTheme ? (
+                  <>
+                    {themeData.items.map((e, i) => {
+                      return (
+                        <MiniSubmissionCard
+                          //   This gives type errors bcus the fetch type is "Themes | Submissions", and despite the fact that I check for themes or submissions here, ts doesn't know that
+                          // @ts-ignore
+                          data={e}
+                          key={`Approved Theme ${i}`}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {themeData.items.map((e, i) => {
+                      return (
+                        <>
+                          <MiniThemeCardRoot
+                            // @ts-ignore
+                            data={e}
+                            key={`Approved Theme ${i}`}
+                          />
+                        </>
+                      );
+                    })}
+                  </>
+                )}
+                <LoadMoreButton
+                  themeArr={themeData}
+                  setThemeArr={setThemeData}
+                  fetchPath={themeDataApiPath}
+                  paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
+                  origSearchOpts={searchOpts}
+                  type={type}
+                />
               </>
             ) : (
               <>
-                {themeData.items.map((e, i) => {
-                  // @ts-ignore
-                  return <MiniThemeCardRoot data={e} key={`Approved Theme ${i}`} />;
-                })}
+                {Array(4)
+                  .fill("")
+                  .map((_, i) => (
+                    <LoadingSkeletonCard
+                      key={`Skeleton_Card_${i}`}
+                      className={twMerge(
+                        "hidden",
+                        `${
+                          i === 1
+                            ? "sm:inline"
+                            : i === 2
+                            ? "md:inline"
+                            : i === 3
+                            ? "lg:inline"
+                            : "inline"
+                        }`
+                      )}
+                    />
+                  ))}
               </>
             )}
-          </div>
-          <div className="mt-4 mx-4">
-            <LoadMoreButton
-              themeArr={themeData}
-              setThemeArr={setThemeData}
-              fetchPath={themeDataApiPath}
-              paramStrFilterPrepend={typeOptionPreset || type ? `${type}.` : ""}
-              origSearchOpts={searchOpts}
-              type={type}
-            />
           </div>
         </div>
       ) : null}

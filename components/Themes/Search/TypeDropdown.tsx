@@ -1,8 +1,7 @@
-import { ReactSelectCustomClasses, ReactSelectCustomLabel } from "../../CustomDropdowns";
-import Select from "react-select";
+import { RadioDropdown } from "../../Primitives";
 
 export function TypeDropdown({
-  typeValue,
+  typeValue = "",
   onTypeChange,
   typeOptions,
 }: {
@@ -13,23 +12,16 @@ export function TypeDropdown({
     value: string;
   }[];
 }) {
-  const formattedTypeOpts = typeOptions.map((e) => ({
-    value: e.value,
-    label: <ReactSelectCustomLabel mainText={e.displayText} />,
-  }));
-
   return (
-    <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
-      <span>Type</span>
-      <Select
-        value={formattedTypeOpts.find((e) => e.value === typeValue) || formattedTypeOpts[0]}
-        onChange={(e) => {
-          onTypeChange && onTypeChange({ target: e });
+    <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
+      <RadioDropdown
+        ariaLabel="Theme Platform Dropdown"
+        headingText="Platform"
+        options={typeOptions}
+        value={typeValue}
+        onValueChange={(e: any) => {
+          onTypeChange && onTypeChange(e);
         }}
-        maxMenuHeight={400}
-        {...ReactSelectCustomClasses}
-        isSearchable={false}
-        options={formattedTypeOpts}
       />
     </div>
   );

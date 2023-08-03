@@ -6,6 +6,7 @@ import {
   fieldTitleClasses,
   sectionContainerClasses,
 } from "./SubmitPageTailwindClasses";
+import { LabelledInput, LabelledTextArea } from "@components/Primitives";
 
 export function CSSSubmitPanel({
   info,
@@ -17,24 +18,18 @@ export function CSSSubmitPanel({
   return (
     <>
       <div className={`${sectionContainerClasses}`}>
-        <div className={`${fieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Name</span>
-          <input
-            type="text"
-            value={info.name}
-            onChange={(e) => setInfo({ ...info, name: e.target.value })}
-            className={fieldClasses}
-          />
-        </div>
-        <div className={`${fieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>CSS</span>
-          <textarea
-            value={info.css}
-            onChange={(e) => setInfo({ ...info, css: e.target.value })}
-            className={`${fieldClasses} w-full h-64`}
-            placeholder="/* Insert Your CSS Here */"
-          />
-        </div>
+        <LabelledInput
+          rootClass="w-full md:w-1/2"
+          label="Name"
+          value={info.name}
+          onValueChange={(e) => setInfo({ ...info, name: e })}
+        />
+        <LabelledTextArea
+          rootClass="w-full md:w-1/2"
+          label="CSS"
+          value={info.css}
+          onValueChange={(e) => setInfo({ ...info, css: e })}
+        />
       </div>
     </>
   );

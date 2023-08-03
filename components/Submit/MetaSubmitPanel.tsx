@@ -7,7 +7,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericGET } from "../../api";
+import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
 import { MetaInfo } from "../../types";
 import { MiniDivider } from "../Generic";
 import {
@@ -17,6 +17,7 @@ import {
   sectionContainerClasses,
 } from "./SubmitPageTailwindClasses";
 import { toast } from "react-toastify";
+import { LabelledTextArea, RadioDropdown } from "@components/Primitives";
 
 registerPlugin(
   FilePondPluginFileValidateSize,
@@ -43,7 +44,7 @@ export function MetaSubmitPanel({
 
   const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
   async function getTargets() {
-    const data = await genericGET(`/themes/filters?type=CSS`, true);
+    const data = await genericGET(`/themes/filters?type=CSS`);
     if (data?.filters) {
       setTargetOptions([
         "None",
@@ -67,8 +68,10 @@ export function MetaSubmitPanel({
     }
     if (
       uploadType === "audio" &&
-      // @ts-ignore
-      (info.target !== "None" || info.target !== "Music" || info.target !== "Audio")
+      (info.target !== "None" ||
+        // @ts-ignore
+        info.target !== "Music" ||
+        info.target !== "Audio")
     ) {
       setInfo({ ...info, target: "None" });
     }
@@ -79,34 +82,30 @@ export function MetaSubmitPanel({
       <div className={`${sectionContainerClasses}`}>
         {uploadType !== "audio" && (
           <>
-            <div className={`${metaFieldContainerClasses}`}>
-              <span className={`${fieldTitleClasses}`}>Target</span>
-              <div className="flex justify-center w-full">
-                <select
-                  className="bg-bgLight dark:bg-bgDark rounded-md p-2 px-4 text-xl"
-                  value={info.target}
-                  onChange={({ target: { value } }) => {
-                    setInfo({ ...info, target: value });
-                  }}
-                >
-                  {targetOptions.map((e) => (
-                    <option value={e} key={e} disabled={e === "None" && uploadMethod === "css"}>
-                      {e !== "None" ? e : "Use JSON Value"}
-                    </option>
-                  ))}
-                </select>
-              </div>
+            <div className={`${metaFieldContainerClasses} w-full`}>
+              <RadioDropdown
+                ariaLabel="Theme Target Dropdown"
+                headingText="Theme Target"
+                value={info.target}
+                onValueChange={(value) => {
+                  setInfo({ ...info, target: value });
+                }}
+                options={targetOptions.sort().map((e) => ({
+                  value: e,
+                  displayText: e !== "None" ? e : "Use JSON Value",
+                  disabled: e === "None" && uploadMethod === "css",
+                }))}
+              />
             </div>
-            <MiniDivider />
           </>
         )}
         <div className={`${metaFieldContainerClasses}`}>
           <span className={`${fieldTitleClasses}`}>Images</span>
-          <div className="flex flex-col w-full relative">
+          <div className="relative flex w-full flex-col">
             <FilePond
               allowFileTypeValidation
               labelFileTypeNotAllowed="Invalid File Type!"
-              fileValidateTypeLabelExpectedTypes="Images must be in .JPG format"
+              fileValidateTypeLabelExpectedTypes="Images must be in .JPG or .PNG format"
               acceptedFileTypes={["image/jpeg", "image/png"]}
               allowFileSizeValidation
               allowImagePreview
@@ -135,34 +134,23 @@ export function MetaSubmitPanel({
                 process: (_, file, __, load, error) => {
                   const formData = new FormData();
                   formData.append("File", file);
-                  checkAndRefreshToken().then((bool) => {
-                    if (bool) {
-                      fetch(`${process.env.NEXT_PUBLIC_API_URL}/blobs`, {
-                        method: "POST",
-                        body: formData,
-                        credentials: "include",
-                      })
-                        .then((res) => {
-                          if (res.status >= 200 && res.status <= 300) {
-                            return res.json();
-                          }
-                          error("Res Not OK!");
-                        })
-                        .then((json) => {
-                          if (json?.id) {
-                            setInfo((info) => ({
-                              ...info,
-                              imageBlobs: [json.id, ...info.imageBlobs],
-                            }));
-                            load(json.id);
-                          }
-                        })
-                        .catch((err) => {
-                          toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
-                          error(err);
-                        });
-                    }
-                  });
+                  genericFetch("/blobs", {
+                    method: "POST",
+                    body: formData,
+                  })
+                    .then((json) => {
+                      if (json?.id) {
+                        setInfo((info) => ({
+                          ...info,
+                          imageBlobs: [json.id, ...info.imageBlobs],
+                        }));
+                        load(json.id);
+                      }
+                    })
+                    .catch((err) => {
+                      toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
+                      error(err);
+                    });
                 },
               }}
               name="File"
@@ -170,20 +158,12 @@ export function MetaSubmitPanel({
             />
           </div>
         </div>
-        <MiniDivider />
-        <div className={`${metaFieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Description</span>
-          <textarea
-            value={info.description}
-            placeholder={`${
-              uploadMethod !== "css"
-                ? `Leave blank to use ${uploadType === "audio" ? "pack.json" : "theme.json"} value.`
-                : "Enter Description Here"
-            }`}
-            onChange={(e) => setInfo({ ...info, description: e.target.value })}
-            className={`${fieldClasses} h-32`}
-          />
-        </div>
+        <LabelledTextArea
+          label="Description"
+          rootClass="w-full md:w-1/2"
+          value={info.description}
+          onValueChange={(e) => setInfo({ ...info, description: e })}
+        />
       </div>
     </>
   );

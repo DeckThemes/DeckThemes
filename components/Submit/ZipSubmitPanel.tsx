@@ -5,7 +5,7 @@ import { FilePond, File, registerPlugin } from "react-filepond";
 import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken } from "../../api";
+import { checkAndRefreshToken, genericFetch } from "../../apiHelpers";
 import { toast } from "react-toastify";
 
 registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType);
@@ -21,7 +21,7 @@ export function ZipSubmitPanel({
 
   return (
     <>
-      <div className="flex flex-col items-center w-full justify-center">
+      <div className="flex w-full flex-col items-center justify-center">
         <div className="w-full md:w-1/2">
           <FilePond
             allowFileTypeValidation
@@ -49,32 +49,20 @@ export function ZipSubmitPanel({
               process: (_, file, __, load, error) => {
                 const formData = new FormData();
                 formData.append("File", file);
-
-                checkAndRefreshToken().then((bool) => {
-                  if (bool) {
-                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/blobs`, {
-                      method: "POST",
-                      body: formData,
-                      credentials: "include",
-                    })
-                      .then((res) => {
-                        if (res.status >= 200 && res.status <= 300) {
-                          return res.json();
-                        }
-                        error("Res Not OK!");
-                      })
-                      .then((json) => {
-                        if (json?.id) {
-                          setInfo({ blob: json.id });
-                          load(json.id);
-                        }
-                      })
-                      .catch((err) => {
-                        toast.error(`Error Uploading File! ${JSON.stringify(err)}`);
-                        error(err);
-                      });
-                  }
-                });
+                genericFetch("/blobs", {
+                  method: "POST",
+                  body: formData,
+                })
+                  .then((json) => {
+                    if (json?.id) {
+                      setInfo({ blob: json.id });
+                      load(json.id);
+                    }
+                  })
+                  .catch((err) => {
+                    toast.error(`Error Uploading File! ${JSON.stringify(err)}`);
+                    error(err);
+                  });
               },
             }}
             name="File"

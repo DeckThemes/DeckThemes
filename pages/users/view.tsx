@@ -1,14 +1,20 @@
 import { useRouter } from "next/router";
 import { useContext, useState, useEffect } from "react";
-import { authContext } from "../_app";
-import { genericGET } from "../../api";
+import { authContext } from "contexts";
+import { genericGET } from "../../apiHelpers";
 import { AccountData, Permissions } from "../../types";
-import { LoadingSpinner, PfpDisplay, ThemeCategoryDisplay } from "../../components";
+import {
+  LoadingSpinner,
+  PfpDisplay,
+  ThemeCategoryDisplay,
+  TransitionedCarouselTitle,
+} from "../../components";
 import Head from "next/head";
+import { HorizontalRadio, RadioDropdown } from "@components/Primitives";
 
 function BigDivider() {
   return (
-    <div className="h-2 bg-borderLight dark:bg-borderDark w-full my-4 md:w-10/12 md:rounded-3xl" />
+    <div className="my-4 h-2 w-full bg-borderLight dark:bg-borderDark md:w-10/12 md:rounded-3xl" />
   );
 }
 
@@ -27,9 +33,11 @@ export default function Account() {
   const { accountInfo } = useContext(authContext);
   const [userInfo, setUserInfo] = useState<AccountData | undefined>();
 
+  const [radioValue, setRadioValue] = useState<string>("themes");
+
   useEffect(() => {
     if (parsedId) {
-      genericGET(`/users/${parsedId}`, true).then((data) => {
+      genericGET(`/users/${parsedId}`).then((data) => {
         if (data) {
           setUserInfo(data);
         }
@@ -45,7 +53,7 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Loading</title>
         </Head>
-        <main className="flex justify-center flex-grow items-center text-center px-5">
+        <main className="flex flex-grow items-center justify-center px-5 text-center">
           <LoadingSpinner />
           <h1 className="text-4xl font-semibold">Loading</h1>
         </main>
@@ -59,59 +67,86 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Invalid User</title>
         </Head>
-        <main className="flex justify-center flex-grow items-center text-center px-5">
-          <h1 className="text-4xl font-semibold pt-20">Error! Invalid User ID</h1>
+        <main className="flex flex-grow items-center justify-center px-5 text-center">
+          <h1 className="pt-20 text-4xl font-semibold">Error! Invalid User ID</h1>
         </main>
       </>
     );
   }
 
   const calcDisplayName = () => {
-    const slicedName = userInfo.username.slice(0, userInfo.username.lastIndexOf("#"));
-    if (slicedName.slice(-1) === "s" || slicedName.slice(-1) === "S") {
+    const slicedName = userInfo.username.includes("#")
+      ? userInfo.username.slice(0, userInfo.username.lastIndexOf("#"))
+      : userInfo.username;
+    if (slicedName.slice(-1).toLowerCase() === "s") {
       return `${slicedName}'`;
     } else {
       return `${slicedName}'s`;
     }
   };
+  const radioOptions = [
+    {
+      value: "themes",
+      displayText: "Themes",
+      title: `${calcDisplayName()} Themes`,
+    },
+    {
+      value: "stars",
+      displayText: "Stars",
+      title: `${calcDisplayName()} Stars`,
+    },
+    {
+      value: "submissions",
+      displayText: "Submissions",
+      title: `${calcDisplayName()} Submissions`,
+    },
+  ];
 
   return (
     <>
       <Head>
         <title>{userInfo.username} | DeckThemes</title>
       </Head>
-      <main className="flex flex-col items-center w-full">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
         <PfpDisplay userData={userInfo} />
-        <div className="mt-4" />
-        <ThemeCategoryDisplay
-          typeOptionPreset="All"
-          themeDataApiPath={`/users/${parsedId}/themes`}
-          filterDataApiPath={`/users/${parsedId}/themes/filters`}
-          title={`${calcDisplayName()} Themes`}
-          noAuthRequired
+        {/* If you're un-authed, this title will just always stay as "x's Themes" */}
+        <TransitionedCarouselTitle
+          className="px-4 pb-20"
+          titles={radioOptions.map((e) => e.title)}
+          currentTitle={
+            radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+          }
         />
+
         {accountInfo?.permissions.includes(Permissions.admin) && (
           <>
-            <BigDivider />
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath={`/users/${parsedId}/stars`}
-              filterDataApiPath={`/users/${parsedId}/stars/filters`}
-              title={`${calcDisplayName()} Stars`}
-            />
-            <BigDivider />
-            <ThemeCategoryDisplay
-              typeOptionPreset="All"
-              themeDataApiPath={`/users/${parsedId}/submissions`}
-              filterDataApiPath={`/users/${parsedId}/submissions/filters`}
-              title={`${calcDisplayName()} Submissions`}
-              useSubmissionCards
-              showFiltersWithZero
-              defaultFilter="AwaitingApproval"
-            />
+            <div className="block w-full px-4 md:hidden">
+              <RadioDropdown
+                ariaLabel="Your Theme Types Dropdown"
+                options={radioOptions}
+                value={radioValue}
+                onValueChange={setRadioValue}
+              />
+            </div>
+            <div className="hidden w-full items-center justify-center md:flex">
+              <HorizontalRadio
+                rootClass="self-center pb-4"
+                options={radioOptions}
+                value={radioValue}
+                onValueChange={setRadioValue}
+              />
+            </div>
           </>
         )}
-      </main>
+        <ThemeCategoryDisplay
+          typeOptionPreset="All"
+          themesPerPage={4}
+          themeDataApiPath={`/users/${parsedId}/${radioValue}`}
+          filterDataApiPath={`/users/${parsedId}/${radioValue}/filters`}
+          noAuthRequired={radioValue === "themes"}
+          useSubmissionCards={radioValue === "submissions"}
+        />
+      </div>
     </>
   );
 }

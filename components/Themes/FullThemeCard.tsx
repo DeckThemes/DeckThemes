@@ -2,22 +2,19 @@ import Head from "next/head";
 import Link from "next/link";
 import { useEffect, useState, useContext } from "react";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
-import { FiArrowDown } from "react-icons/fi";
-import { checkAndRefreshToken, genericGET } from "../../api";
+import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
 import {
-  LoadingPage,
-  LoadingSpinner,
+  ThemeViewLoadingPage,
   SupporterIcon,
   ThemeAdminPanel,
+  ThemeDownloadButton,
   ThemeImageCarousel,
+  MiniThemeCardRoot,
 } from "..";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext, desktopModeContext } from "../../pages/_app";
+import { authContext, desktopModeContext } from "contexts";
 import { toast } from "react-toastify";
-
-function MiniDivider() {
-  return <div className="h-1 w-full bg-borderLight dark:bg-borderDark rounded-3xl" />;
-}
+import { BiCode } from "react-icons/bi";
 
 export function FullThemeCard({
   parsedId,
@@ -26,12 +23,13 @@ export function FullThemeCard({
   parsedId: string;
   hideAdminMenu?: boolean;
 }) {
+  const { desktopMode } = useContext(desktopModeContext);
+
   const [themeData, setThemeData] = useState<FullCSSThemeInfo | undefined>(undefined);
+  const [depData, setDepData] = useState<FullCSSThemeInfo[] | undefined>([]);
   const [isStarred, setStarred] = useState<boolean>(false);
   const [loaded, setLoaded] = useState<boolean>(false);
-
   const { accountInfo } = useContext(authContext);
-  const { desktopMode, setInstalling, installing } = useContext(desktopModeContext);
 
   async function getStarredStatus() {
     const isStarred = await genericGET(`/users/me/stars/${parsedId}`);
@@ -45,13 +43,26 @@ export function FullThemeCard({
     }
   }
 
-  useEffect(() => {
+  async function getThemeData() {
     if (parsedId) {
-      genericGET(`/themes/${parsedId}`).then((data) => {
-        setThemeData(data);
-        setLoaded(true);
-      });
+      const data: FullCSSThemeInfo = await genericGET(`/themes/${parsedId}`);
+      if (!data) return;
+      setThemeData(data);
+      if (data.dependencies.length === 0) {
+        setDepData([]);
+      } else {
+        const depData = await Promise.all(
+          data.dependencies.map((e) => genericGET(`/themes/${e.id}`))
+        );
+        depData && setDepData(depData);
+      }
     }
+    setLoaded(true);
+  }
+
+  useEffect(() => {
+    setLoaded(false);
+    getThemeData();
     if (accountInfo?.username) {
       getStarredStatus();
     }
@@ -60,12 +71,9 @@ export function FullThemeCard({
   async function toggleStar() {
     const waitForRefresh = await checkAndRefreshToken();
     if (waitForRefresh) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/stars/${parsedId}`, {
-        method: isStarred ? "DELETE" : "POST",
-        credentials: "include",
-      })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
+      genericFetch(`/users/me/stars/${parsedId}`, { method: isStarred ? "DELETE" : "POST" }, true)
+        .then((success) => {
+          if (success) {
             if (themeData) {
               setThemeData({
                 ...themeData,
@@ -88,8 +96,9 @@ export function FullThemeCard({
         });
     }
   }
+
   if (!loaded) {
-    return <LoadingPage />;
+    return <ThemeViewLoadingPage />;
   }
 
   return (
@@ -97,166 +106,206 @@ export function FullThemeCard({
       <Head>
         <title>{themeData?.name ? `${themeData.name} | DeckThemes` : "DeckThemes"}</title>
       </Head>
-      <div className="flex-grow flex p-8 justify-center h-full w-full mt-8 lg:mt-0 text-center lg:text-left">
+      <div className="font-fancy flex h-full w-full flex-grow justify-center text-center lg:text-left">
         {themeData !== undefined ? (
           <>
-            <div className="flex flex-col lg:flex-row items-center lg:items-start lg:mx-16 xl:mx-32 h-fit w-full p-4 bg-cardLight dark:bg-cardDark rounded-3xl">
-              <>
-                <div className="w-full h-full flex items-center lg:items-start">
-                  <ThemeImageCarousel data={themeData} />
-                </div>
-              </>
-              <div className="flex flex-col items-center lg:items-start text-xl gap-2 my-4 lg:mx-8 relative">
-                {!hideAdminMenu && <ThemeAdminPanel themeData={themeData} />}
-                <h1 className="text-3xl md:text-5xl font-semibold mb-auto max-w-[640px]">
-                  {themeData.name}
-                </h1>
-                <Link
-                  href={`/users/view?userId=${themeData.author.id}`}
-                  className="flex flex-col md:flex-row gap-1"
-                >
-                  <h3>Created By </h3>
-                  <div className="flex items-center">
-                    <span className="text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700 underline transition-colors font-fancy">
-                      {themeData.specifiedAuthor}
-                    </span>
-                    <SupporterIcon author={themeData.author} />
-                  </div>
-                </Link>
-                <div className="flex justify-between w-full px-3 md:px-0">
-                  <h3>{themeData.target}</h3>
-                  <h3>{themeData.version}</h3>
-                </div>
-                <div className="flex  w-full items-center gap-2">
-                  <MiniDivider />
-                  {desktopMode && (
-                    <div className="flex items-center gap-2 bg-borderLight dark:bg-borderDark px-2 transition-all rounded-2xl">
-                      <FiArrowDown />
-                      <span className="-translate-y-[1.5px]">
-                        {themeData.download.downloadCount}
-                      </span>
-                    </div>
-                  )}
+            {/* bg-base-3-light dark:bg-base-3-dark */}
+            <div className="flex h-fit w-full max-w-7xl flex-col items-center rounded-3xl">
+              {/* Theme name and author */}
+              <div className="flex w-full flex-[75%] flex-col gap-4 text-left md:flex-row">
+                <div className="flex w-full flex-col gap-4">
+                  <h1 className="text-center text-3xl font-extrabold sm:text-left md:text-5xl">
+                    {themeData.name}
+                  </h1>
 
-                  <button
-                    onClick={() => {
-                      if (accountInfo?.username) toggleStar();
-                    }}
-                    className={`flex items-center gap-2 bg-borderLight dark:bg-borderDark ${
-                      accountInfo?.username
-                        ? "hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer"
-                        : "cursor-auto"
-                    } px-2 transition-all rounded-2xl`}
-                  >
-                    {isStarred ? <BsStarFill /> : <BsStar />}{" "}
-                    <span className="-translate-y-[1.5px]">{themeData.starCount}</span>
-                  </button>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(
-                        `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`
-                      );
-                      toast("🔗 Link Copied To Clipboard", {
-                        autoClose: 2000,
-                        hideProgressBar: true,
-                        pauseOnHover: false,
-                      });
-                    }}
-                    className={`flex items-center gap-2 bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark cursor-pointer px-2 transition-all rounded-2xl`}
-                  >
-                    <BsShare className="scale-x-90" />{" "}
-                    <span className="-translate-y-[1.5px]">Share</span>
-                  </button>
-                  <MiniDivider />
-                </div>
-                <div className="text-md max-w-[640px]">
-                  {themeData.description ? (
-                    <span className="whitespace-pre-line break-words">{themeData.description}</span>
-                  ) : (
-                    <span className="text-textFadedLight dark:text-textFadedDark">
-                      <i>No Description Provided</i>
-                    </span>
-                  )}
-                </div>
-                {themeData.download !== undefined ? (
-                  <>
-                    <button
-                      className="self-center flex items-center bg-borderLight dark:bg-borderDark hover:bg-darkBorderLight hover:dark:bg-darkBorderDark transition-colors p-2 text-xl md:text-3xl rounded-full justify-between mt-4"
-                      onClick={() => {
-                        if (desktopMode) {
-                          setInstalling(true);
-                          window.parent.postMessage(
-                            {
-                              action: "installTheme",
-                              payload: themeData.id,
-                            },
-                            "*"
-                          );
-                          return;
-                        }
-                        themeData !== undefined &&
-                          location.assign(
-                            `${process.env.NEXT_PUBLIC_API_URL}/blobs/${themeData.download.id}`
-                          );
-                      }}
+                  <div className="flex w-full flex-col items-center gap-4 self-center pb-4 sm:hidden">
+                    <Link href={`/users/view?userId=${themeData.author.id}`} className="w-fit">
+                      <div className="flex flex-row items-center gap-1">
+                        by
+                        <div className="flex items-center">
+                          <div>{themeData.specifiedAuthor}</div>
+                          <SupporterIcon author={themeData.author} />
+                        </div>
+                      </div>
+                    </Link>
+                    <div className="flex h-full w-full max-w-full items-center">
+                      <ThemeImageCarousel data={themeData} />
+                    </div>
+                  </div>
+
+                  <div className="just flex flex-col items-center gap-4 sm:flex-row">
+                    <Link
+                      href={`/users/view?userId=${themeData.author.id}`}
+                      className="hidden w-fit sm:flex"
                     >
-                      <div className="bg-lightenerLight dark:bg-lightenerDark p-2 rounded-full">
-                        {installing && desktopMode ? <LoadingSpinner /> : <FiArrowDown size={48} />}
+                      <div className="flex flex-row items-center gap-1">
+                        by
+                        <div className="flex items-center">
+                          <div className="">{themeData.specifiedAuthor}</div>
+                          <SupporterIcon author={themeData.author} />
+                        </div>
                       </div>
-                      <div>
-                        {desktopMode ? (
-                          <>
-                            <div className="flex flex-col items-center justify-center ml-2 mr-3">
-                              <span className="font-semibold font-fancy">Install</span>
-                            </div>
-                          </>
-                        ) : (
-                          <>
-                            <span className="font-semibold ml-2 mr-1 md:mr-2">
-                              {themeData.download.downloadCount}
-                            </span>
-                            <span className="pr-3">
-                              Download
-                              {themeData.download.downloadCount !== 1 ? "s" : ""}
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </button>
-                  </>
-                ) : (
-                  <span>Error! No Download Information</span>
-                )}
-                <div className="text-sm max-w-[640px]">
-                  {themeData.source ? (
-                    <>
-                      <span className="text-textFadedLight dark:text-textFadedDark">Source:</span>{" "}
-                      {themeData.source.slice(0, 5) === "https" ? (
-                        <a
-                          href={themeData.source.slice(0, themeData.source.lastIndexOf("@") - 1)}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="underline text-blue-600 hover:text-blue-800 dark:text-cyan-500 hover:dark:text-cyan-700"
-                        >
-                          {themeData.source}
-                        </a>
-                      ) : (
-                        <span>{themeData.source}</span>
-                      )}
-                    </>
-                  ) : (
-                    <span className="text-textFadedLight dark:text-textFadedDark">
-                      <i>No Source Provided</i>
+                    </Link>
+
+                    <div className="flex w-full items-center justify-center gap-4 sm:w-fit">
+                      <button
+                        disabled={!accountInfo?.username}
+                        onClick={() => {
+                          if (accountInfo?.username) toggleStar();
+                        }}
+                        className={`flex h-fit items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light dark:border-borders-base3-dark dark:text-fore-11-dark ${
+                          accountInfo?.username
+                            ? "cursor-pointer select-none transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
+                            : "cursor-auto"
+                        }`}
+                      >
+                        {isStarred ? <BsStarFill /> : <BsStar />}{" "}
+                        <span className="whitespace-nowrap">
+                          {themeData.starCount}{" "}
+                          {themeData.starCount > 1 || themeData.starCount === 0 ? "stars" : "star"}
+                        </span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          function fallbackShare() {
+                            navigator.clipboard.writeText(
+                              `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData!.id}`
+                            );
+                            toast.info("🔗 Link Copied To Clipboard", {
+                              autoClose: 2000,
+                              hideProgressBar: true,
+                              pauseOnHover: false,
+                            });
+                          }
+
+                          // @ts-ignore
+                          if (navigator.canShare) {
+                            navigator
+                              .share({
+                                title: "DeckThemes",
+                                text: themeData.name,
+                                url: `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`,
+                              })
+                              .catch((err) => {
+                                console.log("Error Using navigator.share()", err);
+                                fallbackShare();
+                              });
+                            return;
+                          }
+                          fallbackShare();
+                        }}
+                        className={`flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark`}
+                      >
+                        <BsShare className="scale-x-90" /> <span>Share</span>
+                      </button>
+                      {!hideAdminMenu && <ThemeAdminPanel themeData={themeData} />}
+                    </div>
+                  </div>
+
+                  <div className="text-md mb-4 max-w-2xl text-left">
+                    {themeData.description ? (
+                      <span className="whitespace-pre-line break-words">
+                        {themeData.description}
+                      </span>
+                    ) : (
+                      <span className="text-textFadedLight dark:text-textFadedDark">
+                        <i>No Description Provided</i>
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="my-4 flex flex-col items-center justify-center gap-2 self-center sm:flex-row sm:self-start">
+                    <ThemeDownloadButton themeData={themeData} />
+                    <span className="font-fancy text-textFadedLight dark:text-textFadedDark">
+                      {themeData.download.downloadCount} Download
+                      {themeData.download.downloadCount === 1 ? "" : "s"}
                     </span>
-                  )}
-                  <br />
-                  <span>
-                    <span className="text-textFadedLight dark:text-textFadedDark">
-                      Last Updated:
-                    </span>{" "}
-                    {new Date(themeData.updated).toLocaleString()}
-                  </span>
-                  <br />
+                  </div>
+
+                  <div className="relative mt-8 flex w-full max-w-7xl flex-col items-center justify-center gap-6 md:flex-row">
+                    <div className="hidden h-full w-full max-w-full items-center sm:flex">
+                      <ThemeImageCarousel data={themeData} />
+                    </div>
+                    <div className="relative flex h-fit w-full flex-row flex-wrap items-center justify-center gap-4 rounded-xl border border-borders-base2-light p-6 dark:border-borders-base3-dark md:h-full md:w-fit md:flex-col md:items-start md:justify-between lg:py-10">
+                      <div className="flex flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Category</h3>
+                        <p className="font-medium dark:text-fore-9-dark">{themeData.target}</p>
+                      </div>
+                      <div className="flex flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Version</h3>
+                        <p className="font-medium dark:text-fore-9-dark">{themeData.version}</p>
+                      </div>
+                      <div className="flex flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Published</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
+                          {new Date(themeData.submitted).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="flex flex-col items-start gap-2 px-4">
+                        <h3 className="text-sm font-bold">Updated</h3>
+                        <p className="font-medium dark:text-fore-9-dark">
+                          {new Date(themeData.updated).toLocaleDateString()}
+                        </p>
+                      </div>
+                      {!desktopMode && (
+                        <div className="mt-2 flex flex-col items-center gap-2 px-4 sm:mt-0 sm:items-start">
+                          <h3 className="text-sm font-bold">Resources</h3>
+                          <p className="font-medium dark:text-fore-9-dark">
+                            {themeData.source ? (
+                              <>
+                                {themeData.source.slice(0, 5) === "https" ? (
+                                  <a
+                                    href={themeData.source.slice(
+                                      0,
+                                      themeData.source.lastIndexOf("@") - 1
+                                    )}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="flex h-fit select-none items-center justify-center gap-2 whitespace-nowrap rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark"
+                                  >
+                                    <BiCode />
+                                    Source code
+                                  </a>
+                                ) : (
+                                  <span>{themeData.source}</span>
+                                )}
+                              </>
+                            ) : (
+                              <span className="text-textFadedLight dark:text-textFadedDark">
+                                <i>No source available</i>
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* theme img */}
+              <>
+                {/* md breakpoints work, but are uncomfortably close to screen edge. */}
+                {/* <div className="flex flex-col xl:flex-row w-full max-w-7xl justify-center relative xl:pr-48 xl:-mr-48 mb-12">
+                  <div className="w-full h-full flex items-center lg:items-start xl:max-w-4xl max-w-full">
+                    <ThemeImageCarousel data={themeData} />
+                  </div> */}
+              </>
+
+              {depData && depData.length > 0 && (
+                <div className="flex w-full flex-col items-center gap-4 pt-20 sm:items-start">
+                  <span className="text-3xl font-bold">Dependencies</span>
+                  <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {depData?.map((e, i) => {
+                      return <MiniThemeCardRoot data={e} key={`DEP_${i}`} />;
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* everything else */}
+              {/* <div className="text-sm max-w-[640px]">
+
                   {themeData.dependencies.length > 0 && (
                     <>
                       <span>
@@ -276,8 +325,7 @@ export function FullThemeCard({
                       </span>
                     </>
                   )}
-                </div>
-              </div>
+                </div> */}
             </div>
           </>
         ) : (

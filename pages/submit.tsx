@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
-import { checkAndRefreshToken, fetchDiscordUrl } from "../api";
-
+import { useContext, useEffect, useState } from "react";
+import { genericFetch } from "../apiHelpers";
+import * as Progress from "@radix-ui/react-progress";
 import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 import {
   CSSSubmitPanel,
@@ -10,17 +10,16 @@ import {
   LoadingPage,
   LogInPage,
   MetaSubmitPanel,
-  MiniDivider,
-  partHeaderClasses,
   TosCheckboxes,
   ZipSubmitPanel,
 } from "../components";
 import { useHasCookie } from "../hooks";
-import { authContext } from "./_app";
+import { authContext } from "contexts";
 import { toast } from "react-toastify";
+import { RadioDropdown } from "@components/Primitives";
 
 const BigDivider = () => {
-  return <div className="h-2 w-full bg-borderLight dark:bg-borderDark my-2" />;
+  return <div className="my-2 h-2 w-full bg-borderLight dark:bg-borderDark" />;
 };
 
 export default function Submit() {
@@ -84,39 +83,53 @@ export default function Submit() {
       description: metaInfo.description || null,
       target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
-    const waitForRefresh = await checkAndRefreshToken();
-    if (waitForRefresh) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/submissions/${uploadType}_${uploadMethod}`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ ...data(), meta: formattedMeta }),
-        headers: {
-          "Content-Type": "application/json",
-        },
+    genericFetch(`/submissions/${uploadType}_${uploadMethod}`, {
+      method: "POST",
+      body: JSON.stringify({ ...data(), meta: formattedMeta }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((json) => {
+        process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
+        if (json?.task) {
+          router.push(`/taskStatus/view?task=${json.task}`);
+        } else {
+          alert(`Error Submitting Theme: ${json?.message || "Unknown Error"}`);
+          throw new Error("No task in response");
+        }
       })
-        .then((res) => {
-          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(res);
-          if (res.status < 200 || res.status >= 300 || !res.ok) {
-            console.log("Submission POST Not OK!, Error Code ", res.status);
-          }
-          return res.json();
-        })
-        .then((json) => {
-          process.env.NEXT_PUBLIC_DEV_MODE === "true" && console.log(json);
-          if (json?.task) {
-            router.push(`/taskStatus/view?task=${json.task}`);
-          } else {
-            alert(`Error Submitting Theme: ${json?.message || "Unknown Error"}`);
-            throw new Error("No task in response");
-          }
-        })
-        .catch((err) => {
-          toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
-          console.error("Error Submitting Theme!", err);
-        });
-    }
+      .catch((err) => {
+        toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
+        console.error("Error Submitting Theme!", err);
+      });
   }
 
+  const [currentStep, setStep] = useState<number>(1);
+  const totalSteps = 3;
+
+  const goToNextStep = () => {
+    if (currentStep < totalSteps) {
+      setStep(currentStep + 1);
+    }
+  };
+
+  const goToPreviousStep = () => {
+    if (currentStep > 1) {
+      setStep(currentStep - 1);
+    }
+  };
+
+  const [progress, setProgress] = useState<number>(0);
+  const calculateProgress = () => {
+    const percentage = (currentStep / totalSteps) * 100;
+    setProgress(percentage);
+  };
+
+  useEffect(() => {
+    calculateProgress();
+  }, [currentStep]);
+  console.log(router.query);
   const [uploadMethod, setUploadMethod] = useState<string>("git");
   if (accountInfo?.username) {
     return (
@@ -128,118 +141,209 @@ export default function Submit() {
           {`
         
         .dark .filepond--panel-root {
-          background-color: #2e2e2e;
+          background-color: hsla(220, 9%, 60%, 0.1);
         }
+
         .dark .filepond--drop-label {
           color: #fff;
         }
+
+		.dark .filepond--panel-root {
+			background: transparent;
+		}
+		
+		.filepond--credits {
+			display: none !important;
+		}
+
+		.dark .filepond--root {
+			background: #1e2024;
+			border-radius: 12px;
+		}
         `}
         </style>
-        <div className="flex flex-col items-center w-full grow text-center gap-4 pt-4">
-          <h1 className="text-3xl md:text-4xl font-semibold py-4">Submit A Theme</h1>
-          <div className="m-4 px-4 py-2 bg-cardLight dark:bg-cardDark hover:bg-borderLight hover:dark:bg-borderDark transition-colors rounded-xl text-xl">
-            <a
-              href={process.env.NEXT_PUBLIC_DOCS_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="text-transparent bg-clip-text bg-gradient-to-tl from-blue-800 to-blue-500 p-1 rounded-3xl"
-            >
-              <span className="text-textLight dark:text-textDark">Need help? </span>
-              <br className="flex md:hidden" />
-              View the docs <br className="flex md:hidden" />
-              <span className="text-textLight dark:text-textDark">
-                for guides, documentation, and tools!
-              </span>
-            </a>
+        {router?.query?.update && (
+          <div className="text-lg font-bold">
+            <span className="">
+              To update a theme, submit a new theme with the same name as the original
+            </span>
           </div>
-          <main className="w-11/12 bg-cardLight dark:bg-cardDark rounded-3xl flex flex-col items-center">
-            <section className="p-4 w-full flex flex-col items-center">
-              <div className="flex flex-col items-center gap-4 justify-center mb-4">
-                <span className={partHeaderClasses}>Part 1: Upload Your Theme</span>
-                <div className="flex flex-col md:flex-row gap-2">
-                  <div className="flex flex-col h-20">
-                    <span>Upload Method</span>
-                    <select
-                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
+        )}
+        <div className="m-4 rounded-xl bg-cardLight px-4 py-2 text-xl transition-colors hover:bg-borderLight dark:bg-cardDark hover:dark:bg-borderDark">
+          <a
+            href={process.env.NEXT_PUBLIC_DOCS_URL}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-3xl bg-gradient-to-tl from-blue-800 to-blue-500 bg-clip-text p-1 text-transparent"
+          >
+            <span className="text-textLight dark:text-textDark">Need help? </span>
+            <br className="flex md:hidden" />
+            View the docs <br className="flex md:hidden" />
+            <span className="text-textLight dark:text-textDark">
+              for guides, documentation, and tools!
+            </span>
+          </a>
+        </div>
+        <div className="relative flex min-h-[52rem] w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl border-[1px] border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark">
+          {/* <HorizontalRadio
+              rootClass="pb-8"
+              value={currentStep + ""}
+              onValueChange={(e: string) => setStep(Number(e))}
+              itemClass="h-4 w-4"
+              options={[
+                { value: "1", displayText: "" },
+                { value: "2", displayText: "" },
+                { value: "3", displayText: "" },
+              ]}
+            /> */}
+          <Progress.Root
+            className="absolute top-0 h-2 w-full overflow-hidden rounded-full dark:bg-base-3-dark"
+            value={progress}
+          >
+            <Progress.Indicator
+              className="duration-660ms h-full w-full rounded-full bg-brandBlue transition-transform"
+              style={{ transform: `translateX(-${100 - progress}%)` }}
+            />
+          </Progress.Root>
+
+          {currentStep === 1 && (
+            <>
+              <section className="flex w-full flex-col items-center gap-4 p-4 py-16">
+                <div className="flex w-full flex-col items-center justify-center gap-4">
+                  <div className="absolute top-8">
+                    <span className="font-fancy w-full pb-4 text-center text-2xl font-semibold md:text-4xl">
+                      Upload Theme
+                    </span>
+                  </div>
+                  <div className="mb-4 flex w-full flex-col gap-4 md:w-1/2 md:flex-row">
+                    <RadioDropdown
+                      ariaLabel="Upload Method Dropdown"
+                      headingText="Upload Method"
                       value={uploadMethod}
-                      onChange={({ target: { value } }) => {
+                      onValueChange={(value) => {
                         setUploadMethod(value);
                         if (value === "css") {
                           setUploadType("css");
                         }
                       }}
-                    >
-                      <option value="git">Link Git Repo</option>
-                      <option value="zip">Upload Zip</option>
-                      <option value="css">Paste CSS Snippet</option>
-                    </select>
-                  </div>
-                  <div className="flex flex-col h-20">
-                    <span>Target Plugin</span>
-                    <select
-                      className="bg-bgLight dark:bg-bgDark rounded-md h-full p-4 md:py-0 text-xl text-center"
+                      options={[
+                        { value: "git", displayText: "Link Git Repo" },
+                        { value: "zip", displayText: "Upload Zip" },
+                        { value: "css", displayText: "Paste CSS Snippet" },
+                      ]}
+                    />
+                    <RadioDropdown
+                      ariaLabel="Target Plugin Dropdown"
+                      headingText="Target Plugin"
                       value={uploadType}
-                      onChange={({ target: { value } }) => {
+                      onValueChange={(value) => {
+                        // The if is only here for type validity
                         if (value === "css" || value === "audio") {
                           setUploadType(value);
                         }
                       }}
-                    >
-                      <option value="css">CSS Loader</option>
-                      <option value="audio" disabled={uploadMethod === "css"}>
-                        Audio Loader
-                      </option>
-                    </select>
+                      options={[
+                        { value: "css", displayText: "CSSLoader" },
+                        {
+                          value: "audio",
+                          displayText: "AudioLoader",
+                          disabled: uploadMethod === "css",
+                        },
+                      ]}
+                    />
                   </div>
                 </div>
+                {uploadMethod === "zip" && (
+                  <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
+                )}
+                {uploadMethod === "git" && (
+                  <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
+                )}
+                {uploadMethod === "css" && (
+                  <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
+                )}
+
+                <div className="absolute bottom-8 flex flex-row gap-4">
+                  <button
+                    disabled={true}
+                    className="group pointer-events-none mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline opacity-50 transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                    onClick={goToPreviousStep}
+                  >
+                    Back
+                  </button>
+                  <button
+                    className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                    onClick={goToNextStep}
+                  >
+                    Next
+                  </button>
+                </div>
+              </section>
+            </>
+          )}
+          {currentStep === 2 && (
+            <section className="flex w-full flex-col items-center p-4 py-16">
+              <div className="absolute top-8">
+                <span className="font-fancy w-full pb-4 text-center text-2xl font-semibold md:text-4xl">
+                  Edit Theme Listing
+                </span>
               </div>
-              <MiniDivider />
-              <div className="pb-4" />
-              {uploadMethod === "zip" && (
-                <ZipSubmitPanel info={zipUploadInfo} setInfo={setZipUploadInfo} />
-              )}
-              {uploadMethod === "git" && (
-                <GitSubmitPanel info={gitUploadInfo} setInfo={setGitUploadInfo} />
-              )}
-              {uploadMethod === "css" && (
-                <CSSSubmitPanel info={cssUploadInfo} setInfo={setCSSUploadInfo} />
-              )}
-            </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              <span className={partHeaderClasses}>Part 2: Add More Info</span>
               <MetaSubmitPanel
                 info={metaInfo}
                 setInfo={setMetaInfo}
                 uploadType={uploadType}
                 uploadMethod={uploadMethod}
               />
+              <div className="absolute bottom-8 flex flex-row gap-4">
+                <button
+                  className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                  onClick={goToPreviousStep}
+                >
+                  Back
+                </button>
+                <button
+                  className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                  onClick={goToNextStep}
+                >
+                  Next
+                </button>
+              </div>
             </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              <span className={partHeaderClasses}>Part 3: Accept Terms</span>
-              <TosCheckboxes setCheckValue={setHasAcceptedTos} uploadType={uploadType} />
-            </section>
-            <BigDivider />
-            <section className="p-4 w-full flex flex-col items-center">
-              {checkIfReady() ? (
-                <>
-                  <button className="bg-gradient-to-tl from-green-700 to-lime-300 p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                    <span
-                      className="text-textDark dark:text-textLight font-fancy"
-                      onClick={() => submitTheme()}
-                    >
-                      Submit
+          )}
+          {currentStep === 3 && (
+            <>
+              <section className="flex w-full flex-col items-center p-4 py-16">
+                <div className="flex w-full flex-col items-center justify-center gap-4">
+                  <div className="absolute top-8">
+                    <span className="font-fancy w-full pb-4 text-center text-2xl font-semibold md:text-4xl">
+                      Accept Terms
                     </span>
-                  </button>
-                </>
-              ) : (
-                <div className="p-4 text-2xl md:text-3xl font-medium rounded-3xl mb-4">
-                  <span>Add Info Before Submitting</span>
+                  </div>
+                  <TosCheckboxes
+                    checkValue={hasAcceptedTos}
+                    setCheckValue={setHasAcceptedTos}
+                    uploadType={uploadType}
+                  />
                 </div>
-              )}
-            </section>
-          </main>
+                <div className="absolute bottom-8 flex flex-row gap-4">
+                  <button
+                    className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                    onClick={goToPreviousStep}
+                  >
+                    Back
+                  </button>
+
+                  <button
+                    disabled={!checkIfReady()}
+                    onClick={submitTheme}
+                    className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </section>
+            </>
+          )}
         </div>
       </>
     );

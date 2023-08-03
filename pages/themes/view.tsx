@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { FullThemeCard, LoadingSpinner } from "../../components";
-import { useState, useEffect } from "react";
-import Head from "next/head";
+import { useState, useEffect, useContext } from "react";
+import { desktopModeContext } from "contexts";
 
 export default function FullThemeViewPage() {
+  const { desktopMode } = useContext(desktopModeContext);
   const router = useRouter();
   let { themeId } = router.query;
   const [parsedId, setParsedId] = useState<string>("");
@@ -20,7 +21,7 @@ export default function FullThemeViewPage() {
 
   if (!parsedId) {
     return (
-      <main className="w-full flex-grow flex items-center justify-center">
+      <main className="flex w-full flex-grow items-center justify-center">
         <span className="text-3xl">No Theme Found</span>
       </main>
     );
@@ -28,9 +29,9 @@ export default function FullThemeViewPage() {
 
   return (
     <>
-      <main>
+      <div className="flex h-full w-full items-center justify-center px-4">
         <FullThemeCard parsedId={parsedId} />
-      </main>
+      </div>
     </>
   );
 }

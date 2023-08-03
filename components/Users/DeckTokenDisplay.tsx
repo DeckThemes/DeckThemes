@@ -1,35 +1,39 @@
 import { useState } from "react";
-import { fetchWithRefresh, genericGET } from "../../api";
+import { fetchWithRefresh, genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
+import { RiRefreshLine } from "react-icons/ri";
 
 export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
   const [deckToken, setDeckToken] = useState<string | undefined>();
   const [hover, setHover] = useState<boolean>(false);
   function generateDeckToken() {
     setDeckToken("LOADING");
-    fetchWithRefresh(() => {
-      genericGET(`/users/${userId ? userId : "me"}/token`, true).then((json) => {
-        if (json?.token) {
-          setDeckToken(json.token);
-        }
-      });
+    genericGET(`/users/${userId ? userId : "me"}/token`).then((json) => {
+      if (json?.token) {
+        setDeckToken(json.token);
+      }
     });
   }
   return (
-    <div className="flex flex-col gap-4 p-4 border-borderLight dark:border-borderDark">
-      <span className="text-3xl font-semibold font-fancy text-center">Connect Your Steam Deck</span>
-      <div className="flex flex-col md:flex-row items-center bg-cardLight dark:bg-cardDark rounded-3xl">
+    <div className="flex flex-col gap-4 border-borderLight p-4 dark:border-borderDark">
+      <span className="font-fancy text-xl font-semibold">
+        Connect Your Steam Deck
+      </span>
+      <div className="flex flex-col items-center md:flex-row">
         <button
           onClick={generateDeckToken}
-          className="w-full p-4 bg-borderLight dark:bg-borderDark rounded-3xl font-fancy"
+          className="flex h-fit w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
         >
-          {deckToken ? "Reg" : "G"}enerate Deck Token
+          <RiRefreshLine />
+          <div className="font-fancy text-xs font-bold">
+            {deckToken ? "Reg" : "G"}enerate Deck Token
+          </div>
         </button>
         {deckToken ? (
           <>
-            <div className="px-4 py-4 md:py-0 relative">
+            <div className="relative px-4 py-4 md:py-0">
               {deckToken === "LOADING" ? (
-                <LoadingSpinner />
+                <LoadingSpinner size={24} />
               ) : (
                 <>
                   <div className="cursor-pointer underline">
@@ -44,7 +48,7 @@ export function DeckTokenDisplay({ userId }: { userId?: string | undefined }) {
                       {deckToken}
                     </span>
                     <span
-                      className="w-full flex justify-center underline absolute left-1/2 -translate-x-1/2 top-[-0.15rem] text-blue-700 dark:text-blue-200 transition-opacity duration-75"
+                      className="absolute left-1/2 top-[-0.15rem] flex w-full -translate-x-1/2 justify-center text-blue-700 underline transition-opacity duration-75 dark:text-blue-200"
                       style={{ opacity: hover ? "100%" : "0%" }}
                       onClick={() => navigator.clipboard.writeText(deckToken)}
                       onMouseEnter={() => setHover(true)}

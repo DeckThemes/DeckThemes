@@ -1,22 +1,19 @@
 import { useContext, useEffect, useState } from "react";
-import { authContext } from "../_app";
-import { clearCookie, genericGET } from "../../api";
+import { authContext } from "contexts";
+import { clearCookie, genericFetch, genericGET } from "../../apiHelpers";
 import {
   DeckTokenDisplay,
   LoadingPage,
   LogInPage,
   PfpDisplay,
   ThemeCategoryDisplay,
+  TransitionedCarouselTitle,
 } from "../../components";
 import Head from "next/head";
 import { useHasCookie } from "../../hooks";
 import { UserInfo } from "../../types";
-
-function BigDivider() {
-  return (
-    <div className="h-2 bg-borderLight dark:bg-borderDark w-full my-4 md:w-10/12 md:rounded-3xl" />
-  );
-}
+import { HorizontalRadio } from "@components/Primitives/HorizontalRadio";
+import { RadioDropdown } from "@components/Primitives";
 
 export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
@@ -25,8 +22,19 @@ export default function Account() {
 
   const [meInfo, setMeInfo] = useState<UserInfo>();
 
+  const [radioValue, setRadioValue] = useState<string>("stars");
+  const radioOptions = [
+    { value: "stars", displayText: "Stars", title: "Your Stars" },
+    { value: "themes", displayText: "Themes", title: "Your Themes" },
+    {
+      value: "submissions",
+      displayText: "Submissions",
+      title: "Your Submissions",
+    },
+  ];
+
   useEffect(() => {
-    genericGET(`/auth/me_full`, true).then((data) => {
+    genericGET(`/auth/me_full`).then((data) => {
       if (data) {
         setMeInfo(data);
       }
@@ -42,11 +50,8 @@ export default function Account() {
   function logOutAll() {
     const isSure = confirm("This will remove all signed in web browsers and Steam Decks");
     if (isSure) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/me/logout_all`, {
-        method: "POST",
-        credentials: "include",
-      }).then((res) => {
-        if (res.status >= 200 && res.status < 300) {
+      genericFetch("/users/me/logout_all", { method: "POST" }, true).then((success) => {
+        if (success) {
           setAccountInfo(undefined);
           clearCookie();
         }
@@ -60,50 +65,55 @@ export default function Account() {
         <Head>
           <title>DeckThemes | My Profile</title>
         </Head>
-        <main className="flex flex-col items-center w-full">
+        <div className="mx-auto flex w-full max-w-7xl flex-col gap-4">
           <PfpDisplay userData={meInfo || accountInfo} />
-          <div className="mt-4" />
+          <TransitionedCarouselTitle
+            className="px-4 pb-20"
+            titles={radioOptions.map((e) => e.title)}
+            currentTitle={
+              radioOptions.find((e) => e.value === radioValue)?.title || radioOptions[0].title
+            }
+          />
+          <div className="mx-4 block md:hidden">
+            <RadioDropdown
+              ariaLabel="Your Theme Types Dropdown"
+              options={radioOptions}
+              value={radioValue}
+              onValueChange={setRadioValue}
+            />
+          </div>
+          <div className="hidden w-full items-center justify-center md:flex">
+            <HorizontalRadio
+              rootClass="self-center pb-4"
+              options={radioOptions}
+              value={radioValue}
+              onValueChange={setRadioValue}
+            />
+          </div>
           <ThemeCategoryDisplay
             typeOptionPreset="All"
-            themeDataApiPath="/users/me/stars"
-            filterDataApiPath={`/users/me/stars/filters`}
-            title="Starred Themes"
+            themesPerPage={4}
+            useSubmissionCards={radioValue === "submissions"}
+            themeDataApiPath={`/users/me/${radioValue}`}
+            filterDataApiPath={`/users/me/${radioValue}/filters`}
           />
-          <BigDivider />
-          <ThemeCategoryDisplay
-            typeOptionPreset="All"
-            themeDataApiPath="/users/me/themes"
-            filterDataApiPath={`/users/me/themes/filters`}
-            title="Your Approved Themes"
-          />
-          <BigDivider />
-          <ThemeCategoryDisplay
-            typeOptionPreset="All"
-            themeDataApiPath="/users/me/submissions"
-            filterDataApiPath={`/users/me/submissions/filters`}
-            title="Your Submissions"
-            useSubmissionCards
-            showFiltersWithZero
-            defaultFilter="AwaitingApproval"
-          />
-          <BigDivider />
           <DeckTokenDisplay />
-          <div className="my-5 h-2 w-10/12 rounded-full bg-borderLight dark:bg-borderDark" />
-          <div className="flex gap-4 p-4">
+          <div className="flex flex-col gap-6 p-4">
+            <span className="font-fancy text-xl font-semibold">Log Out</span>
             <button
               onClick={logOut}
-              className="mt-auto p-5 mb-5 font-medium text-xl bg-red-500 rounded-3xl"
+              className="flex w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark bg-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
             >
-              Log Out This Device
+              <div className="font-fancy text-xs font-bold">Log out</div>
             </button>
             <button
               onClick={logOutAll}
-              className="mt-auto p-5 mb-5 font-medium text-xl border-red-500 border-2 rounded-3xl"
+              className="flex w-fit select-none items-center gap-2 rounded-full border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
             >
-              Log Out All Devices
+              <div className="font-fancy text-xs font-bold">Log out all devices</div>
             </button>
           </div>
-        </main>
+        </div>
       </>
     );
   }

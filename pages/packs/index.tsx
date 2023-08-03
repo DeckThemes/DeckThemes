@@ -27,34 +27,36 @@ export default function Packs() {
   return (
     <>
       <Head>
-        <title>DeckThemes | CSSLoader Themes</title>
+        <title>DeckThemes | AudioLoader Packs</title>
       </Head>
-      <main className="flex flex-col items-center">
-        <div className="flex flex-col items-center justify-center">
-          <h2 className="font-bold text-3xl md:text-5xl pt-4">AudioLoader Packs</h2>
-        </div>
-        {defaults !== undefined && (
-          <ThemeCategoryDisplay
-            {...defaults}
-            themeDataApiPath="/themes"
-            filterDataApiPath="/themes/filters"
-            title=""
-            defaultType="AUDIO"
-            themesPerPage={24}
-            noAuthRequired
-            onSearchOptsChange={(searchOpts, type) => {
-              router.push(
-                {
-                  pathname: "/packs",
-                  query: { filters: searchOpts.filters, order: searchOpts.order, type: type },
+      <div className="mb-12 flex flex-col items-center">
+        <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">Audio Packs</h1>
+      </div>
+      {defaults !== undefined && (
+        <ThemeCategoryDisplay
+          {...defaults}
+          themeDataApiPath="/themes"
+          filterDataApiPath="/themes/filters"
+          title=""
+          defaultType="AUDIO"
+          themesPerPage={24}
+          noAuthRequired
+          onSearchOptsChange={(searchOpts, type) => {
+            router.push(
+              {
+                pathname: "/packs",
+                query: {
+                  filters: searchOpts.filters,
+                  order: searchOpts.order,
+                  type: type,
                 },
-                undefined,
-                { shallow: true }
-              );
-            }}
-          />
-        )}
-      </main>
+              },
+              undefined,
+              { shallow: true }
+            );
+          }}
+        />
+      )}
     </>
   );
 }

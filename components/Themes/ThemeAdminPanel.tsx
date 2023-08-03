@@ -1,15 +1,17 @@
-import { BiEditAlt } from "react-icons/bi";
-import { BsCloudUploadFill, BsThreeDotsVertical, BsXCircleFill } from "react-icons/bs";
-import Link from "next/link";
-import { authContext } from "../../pages/_app";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
+import { authContext } from "contexts";
 import { useContext, useState } from "react";
 import { FullCSSThemeInfo, Permissions } from "../../types";
-import { fetchWithRefresh } from "../../api";
+import { genericFetch } from "../../apiHelpers";
 import { toast } from "react-toastify";
+import { MenuDropdown } from "@components/Primitives";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { useRouter } from "next/router";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
   const [showAdminModal, setShowAdminModal] = useState<boolean>(false);
+  const router = useRouter();
 
   function deleteTheme() {
     if (themeData) {
@@ -17,15 +19,19 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
         `Are you sure you want to delete this theme? \nType "${themeData.name}" below to confirm.`
       );
       if (enteredName === themeData.name) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData.id}`, {
-          method: "DELETE",
-          credentials: "include",
-        })
-          .then((res) => {
-            if (res.ok && res.status === 200) {
+        genericFetch(
+          `/themes/${themeData.id}`,
+          {
+            method: "DELETE",
+          },
+          true
+        )
+          .then((success) => {
+            if (success) {
               alert("Theme Successfully Deleted");
+              return;
             }
-            throw new Error(`Res Not OK! Error Code ${res.status}`);
+            throw new Error(`Res Not OK!`);
           })
           .catch((err) => {
             toast.error(`Error Deleting Theme! ${JSON.stringify(err)}`);
@@ -49,10 +55,10 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
     if (!target) {
       target = null;
     }
-    fetchWithRefresh(() => {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/themes/${themeData?.id}`, {
+    genericFetch(
+      `/themes/${themeData.id}`,
+      {
         method: "PATCH",
-        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -61,18 +67,19 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
           target: target,
           author: author,
         }),
+      },
+      true
+    )
+      .then((success) => {
+        if (success) {
+          alert("Edited Successfully");
+          location.reload();
+        }
       })
-        .then((res) => {
-          if (res.ok && res.status === 200) {
-            alert("Edited Successfully");
-            location.reload();
-          }
-        })
-        .catch((err) => {
-          toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
-          console.error(err);
-        });
-    });
+      .catch((err) => {
+        toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
+        console.error(err);
+      });
   }
 
   return (
@@ -80,55 +87,33 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
       {themeData.author.id === accountInfo?.id ||
       accountInfo?.permissions.includes(Permissions.editAny) ? (
         <>
-          <div
-            className="absolute right-0 flex flex-col items-end transition-all"
-            onMouseEnter={() => setShowAdminModal(true)}
-            onMouseLeave={() => setShowAdminModal(false)}
-          >
-            <button
-              className="bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition-all p-2 rounded-full"
-              onClick={() => setShowAdminModal(!showAdminModal)}
-            >
-              <BsThreeDotsVertical />
-            </button>
-            {showAdminModal && (
-              <>
-                {/* <div
-                          className="bg-red-800 absolute w-[300vw] h-[300vh] z-10 translate-x-1/2 -translate-y-1/2"
-                          onClick={() => setShowAdminModal(false)}
-                        /> */}
-                {accountInfo.permissions.includes(Permissions.editAny) ? (
-                  <>
-                    <button
-                      className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                      onClick={changeMeta}
-                    >
-                      <BiEditAlt />
-                      <span>Change Meta</span>
-                    </button>
-                  </>
-                ) : null}
-                <button
-                  className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                  onClick={deleteTheme}
-                >
-                  <BsXCircleFill className="text-red-500" />
-                  <span>Delete Theme</span>
-                </button>
-                {themeData.author.id === accountInfo?.id && (
-                  <>
-                    <Link
-                      href="/submit"
-                      className={`flex bg-borderLight dark:bg-borderDark hover:bg-bgLight hover:dark:bg-bgDark transition p-1 rounded-full items-center gap-2 px-2`}
-                    >
-                      <BsCloudUploadFill />
-                      <span>Update Theme</span>
-                    </Link>
-                  </>
-                )}
-              </>
-            )}
-          </div>
+          <MenuDropdown
+            options={[
+              ...(themeData.author.id === accountInfo?.id
+                ? [
+                    {
+                      displayText: "Update Theme",
+                      icon: <AiOutlineCloudUpload size={20} />,
+                      onSelect: () => router.push("/submit?update=1"),
+                    },
+                  ]
+                : []),
+              ...(accountInfo.permissions.includes(Permissions.editAny)
+                ? [
+                    {
+                      displayText: "Change Theme Meta",
+                      icon: <BiEditAlt size={20} />,
+                      onSelect: () => changeMeta(),
+                    },
+                    {
+                      displayText: "Delete Theme",
+                      icon: <BiTrash size={20} />,
+                      onSelect: () => deleteTheme(),
+                    },
+                  ]
+                : []),
+            ]}
+          />
         </>
       ) : null}
     </>

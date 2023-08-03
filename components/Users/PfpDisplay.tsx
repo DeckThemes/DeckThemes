@@ -1,36 +1,57 @@
 import Image from "next/image";
 import { Permissions, UserInfo } from "../../types";
-import { BsWrench } from "react-icons/bs";
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+import { BsPaintBucket, BsWrench } from "react-icons/bs";
+// import { Tooltip } from "react-tooltip";
+// import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "../Primitives";
 import { SupporterIcon } from "./SupporterIcon";
+import { RiPaintBrushFill, RiStarFill } from "react-icons/ri";
 
 export function PfpDisplay({ userData }: { userData?: UserInfo }) {
   if (userData) {
     return (
-      <div className="flex flex-col md:flex-row-reverse gap-2 items-center text-center md:bg-cardLight md:dark:bg-cardDark rounded-full md:pl-8 md:gap-6 mt-10">
+      <div className="mx-auto mt-4 mb-16 flex w-fit flex-col items-center gap-8 rounded-2xl bg-base-5-light p-8 shadow-2xl dark:bg-base-3-dark md:flex-row">
         <Image
           src={userData?.avatar || "/question_mark.png"}
-          width="142"
-          height="142"
+          width="128"
+          height="128"
           alt="Your Discord Profile Picture"
-          className="rounded-full border-8 border-borderLight dark:border-borderDark"
+          className="flex aspect-square rounded-full"
         />
-        <div className="flex flex-col w-full items-center justify-center">
-          <h1 className="text-3xl font-semibold">{userData?.username}</h1>
-          <div className="flex flex-row w-full text-3xl items-center justify-center">
-            {userData?.permissions.includes(Permissions.admin) && (
-              <>
-                <BsWrench id="maintainer-tt" />
-                <Tooltip
-                  anchorSelect="#maintainer-tt"
-                  content="DeckThemes Maintainer"
-                  place="bottom"
-                />
-              </>
-            )}
-            <SupporterIcon author={userData} />
+        <div className="flex flex-col justify-center gap-4">
+          <div className="flex flex-row items-center gap-4">
+            <h1 className="text-3xl font-extrabold">{userData?.username}</h1>
+            <div className="flex w-full flex-col items-center justify-center gap-2 rounded-full dark:bg-base-2-dark dark:text-fore-11-dark sm:flex-row">
+              {userData?.permissions.includes(Permissions.admin) && (
+                <>
+                  <Tooltip
+                    triggerContent={
+                      <>
+                        <BsWrench className="m-4 h-5 w-5" />
+                      </>
+                    }
+                    content={<span>DeckThemes Maintainer</span>}
+                  />
+                </>
+              )}
+              <SupporterIcon author={userData} />
+            </div>
           </div>
+
+          {/* <div className="text-fore-8-dark">
+            <div className="flex items-center gap-3">
+              <RiStarFill className="text-fore-11-dark" />
+              <div>
+                <span className="text-fore-11-dark">10</span> stars
+              </div>
+            </div>
+            <div className="flex items-center gap-3 mt-4">
+              <RiPaintBrushFill className="text-fore-11-dark" />
+              <div>
+                <span className="text-fore-11-dark">2</span> themes
+              </div>
+            </div>
+          </div> */}
         </div>
       </div>
     );

@@ -1,12 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { GitSubmissionInfo } from "../../types";
-import { MiniDivider } from "../Generic";
-import {
-  fieldClasses,
-  fieldContainerClasses,
-  fieldTitleClasses,
-  sectionContainerClasses,
-} from "./SubmitPageTailwindClasses";
+import { LabelledInput } from "@components/Primitives";
 
 export function GitSubmitPanel({
   info,
@@ -17,37 +11,25 @@ export function GitSubmitPanel({
 }) {
   return (
     <>
-      <div className={`${sectionContainerClasses}`}>
-        <div className={`${fieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Repo URL</span>
-          <input
-            type="text"
-            value={info.url}
-            onChange={(e) => setInfo({ ...info, url: e.target.value })}
-            className={fieldClasses}
-          />
-        </div>
-        <MiniDivider />
-        <div className={`${fieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Commit ID</span>
-          <input
-            type="text"
-            value={info.commit}
-            placeholder="Leave blank for latest commit"
-            onChange={(e) => setInfo({ ...info, commit: e.target.value })}
-            className={fieldClasses}
-          />
-        </div>
-        <MiniDivider />
-        <div className={`${fieldContainerClasses}`}>
-          <span className={`${fieldTitleClasses}`}>Subfolder</span>
-          <input
-            type="text"
-            value={info.subfolder}
-            onChange={(e) => setInfo({ ...info, subfolder: e.target.value })}
-            className={fieldClasses}
-          />
-        </div>
+      <div className="flex w-full flex-col items-center justify-center gap-4">
+        <LabelledInput
+          rootClass="w-full md:w-1/2"
+          label="Repo URL"
+          value={info.url}
+          onValueChange={(e) => setInfo({ ...info, url: e })}
+        />
+        <LabelledInput
+          rootClass="w-full md:w-1/2"
+          label="Commit ID"
+          value={info.commit}
+          onValueChange={(e) => setInfo({ ...info, commit: e })}
+        />
+        <LabelledInput
+          rootClass="w-full md:w-1/2"
+          label="Subfolder"
+          value={info.subfolder}
+          onValueChange={(e) => setInfo({ ...info, subfolder: e })}
+        />
       </div>
     </>
   );

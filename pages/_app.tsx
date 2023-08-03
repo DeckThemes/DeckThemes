@@ -1,49 +1,26 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Footer, MainNav } from "../components";
-import { createContext, useEffect, useState } from "react";
-import { Theme, themeContext } from "../styles";
-import { AccountData, AuthContextContents } from "../types";
-import { getMeDataOnInit } from "../api";
-import { ToastContainer } from "react-toastify";
+import { LandingFooter, DesktopFooter, MainNav } from "../components";
+import Nav from "@components/Nav/Nav";
+import { useEffect, useState } from "react";
+import { ThemeProvider } from "next-themes";
+import { AccountData } from "../types";
+import { getMeDataOnInit } from "../apiHelpers";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-export const authContext = createContext<AuthContextContents>({
-  accountInfo: undefined,
-  setAccountInfo: () => {},
-});
-
-export const desktopModeContext = createContext<any>({
-  desktopMode: false,
-  setDesktopMode: () => {},
-  installing: false,
-  setInstalling: () => {},
-});
+import { logInWithToken } from "apiHelpers/auth/logInWithToken";
+import { IoMdClose } from "react-icons/io";
+import { authContext, desktopModeContext } from "contexts";
+import { InstalledTheme } from "@customTypes/DesktopModeTypes";
+import { useRouter } from "next/router";
+import { twMerge } from "tailwind-merge";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState<Theme>("dark");
-
-  const [desktopMode, setDesktopMode] = useState<boolean>(false);
+  const [desktopMode, setDesktopMode] = useState<boolean | undefined>(undefined);
   const [installing, setInstalling] = useState<boolean>(false);
-
-  function initSetTheme(): void {
-    //Sets dark theme based on browser preferences, but also allows for manual changing
-    if (localStorage?.theme) {
-      localStorage.theme === "light" || localStorage.theme === "dark"
-        ? setTheme(localStorage.theme)
-        : console.warn(
-            "Theme value in localStorage is not valid! Please set it to either 'light' or 'dark'"
-          );
-      return;
-    }
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
-      localStorage.theme = "dark";
-      return;
-    }
-    setTheme("dark");
-    return;
-  }
+  const [installedThemes, setInstalledThemes] = useState<InstalledTheme[]>([]);
+  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
+  const router = useRouter();
 
   async function initGetUserData(): Promise<void> {
     const meJson = await getMeDataOnInit();
@@ -53,58 +30,89 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   useEffect(() => {
-    initSetTheme();
     initGetUserData();
   }, []);
 
   useEffect(() => {
-    window.addEventListener("message", (event) => {
-      if (event.data === "enableDesktopAppMode") {
-        setDesktopMode(true);
-      }
-      if (event.data === "themeInstalled") {
+    // iFrame event handling
+    async function handleMessage(event: MessageEvent<{ action: string; payload: any }>) {
+      if (event.data.action === "themeInstalled") {
         setInstalling(false);
       }
-    });
-    window.parent.postMessage(
-      {
-        action: "isThisDesktopApp",
-        payload: undefined,
-      },
-      "*"
-    );
+      if (event.data.action === "logInWithToken") {
+        const meJson = await logInWithToken(event.data.payload);
+        if (meJson?.username) {
+          setAccountInfo(meJson);
+        }
+      }
+      if (event.data.action === "provideInstallState") {
+        console.log("received test");
+        setInstalledThemes(event.data.payload);
+      }
+    }
+
+    window.addEventListener("message", handleMessage);
+
+    // The enabling of desktop mode used to be through another iframe postMessage, however that led to ~100ms of seeing the wrong ui before it switched
+    // This properly renders the right version of the site on first page load
+    if (window && window.location.pathname === "/desktop") {
+      setDesktopMode(true);
+    } else {
+      setDesktopMode(false);
+    }
+
+    return () => window.removeEventListener("message", handleMessage);
   }, []);
 
-  const [accountInfo, setAccountInfo] = useState<AccountData | undefined>(undefined);
-
   return (
-    <themeContext.Provider value={{ theme, setTheme }}>
+    <ThemeProvider attribute="class" disableTransitionOnChange={true}>
       <authContext.Provider value={{ accountInfo, setAccountInfo }}>
         <desktopModeContext.Provider
-          value={{ desktopMode, setDesktopMode, installing, setInstalling }}
+          value={{
+            desktopMode,
+            setDesktopMode,
+            installing,
+            setInstalling,
+            installedThemes,
+            setInstalledThemes,
+          }}
         >
-          <div className={`${theme}`}>
-            <div className="bg-bgLight dark:bg-bgDark text-textLight dark:text-textDark min-h-screen flex flex-col relative">
-              <MainNav />
-              <ToastContainer
-                position="bottom-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme={theme}
-              />
-              <Component {...pageProps} />
-              <div className="mt-auto pt-20">
-                <Footer />
-              </div>
-            </div>
+          <div className="relative flex min-h-screen flex-col bg-base-6-light text-textLight dark:bg-base-6-dark dark:text-textDark">
+            {desktopMode !== undefined ? (
+              <>
+                <Nav />
+                <ToastContainer
+                  position="bottom-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop
+                  closeButton={<IoMdClose />}
+                  toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+                  bodyClassName="rounded-xl font-fancy text-black dark:text-white"
+                  closeOnClick
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
+                <main
+                  className={twMerge(
+                    "page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px]  border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark",
+                    router.pathname !== "/" && "py-12"
+                    // desktopMode && "pt-0",
+                    // !desktopMode &&
+                    //   "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
+                  )}
+                >
+                  <Component {...pageProps} />
+                </main>
+                {desktopMode ? <DesktopFooter /> : <LandingFooter />}
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </desktopModeContext.Provider>
       </authContext.Provider>
-    </themeContext.Provider>
+    </ThemeProvider>
   );
 }

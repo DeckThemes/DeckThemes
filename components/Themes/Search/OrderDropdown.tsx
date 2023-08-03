@@ -1,5 +1,4 @@
-import { ReactSelectCustomClasses, ReactSelectCustomLabel } from "../../CustomDropdowns";
-import Select from "react-select";
+import { RadioDropdown } from "../../Primitives";
 
 export function OrderDropdown({
   orderOpts = ["ERROR"],
@@ -10,31 +9,17 @@ export function OrderDropdown({
   orderValue: string;
   onOrderChange?: (e: any) => void;
 }) {
-  const formattedOrderOpts =
-    orderOpts.length > 0
-      ? orderOpts.map((orderName) => ({
-          value: orderName,
-          label: <ReactSelectCustomLabel mainText={orderName} />,
-        }))
-      : [
-          {
-            value: "Alphabetical (A to Z)",
-            label: <ReactSelectCustomLabel mainText="Alphabetical (A to Z)" />,
-          },
-        ];
   return (
     <>
-      <div className="flex flex-col items-center bg-cardLight dark:bg-cardDark rounded-md p-2">
-        <span>Order</span>
-        <Select
-          value={formattedOrderOpts.find((e) => e.value === orderValue) || formattedOrderOpts[0]}
-          onChange={(e) => {
-            onOrderChange && onOrderChange({ target: e });
+      <div className="font-fancy flex flex-col gap-2 rounded-md text-sm">
+        <RadioDropdown
+          ariaLabel="Theme Sort Dropdown"
+          headingText="Sort by"
+          options={orderOpts}
+          value={orderValue}
+          onValueChange={(e: any) => {
+            onOrderChange && onOrderChange(e);
           }}
-          maxMenuHeight={400}
-          {...ReactSelectCustomClasses}
-          isSearchable={false}
-          options={formattedOrderOpts}
         />
       </div>
     </>
