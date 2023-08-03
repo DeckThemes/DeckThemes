@@ -4,8 +4,8 @@ import { twMerge } from "tailwind-merge";
 
 export function PatreonFooterBar() {
   const [isHovered, setIsHovered] = useState(false);
-  const [patreonPercentage2, setPatreonPercentage] = useState<number | undefined>(undefined);
-  const patreonPercentage = 70;
+  const [patreonPercentage, setPatreonPercentage] = useState<number | undefined>(undefined);
+  // const patreonPercentage = 70;
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_DEV_MODE === "true") {
