@@ -103,13 +103,10 @@ export function MiniThemeCardRoot({
   className?: string;
 }) {
   function imageSRCCreator(): string {
-    if (data?.images === undefined) return `https://share.deckthemes.com/css_placeholder.png`;
-
-    if (data?.images[0]?.id && data.images[0].id !== "MISSING") {
-      return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
-    } else {
+    if (!data.images || data.images.length === 0 || data.images[0].id !== "MISSING") {
       return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
     }
+    return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
   }
 
   function InnerContent() {
