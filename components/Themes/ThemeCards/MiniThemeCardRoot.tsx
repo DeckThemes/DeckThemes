@@ -65,7 +65,7 @@ function CSSCardImage({ imageSrc }: { imageSrc: string }) {
     <div className="relative aspect-video h-[162.5px] w-full rounded-xl bg-cover bg-center bg-no-repeat">
       <Image
         alt=""
-        src={`${imageSrc}/thumb`}
+        src={`${imageSrc}`}
         placeholder={"blur"}
         blurDataURL={cssCardBlurDataUrl}
         fill
@@ -103,10 +103,10 @@ export function MiniThemeCardRoot({
   className?: string;
 }) {
   function imageSRCCreator(): string {
-    if (!data.images || data.images.length === 0 || data.images[0].id !== "MISSING") {
+    if (!data.images || data.images.length === 0 || data.images[0].id === "MISSING") {
       return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
     }
-    return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}`;
+    return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0]?.id}/thumb`;
   }
 
   function InnerContent() {
