@@ -22,10 +22,8 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
       },
       true
     ).then(() => {
-      console.log("test");
-      toast("test");
+      toast("Email Updated");
     });
-    console.log(inputValue);
   }
 
   return (

@@ -21,7 +21,6 @@ export function TransitionedCarouselTitle({
   const [titleRefArr, setTitleRefArr] = useState<any[]>([]);
   useEffect(() => {
     const titleRefArr = titles.map(() => createRef());
-    console.log("titleRefArr", titleRefArr);
     setTitleRefArr(titleRefArr);
     // I have no idea why but this errors if this is not stringified here
   }, [JSON.stringify(titles)]);
@@ -36,7 +35,6 @@ export function TransitionedCarouselTitle({
     setTransitioning && setTransitioning(true);
     // This happens before the transition to account for the time it will take for the API call anyway
     setOldTitle(newTitle);
-    console.log(titleRefArr);
     const oldIndex = titles.indexOf(oldTitle || titles[0]);
     const newIndex = titles.indexOf(newTitle || titles[0]);
     await fadeOut(titleRefArr[oldIndex].current);

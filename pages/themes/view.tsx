@@ -10,7 +10,6 @@ export default function FullThemeViewPage() {
   const [parsedId, setParsedId] = useState<string>("");
 
   useEffect(() => {
-    console.log(themeId);
     // this is here because for some reason @types/next thinks that router.query can be an array of strings
     if (Array.isArray(themeId)) {
       setParsedId(themeId[0]);

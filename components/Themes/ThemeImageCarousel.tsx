@@ -39,7 +39,6 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
     } else {
       const percentage = (selectedImage / (data.images.length - 1)) * 100;
       setProgress(percentage);
-      console.log(percentage);
     }
   };
 

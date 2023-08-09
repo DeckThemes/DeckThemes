@@ -4,7 +4,6 @@ import { Tooltip } from "../Primitives";
 
 export function SupporterIcon({ author }: { author: UserInfo }) {
   const randId = Math.trunc(Math.random() * 69420);
-  console.log(author);
   return (
     <>
       {author?.premiumTier && author?.premiumTier !== "None" && (

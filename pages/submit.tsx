@@ -129,7 +129,6 @@ export default function Submit() {
   useEffect(() => {
     calculateProgress();
   }, [currentStep]);
-  console.log(router.query);
   const [uploadMethod, setUploadMethod] = useState<string>("git");
   if (accountInfo?.username) {
     return (
