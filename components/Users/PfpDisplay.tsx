@@ -6,17 +6,25 @@ import { BsPaintBucket, BsWrench } from "react-icons/bs";
 import { Tooltip } from "../Primitives";
 import { SupporterIcon } from "./SupporterIcon";
 import { RiPaintBrushFill, RiStarFill } from "react-icons/ri";
+import { useEffect, useState } from "react";
 
 export function PfpDisplay({ userData }: { userData?: UserInfo }) {
+  const [imgSrc, setImgSrc] = useState(userData?.avatar || "/question_mark.png");
+  useEffect(() => {
+    setImgSrc(userData?.avatar || "/question_mark.png");
+  }, [userData]);
   if (userData) {
     return (
       <div className="mx-auto mt-4 mb-16 flex w-fit flex-col items-center gap-8 rounded-2xl bg-base-5-light p-8 shadow-2xl dark:bg-base-3-dark md:flex-row">
         <Image
-          src={userData?.avatar || "/question_mark.png"}
+          src={imgSrc}
           width="128"
           height="128"
+          onError={() => {
+            setImgSrc("/question_mark.png");
+          }}
           alt="Your Discord Profile Picture"
-          className="flex aspect-square rounded-full"
+          className="flex aspect-square items-center justify-center rounded-full"
         />
         <div className="flex flex-col justify-center gap-4">
           <div className="flex flex-row items-center gap-4">
@@ -37,21 +45,6 @@ export function PfpDisplay({ userData }: { userData?: UserInfo }) {
               <SupporterIcon author={userData} />
             </div>
           </div>
-
-          {/* <div className="text-fore-8-dark">
-            <div className="flex items-center gap-3">
-              <RiStarFill className="text-fore-11-dark" />
-              <div>
-                <span className="text-fore-11-dark">10</span> stars
-              </div>
-            </div>
-            <div className="flex items-center gap-3 mt-4">
-              <RiPaintBrushFill className="text-fore-11-dark" />
-              <div>
-                <span className="text-fore-11-dark">2</span> themes
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
     );

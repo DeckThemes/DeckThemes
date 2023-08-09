@@ -22,7 +22,7 @@ export async function logInWithToken(shortTokenValue: string) {
       .then((data) => {
         if (data && data?.token) {
           generateAuthCookie(data.token);
-          return genericGET("/auth/me").catch((err) => {
+          return genericGET("/auth/me_full").catch((err) => {
             toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
             console.error("Error Fetching User Data!", err);
           });

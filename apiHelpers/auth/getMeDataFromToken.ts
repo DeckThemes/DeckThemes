@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 import { AccountData } from "@customTypes/AccountData";
 
 export async function getMeDataFromToken(token: string): Promise<AccountData> {
-  const meJson = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me`, {
+  const meJson = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me_full`, {
     method: "GET",
     credentials: "include",
     headers: token

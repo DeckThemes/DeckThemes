@@ -11,6 +11,8 @@ export enum Permissions {
 export type PremiumTiers = "None" | "Tier1" | "Tier2" | "Tier3";
 export interface UserInfo {
   premiumTier: PremiumTiers;
+  hasDeckKey: boolean;
+  email: null | string;
   permissions: Permissions[];
   id: string;
   username: string;

@@ -68,9 +68,7 @@ export async function checkAndRefreshToken() {
         return true;
       } else {
         clearCookie();
-        toast.error(
-          `Error re-authenticating! ${json?.message || "Unknown Error!"}`
-        );
+        toast.error(`Error re-authenticating! ${json?.message || "Unknown Error!"}`);
         return false;
       }
     })
@@ -109,6 +107,7 @@ export async function genericFetch(
   // This just ensures that no user provided options overwrite the necessary ones
   let formattedOptions: RequestInit = { ...options, credentials: "include" };
   if (!formattedOptions?.method) formattedOptions.method = "GET";
+  // Merges the invocation-provided headers with the auth stuff
   formattedOptions.headers = {
     ...options?.headers,
     ...(debugEnv
@@ -121,10 +120,7 @@ export async function genericFetch(
 
   const waitForRefresh = await checkAndRefreshToken();
   if (waitForRefresh) {
-    const command = fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}${subPath}`,
-      formattedOptions
-    );
+    const command = fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, formattedOptions);
 
     if (noReturn) {
       return await command.then((res) => {
