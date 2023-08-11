@@ -66,6 +66,12 @@ export function ThemeCategoryDisplay({
 
   const [loaded, setLoaded] = useState<boolean>(false);
 
+  // If you spammed the radio or otherwise changed things, there were cases where useSubmissionCards was true even before the submission data had loaded, causing type errors
+  // This now only sets what type of card to use after said data has loaded
+  const [debouncedUseSubmissionCards, setDebouncedUseSubmissionCards] = useState<
+    boolean | undefined
+  >(useSubmissionCards);
+
   async function fetchNewData() {
     setLoaded(false);
 
@@ -80,6 +86,7 @@ export function ThemeCategoryDisplay({
     return genericGET(`${themeDataApiPath}${searchOptStr}`).then((data) => {
       if (data) {
         setThemeData(data);
+        setDebouncedUseSubmissionCards(useSubmissionCards);
         setLoaded(true);
       }
     });
@@ -137,19 +144,15 @@ export function ThemeCategoryDisplay({
         const isElementSticky = rect?.top <= 0;
 
         setIsSticky(isElementSticky);
-        console.log("hit");
       }
     };
 
     window.addEventListener("scroll", handleScroll);
-    console.log("handlescroll mounted");
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  useSubmissionCards && console.log(themeData, loaded);
 
   return (
     <>
@@ -193,7 +196,7 @@ export function ThemeCategoryDisplay({
               <>
                 {themeData.total === 0 && <span>No Results Found</span>}
                 {/* @ts-ignore */}
-                {useSubmissionCards && themeData?.items?.[0]?.newTheme ? (
+                {debouncedUseSubmissionCards && themeData?.items?.[0]?.newTheme ? (
                   <>
                     {themeData.items.map((e, i) => {
                       return (

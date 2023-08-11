@@ -6,6 +6,7 @@ import { LabelledInput } from "@components/Primitives";
 import { SiMaildotru } from "react-icons/si";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { toast } from "react-toastify";
+import { FaCaretDown } from "react-icons/fa";
 
 export function AddEmailForm({ userId }: { userId?: string | undefined }) {
   const { accountInfo } = useContext(authContext);
@@ -34,11 +35,15 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
           Get Email Updates on Your Submissions
         </span>
       </div>
-      <Collapsible.Root>
+      <Collapsible.Root className="group">
         <Collapsible.Trigger asChild>
           <button className="flex h-fit w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight">
             <SiMaildotru />
             <div className="font-fancy text-xs font-bold">Edit Email</div>
+            <FaCaretDown
+              className="relative transition-transform ease-in group-data-[state=open]:-rotate-180"
+              aria-hidden
+            />
           </button>
         </Collapsible.Trigger>
         <Collapsible.Content className="CollapsibleContent">

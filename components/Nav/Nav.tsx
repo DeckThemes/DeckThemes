@@ -139,7 +139,7 @@ export default function Nav() {
                       <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
                         <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
                         <FaCaretDown
-                          className="relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
+                          className="relative top-[1px] transition-transform ease-in group-data-[state=open]:-rotate-180"
                           aria-hidden
                         />
                       </NavigationMenu.Trigger>

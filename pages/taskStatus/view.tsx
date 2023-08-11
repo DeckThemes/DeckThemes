@@ -8,6 +8,8 @@ import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
 import Image from "next/image";
 import { useTheme } from "next-themes";
+import Link from "next/link";
+import { SiMaildotru } from "react-icons/si";
 
 export default function TaskView() {
   const router = useRouter();
@@ -92,24 +94,35 @@ export default function TaskView() {
                   <span>{apiStatus.status}</span>
                 </>
               )}
-              <a
-                href="https://discord.gg/zSyf5GgdQY"
-                target="_blank"
-                rel="noreferrer"
-                className="m-4 flex items-center justify-center gap-4 rounded-xl bg-base-3-light px-4 py-2 text-left text-xl transition-colors hover:bg-base-4-light dark:bg-base-3-dark dark:hover:bg-base-4-dark"
-              >
-                <Image
-                  alt="Discord Logo"
-                  height="32"
-                  width="32"
-                  src={`https://cdn.simpleicons.org/discord/${
-                    resolvedTheme === "light" ? "black" : "white"
-                  }`}
-                />
-                <span className="text-md rounded-3xl">
-                  Join our Discord for support and updates on your submission
-                </span>
-              </a>
+              <div className="mt-8 flex flex-col items-center justify-center">
+                <h2 className="text-2xl font-semibold">Stay Updated on Your Submission</h2>
+                <div className="flex items-center justify-center gap-2">
+                  <a
+                    href="https://discord.gg/zSyf5GgdQY"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="m-4 flex items-center justify-center gap-4 rounded-xl bg-base-3-light px-4 py-2 text-left text-xl transition-colors hover:bg-base-4-light dark:bg-base-3-dark dark:hover:bg-base-4-dark"
+                  >
+                    <Image
+                      alt="Discord Logo"
+                      height="32"
+                      width="32"
+                      src={`https://cdn.simpleicons.org/discord/${
+                        resolvedTheme === "light" ? "black" : "white"
+                      }`}
+                    />
+                    <span className="text-md rounded-3xl">Join our Discord</span>
+                  </a>
+                  <span className="text-xl font-semibold">or</span>
+                  <Link
+                    href="/users/me"
+                    className="m-4 flex items-center justify-center gap-4 rounded-xl bg-base-3-light px-4 py-2 text-left text-xl transition-colors hover:bg-base-4-light dark:bg-base-3-dark dark:hover:bg-base-4-dark"
+                  >
+                    <SiMaildotru size={32} />
+                    <span className="text-md rounded-3xl">Link Your Email</span>
+                  </Link>
+                </div>
+              </div>
             </div>
           ) : (
             <>
