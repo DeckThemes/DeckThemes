@@ -51,7 +51,7 @@ export default function Nav() {
                   />
                 </NavigationMenu.Trigger>
                 <NavigationMenu.Content className="absolute top-0 left-0 w-full sm:w-auto">
-                  <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[320px] sm:grid-flow-col sm:grid-rows-2">
+                  <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[320px] sm:grid-flow-row sm:grid-cols-1">
                     <ListItem
                       title="CSS Themes"
                       href="/themes?filters=All&order=Most+Downloaded&type=CSS"
@@ -145,7 +145,9 @@ export default function Nav() {
                       </NavigationMenu.Trigger>
                       <NavigationMenu.Content className="absolute top-0 right-0 w-full sm:w-auto">
                         {/* Note, these don't work if you're already on the /themes page. ugh */}
-                        <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
+                        <ul
+                          className={`m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-row sm:grid-cols-1`}
+                        >
                           <ListItem title="Profile" href="/users/me">
                             View Your Profile
                           </ListItem>
