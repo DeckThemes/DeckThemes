@@ -26,25 +26,21 @@ export function PfpDisplay({ userData }: { userData?: UserInfo }) {
           alt="Your Discord Profile Picture"
           className="flex aspect-square items-center justify-center rounded-full"
         />
-        <div className="flex flex-col justify-center gap-4">
-          <div className="flex flex-row items-center gap-4">
-            <h1 className="text-3xl font-extrabold">{userData?.username}</h1>
-            <div className="flex w-full flex-col items-center justify-center gap-2 rounded-full dark:bg-base-2-dark dark:text-fore-11-dark sm:flex-row">
-              {userData?.permissions.includes(Permissions.admin) && (
-                <>
-                  <Tooltip
-                    triggerContent={
-                      <>
-                        <BsWrench className="m-4 h-5 w-5" />
-                      </>
-                    }
-                    content={<span>DeckThemes Maintainer</span>}
-                  />
-                </>
-              )}
-              <SupporterIcon author={userData} />
-            </div>
-          </div>
+        <h1 className="text-3xl font-extrabold">{userData?.username}</h1>
+        <div className="flex w-full flex-col items-center justify-center gap-2 rounded-full dark:bg-base-2-dark dark:text-fore-11-dark sm:flex-row">
+          {userData?.permissions.includes(Permissions.admin) && (
+            <>
+              <Tooltip
+                triggerContent={
+                  <>
+                    <BsWrench className="m-4 h-5 w-5" />
+                  </>
+                }
+                content={<span>DeckThemes Maintainer</span>}
+              />
+            </>
+          )}
+          <SupporterIcon author={userData} />
         </div>
       </div>
     );
