@@ -13,7 +13,7 @@ export default function Auth() {
     const meJson = await getMeDataFromToken(token);
     if (meJson?.username) {
       setAccountInfo(meJson);
-      router.push("/users/me");
+      router.push(localStorage.getItem("authRedirect") || "/users/me");
     }
   }
 
