@@ -116,7 +116,6 @@ export async function genericFetch(
         }
       : {}),
   };
-  console.log("formattedOptions", formattedOptions);
 
   const waitForRefresh = await checkAndRefreshToken();
   if (waitForRefresh) {
