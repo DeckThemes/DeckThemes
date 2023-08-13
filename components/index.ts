@@ -5,3 +5,8 @@ export * from "./Users";
 export * from "./Generic";
 export * from "./HomePage";
 export * from "./Submit";
+export * from "./DeckIcon";
+export * from "./Desktop";
+export * from "./Download";
+export * from "./Primitives";
+export * from "./Submission";
