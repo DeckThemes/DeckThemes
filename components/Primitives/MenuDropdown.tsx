@@ -17,7 +17,7 @@ export function MenuDropdown({
   const { theme } = useTheme();
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger className="flex h-fit w-12 select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-white transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:active:scale-90">
+      <DropdownMenu.Trigger className="flex h-fit w-12 select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-textLight transition duration-150 hover:scale-95 hover:bg-base-4-light hover:active:scale-90 dark:text-textDark hover:dark:bg-base-3-dark">
         <GiHamburgerMenu size={16} />
       </DropdownMenu.Trigger>
 
@@ -36,9 +36,7 @@ export function MenuDropdown({
                     <span
                       className={twMerge(
                         "flex w-fit items-center font-semibold",
-                        e.disabled
-                          ? "text-textFadedLight dark:text-textFadedDark"
-                          : ""
+                        e.disabled ? "text-textFadedLight dark:text-textFadedDark" : ""
                       )}
                     >
                       {e.displayText}
