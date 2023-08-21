@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { GitSubmissionInfo } from "../../types";
+import { GitSubmissionInfo } from "@customTypes/ThemeSubmissionTypes";
 import { LabelledInput } from "@components/Primitives";
 
 export function GitSubmitPanel({

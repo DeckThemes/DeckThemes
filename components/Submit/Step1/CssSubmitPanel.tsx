@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
-import { CSSSubmissionInfo } from "../../types";
+import { CSSSubmissionInfo } from "@customTypes/ThemeSubmissionTypes";
 import {
   fieldClasses,
   fieldContainerClasses,
   fieldTitleClasses,
   sectionContainerClasses,
-} from "./SubmitPageTailwindClasses";
+} from "../SubmitPageTailwindClasses";
 import { LabelledInput, LabelledTextArea } from "@components/Primitives";
 
 export function CSSSubmitPanel({

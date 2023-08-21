@@ -7,15 +7,15 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
-import { MetaInfo } from "../../types";
-import { MiniDivider } from "../Generic";
+import { checkAndRefreshToken, genericFetch, genericGET } from "../../../apiHelpers";
+import { MetaInfo } from "@customTypes/ThemeSubmissionTypes";
+import { MiniDivider } from "@components/Generic";
 import {
   fieldClasses,
   fieldTitleClasses,
   metaFieldContainerClasses,
   sectionContainerClasses,
-} from "./SubmitPageTailwindClasses";
+} from "../SubmitPageTailwindClasses";
 import { toast } from "react-toastify";
 import { LabelledTextArea, RadioDropdown } from "@components/Primitives";
 
@@ -113,7 +113,7 @@ export function MetaSubmitPanel({
               maxFileSize={process.env.NEXT_PUBLIC_MAX_IMG_SIZE}
               files={images}
               onupdatefiles={setImages}
-              onremovefile={(_, file) => {
+              onremovefile={(_1, file) => {
                 setInfo({
                   ...info,
                   imageBlobs: info.imageBlobs.filter((e) => e !== file.serverId),
