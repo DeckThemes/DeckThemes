@@ -27,7 +27,7 @@ registerPlugin(
 );
 
 // Use this to hide targets that aren't meant for user choice
-const disallowedOverrideTargets = ["Preset"];
+const disallowedOverrideTargets = ["Preset", "Profile"];
 
 export function MetaSubmitPanel({
   info,

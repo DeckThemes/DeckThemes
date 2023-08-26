@@ -2,8 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { authContext } from "contexts";
 import { clearCookie, genericFetch, genericGET } from "../../apiHelpers";
 import {
+  AccountKeyDisplay,
   AddEmailForm,
-  DeckTokenDisplay,
   LoadingPage,
   LogInPage,
   PfpDisplay,
@@ -99,7 +99,7 @@ export default function Account() {
             filterDataApiPath={`/users/me/${radioValue}/filters`}
           />
           <AddEmailForm />
-          <DeckTokenDisplay />
+          <AccountKeyDisplay />
           <div className="flex flex-col gap-6 p-4">
             <span className="font-fancy text-xl font-semibold">Log Out</span>
             <button
