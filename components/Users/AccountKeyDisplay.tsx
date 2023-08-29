@@ -16,7 +16,7 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
   }
   return (
     <div className="flex flex-col gap-4 border-borderLight p-4 dark:border-borderDark">
-      <span className="font-fancy text-xl font-semibold">Connect Your Steam Deck</span>
+      <span className="font-fancy text-xl font-semibold">Connect Your Devices</span>
       <div className="flex flex-col items-center md:flex-row">
         <button
           onClick={generateAccountKey}
