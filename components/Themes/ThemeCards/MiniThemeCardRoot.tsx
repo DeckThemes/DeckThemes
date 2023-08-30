@@ -80,7 +80,7 @@ function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
     <>
       <div className="flex w-full flex-col items-start p-4">
         <span className="font-fancy w-full max-w-full truncate text-start font-bold">
-          {data.name}
+          {data.displayName}
         </span>
         <div className="font-fancy flex w-full justify-between">
           <span className="flex-grow truncate text-start text-sm text-fore-9-light dark:text-fore-9-dark">

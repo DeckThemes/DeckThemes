@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import {
   CSSSubmissionInfo,
   GitSubmissionInfo,
@@ -9,9 +9,8 @@ import { SubmitCarouselProgressBar } from "./SubmitCarouselProgressBar";
 import { Step1 } from "./Step1/Step1";
 import { MetaSubmitPanel } from "./Step2/MetaSubmitPanel";
 import { TosCheckboxes } from "./Step3/TosCheckboxes";
-
-const totalSteps = 3;
-const stepTitles = ["Upload Theme", "Edit Theme Listing", "Accept Terms"];
+import { authContext } from "contexts";
+import { AddContactPage } from "./AddContactPage";
 
 export function SubmitStepsCarousel({
   submitTheme,
@@ -23,7 +22,16 @@ export function SubmitStepsCarousel({
     metaInfo: MetaInfo
   ) => void;
 }) {
+  const { accountInfo } = useContext(authContext);
   const [currentStep, setStep] = useState<number>(1);
+
+  const [totalSteps, stepTitles] = useMemo(() => {
+    if (accountInfo && !accountInfo.email) {
+      return [4, ["Upload Theme", "Edit Theme Listing", "Add Contact Info", "Accept Terms"]];
+    } else {
+      return [3, ["Upload Theme", "Edit Theme Listing", "Accept Terms"]];
+    }
+  }, [accountInfo]);
 
   const goToNextStep = () => {
     if (currentStep < totalSteps) {
@@ -114,7 +122,18 @@ export function SubmitStepsCarousel({
                 uploadMethod={uploadMethod}
               />
             </div>
-            <div className={currentStep !== 3 ? "hidden" : "w-full"}>
+            {stepTitles.includes("Add Contact Info") && (
+              <div
+                className={
+                  currentStep !== stepTitles.indexOf("Add Contact Info") + 1 ? "hidden" : "w-full"
+                }
+              >
+                <div className="flex w-full flex-col items-center justify-center gap-4">
+                  <AddContactPage />
+                </div>
+              </div>
+            )}
+            <div className={currentStep !== totalSteps ? "hidden" : "w-full"}>
               <div className="flex w-full flex-col items-center justify-center gap-4">
                 <TosCheckboxes
                   checkValue={hasAcceptedTos}
@@ -133,11 +152,13 @@ export function SubmitStepsCarousel({
               Back
             </button>
             <button
-              disabled={currentStep === 3 && !checkIfReady()}
+              disabled={currentStep === totalSteps && !checkIfReady()}
               className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
-              onClick={() => (currentStep !== 3 ? goToNextStep() : formatDataForSubmission())}
+              onClick={() =>
+                currentStep !== totalSteps ? goToNextStep() : formatDataForSubmission()
+              }
             >
-              {currentStep !== 3 ? "Next" : "Submit"}
+              {currentStep !== totalSteps ? "Next" : "Submit"}
             </button>
           </div>
         </section>

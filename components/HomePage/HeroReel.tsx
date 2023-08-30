@@ -46,7 +46,7 @@ export function HeroReel() {
         )}`}
       >
         <span className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 scale-75 text-center text-lg font-semibold opacity-0 transition-all group-hover:translate-y-10 group-hover:scale-100 group-hover:opacity-100">
-          {loaded ? data.name : ""}
+          {loaded ? data.displayName : ""}
         </span>
         <div className="absolute aspect-[16/10] w-[24rem] overflow-hidden rounded-xl md:w-[32rem]">
           <Image

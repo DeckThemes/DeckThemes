@@ -104,7 +104,9 @@ export function FullThemeCard({
   return (
     <>
       <Head>
-        <title>{themeData?.name ? `${themeData.name} | DeckThemes` : "DeckThemes"}</title>
+        <title>
+          {themeData?.displayName ? `${themeData.displayName} | DeckThemes` : "DeckThemes"}
+        </title>
       </Head>
       <div className="font-fancy flex h-full w-full flex-grow justify-center text-center lg:text-left">
         {themeData !== undefined ? (
@@ -115,7 +117,7 @@ export function FullThemeCard({
               <div className="flex w-full flex-[75%] flex-col gap-4 text-left md:flex-row">
                 <div className="flex w-full flex-col gap-4">
                   <h1 className="text-center text-3xl font-extrabold sm:text-left md:text-5xl">
-                    {themeData.name}
+                    {themeData.displayName}
                   </h1>
 
                   <div className="flex w-full flex-col items-center gap-4 self-center pb-4 sm:hidden">
@@ -183,7 +185,7 @@ export function FullThemeCard({
                             navigator
                               .share({
                                 title: "DeckThemes",
-                                text: themeData.name,
+                                text: themeData.displayName,
                                 url: `${process.env.NEXT_PUBLIC_SHARE_URL}/${themeData.id}`,
                               })
                               .catch((err) => {

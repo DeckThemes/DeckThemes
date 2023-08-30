@@ -92,16 +92,18 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
                 >
                   <div className="font-fancy text-xs font-bold">Submit Email</div>
                 </button>
-                <button
-                  type="button"
-                  disabled={loading}
-                  onClick={() => {
-                    removeEmail();
-                  }}
-                  className="flex h-12 w-fit select-none items-center gap-2 rounded-xl border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
-                >
-                  <div className="font-fancy text-xs font-bold">Unsubscribe</div>
-                </button>
+                {accountInfo?.email && (
+                  <button
+                    type="button"
+                    disabled={loading}
+                    onClick={() => {
+                      removeEmail();
+                    }}
+                    className="flex h-12 w-fit select-none items-center gap-2 rounded-xl border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
+                  >
+                    <div className="font-fancy text-xs font-bold">Unsubscribe</div>
+                  </button>
+                )}
               </>
             )}
           </div>
