@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fetchWithRefresh, genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
 import { RiRefreshLine } from "react-icons/ri";
+import { SquishyButton } from "..";
 
 export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
   const [accountKey, setAccountKey] = useState<string | undefined>();
@@ -18,15 +19,12 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
     <div className="flex flex-col gap-4 border-borderLight p-4 dark:border-borderDark">
       <span className="font-fancy text-xl font-semibold">Connect Your Devices</span>
       <div className="flex flex-col items-center md:flex-row">
-        <button
-          onClick={generateAccountKey}
-          className="flex h-fit w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
-        >
+        <SquishyButton onClick={generateAccountKey}>
           <RiRefreshLine />
           <div className="font-fancy text-xs font-bold">
             {accountKey ? "Reg" : "G"}enerate Account Key
           </div>
-        </button>
+        </SquishyButton>
         {accountKey ? (
           <>
             <div className="relative px-4 py-4 md:py-0">

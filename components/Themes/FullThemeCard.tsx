@@ -10,6 +10,7 @@ import {
   ThemeDownloadButton,
   ThemeImageCarousel,
   MiniThemeCardRoot,
+  SquishyButton,
 } from "..";
 import { FullCSSThemeInfo } from "../../types";
 import { authContext, desktopModeContext } from "contexts";
@@ -150,24 +151,20 @@ export function FullThemeCard({
                     </Link>
 
                     <div className="flex w-full items-center justify-center gap-4 sm:w-fit">
-                      <button
-                        disabled={!accountInfo?.username}
+                      <SquishyButton
+                        buttonProps={{ disabled: !accountInfo?.username }}
                         onClick={() => {
                           if (accountInfo?.username) toggleStar();
                         }}
-                        className={`flex h-fit items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light dark:border-borders-base3-dark dark:text-fore-11-dark ${
-                          accountInfo?.username
-                            ? "cursor-pointer select-none transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
-                            : "cursor-auto"
-                        }`}
+                        requiresLogin
                       >
                         {isStarred ? <BsStarFill /> : <BsStar />}{" "}
                         <span className="whitespace-nowrap">
                           {themeData.starCount}{" "}
                           {themeData.starCount > 1 || themeData.starCount === 0 ? "stars" : "star"}
                         </span>
-                      </button>
-                      <button
+                      </SquishyButton>
+                      <SquishyButton
                         onClick={() => {
                           function fallbackShare() {
                             navigator.clipboard.writeText(
@@ -196,10 +193,9 @@ export function FullThemeCard({
                           }
                           fallbackShare();
                         }}
-                        className={`flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base2-light px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:border-borders-base3-dark dark:text-fore-11-dark`}
                       >
                         <BsShare className="scale-x-90" /> <span>Share</span>
-                      </button>
+                      </SquishyButton>
                       {!hideAdminMenu && <ThemeAdminPanel themeData={themeData} />}
                     </div>
                   </div>

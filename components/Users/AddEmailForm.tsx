@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { fetchWithRefresh, genericFetch, genericGET } from "../../apiHelpers";
 import { LoadingSpinner } from "../Generic";
 import { authContext } from "contexts";
-import { LabelledInput } from "@components/Primitives";
+import { LabelledInput, SquishyButton } from "@components/Primitives";
 import { SiMaildotru } from "react-icons/si";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { toast } from "react-toastify";
@@ -57,14 +57,14 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
       </div>
       <Collapsible.Root className="group">
         <Collapsible.Trigger asChild>
-          <button className="flex h-fit w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight">
+          <SquishyButton>
             <SiMaildotru />
             <div className="font-fancy text-xs font-bold">Edit Email</div>
             <FaCaretDown
               className="relative transition-transform ease-in group-data-[state=open]:-rotate-180"
               aria-hidden
             />
-          </button>
+          </SquishyButton>
         </Collapsible.Trigger>
         <Collapsible.Content className="CollapsibleContent">
           <div className="flex items-end justify-start gap-2 py-4">
@@ -85,24 +85,20 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
               </>
             ) : (
               <>
-                <button
-                  disabled={loading}
-                  type="submit"
-                  className="flex h-12 w-fit select-none items-center gap-2 rounded-xl border border-borders-base3-dark py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
+                <SquishyButton
+                  customClass="h-12 rounded-xl"
+                  buttonProps={{ disabled: loading, type: "submit" }}
                 >
                   <div className="font-fancy text-xs font-bold">Submit Email</div>
-                </button>
+                </SquishyButton>
                 {accountInfo?.email && (
-                  <button
-                    type="button"
-                    disabled={loading}
-                    onClick={() => {
-                      removeEmail();
-                    }}
-                    className="flex h-12 w-fit select-none items-center gap-2 rounded-xl border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
+                  <SquishyButton
+                    customClass="h-12 border-red-500 hover:bg-red-600 rounded-xl"
+                    buttonProps={{ disabled: loading, type: "button" }}
+                    onClick={() => removeEmail()}
                   >
                     <div className="font-fancy text-xs font-bold">Unsubscribe</div>
-                  </button>
+                  </SquishyButton>
                 )}
               </>
             )}

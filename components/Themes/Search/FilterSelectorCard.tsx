@@ -1,4 +1,4 @@
-import { LabelledInput } from "@components/Primitives";
+import { LabelledInput, SquishyButton } from "@components/Primitives";
 import { FilterDropdown, OrderDropdown, TypeDropdown, TypeOptions } from ".";
 import { useVW } from "@hooks/useVW";
 import { useState } from "react";
@@ -49,12 +49,9 @@ export function FilterSelectorCard({
         />
         {vw <= 1025 ? (
           <>
-            <button
-              onClick={toggleFiltersExpanded}
-              className="flex h-fit w-fit select-none items-center gap-2 whitespace-nowrap rounded-full border border-borders-base3-dark py-2 px-4 text-sm font-bold transition duration-150  hover:scale-95 hover:bg-base-3-dark hover:active:scale-90"
-            >
+            <SquishyButton onClick={toggleFiltersExpanded} customClass="text-sm">
               {filtersExpanded ? "Hide Filters" : "Show Filters"}
-            </button>
+            </SquishyButton>
             {/* could definitely use some cleanup, but this is "good enough" for now */}
             {filtersExpanded && (
               <>

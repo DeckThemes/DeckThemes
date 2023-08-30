@@ -14,7 +14,7 @@ import Head from "next/head";
 import { useHasCookie } from "../../hooks";
 import { UserInfo } from "../../types";
 import { HorizontalRadio } from "@components/Primitives/HorizontalRadio";
-import { RadioDropdown } from "@components/Primitives";
+import { RadioDropdown, SquishyButton } from "@components/Primitives";
 
 export default function Account() {
   const { accountInfo, setAccountInfo } = useContext(authContext);
@@ -102,18 +102,12 @@ export default function Account() {
           <AccountKeyDisplay />
           <div className="flex flex-col gap-6 p-4">
             <span className="font-fancy text-xl font-semibold">Log Out</span>
-            <button
-              onClick={logOut}
-              className="flex w-fit select-none items-center gap-2 rounded-full border border-borders-base3-dark bg-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
-            >
+            <SquishyButton onClick={logOut} customClass="bg-red-500 hover:bg-red-600">
               <div className="font-fancy text-xs font-bold">Log out</div>
-            </button>
-            <button
-              onClick={logOutAll}
-              className="flex w-fit select-none items-center gap-2 rounded-full border border-red-500 py-2 px-4 text-textLight transition duration-150 hover:scale-95 hover:bg-red-600 hover:text-bgDark hover:active:scale-90 dark:text-textDark dark:hover:text-bgLight"
-            >
+            </SquishyButton>
+            <SquishyButton onClick={logOutAll} customClass="border-red-500 hover:bg-red-600">
               <div className="font-fancy text-xs font-bold">Log out all devices</div>
-            </button>
+            </SquishyButton>
           </div>
         </div>
       </>

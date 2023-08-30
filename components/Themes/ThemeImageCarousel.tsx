@@ -3,7 +3,7 @@ import { BsArrowLeft, BsArrowRight } from "react-icons/bs";
 import * as Progress from "@radix-ui/react-progress";
 import { FullCSSThemeInfo } from "../../types";
 import Image from "next/image";
-import { HorizontalRadio } from "@components/Primitives";
+import { HorizontalRadio, SquishyButton } from "@components/Primitives";
 
 export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
   const [selectedImage, setSelected] = useState<number>(0);
@@ -70,18 +70,18 @@ export function ThemeImageCarousel({ data }: { data: FullCSSThemeInfo }) {
         />
         {data.images?.length > 1 && (
           <>
-            <button
-              className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full border-2 border-borders-base1-light bg-base-3-light p-2 shadow-xl transition-all hover:scale-95 hover:border-borders-base2-light hover:active:scale-90 dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+            <SquishyButton
               onClick={decrementImg}
+              customClass="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full dark:bg-base-3-dark bg-base-3-light p-2"
             >
               <BsArrowLeft size={16} />
-            </button>
-            <button
-              className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full border-2 border-borders-base1-light bg-base-3-light p-2 shadow-xl transition-all hover:scale-95 hover:border-borders-base2-light hover:active:scale-90 dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
+            </SquishyButton>
+            <SquishyButton
               onClick={incrementImg}
+              customClass="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full dark:bg-base-3-dark bg-base-3-light p-2"
             >
               <BsArrowRight size={16} />
-            </button>
+            </SquishyButton>
             <Progress.Root
               className="absolute -bottom-4 z-10 flex h-1 w-full overflow-hidden rounded-full dark:bg-base-3-dark"
               value={progress}

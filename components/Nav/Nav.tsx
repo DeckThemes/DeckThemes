@@ -14,6 +14,7 @@ import { useHasCookie } from "../../hooks";
 import { DesktopNav } from "../Desktop";
 import { FaCaretDown } from "react-icons/fa";
 import Link from "next/link";
+import { SquishyButton } from "..";
 
 export default function Nav() {
   const { accountInfo } = useContext(authContext);
@@ -172,14 +173,11 @@ export default function Nav() {
                     </>
                   ) : (
                     <>
-                      <button
-                        className="flex h-fit select-none items-center justify-center gap-2 rounded-full border border-borders-base3-dark px-4 py-2 text-xs font-bold text-fore-11-light transition duration-150 hover:scale-95 hover:bg-base-3-dark hover:text-fore-11-dark hover:active:scale-90 dark:text-fore-11-dark"
-                        onClick={fetchDiscordUrl}
-                      >
+                      <SquishyButton onClick={fetchDiscordUrl}>
                         <div>
                           Login <span className="hidden sm:inline-block">with Discord</span>
                         </div>
-                      </button>
+                      </SquishyButton>
                     </>
                   )}
                 </>
