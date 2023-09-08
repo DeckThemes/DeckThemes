@@ -25,7 +25,7 @@ export default function ToS() {
             list-style: disc;
         }        
         `}</style>
-        <div className="tos-container relative flex w-full flex-col justify-center px-10 pt-10 text-zinc-300">
+        <div className="tos-container relative flex w-full flex-col justify-center px-10 pt-10 text-black dark:text-zinc-300">
           <h1 className="text-3xl font-bold md:text-5xl">Deckthemes Terms Of Use</h1>
 
           <h2>
@@ -209,7 +209,7 @@ export default function ToS() {
           </p>
           <h2>Contact Us</h2>
           <p>If you have any questions about these Terms and Conditions, You can contact us:</p>
-          <ul className="!list-none !p-0">
+          <ul className="!list-none !p-0 invert dark:invert-0">
             <li>
               <Image width={200} height={60} src="/contact_info.png" alt="Email Contact Info" />
             </li>

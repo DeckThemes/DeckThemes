@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { LandingFooter, DesktopFooter, MainNav } from "../components";
+import { LandingFooter, DesktopFooter } from "../components";
 import Nav from "@components/Nav/Nav";
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
