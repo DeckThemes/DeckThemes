@@ -59,7 +59,6 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
                     <div
                       className="pointer-events-none absolute left-1/2 -top-8 flex w-fit -translate-x-1/2 justify-center whitespace-nowrap rounded-full bg-black px-2 py-1 text-sm font-bold text-white transition-opacity duration-75 dark:text-blue-200 shadow-md"
                       style={{ opacity: hover ? "100%" : "0%" }}
-                      onMouseEnter={() => setHover(true)}
                     >
                       {!copied ? <>Click To Copy</> : <>Copied</>}
                     </div>
