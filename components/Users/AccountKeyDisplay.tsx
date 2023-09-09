@@ -11,7 +11,7 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
   const [hover, setHover] = useState<boolean>(false);
   function generateAccountKey() {
     setAccountKey("LOADING");
-    setCopied(false)
+    setCopied(false);
     genericGET(`/users/${userId ? userId : "me"}/token`).then((json) => {
       if (json?.token) {
         setAccountKey(json.token);
@@ -32,7 +32,9 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
       <span className="font-fancy text-xl font-semibold">Connect Your Devices</span>
       <div className="flex flex-col items-center md:flex-row">
         <SquishyButton onClick={generateAccountKey}>
-          <RiRefreshLine />
+          <div className={accountKey === "LOADING" ? "animate-spin" : ""}>
+            <RiRefreshLine size={16} />
+          </div>
           <div className="font-fancy text-xs font-bold">
             {accountKey ? "Reg" : "G"}enerate Account Key
           </div>
@@ -40,9 +42,7 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
         {accountKey ? (
           <>
             <div className="relative px-4 py-4 md:py-0">
-              {accountKey === "LOADING" ? (
-                <LoadingSpinner size={24} />
-              ) : (
+              {accountKey !== "LOADING" && (
                 <>
                   <div className="flex cursor-pointer flex-row items-center gap-2">
                     <span
@@ -57,7 +57,7 @@ export function AccountKeyDisplay({ userId }: { userId?: string | undefined }) {
                     </span>
                     {!copied ? <BiCopyAlt /> : <BiCheckCircle fill="#07bc0c" />}
                     <div
-                      className="pointer-events-none absolute left-1/2 -top-8 flex w-fit -translate-x-1/2 justify-center whitespace-nowrap rounded-full bg-black px-2 py-1 text-sm font-bold text-white transition-opacity duration-75 dark:text-blue-200 shadow-md"
+                      className="pointer-events-none absolute left-1/2 -top-8 flex w-fit -translate-x-1/2 justify-center whitespace-nowrap rounded-full bg-black px-2 py-1 text-sm font-bold text-white shadow-md transition-opacity duration-75 dark:text-blue-200"
                       style={{ opacity: hover ? "100%" : "0%" }}
                     >
                       {!copied ? <>Click To Copy</> : <>Copied</>}
