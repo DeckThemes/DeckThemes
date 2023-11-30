@@ -30,12 +30,23 @@ export function HeroReel() {
   useEffect(() => {
     genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${numHeroCards}`).then((data) => {
       if (data) {
+        console.log(data);
         setLoaded(true);
         setThemeData(data);
       }
     });
   }, []);
   function ReelCard({ data, index }: { data: PartialCSSThemeInfo; index: number }) {
+    const imageSrc = useMemo(() => {
+      if (loaded) {
+        if (data.images.length > 0) {
+          return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0].id}/thumb?maxWidth=600`;
+        }
+        return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
+      }
+      return cssCardBlurDataUrl;
+    }, [data, loaded]);
+
     return (
       <Link
         // ref={index === 0 ? firstCardRef : null}
@@ -54,12 +65,8 @@ export function HeroReel() {
             placeholder="blur"
             blurDataURL={cssCardBlurDataUrl}
             className="z-0 rounded-xl"
-            src={
-              loaded
-                ? `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data?.images[0].id}/thumb?maxWidth=600`
-                : cssCardBlurDataUrl
-            }
-            alt={`Hero Image ${index + 1}`}
+            src={imageSrc}
+            alt={loaded ? data.name : `Hero Image ${index}`}
             style={{ objectFit: "cover", filter: loaded ? "" : "blur(50px)" }}
             fill={true}
           />
