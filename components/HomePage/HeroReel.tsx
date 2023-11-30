@@ -38,13 +38,11 @@ export function HeroReel() {
   }, []);
   function ReelCard({ data, index }: { data: PartialCSSThemeInfo; index: number }) {
     const imageSrc = useMemo(() => {
-      if (loaded) {
-        if (data.images.length > 0) {
-          return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0].id}/thumb?maxWidth=600`;
-        }
-        return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
+      if (!loaded) return cssCardBlurDataUrl;
+      if (data.images.length > 0) {
+        return `${process.env.NEXT_PUBLIC_API_URL}/blobs/${data.images[0].id}/thumb?maxWidth=600`;
       }
-      return cssCardBlurDataUrl;
+      return `https://share.deckthemes.com/${data?.type.toLowerCase()}placeholder.png`;
     }, [data, loaded]);
 
     return (
