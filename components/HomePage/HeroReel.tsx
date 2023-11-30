@@ -1,4 +1,8 @@
-import { PartialCSSThemeInfo, ThemeQueryResponse } from "@customTypes/CSSThemeTypes";
+import {
+  FullCSSThemeInfo,
+  PartialCSSThemeInfo,
+  ThemeQueryResponse,
+} from "@customTypes/CSSThemeTypes";
 import { genericGET } from "apiHelpers";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +16,14 @@ export function HeroReel() {
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const rotations = ["rotate-2", "-rotate-2"];
-  const numHeroCards = 5;
+  const featuredThemes = [
+    "f16cf40d-7ccc-4981-95bf-77b28e8d101e",
+    "994360e7-cfca-46d3-9337-80d28ad169ba",
+    "11c33bda-cfff-42e6-9a9a-fbd51e341f5a",
+    "231c969d-b16f-41a0-98a1-cec8aeb557ba",
+    "36342841-4128-4043-9a56-333e2bc5d170",
+  ];
+  const numHeroCards = featuredThemes.length;
 
   const randomSeed = useMemo(
     () =>
@@ -28,11 +39,18 @@ export function HeroReel() {
   };
 
   useEffect(() => {
-    genericGET(`/themes?filters=CSS&order=Last Updated&perPage=${numHeroCards}`).then((data) => {
+    Promise.all(
+      featuredThemes.map(
+        (e) =>
+          new Promise<FullCSSThemeInfo>(async (resolve) => {
+            const data = await genericGET(`/themes/${e}`);
+            resolve(data);
+          })
+      )
+    ).then((data) => {
       if (data) {
-        console.log(data);
         setLoaded(true);
-        setThemeData(data);
+        setThemeData({ total: data.length, items: data });
       }
     });
   }, []);
