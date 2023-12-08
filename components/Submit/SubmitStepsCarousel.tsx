@@ -101,7 +101,7 @@ export function SubmitStepsCarousel({
           <span className="font-fancy w-full pb-4 text-center text-2xl font-semibold md:text-4xl">
             {stepTitles[currentStep - 1]}
           </span>
-          <div className="w-full py-8">
+          <div className="w-full">
             <div className={currentStep !== 1 ? "hidden" : "w-full"}>
               <Step1
                 {...{
@@ -133,7 +133,7 @@ export function SubmitStepsCarousel({
                 </div>
               </div>
             )}
-            <div className={currentStep !== totalSteps ? "hidden" : "w-full"}>
+            <div className={currentStep !== totalSteps ? "disable-timer hidden" : "w-full"}>
               <div className="flex w-full flex-col items-center justify-center gap-4">
                 <TosCheckboxes
                   checkValue={hasAcceptedTos}

@@ -97,8 +97,8 @@ export default function Nav() {
                       </NavigationMenu.Link>
                     </li>
                     <ul className="m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-col sm:grid-rows-3">
-                      <ListItem href="https://github.com/beebls/DeckThemes" title="GitHub">
-                        Contribute to DeckThemes and CSSLoader on our GitHub
+                      <ListItem href="https://github.com/DeckThemes" title="GitHub">
+                        Contribute to DeckThemes and our plugins on GitHub
                       </ListItem>
                       {!!process.env.NEXT_PUBLIC_DISCORD_URL && (
                         <ListItem href={process.env.NEXT_PUBLIC_DISCORD_URL} title="Discord">
@@ -150,14 +150,14 @@ export default function Nav() {
                           className={`m-0 grid list-none gap-x-[10px] p-[12px] sm:w-[300px] sm:grid-flow-row sm:grid-cols-1`}
                         >
                           <ListItem title="Profile" href="/users/me">
-                            View Your Profile
+                            View your profile
                           </ListItem>
                           <ListItem title="Upload" href="/submit">
-                            Submit Themes or Audio Packs
+                            Submit themes and audio packs
                           </ListItem>
                           {accountInfo.permissions.includes(Permissions.viewSubs) && (
                             <ListItem title="Submissions" href="/submissions">
-                              View Current Submissions
+                              View submissions awaiting approval
                             </ListItem>
                           )}
                         </ul>

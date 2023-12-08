@@ -27,7 +27,7 @@ export default function Packs() {
   return (
     <>
       <Head>
-        <title>DeckThemes | AudioLoader Packs</title>
+        <title>DeckThemes | Audio Loader Packs</title>
       </Head>
       <div className="mb-12 flex flex-col items-center">
         <h1 className="pt-4 text-3xl font-extrabold md:text-5xl lg:pt-24">Audio Packs</h1>

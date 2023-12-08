@@ -9,14 +9,14 @@ export default function DeckDownload() {
         {/* Headline */}
         <h1 className="mx-auto max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
           <span className="">
-            CSSLoader <br className="block sm:hidden" />
+            CSS Loader <br className="block sm:hidden" />
           </span>{" "}
           for Steam Deck
         </h1>
 
         {/* Blurb */}
         <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
-          Steam Deck is supported through Decky Loader. You can also install CSSLoader on your{" "}
+          Steam Deck is supported through Decky Loader. You can also install CSS Loader on your{" "}
           <Link className="text-brandBlue hover:underline" href={"/download/windows"}>
             Windows PC
           </Link>
@@ -42,7 +42,7 @@ export default function DeckDownload() {
         </InstallSection>
 
         <InstallSection>
-          <InstallSection.Header>Install CSSLoader</InstallSection.Header>
+          <InstallSection.Header>Install CSS Loader</InstallSection.Header>
 
           <InstallSection.Content>
             <ol className="flex w-full list-decimal flex-col gap-4">
@@ -75,7 +75,7 @@ export default function DeckDownload() {
         </InstallSection>
 
         <InstallSection>
-          <InstallSection.Header>Using CSSLoader</InstallSection.Header>
+          <InstallSection.Header>Using CSS Loader</InstallSection.Header>
 
           <InstallSection.Content>
             <div className="flex flex-row flex-wrap items-center">

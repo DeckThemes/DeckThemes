@@ -73,10 +73,10 @@ export function Step1({
               }
             }}
             options={[
-              { value: "css", displayText: "CSSLoader" },
+              { value: "css", displayText: "CSS Loader" },
               {
                 value: "audio",
-                displayText: "AudioLoader",
+                displayText: "Audio Loader",
                 disabled: uploadMethod === "css",
               },
             ]}

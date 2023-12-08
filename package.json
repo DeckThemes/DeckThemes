@@ -35,6 +35,7 @@
     "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-color-extractor": "^1.1.2",
+    "react-countdown-circle-timer": "^3.2.1",
     "react-debounce-input": "^3.3.0",
     "react-dom": "18.2.0",
     "react-dropdown": "^1.11.0",
