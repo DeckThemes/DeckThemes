@@ -90,7 +90,7 @@ export default function ToS() {
           </p>
           <h2>
             <strong>
-              Requirements for audio assets <em>(AudioLoader)</em>:
+              Requirements for audio assets <em>(Audio Loader)</em>:
             </strong>
           </h2>
           <ul>
@@ -110,12 +110,12 @@ export default function ToS() {
             <li>Make sure that the asset have been properly tested before being submited.</li>
             <li>
               Make sure it work properly on the lastest beta and stable versions of SteamOS, Decky
-              Loader, and AudioLoader
+              Loader, and Audio Loader
             </li>
           </ul>
           <h2>
             <strong>
-              Requirements for visual assets <em>(CSSLoader &amp; AudioLoader)</em>:
+              Requirements for visual assets <em>(CSS Loader &amp; Audio Loader)</em>:
             </strong>
           </h2>
           <ul>

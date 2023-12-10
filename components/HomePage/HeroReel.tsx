@@ -15,28 +15,16 @@ export function HeroReel() {
   const [themeData, setThemeData] = useState<ThemeQueryResponse>({ total: 0, items: [] });
   const [loaded, setLoaded] = useState<boolean>(false);
 
-  const rotations = ["rotate-2", "-rotate-2"];
   const featuredThemes = [
-    "f16cf40d-7ccc-4981-95bf-77b28e8d101e",
-    "994360e7-cfca-46d3-9337-80d28ad169ba",
-    "11c33bda-cfff-42e6-9a9a-fbd51e341f5a",
-    "231c969d-b16f-41a0-98a1-cec8aeb557ba",
-    "36342841-4128-4043-9a56-333e2bc5d170",
+    "4ba8fe8b-fbd9-457c-94fc-f3555a8877bf", // Outrun, GrodanBool
+    "54cda487-9697-4eaa-94dc-1a613becdc8d", // Pip-Boy, SuchMeme
+    "f16cf40d-7ccc-4981-95bf-77b28e8d101e", // Obsidian, EMERALD0874
+    "994360e7-cfca-46d3-9337-80d28ad169ba", // Art Hero, Metagawa
+    "11c33bda-cfff-42e6-9a9a-fbd51e341f5a", // Phantom, EMERALD0874
+    "231c969d-b16f-41a0-98a1-cec8aeb557ba", // Tilted Home, TheRensei
+    "36342841-4128-4043-9a56-333e2bc5d170", // RGB Keyboard, Party Wumpus
   ];
   const numHeroCards = featuredThemes.length;
-
-  const randomSeed = useMemo(
-    () =>
-      Array(numHeroCards)
-        .fill("")
-        .map(() => Math.random()),
-    [numHeroCards]
-  );
-
-  const getRandomRotationClass = (index: number) => {
-    const randomIndex = Math.floor(randomSeed[index % numHeroCards] * rotations.length);
-    return rotations[randomIndex];
-  };
 
   useEffect(() => {
     Promise.all(
@@ -68,9 +56,7 @@ export function HeroReel() {
         // ref={index === 0 ? firstCardRef : null}
         href={loaded ? `/themes/view?themeId=${data.id}` : "#"}
         key={index}
-        className={`img-shadow group relative aspect-[16/10] w-[24rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem] ${getRandomRotationClass(
-          index
-        )}`}
+        className={`img-shadow group relative aspect-[16/10] w-[24rem] flex-none rounded-xl border-2 border-borders-base1-light bg-[#27272a] transition dark:border-borders-base1-dark dark:bg-zinc-800 sm:rounded-2xl md:w-[32rem]`}
       >
         <span className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 scale-75 text-center text-lg font-semibold opacity-0 transition-all group-hover:translate-y-10 group-hover:scale-100 group-hover:opacity-100">
           {loaded ? data.displayName : ""}
@@ -92,7 +78,7 @@ export function HeroReel() {
   }
   return (
     <>
-      <div className="relative mt-0 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden md:mt-12 md:h-[30rem]">
+      <div className="relative mt-0 flex h-[24rem] max-w-[calc(100vw-48px)] items-center overflow-hidden md:mt-12">
         <style>
           {`
           @keyframes hero-reel-scroll {

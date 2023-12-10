@@ -10,20 +10,20 @@ export default function WindowsDownload() {
         {/* Headline */}
         <h1 className="mx-auto max-w-4xl text-center text-5xl font-extrabold tracking-tight sm:text-6xl">
           <span className="">
-            CSSLoader <br className="block sm:hidden" />
+            CSS Loader <br className="block sm:hidden" />
           </span>{" "}
           for Windows
         </h1>
         {/* Blurb */}
         <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
-          CSSLoader on Windows uses a native backend with a standalone frontend. You also install
-          CSSLoader on your{" "}
+          CSS Loader on Windows uses a native backend with a standalone frontend. You also install
+          CSS Loader on your{" "}
           <Link className="text-brandBlue hover:underline" href={"/download/deck"}>
             Steam Deck
           </Link>
         </p>
         <InstallSection>
-          <InstallSection.Header>Install CSSLoader Desktop</InstallSection.Header>
+          <InstallSection.Header>Install CSS Loader Desktop</InstallSection.Header>
 
           <InstallSection.Content>
             <ol className="flex w-full list-decimal flex-col gap-4">
@@ -45,7 +45,7 @@ export default function WindowsDownload() {
               <li>
                 <div className="flex flex-row items-center">
                   Run the installer and follow the on-screen instructions. Note that if this is your
-                  first time using CSSLoader Desktop, you'll be prompted to install the backend on
+                  first time using CSS Loader Desktop, you'll be prompted to install the backend on
                   launch.
                 </div>
               </li>
@@ -54,7 +54,7 @@ export default function WindowsDownload() {
                   Your antivirus may flag the backend executable, if so, please allow it to run.{" "}
                   <a
                     className="text-brandBlue hover:underline"
-                    href="https://github.com/suchmememanyskill/SDH-CssLoader"
+                    href="https://github.com/DeckThemes/SDH-CssLoader"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -63,7 +63,7 @@ export default function WindowsDownload() {
                   and{" "}
                   <a
                     className="text-brandBlue hover:underline"
-                    href="https://github.com/suchmememanyskill/SDH-CssLoader/releases"
+                    href="https://github.com/DeckThemes/SDH-CssLoader/releases"
                     target="_blank"
                     rel="noreferrer"
                   >
@@ -89,7 +89,7 @@ export default function WindowsDownload() {
                     <li>Select 'For developers'</li>
                     <li>Enable 'Developer Mode'</li>
                     <li>
-                      If CSSLoader's backend is already installed, reboot your machine for this to
+                      If CSS Loader's backend is already installed, reboot your machine for this to
                       take effect.
                     </li>
                     <li>Developer Mode may be disabled after one reboot</li>
@@ -100,7 +100,7 @@ export default function WindowsDownload() {
           </InstallSection.Content>
         </InstallSection>
         <InstallSection>
-          <InstallSection.Header>Using CSSLoader Desktop</InstallSection.Header>
+          <InstallSection.Header>Using CSS Loader Desktop</InstallSection.Header>
 
           <InstallSection.Content>
             <ul className="flex w-full list-disc flex-col gap-4">
@@ -127,7 +127,7 @@ export default function WindowsDownload() {
               <li>
                 <div>
                   <b>Settings</b> contains an input field for your DeckThemes login token, as well
-                  as additional settings for CSSLoader.
+                  as additional settings for CSS Loader.
                 </div>
               </li>
             </ul>
@@ -141,7 +141,7 @@ export default function WindowsDownload() {
             target="_blank"
             rel="noreferrer"
           >
-            CSSLoader Desktop's readme
+            CSS Loader Desktop's readme
           </a>
         </span>
       </div>

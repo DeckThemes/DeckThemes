@@ -14,7 +14,7 @@ export default function Home() {
         <meta name="title" content="DeckThemes" />
         <meta
           name="description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
+          content="CSS Loader and Audio Loader themes for Steam Deck and Desktop Steam"
         />
 
         <meta property="og:type" content="website" />
@@ -22,7 +22,7 @@ export default function Home() {
         <meta property="og:title" content="DeckThemes" />
         <meta
           property="og:description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
+          content="CSS Loader and Audio Loader themes for Steam Deck and Desktop Steam"
         />
 
         <meta property="twitter:card" content="summary_large_image" />
@@ -30,7 +30,7 @@ export default function Home() {
         <meta property="twitter:title" content="DeckThemes" />
         <meta
           property="twitter:description"
-          content="CSSLoader and AudioLoader themes for Steam Deck and Desktop Steam"
+          content="CSS Loader and Audio Loader themes for Steam Deck and Desktop Steam"
         />
       </Head>
 
@@ -70,20 +70,20 @@ export default function Home() {
           <HighlightCarousel
             options={[
               {
-                title: "BPM CSS Themes",
+                title: "Big Picture Themes",
                 searchFilter: "BPM-CSS",
                 hrefLink: "/themes?type=BPM-CSS",
                 buttonText: "BPM",
               },
               {
-                title: "Desktop CSS Themes",
+                title: "Desktop Themes",
                 searchFilter: "DESKTOP-CSS",
                 hrefLink: "/themes?type=DESKTOP-CSS",
                 buttonText: "Desktop",
               },
               // This has a trailing ? because the link filler only knows to add "&order="
               {
-                title: "AudioLoader Packs",
+                title: "Audio Packs",
                 searchFilter: "AUDIO",
                 hrefLink: "/packs?",
                 buttonText: "Audio",
