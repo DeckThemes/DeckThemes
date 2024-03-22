@@ -1,6 +1,4 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { codeBlockClasses } from "../SubmitPageTailwindClasses";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export function CopyrightSelector({
   setCopyrightRead,
@@ -22,6 +20,15 @@ export function CopyrightSelector({
         </div>
         <ul className="flex max-w-4xl list-disc flex-col items-start gap-2 text-xl text-[#e0f2fe]">
           <>
+            <button
+              className="hover:text-white"
+              onClick={() => {
+                setCurrentWarning(1);
+                setCopyrightRead(true);
+              }}
+            >
+              These are sound effects, not music.
+            </button>
             <button
               className="hover:text-white"
               onClick={() => {
