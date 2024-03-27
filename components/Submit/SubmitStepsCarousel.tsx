@@ -6,11 +6,12 @@ import {
   ZipSubmissionInfo,
 } from "@customTypes/ThemeSubmissionTypes";
 import { SubmitCarouselProgressBar } from "./SubmitCarouselProgressBar";
-import { Step1 } from "./Step1/Step1";
-import { MetaSubmitPanel } from "./Step2/MetaSubmitPanel";
-import { TosCheckboxes } from "./Step3/TosCheckboxes";
+import { Step1 } from "./UploadInfo/Step1";
+import { MetaSubmitPanel } from "./Metadata/MetaSubmitPanel";
+import { TosCheckboxes } from "./Terms/TosCheckboxes";
 import { authContext } from "contexts";
 import { AddContactPage } from "./AddContactPage";
+import { CopyrightSelector } from "./Copyright/CopyrightSelector";
 
 export function SubmitStepsCarousel({
   submitTheme,
@@ -25,13 +26,17 @@ export function SubmitStepsCarousel({
   const { accountInfo } = useContext(authContext);
   const [currentStep, setStep] = useState<number>(1);
 
+  const [uploadMethod, setUploadMethod] = useState<"git" | "css" | "zip">("git");
+  const [uploadType, setUploadType] = useState<"css" | "audio">("css");
+
   const [totalSteps, stepTitles] = useMemo(() => {
-    if (accountInfo && !accountInfo.email) {
-      return [4, ["Upload Theme", "Edit Theme Listing", "Add Contact Info", "Accept Terms"]];
-    } else {
-      return [3, ["Upload Theme", "Edit Theme Listing", "Accept Terms"]];
-    }
-  }, [accountInfo]);
+    let steps = ["Upload Information"];
+    if (accountInfo && !accountInfo.email) steps.push("Add Contact Information");
+    if (uploadType === "audio") steps.push("Copyright Information");
+    steps.push("Edit Listing", "Accept Upload Terms");
+
+    return [steps.length, steps];
+  }, [accountInfo, uploadType]);
 
   const goToNextStep = () => {
     if (currentStep < totalSteps) {
@@ -52,10 +57,7 @@ export function SubmitStepsCarousel({
 
   useEffect(() => {
     calculateProgress();
-  }, [currentStep]);
-
-  const [uploadMethod, setUploadMethod] = useState<"git" | "css" | "zip">("git");
-  const [uploadType, setUploadType] = useState<"css" | "audio">("css");
+  }, [currentStep, totalSteps]);
 
   const [uploadInfo, setUploadInfo] = useState<
     ZipSubmissionInfo | GitSubmissionInfo | CSSSubmissionInfo
@@ -66,6 +68,7 @@ export function SubmitStepsCarousel({
     description: "",
     target: "None",
   });
+  const [readCopyrightInfo, setReadCopyrightInfo] = useState<boolean>(false);
   const [hasAcceptedTos, setHasAcceptedTos] = useState<boolean>(false);
   useEffect(() => {
     console.log(metaInfo.imageBlobs);
@@ -114,7 +117,20 @@ export function SubmitStepsCarousel({
                 }}
               />
             </div>
-            <div className={currentStep !== 2 ? "hidden" : "w-full"}>
+            <div
+              className={
+                currentStep !== stepTitles.indexOf("Copyright Information") + 1
+                  ? "hidden"
+                  : "w-full"
+              }
+            >
+              <CopyrightSelector setCopyrightRead={setReadCopyrightInfo} />
+            </div>
+            <div
+              className={
+                currentStep !== stepTitles.indexOf("Edit Listing") + 1 ? "hidden" : "w-full"
+              }
+            >
               <MetaSubmitPanel
                 info={metaInfo}
                 setInfo={setMetaInfo}
@@ -125,7 +141,9 @@ export function SubmitStepsCarousel({
             {stepTitles.includes("Add Contact Info") && (
               <div
                 className={
-                  currentStep !== stepTitles.indexOf("Add Contact Info") + 1 ? "hidden" : "w-full"
+                  currentStep !== stepTitles.indexOf("Add Contact Information") + 1
+                    ? "hidden"
+                    : "w-full"
                 }
               >
                 <div className="flex w-full flex-col items-center justify-center gap-4">
@@ -152,7 +170,11 @@ export function SubmitStepsCarousel({
               Back
             </button>
             <button
-              disabled={currentStep === totalSteps && !checkIfReady()}
+              disabled={
+                (currentStep === stepTitles.indexOf("Copyright Information") + 1 &&
+                  !readCopyrightInfo) ||
+                (currentStep === totalSteps && !checkIfReady())
+              }
               className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
               onClick={() =>
                 currentStep !== totalSteps ? goToNextStep() : formatDataForSubmission()
