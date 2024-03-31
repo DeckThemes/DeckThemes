@@ -32,8 +32,7 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
     setLoading(false);
   }
 
-  function onFormSubmit(e: any) {
-    e.preventDefault();
+  function onFormSubmit() {
     if (inputValue.length === 0) {
       toast("Enter a Valid Email");
       return;
@@ -48,7 +47,7 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
   }
 
   return (
-    <form onSubmit={onFormSubmit} className="flex flex-col gap-4 p-4">
+    <div className="flex flex-col gap-4 p-4">
       <div className="flex flex-col items-start justify-center gap-2">
         <span className="font-fancy text-xl font-semibold">Email</span>
         <span className="font-fancy text-sm font-medium text-textFadedLight dark:text-textFadedDark">
@@ -88,6 +87,7 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
                 <SquishyButton
                   customClass="h-12 rounded-xl"
                   buttonProps={{ disabled: loading, type: "submit" }}
+                  onClick={onFormSubmit}
                 >
                   <div className="font-fancy text-xs font-bold">Submit Email</div>
                 </SquishyButton>
@@ -105,6 +105,6 @@ export function AddEmailForm({ userId }: { userId?: string | undefined }) {
           </div>
         </Collapsible.Content>
       </Collapsible.Root>
-    </form>
+    </div>
   );
 }

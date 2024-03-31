@@ -138,7 +138,7 @@ export function SubmitStepsCarousel({
                 uploadMethod={uploadMethod}
               />
             </div>
-            {stepTitles.includes("Add Contact Info") && (
+            {stepTitles.includes("Add Contact Information") && (
               <div
                 className={
                   currentStep !== stepTitles.indexOf("Add Contact Information") + 1
