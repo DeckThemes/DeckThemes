@@ -1,13 +1,13 @@
+import { SubmitStepsCarousel } from "@components/Submit/SubmitStepsCarousel";
+import { authContext } from "contexts";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
+import { toast } from "react-toastify";
 import { genericFetch } from "../apiHelpers";
-import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 import { LoadingPage, LogInPage } from "../components";
 import { useHasCookie } from "../hooks";
-import { authContext } from "contexts";
-import { toast } from "react-toastify";
-import { SubmitStepsCarousel } from "@components/Submit/SubmitStepsCarousel";
+import { CSSSubmissionInfo, GitSubmissionInfo, MetaInfo, ZipSubmissionInfo } from "../types";
 
 export default function Submit() {
   const router = useRouter();
@@ -27,7 +27,11 @@ export default function Submit() {
       target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
 
-    console.log(formattedMeta);
+    if (formattedMeta.imageBlobs.length === 0) {
+      toast.error("Please upload at least one image.");
+      return;
+    }
+
     genericFetch(`/submissions/${uploadType}_${uploadMethod}`, {
       method: "POST",
       body: JSON.stringify({ ...uploadInfo, meta: formattedMeta }),
