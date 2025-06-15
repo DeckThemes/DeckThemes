@@ -22,7 +22,7 @@ export default function Submit() {
     metaInfo: MetaInfo
   ) {
     const formattedMeta = {
-      imageBlobs: metaInfo.imageBlobs,
+      imageBlobs: metaInfo.imageBlobs.filter(Boolean),
       description: metaInfo.description || null,
       target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
