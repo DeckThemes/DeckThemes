@@ -1,21 +1,21 @@
+import { authContext, desktopModeContext } from "contexts";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { BiCode } from "react-icons/bi";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
-import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
+import { toast } from "react-toastify";
 import {
-  ThemeViewLoadingPage,
+  MiniThemeCardRoot,
+  SquishyButton,
   SupporterIcon,
   ThemeAdminPanel,
   ThemeDownloadButton,
   ThemeImageCarousel,
-  MiniThemeCardRoot,
-  SquishyButton,
+  ThemeViewLoadingPage,
 } from "..";
+import { checkAndRefreshToken, genericFetch, genericGET } from "../../apiHelpers";
 import { FullCSSThemeInfo } from "../../types";
-import { authContext, desktopModeContext } from "contexts";
-import { toast } from "react-toastify";
-import { BiCode } from "react-icons/bi";
 
 export function FullThemeCard({
   parsedId,
@@ -92,7 +92,9 @@ export function FullThemeCard({
           }
         })
         .catch((err) => {
-          toast.error(`Error Starring Theme! ${JSON.stringify(err)}`);
+          toast.error(
+            `Error Starring Theme! ${JSON.stringify(err instanceof Error ? err.message : err)}`
+          );
           console.error("Error Setting Star On Theme", err);
         });
     }

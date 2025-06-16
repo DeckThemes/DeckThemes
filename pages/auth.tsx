@@ -1,10 +1,10 @@
+import { authContext } from "contexts";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { generateAuthCookie, getMeDataFromToken } from "../apiHelpers";
 import { LoadingSpinner } from "../components";
-import { authContext } from "contexts";
 
 export default function Auth() {
   const router = useRouter();
@@ -42,7 +42,9 @@ export default function Auth() {
         getAndSetMeData(json.token);
       })
       .catch((err) => {
-        toast.error(`Error Authenticating! ${JSON.stringify(err)}`);
+        toast.error(
+          `Error Authenticating! ${JSON.stringify(err instanceof Error ? err.message : err)}`
+        );
         console.error("Account Token Fetch Failed:", err);
       });
   }

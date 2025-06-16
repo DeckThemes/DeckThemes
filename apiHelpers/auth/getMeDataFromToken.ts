@@ -1,5 +1,5 @@
-import { toast } from "react-toastify";
 import { AccountData } from "@customTypes/AccountData";
+import { toast } from "react-toastify";
 
 export async function getMeDataFromToken(token: string): Promise<AccountData> {
   const meJson = fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/me_full`, {
@@ -18,7 +18,9 @@ export async function getMeDataFromToken(token: string): Promise<AccountData> {
       return res.json();
     })
     .catch((err) => {
-      toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
+      toast.error(
+        `Error Fetching User Data!, ${JSON.stringify(err instanceof Error ? err.message : err)}`
+      );
       console.error("Account Data Fetch Failed!", err);
     });
   return meJson;

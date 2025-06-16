@@ -1,6 +1,6 @@
 import { genericGET } from "apiHelpers/genericFetches";
-import { generateAuthCookie } from "./generateAuthCookie";
 import { toast } from "react-toastify";
+import { generateAuthCookie } from "./generateAuthCookie";
 
 export async function logInWithToken(shortTokenValue: string) {
   if (shortTokenValue.length === 12) {
@@ -23,7 +23,11 @@ export async function logInWithToken(shortTokenValue: string) {
         if (data && data?.token) {
           generateAuthCookie(data.token);
           return genericGET("/auth/me_full").catch((err) => {
-            toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
+            toast.error(
+              `Error Fetching User Data!, ${JSON.stringify(
+                err instanceof Error ? err.message : err
+              )}`
+            );
             console.error("Error Fetching User Data!", err);
           });
         } else {

@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { AccountData } from "../../types";
-import { checkAndRefreshToken, genericGET, getCookieToken } from "../genericFetches";
+import { genericGET } from "../genericFetches";
 
 export async function getMeDataOnInit(): Promise<AccountData | undefined> {
   const cookieStr = document.cookie;
@@ -15,7 +15,9 @@ export async function getMeDataOnInit(): Promise<AccountData | undefined> {
       }, {});
     if (Object.keys(cookieObj).indexOf("authToken") >= 0) {
       return genericGET("/auth/me_full").catch((err) => {
-        toast.error(`Error Fetching User Data!, ${JSON.stringify(err)}`);
+        toast.error(
+          `Error Fetching User Data!, ${JSON.stringify(err instanceof Error ? err.message : err)}`
+        );
         console.error("Error Fetching User Data!", err);
       });
     }

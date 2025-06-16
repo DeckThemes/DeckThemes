@@ -44,13 +44,17 @@ export default function Submit() {
         if (json?.task) {
           router.push(`/taskStatus/view?task=${json.task}`);
         } else {
-          alert(`Error Submitting Theme: ${json?.message || "Unknown Error"}`);
+          alert(`Error Submitting Theme, No Task Returned: ${json?.message || "Unknown Error"}`);
           throw new Error("No task in response");
         }
       })
       .catch((err) => {
-        toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
-        console.error("Error Submitting Theme!", err);
+        toast.error(
+          `Error Submitting Theme, Request Failed: ${JSON.stringify(
+            err instanceof Error ? err.message : err
+          )}`
+        );
+        console.error("Error Submitting Theme:", err);
       });
   }
 

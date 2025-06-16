@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useState } from "react";
 import { ZipSubmissionInfo } from "@customTypes/ThemeSubmissionTypes";
+import { Dispatch, SetStateAction, useState } from "react";
 // @ts-ignore
-import { FilePond, File, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericFetch } from "../../../apiHelpers";
+import "filepond/dist/filepond.min.css";
+import { FilePond, registerPlugin } from "react-filepond";
 import { toast } from "react-toastify";
+import { genericFetch } from "../../../apiHelpers";
 
 registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType);
 
@@ -17,7 +17,7 @@ export function ZipSubmitPanel({
   info: ZipSubmissionInfo;
   setInfo: Dispatch<SetStateAction<ZipSubmissionInfo>>;
 }) {
-  const [file, setFile] = useState<File>();
+  const [file, setFile] = useState<any>();
 
   return (
     <>
@@ -60,7 +60,11 @@ export function ZipSubmitPanel({
                     }
                   })
                   .catch((err) => {
-                    toast.error(`Error Uploading File! ${JSON.stringify(err)}`);
+                    toast.error(
+                      `Error Uploading File! ${JSON.stringify(
+                        err instanceof Error ? err.message : err
+                      )}`
+                    );
                     error(err);
                   });
               },

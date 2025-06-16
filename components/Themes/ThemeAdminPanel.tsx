@@ -1,12 +1,12 @@
-import { BiEditAlt, BiTrash } from "react-icons/bi";
-import { authContext } from "contexts";
-import { useContext, useState } from "react";
-import { FullCSSThemeInfo, Permissions } from "../../types";
-import { genericFetch } from "../../apiHelpers";
-import { toast } from "react-toastify";
 import { MenuDropdown } from "@components/Primitives";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+import { authContext } from "contexts";
 import { useRouter } from "next/router";
+import { useContext, useState } from "react";
+import { AiOutlineCloudUpload } from "react-icons/ai";
+import { BiEditAlt, BiTrash } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { genericFetch } from "../../apiHelpers";
+import { FullCSSThemeInfo, Permissions } from "../../types";
 
 export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) {
   const { accountInfo } = useContext(authContext);
@@ -34,7 +34,9 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
             throw new Error(`Res Not OK!`);
           })
           .catch((err) => {
-            toast.error(`Error Deleting Theme! ${JSON.stringify(err)}`);
+            toast.error(
+              `Error Deleting Theme! ${JSON.stringify(err instanceof Error ? err.message : err)}`
+            );
             console.error("Delete Request Failed!", err);
           });
       } else {
@@ -77,7 +79,9 @@ export function ThemeAdminPanel({ themeData }: { themeData: FullCSSThemeInfo }) 
         }
       })
       .catch((err) => {
-        toast.error(`Error Changing Meta! ${JSON.stringify(err)}`);
+        toast.error(
+          `Error Changing Meta! ${JSON.stringify(err instanceof Error ? err.message : err)}`
+        );
         console.error(err);
       });
   }

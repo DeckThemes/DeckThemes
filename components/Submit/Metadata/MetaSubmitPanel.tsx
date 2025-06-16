@@ -1,23 +1,21 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 // @ts-ignore
-import { FilePond, File, registerPlugin } from "react-filepond";
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import { LabelledTextArea, RadioDropdown } from "@components/Primitives";
+import { MetaInfo } from "@customTypes/ThemeSubmissionTypes";
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
-import { checkAndRefreshToken, genericFetch, genericGET } from "../../../apiHelpers";
-import { MetaInfo } from "@customTypes/ThemeSubmissionTypes";
-import { MiniDivider } from "@components/Generic";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
+import "filepond/dist/filepond.min.css";
+import { FilePond, registerPlugin } from "react-filepond";
+import { toast } from "react-toastify";
+import { genericFetch, genericGET } from "../../../apiHelpers";
 import {
-  fieldClasses,
   fieldTitleClasses,
   metaFieldContainerClasses,
   sectionContainerClasses,
 } from "../SubmitPageTailwindClasses";
-import { toast } from "react-toastify";
-import { LabelledTextArea, RadioDropdown } from "@components/Primitives";
 
 registerPlugin(
   FilePondPluginFileValidateSize,
@@ -40,7 +38,8 @@ export function MetaSubmitPanel({
   uploadType?: "css" | "audio";
   uploadMethod?: string;
 }) {
-  const [images, setImages] = useState<File>();
+  // TODO: remove filepond because the typings are garbage
+  const [images, setImages] = useState<any[]>([]);
 
   const [targetOptions, setTargetOptions] = useState<string[]>(["None", "System-Wide", "Snippet"]);
   async function getTargets() {
@@ -148,7 +147,11 @@ export function MetaSubmitPanel({
                       }
                     })
                     .catch((err) => {
-                      toast.error(`Error Uploading Image! ${JSON.stringify(err)}`);
+                      toast.error(
+                        `Error Uploading Image! ${JSON.stringify(
+                          err instanceof Error ? err.message : err
+                        )}`
+                      );
                       error(err);
                     });
                 },

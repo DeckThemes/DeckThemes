@@ -1,12 +1,12 @@
+import { Permissions } from "@customTypes/AccountData";
+import { ThemeSubmissionInfo } from "@customTypes/CSSThemeTypes";
+import { checkAndRefreshToken, genericFetch } from "apiHelpers";
 import { authContext } from "contexts";
 import { useContext, useState } from "react";
-import { ActionButton } from "./ActionButton";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
-import { ThemeSubmissionInfo } from "@customTypes/CSSThemeTypes";
-import { Permissions } from "@customTypes/AccountData";
-import { LabelledTextArea, LoadingSpinner } from "..";
-import { checkAndRefreshToken, genericFetch } from "apiHelpers";
 import { toast } from "react-toastify";
+import { LabelledTextArea, LoadingSpinner } from "..";
+import { ActionButton } from "./ActionButton";
 
 export function SubmissionReviewCard({
   submissionData,
@@ -49,7 +49,11 @@ export function SubmissionReviewCard({
           })
           .catch((err) => {
             console.error("Error Submitting Theme Review!", err);
-            toast.error(`Error Submitting Theme Review! ${JSON.stringify(err)}`);
+            toast.error(
+              `Error Submitting Theme Review! ${JSON.stringify(
+                err instanceof Error ? err.message : err
+              )}`
+            );
           });
       }
     }

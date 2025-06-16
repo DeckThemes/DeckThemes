@@ -1,15 +1,15 @@
+import { useTheme } from "next-themes";
 import Head from "next/head";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
+import { SiMaildotru } from "react-icons/si";
 import { toast } from "react-toastify";
 import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
-import Image from "next/image";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { SiMaildotru } from "react-icons/si";
 
 export default function TaskView() {
   const router = useRouter();
@@ -26,7 +26,9 @@ export default function TaskView() {
             setStatus(json);
           })
           .catch((err) => {
-            toast.error(`Error Submitting Theme! ${JSON.stringify(err)}`);
+            toast.error(
+              `Error Submitting Theme! ${JSON.stringify(err instanceof Error ? err.message : err)}`
+            );
             console.error("Error Submitting Theme!", err);
           });
       }

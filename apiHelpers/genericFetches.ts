@@ -73,7 +73,9 @@ export async function checkAndRefreshToken() {
       }
     })
     .catch((err) => {
-      toast.error(`Error re-authenticating!, ${JSON.stringify(err)}`);
+      toast.error(
+        `Error re-authenticating!, ${JSON.stringify(err instanceof Error ? err.message : err)}`
+      );
       console.error(`Error Refreshing Token`, err);
     });
 }
@@ -122,16 +124,18 @@ export async function genericFetch(
     const command = fetch(`${process.env.NEXT_PUBLIC_API_URL}${subPath}`, formattedOptions);
 
     if (noReturn) {
-      return await command.then((res) => {
+      return await command.then(async (res) => {
         if (res.status < 200 || res.status >= 300 || !res.ok) {
-          throw new Error("Response Not OK");
+          const errorText = await res.text();
+          throw new Error(`Response Not OK: ${res.status} - ${errorText}`);
         }
         return true;
       });
     }
-    return await command.then((res) => {
+    return await command.then(async (res) => {
       if (res.status < 200 || res.status >= 300 || !res.ok) {
-        throw new Error("Response Not OK");
+        const errorText = await res.text();
+        throw new Error(`Response Not OK: ${res.status} - ${errorText}`);
       }
       return res.json();
     });
@@ -151,10 +155,11 @@ export async function genericGET(subPath: string, debug: boolean = false) {
           }
         : {},
     })
-      .then((res) => {
+      .then(async (res) => {
         debug && debugEnv && console.log(`${subPath} Fetch Res: `, res);
         if (res.status < 200 || res.status >= 300 || !res.ok) {
-          throw new Error("Response Not OK");
+          const errorText = await res.text();
+          throw new Error(`Response Not OK: ${res.status} - ${errorText}`);
         }
         return res.json();
       })
@@ -166,7 +171,9 @@ export async function genericGET(subPath: string, debug: boolean = false) {
         throw new Error("Couldn't find data");
       })
       .catch((err) => {
-        toast.error(`Error fetching ${subPath}!, ${JSON.stringify(err)}`);
+        toast.error(
+          `Error fetching ${subPath}!, ${JSON.stringify(err instanceof Error ? err.message : err)}`
+        );
         console.error(`Error fetching from ${subPath}`, err);
       });
   } else {
