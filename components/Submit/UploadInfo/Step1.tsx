@@ -82,9 +82,7 @@ export function Step1({
             ]}
           />
         </div>
-        {uploadMethod === "zip" && (
-          <ZipSubmitPanel info={uploadInfo as ZipSubmissionInfo} setInfo={setUploadInfo} />
-        )}
+        {uploadMethod === "zip" && <ZipSubmitPanel setInfo={setUploadInfo} />}
         {uploadMethod === "git" && (
           <GitSubmitPanel info={uploadInfo as GitSubmissionInfo} setInfo={setUploadInfo} />
         )}
