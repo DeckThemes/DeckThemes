@@ -65,30 +65,6 @@ export default function Submit() {
         <Head>
           <title>DeckThemes | Submit</title>
         </Head>
-        <style>
-          {`
-          .dark .filepond--panel-root {
-            background-color: hsla(220, 9%, 60%, 0.1);
-          }
-
-          .dark .filepond--drop-label {
-            color: #fff;
-          }
-
-		      .dark .filepond--panel-root {
-		      	background: transparent;
-		      }
-        
-	    	  .filepond--credits {
-	    	  	display: none !important;
-	    	  }
-
-		      .dark .filepond--root {
-	     	  	background: #1e2024;
-	    	  	border-radius: 12px;
-		      }
-          `}
-        </style>
         {router?.query?.update && (
           <div className="text-lg font-bold">
             <span className="">

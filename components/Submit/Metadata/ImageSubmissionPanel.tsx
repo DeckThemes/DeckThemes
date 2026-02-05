@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { LoadingSpinner } from "@components/Generic";
-import { SquishyButton } from "@components/Primitives";
+import { Dropzone } from "@components/Primitives";
 import { MetaInfo } from "@customTypes/ThemeSubmissionTypes";
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -63,9 +63,6 @@ function isAcceptedImage(file: File) {
 
 export function ImageSubmissionPanel({ setInfo }: { setInfo: Dispatch<SetStateAction<MetaInfo>> }) {
   const [items, setItems] = useState<ImageItem[]>([]);
-  const [isDragging, setIsDragging] = useState(false);
-  const dragDepth = useRef(0);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const itemsRef = useRef<ImageItem[]>([]);
 
   const maxImageSizeLabel = process.env.NEXT_PUBLIC_MAX_IMG_SIZE || "1MB";
@@ -173,46 +170,6 @@ export function ImageSubmissionPanel({ setInfo }: { setInfo: Dispatch<SetStateAc
     [items.length, maxImageSizeBytes, maxImageSizeLabel, uploadImage]
   );
 
-  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dragDepth.current = 0;
-    setIsDragging(false);
-    if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      addFiles(Array.from(event.dataTransfer.files));
-    }
-  };
-
-  const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dragDepth.current += 1;
-    if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
-      setIsDragging(true);
-    }
-  };
-
-  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-    dragDepth.current -= 1;
-    if (dragDepth.current === 0) {
-      setIsDragging(false);
-    }
-  };
-
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      addFiles(Array.from(event.target.files));
-      event.target.value = "";
-    }
-  };
-
   const removeItem = (item: ImageItem) => {
     URL.revokeObjectURL(item.previewUrl);
     setItems((prev) => prev.filter((entry) => entry.id !== item.id));
@@ -232,36 +189,14 @@ export function ImageSubmissionPanel({ setInfo }: { setInfo: Dispatch<SetStateAc
     <div className={`${metaFieldContainerClasses}`}>
       <span className={`${fieldTitleClasses}`}>Images</span>
       <div className="flex w-full flex-col gap-4">
-        <div
-          className={`flex w-full flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed p-6 text-center transition ${
-            isDragging
-              ? "border-brandBlue bg-brandBlue/10"
-              : "border-borders-base1-light dark:border-borders-base1-dark"
-          }`}
-          onDragEnter={handleDragEnter}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          onDrop={handleDrop}
-        >
-          <span className="text-sm font-semibold">Drag and drop images here</span>
-          <span className="text-xs text-textFadedLight dark:text-textFadedDark">
-            JPG or PNG, up to {maxImageSizeLabel} each. Max {maxFiles} images.
-          </span>
-          <SquishyButton
-            buttonProps={{ type: "button" }}
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Upload images
-          </SquishyButton>
-          <input
-            ref={fileInputRef}
-            type="file"
-            className="hidden"
-            accept="image/png,image/jpeg"
-            multiple
-            onChange={handleInputChange}
-          />
-        </div>
+        <Dropzone
+          accept="image/png,image/jpeg,.png,.jpg,.jpeg"
+          multiple
+          onFilesAdded={addFiles}
+          title="Drag and drop images here"
+          helperText={`JPG or PNG, up to ${maxImageSizeLabel} each. Max ${maxFiles} images.`}
+          buttonText="Upload images"
+        />
 
         <div className="flex w-full flex-col gap-3">
           <div className="flex w-full items-center justify-between">
