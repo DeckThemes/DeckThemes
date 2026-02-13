@@ -6,3 +6,4 @@ export * from "./LabelledTextArea";
 export * from "./MenuDropdown";
 export * from "./TwoItemToggle";
 export * from "./SquishyButton";
+export * from "./Dropzone";
