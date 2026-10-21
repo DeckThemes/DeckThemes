@@ -5,7 +5,7 @@ import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import "filepond/dist/filepond.min.css";
 import { FilePond, registerPlugin } from "react-filepond";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericFetch } from "../../../apiHelpers";
 
 registerPlugin(FilePondPluginFileValidateSize, FilePondPluginFileValidateType);

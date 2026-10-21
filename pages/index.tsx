@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { useContext } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel, HeroReel } from "../components";
 import Head from "next/head";
@@ -46,7 +45,7 @@ export default function Home() {
           </h1>
 
           {/* Blurb */}
-          <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
+          <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg sm:leading-7">
             DeckThemes is the largest repository of custom themes, styles, and audio packs for
             Steam. Available for Steam Deck and Windows.
           </p>

@@ -7,7 +7,7 @@ export default function ToS() {
       <Head>
         <title>DeckThemes | ToS</title>
       </Head>
-      <main className="flex w-full flex-grow flex-col items-center justify-center gap-4">
+      <main className="flex w-full grow flex-col items-center justify-center gap-4">
         <style>{`
         
         strong {
@@ -209,7 +209,7 @@ export default function ToS() {
           </p>
           <h2>Contact Us</h2>
           <p>If you have any questions about these Terms and Conditions, You can contact us:</p>
-          <ul className="!list-none !p-0 invert dark:invert-0">
+          <ul className="list-none! p-0! invert dark:invert-0">
             <li>
               <Image width={200} height={60} src="/contact_info.png" alt="Email Contact Info" />
             </li>

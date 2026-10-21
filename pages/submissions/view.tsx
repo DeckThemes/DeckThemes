@@ -2,7 +2,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState, useContext } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { checkAndRefreshToken, fetchWithRefresh, genericFetch, genericGET } from "../../apiHelpers";
 import { FullThemeCard, LoadingPage, MiniPfpDisplay, SubmissionReviewCard } from "../../components";
 import {

@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { AccountData } from "../../types";
 import { genericGET } from "../genericFetches";
 

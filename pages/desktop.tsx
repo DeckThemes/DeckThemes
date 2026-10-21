@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { useRef, useContext, useEffect } from "react";
 import { DownloadButtonWithIcon, HighlightCarousel } from "../components";
 import { DesktopHighlights } from "@components/Desktop/DesktopHighlights";

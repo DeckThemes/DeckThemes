@@ -34,7 +34,7 @@ export function TwoItemToggle({
         >
           <button
             className={twMerge(
-              "relative z-20 flex w-16 items-center justify-center outline-none",
+              "relative z-20 flex w-16 items-center justify-center outline-hidden",
               `${resolvedTheme === "light" && value === options[0].value && "text-white"}`,
               optionClass
             )}
@@ -44,7 +44,7 @@ export function TwoItemToggle({
           </button>
           <button
             className={twMerge(
-              "relative z-20 flex w-16 items-center justify-center outline-none",
+              "relative z-20 flex w-16 items-center justify-center outline-hidden",
               `${resolvedTheme === "light" && value === options[1].value && "text-white"}`,
               optionClass
             )}

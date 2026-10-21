@@ -1,24 +1,9 @@
 /** @type {import('next').NextConfig} */
-const withBundleAnalyzer = require("@next/bundle-analyzer");
-
 const nextConfig = {
+  // Fully static site: `next build` writes plain HTML/JS/CSS to ./out for Cloudflare Pages
+  output: "export",
   trailingSlash: false,
   reactStrictMode: true,
-  swcMinify: true,
-  async redirects() {
-    return [
-      {
-        source: "/discord",
-        destination: "https://discord.gg/HsU72Kfnpf",
-        permanent: false,
-      },
-      {
-        source: "/docs",
-        destination: "https://docs.deckthemes.com",
-        permanent: false,
-      },
-    ];
-  },
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -46,5 +31,4 @@ const nextConfig = {
   },
 };
 
-// module.exports = withBundleAnalyzer(nextConfig);
 module.exports = nextConfig;

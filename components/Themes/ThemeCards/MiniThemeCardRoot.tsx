@@ -30,7 +30,7 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
           }}
         >
           <div
-            className="absolute left-0 z-30 h-full w-3/4 rounded-sm bg-cover"
+            className="absolute left-0 z-30 h-full w-3/4 rounded-xs bg-cover"
             style={{
               background:
                 target === "Music"
@@ -43,7 +43,7 @@ function AudioCardImage({ imageSrc, target }: { imageSrc: string; target: string
             style={{
               backgroundImage: `url(${imageSrc})`,
             }}
-            className="absolute left-0 z-20 h-full w-3/4 rounded-sm bg-[#21323d] bg-cover bg-center bg-no-repeat"
+            className="absolute left-0 z-20 h-full w-3/4 rounded-xs bg-[#21323d] bg-cover bg-center bg-no-repeat"
           />
           <div
             className="absolute right-[5%] z-10 h-full w-1/5 bg-cover bg-right"
@@ -83,7 +83,7 @@ function ThemeCardInfo({ data }: { data: PartialCSSThemeInfo }) {
           {data.displayName}
         </span>
         <div className="font-fancy flex w-full justify-between">
-          <span className="flex-grow truncate text-start text-sm text-fore-9-light dark:text-fore-9-dark">
+          <span className="grow truncate text-start text-sm text-fore-9-light dark:text-fore-9-dark">
             {data.specifiedAuthor}
           </span>
           <span className="flex text-sm">{data.version}</span>
@@ -111,7 +111,7 @@ export function MiniThemeCardRoot({
 
   function InnerContent() {
     return (
-      <div className="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark">
+      <div className="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark dark:hover:border-borders-base2-dark">
         {data.type === "Audio" ? (
           <>
             <AudioCardImage imageSrc={imageSRCCreator()} target={data.target} />
