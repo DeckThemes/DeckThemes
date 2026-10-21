@@ -1,7 +1,7 @@
 import { Dropzone } from "@components/Primitives";
 import { ZipSubmissionInfo } from "@customTypes/ThemeSubmissionTypes";
-import { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { toast } from "react-toastify";
+import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
+import { toast } from "react-toastify/unstyled";
 import { LoadingSpinner } from "@components/Generic";
 import { genericFetch } from "../../../apiHelpers";
 
@@ -67,6 +67,8 @@ export function ZipSubmitPanel({
   setInfo: Dispatch<SetStateAction<ZipSubmissionInfo>>;
 }) {
   const [item, setItem] = useState<ZipItem | null>(null);
+  // Id of the zip currently shown, so uploads for removed or replaced files are ignored when they finish
+  const currentItemId = useRef<string | null>(null);
 
   const maxZipSizeLabel = process.env.NEXT_PUBLIC_MAX_ZIP_SIZE || "10MB";
   const maxZipSizeBytes = parseSizeToBytes(maxZipSizeLabel);
@@ -80,6 +82,7 @@ export function ZipSubmitPanel({
         body: formData,
       })
         .then((json) => {
+          if (currentItemId.current !== itemId) return;
           if (!json?.id) {
             throw new Error("No id returned from upload");
           }
@@ -91,6 +94,7 @@ export function ZipSubmitPanel({
           );
         })
         .catch((err) => {
+          if (currentItemId.current !== itemId) return;
           toast.error(
             `Error Uploading File! ${JSON.stringify(err instanceof Error ? err.message : err)}`
           );
@@ -129,6 +133,7 @@ export function ZipSubmitPanel({
         file,
         status: "uploading",
       };
+      currentItemId.current = nextItem.id;
       setInfo({ blob: "" });
       setItem(nextItem);
       uploadZip(nextItem.id, file);
@@ -137,6 +142,7 @@ export function ZipSubmitPanel({
   );
 
   const removeItem = () => {
+    currentItemId.current = null;
     setItem(null);
     setInfo({ blob: "" });
   };

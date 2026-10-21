@@ -3,7 +3,7 @@ import { LoadingSpinner } from "@components/Generic";
 import { Dropzone } from "@components/Primitives";
 import { MetaInfo } from "@customTypes/ThemeSubmissionTypes";
 import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericFetch } from "../../../apiHelpers";
 import { fieldTitleClasses, metaFieldContainerClasses } from "../SubmitPageTailwindClasses";
 
