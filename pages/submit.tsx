@@ -26,15 +26,16 @@ export default function Submit() {
       description: metaInfo.description || null,
       target: metaInfo.target !== "None" ? metaInfo.target : null,
     };
-
     if (formattedMeta.imageBlobs.length === 0) {
       toast.error("Please upload at least one image.");
       return;
     }
 
+    const body = JSON.stringify({ ...uploadInfo, meta: formattedMeta });
+
     genericFetch(`/submissions/${uploadType}_${uploadMethod}`, {
       method: "POST",
-      body: JSON.stringify({ ...uploadInfo, meta: formattedMeta }),
+      body: body,
       headers: {
         "Content-Type": "application/json",
       },
@@ -64,30 +65,6 @@ export default function Submit() {
         <Head>
           <title>DeckThemes | Submit</title>
         </Head>
-        <style>
-          {`
-          .dark .filepond--panel-root {
-            background-color: hsla(220, 9%, 60%, 0.1);
-          }
-
-          .dark .filepond--drop-label {
-            color: #fff;
-          }
-
-		      .dark .filepond--panel-root {
-		      	background: transparent;
-		      }
-        
-	    	  .filepond--credits {
-	    	  	display: none !important;
-	    	  }
-
-		      .dark .filepond--root {
-	     	  	background: #1e2024;
-	    	  	border-radius: 12px;
-		      }
-          `}
-        </style>
         {router?.query?.update && (
           <div className="text-lg font-bold">
             <span className="">
