@@ -22,7 +22,7 @@ export function TosCheckboxes({
         <ul className="flex max-w-4xl list-disc flex-col items-start gap-2 text-sm">
           {uploadType === "audio" ? (
             <>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:text-2xl">Ownership</span>
+              <span className="font-fancy w-full text-xl md:-ml-4 md:text-2xl">Ownership</span>
               <li>
                 I am the original author of this pack or have permission from the original author to
                 make this submission.
@@ -31,14 +31,14 @@ export function TosCheckboxes({
                 All copyright of this pack&apos;s contents belong to the listed author or is clearly
                 attributed.
               </li>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:mt-[.5rem] md:text-2xl">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:mt-[.5rem] md:text-2xl">
                 Compatibility
               </span>
               <li>
                 This packs works properly on the latest beta and stable versions of SteamOS, Decky
                 Loader and Audio Loader.
               </li>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:mt-[.5rem] md:text-2xl">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:mt-[.5rem] md:text-2xl">
                 Content
               </span>
               <li>
@@ -60,7 +60,7 @@ export function TosCheckboxes({
             </>
           ) : (
             <>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:text-2xl ">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:text-2xl ">
                 Ownership
               </span>
               <li>
@@ -71,7 +71,7 @@ export function TosCheckboxes({
                 All copyright of this theme&apos;s contents belong to the listed author or is
                 clearly attributed.
               </li>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:mt-[.5rem] md:text-2xl">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:mt-[.5rem] md:text-2xl">
                 Compatibility
               </span>
               <li>
@@ -91,7 +91,7 @@ export function TosCheckboxes({
                 This theme does not bundle any other themes with it, and uses dependencies where
                 necessary.
               </li>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:mt-[.5rem] md:text-2xl">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:mt-[.5rem] md:text-2xl">
                 Target
               </span>
               <li>
@@ -102,7 +102,7 @@ export function TosCheckboxes({
                 If this is a system-wide theme that also targets the keyboard, the keyboard theming
                 is toggleable.
               </li>
-              <span className="font-fancy w-full text-xl md:ml-[-1rem] md:mt-[.5rem] md:text-2xl">
+              <span className="font-fancy w-full text-xl md:-ml-4 md:mt-[.5rem] md:text-2xl">
                 Other
               </span>
               <li>
@@ -113,7 +113,7 @@ export function TosCheckboxes({
             </>
           )}
         </ul>
-        <div className="flex items-center gap-4 text-xl md:mt-[1rem]">
+        <div className="flex items-center gap-4 text-xl md:mt-4">
           <span>By checking this box you agree to the above terms. </span>
           {!expired ? (
             <CountdownCircleTimer

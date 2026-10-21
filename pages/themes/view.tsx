@@ -20,7 +20,7 @@ export default function FullThemeViewPage() {
 
   if (!parsedId) {
     return (
-      <main className="flex w-full flex-grow items-center justify-center">
+      <main className="flex w-full grow items-center justify-center">
         <span className="text-3xl">No Theme Found</span>
       </main>
     );

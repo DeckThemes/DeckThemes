@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects (Next.js `redirects()` don't apply to a static export)
+/discord https://discord.gg/HsU72Kfnpf 307
+/docs https://docs.deckthemes.com 307

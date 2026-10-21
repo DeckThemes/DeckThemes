@@ -9,7 +9,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import "filepond/dist/filepond.min.css";
 import { FilePond, registerPlugin } from "react-filepond";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericFetch, genericGET } from "../../../apiHelpers";
 import {
   fieldTitleClasses,

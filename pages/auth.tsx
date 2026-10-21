@@ -2,7 +2,7 @@ import { authContext } from "contexts";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { generateAuthCookie, getMeDataFromToken } from "../apiHelpers";
 import { LoadingSpinner } from "../components";
 
@@ -63,7 +63,7 @@ export default function Auth() {
       <Head>
         <title>DeckThemes | Authenticating</title>
       </Head>
-      <main className="flex h-full w-full flex-grow items-center justify-center gap-2">
+      <main className="flex h-full w-full grow items-center justify-center gap-2">
         <LoadingSpinner />
         <h1 className="text-4xl font-semibold">Loading</h1>
       </main>

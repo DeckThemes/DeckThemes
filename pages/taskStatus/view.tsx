@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
 import { ImSpinner5 } from "react-icons/im";
 import { SiMaildotru } from "react-icons/si";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { checkAndRefreshToken, genericGET } from "../../apiHelpers";
 import { TaskQueryResponse } from "../../types";
 

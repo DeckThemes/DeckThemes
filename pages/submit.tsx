@@ -3,7 +3,7 @@ import { authContext } from "contexts";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericFetch } from "../apiHelpers";
 import { LoadingPage, LogInPage } from "../components";
 import { useHasCookie } from "../hooks";
@@ -100,7 +100,7 @@ export default function Submit() {
             href={process.env.NEXT_PUBLIC_DOCS_URL}
             target="_blank"
             rel="noreferrer"
-            className="rounded-3xl bg-gradient-to-tl from-blue-800 to-blue-500 bg-clip-text p-1 text-transparent"
+            className="rounded-3xl bg-linear-to-tl from-blue-800 to-blue-500 bg-clip-text p-1 text-transparent"
           >
             <span className="text-textLight dark:text-textDark">Need help? </span>
             <br className="flex md:hidden" />

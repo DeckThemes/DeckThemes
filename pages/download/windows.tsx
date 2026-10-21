@@ -15,7 +15,7 @@ export default function WindowsDownload() {
           for Windows
         </h1>
         {/* Blurb */}
-        <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
+        <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg sm:leading-7">
           CSS Loader on Windows uses a native backend with a standalone frontend. You also install
           CSS Loader on your{" "}
           <Link className="text-brandBlue hover:underline" href={"/download/deck"}>

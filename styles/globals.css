@@ -1,6 +1,230 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "react-toastify/ReactToastify.css" layer(components);
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Formerly the `safelist` in tailwind.config.js */
+@source inline("opacity-0 opacity-100 bg-elevation-2-light dark:bg-elevation-2-dark hover:bg-elevation-3-light dark:hover:bg-elevation-3-dark");
+
+@theme {
+  --color-base-1-dark: hsl(220, 11%, 5.5%);
+  --color-base-1-light: hsl(264, 6%, 98.5%);
+  --color-base-2-dark: hsla(220, 12%, 6%, 0.8);
+  --color-base-2-light: hsl(264, 7%, 100%);
+  --color-base-2T-dark: hsla(220, 12%, 8%, 0.7);
+  --color-base-2T-light: hsla(264, 100%, 100%, 0.7);
+  --color-base-2\.5-dark: #0b0d0f;
+  --color-base-2\.5-light: #eeeeee;
+  --color-base-3-dark: hsl(220, 10%, 13%);
+  --color-base-3-light: hsl(264, 100%, 100%);
+  --color-base-3T-dark: hsla(220, 9%, 60%, 0.1);
+  --color-base-3T-light: hsla(264, 100%, 100%, 0.7);
+  --color-base-4-dark: hsl(220, 11%, 15%);
+  --color-base-4-light: hsl(264, 1%, 88%);
+  --color-base-4T-dark: hsla(220, 9%, 30%, 0.33);
+  --color-base-4T-light: hsla(264, 20%, 10%, 0.12);
+  --color-base-5-dark: hsl(220, 11%, 12%);
+  --color-base-5-light: hsl(264, 3%, 90%);
+  --color-base-5T-dark: hsla(220, 13%, 60%, 0.15);
+  --color-base-5T-light: hsla(264, 15%, 10%, 0.09);
+  --color-base-6-dark: hsl(220, 13%, 4%);
+  --color-base-6-light: hsl(264, 3%, 95%);
+  --color-base-6T-dark: hsla(220, 13%, 4%, 0.7);
+  --color-base-6T-light: hsla(264, 10%, 14%, 0.05);
+  --color-base-contrast-dark: hsl(270, 3%, 75%);
+  --color-base-contrast-light: hsl(264, 6%, 17%);
+
+  --color-fore-2-dark: hsla(220, 20%, 83%, 0.15);
+  --color-fore-2-light: hsla(264, 24%, 10%, 0.08);
+  --color-fore-3-dark: hsl(220, 3%, 20%);
+  --color-fore-3-light: hsl(264, 3%, 86%);
+  --color-fore-3T-dark: hsla(220, 20%, 83%, 0.19);
+  --color-fore-3T-light: hsla(264, 24%, 10%, 0.14);
+  --color-fore-4-dark: hsl(220, 3%, 20%);
+  --color-fore-4-light: hsl(264, 3%, 79%);
+  --color-fore-4T-dark: hsla(220, 26%, 89%, 0.31);
+  --color-fore-4T-light: hsla(264, 28%, 10%, 0.26);
+  --color-fore-5-dark: hsl(220, 3%, 45%);
+  --color-fore-5-light: hsl(264, 3%, 69%);
+  --color-fore-5T-dark: hsla(220, 26%, 89%, 0.31);
+  --color-fore-5T-light: hsla(264, 28%, 10%, 0.34);
+  --color-fore-6-dark: hsl(220, 3%, 45%);
+  --color-fore-6-light: hsl(264, 3%, 59%);
+  --color-fore-6T-dark: hsla(220, 3%, 80%, 0.5);
+  --color-fore-6T-light: hsla(264, 3%, 17%, 0.5);
+  --color-fore-8-dark: hsl(220, 3%, 55%);
+  --color-fore-8-light: hsl(264, 3%, 42%);
+  --color-fore-9-dark: hsl(220, 3%, 69%);
+  --color-fore-9-light: hsl(264, 6%, 30%);
+  --color-fore-9Hex-dark: #aeafb2;
+  --color-fore-9Hex-light: #4c4851;
+  --color-fore-10-dark: hsl(220, 3%, 75%);
+  --color-fore-10-light: hsl(264, 6%, 17%);
+  --color-fore-11-dark: hsl(220, 3%, 95%);
+  --color-fore-11-light: hsl(264, 6%, 8%);
+  --color-fore-contrast-dark: hsl(220, 11%, 10%);
+  --color-fore-contrast-light: hsl(115, 100%, 100%);
+
+  --color-borders-base1-dark: hsl(220, 9%, 14%);
+  --color-borders-base1-light: hsl(220, 9%, 84%);
+  --color-borders-base2-dark: hsl(220, 9%, 20%);
+  --color-borders-base2-light: hsl(220, 9%, 65%);
+  --color-borders-base3-dark: hsl(220, 9%, 28%);
+  --color-borders-base3-light: hsl(220, 9%, 90%);
+
+  --color-app-neutralDrop-dark: hsla(220, 6%, 9%, 0.9);
+  --color-app-neutralDrop-light: hsla(264, 3%, 92%, 0.9);
+  --color-app-backdrop-dark: hsla(220, 5%, 6%, 0.4);
+  --color-app-backdrop-light: hsla(264, 3%, 92%, 0.3);
+  --color-app-backdropUmbra-dark: hsla(220, 7%, 4%, 0.85);
+  --color-app-backdropUmbra-light: hsla(264, 3%, 92%, 0.85);
+  --color-app-backdropUmbraSolid-dark: hsl(229, 5%, 4%);
+  --color-app-backdropUmbraSolid-light: hsla(264, 3%, 94%, 1);
+
+  --color-brandBlue: #2563eb;
+  --color-cssPurple: #de2cf7;
+  --color-audioBlue: rgb(26, 159, 255);
+  --color-discordColor: #5865f2;
+  --color-patreonColor: #ff424d;
+  /* These are used to "transform" the card values to look like the bg values */
+  --color-lightenerDark: rgba(255, 255, 255, 0.1);
+  --color-lightenerLight: rgba(255, 255, 255, 0.3);
+  --color-header-dark: hsl(220, 11%, 5.5%);
+  --color-bgDark: #2e2e2e;
+  --color-bgLight: #e2e2e2;
+  --color-cardDark: #0000004e;
+  --color-cardLight: #0000002e;
+  --color-elevation-1-dark: #0000002e;
+  --color-elevation-1-light: #0000001e;
+  --color-elevation-2-dark: #0000004e;
+  --color-elevation-2-light: #0000002e;
+  --color-elevation-3-dark: #0000006e;
+  --color-elevation-3-light: #0000006e;
+  --color-borderDark: #0e0e0e;
+  --color-borderLight: #a2a2a2;
+  --color-darkBorderDark: #020202;
+  --color-darkBorderLight: rgb(140, 140, 140);
+  --color-textLight: #000;
+  --color-textFadedLight: #333;
+  --color-textDark: #fff;
+  --color-textFadedDark: #aaa;
+
+  --animate-scaleIn: scaleIn 200ms ease;
+  --animate-scaleOut: scaleOut 200ms ease;
+  --animate-fadeIn: fadeIn 200ms ease;
+  --animate-fadeOut: fadeOut 200ms ease;
+  --animate-enterFromLeft: enterFromLeft 250ms ease;
+  --animate-enterFromRight: enterFromRight 250ms ease;
+  --animate-exitToLeft: exitToLeft 250ms ease;
+  --animate-exitToRight: exitToRight 250ms ease;
+
+  @keyframes enterFromRight {
+    from {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes enterFromLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-200px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  @keyframes exitToRight {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(200px);
+    }
+  }
+  @keyframes exitToLeft {
+    from {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-200px);
+    }
+  }
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: rotateX(-10deg) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+  }
+  @keyframes scaleOut {
+    from {
+      opacity: 1;
+      transform: rotateX(0deg) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: rotateX(-10deg) scale(0.95);
+    }
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+}
+
+@utility h-screenMinusHeader {
+  height: calc(100vh - 4rem);
+}
+
+/*
+  Tailwind v4 changed a few preflight defaults; these keep the v3 look.
+  - borders default to `currentcolor` (v3 used gray-200)
+  - buttons default to `cursor: default` (v3 used pointer)
+  - placeholders use the text color at 50% (v3 used gray-400)
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+}
 
 html,
 body,

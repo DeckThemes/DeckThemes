@@ -34,7 +34,7 @@ export default function Nav() {
           }
         }}
         delayDuration={0}
-        className="relative !z-[9999] my-8 w-full px-4 text-xs font-bold"
+        className="relative z-9999! my-8 w-full px-4 text-xs font-bold"
       >
         <div className="mx-auto flex max-w-7xl justify-between">
           <div className="flex items-center">
@@ -44,10 +44,10 @@ export default function Nav() {
           <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
             <NavigationMenu.List className="center shadow-blackA7 m-0 flex list-none rounded-lg p-1">
               <NavigationMenu.Item value="center1">
-                <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
+                <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-hidden transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
                   Browse{" "}
                   <FaCaretDown
-                    className="relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
+                    className="relative top-px transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
                     aria-hidden
                   />
                 </NavigationMenu.Trigger>
@@ -69,10 +69,10 @@ export default function Nav() {
                 </NavigationMenu.Content>
               </NavigationMenu.Item>
               <NavigationMenu.Item value="center2">
-                <NavigationMenu.Trigger className="group flex select-none items-center  justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
+                <NavigationMenu.Trigger className="group flex select-none items-center  justify-between gap-[2px] rounded-lg px-3 py-2 text-[15px] font-bold leading-none outline-hidden transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
                   Social{" "}
                   <FaCaretDown
-                    className="relative top-[1px] transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
+                    className="relative top-px transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180"
                     aria-hidden
                   />
                 </NavigationMenu.Trigger>
@@ -117,17 +117,17 @@ export default function Nav() {
               </NavigationMenu.Item>
 
               {/* Nav arrow thing */}
-              {/* <NavigationMenu.Indicator className="top-full z-[1] flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
-                <div className="relative top-[70%] h-[10px] w-[10px] rotate-[45deg] rounded-tl-[2px] bg-black dark:bg-white" />
+              {/* <NavigationMenu.Indicator className="top-full z-1 flex h-[10px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease] data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut">
+                <div className="relative top-[70%] h-[10px] w-[10px] rotate-45 rounded-tl-[2px] bg-black dark:bg-white" />
               </NavigationMenu.Indicator> */}
             </NavigationMenu.List>
           </div>
 
           <div
-            className="absolute top-full left-1/2 !z-[9999] flex w-full max-w-7xl -translate-x-1/2"
+            className="absolute top-full left-1/2 z-9999! flex w-full max-w-7xl -translate-x-1/2"
             style={{ justifyContent: alignValue }}
           >
-            <NavigationMenu.Viewport className="relative !z-[9999] mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-2xl bg-black !text-white transition-all duration-300 data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+            <NavigationMenu.Viewport className="relative z-9999! mt-[10px] h-(--radix-navigation-menu-viewport-height) w-full origin-[top_center] overflow-hidden rounded-2xl bg-black text-white! transition-all duration-300 data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut sm:w-(--radix-navigation-menu-viewport-width)" />
           </div>
 
           {/* Account, Upload, Submissions */}
@@ -137,10 +137,10 @@ export default function Nav() {
                 <>
                   <NavigationMenu.List className="center shadow-blackA7 relative m-0 flex list-none rounded-lg p-1">
                     <NavigationMenu.Item value="end1">
-                      <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 text-[15px] font-bold leading-none outline-none transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
+                      <NavigationMenu.Trigger className="group flex select-none items-center justify-between gap-[2px] rounded-lg px-3 text-[15px] font-bold leading-none outline-hidden transition hover:bg-base-5-dark hover:text-white focus:shadow-[0_0_0_2px] dark:hover:bg-base-5-dark">
                         <MiniPfpDisplay accountInfo={accountInfo} goToMe hideName />
                         <FaCaretDown
-                          className="relative top-[1px] transition-transform ease-in group-data-[state=open]:-rotate-180"
+                          className="relative top-px transition-transform ease-in group-data-[state=open]:-rotate-180"
                           aria-hidden
                         />
                       </NavigationMenu.Trigger>
@@ -195,7 +195,7 @@ const ListItem = React.forwardRef(({ className, children, title, ...props }, for
     <NavigationMenu.Link asChild>
       <Link
         className={twMerge(
-          "block select-none rounded-[6px] p-3 text-[15px] leading-none no-underline outline-none transition-colors hover:bg-base-4-dark focus:shadow-[0_0_0_2px]",
+          "block select-none rounded-[6px] p-3 text-[15px] leading-none no-underline outline-hidden transition-colors hover:bg-base-4-dark focus:shadow-[0_0_0_2px]",
           className
         )}
         {...props}

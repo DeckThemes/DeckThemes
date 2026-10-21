@@ -16,7 +16,7 @@ export function ThemeDownloadButton({ themeData }: { themeData: FullCSSThemeInfo
         <>
           <button
             className={twMerge(
-              "group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0",
+              "group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 dark:border-borders-base1-dark dark:hover:border-borders-base2-dark sm:mb-0",
               desktopEntry && desktopEntry.version === themeData.version
                 ? "hover: bg-base-3-light text-black dark:bg-base-3-dark dark:text-white"
                 : "bg-brandBlue hover:text-fore-contrast-dark dark:bg-brandBlue"

@@ -1,5 +1,5 @@
 import { genericGET } from "apiHelpers/genericFetches";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { generateAuthCookie } from "./generateAuthCookie";
 
 export async function logInWithToken(shortTokenValue: string) {

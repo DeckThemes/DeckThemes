@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, JSX, SetStateAction } from "react";
 
 export function ActionButton({
   selectedAction,
@@ -21,7 +21,7 @@ export function ActionButton({
       <button
         className={`${
           action === selectedAction && colorSets[action]
-        } flex items-center rounded-full border-2 border-borders-base1-light p-2 transition-colors hover:border-borders-base2-light dark:border-borders-base1-dark hover:dark:border-borders-base2-dark`}
+        } flex items-center rounded-full border-2 border-borders-base1-light p-2 transition-colors hover:border-borders-base2-light dark:border-borders-base1-dark dark:hover:border-borders-base2-dark`}
         onClick={() => {
           action !== selectedAction ? setAction(action) : setAction(undefined);
         }}

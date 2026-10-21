@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericGET } from "../genericFetches";
 
 export async function fetchDiscordUrl() {
