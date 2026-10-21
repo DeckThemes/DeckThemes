@@ -53,7 +53,7 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Loading</title>
         </Head>
-        <main className="flex flex-grow items-center justify-center px-5 text-center">
+        <main className="flex grow items-center justify-center px-5 text-center">
           <LoadingSpinner />
           <h1 className="text-4xl font-semibold">Loading</h1>
         </main>
@@ -67,7 +67,7 @@ export default function Account() {
         <Head>
           <title>DeckThemes | Invalid User</title>
         </Head>
-        <main className="flex flex-grow items-center justify-center px-5 text-center">
+        <main className="flex grow items-center justify-center px-5 text-center">
           <h1 className="pt-20 text-4xl font-semibold">Error! Invalid User ID</h1>
         </main>
       </>

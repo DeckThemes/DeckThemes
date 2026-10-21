@@ -1,4 +1,4 @@
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { clearCookie, generateAuthCookie } from "./auth";
 
 export async function fetchWithRefresh(fetchFunc: any) {

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { BiCode } from "react-icons/bi";
 import { BsShare, BsStar, BsStarFill } from "react-icons/bs";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import {
   MiniThemeCardRoot,
   SquishyButton,
@@ -111,7 +111,7 @@ export function FullThemeCard({
           {themeData?.displayName ? `${themeData.displayName} | DeckThemes` : "DeckThemes"}
         </title>
       </Head>
-      <div className="font-fancy flex h-full w-full flex-grow justify-center text-center lg:text-left">
+      <div className="font-fancy flex h-full w-full grow justify-center text-center lg:text-left">
         {themeData !== undefined ? (
           <>
             {/* bg-base-3-light dark:bg-base-3-dark */}
@@ -204,7 +204,7 @@ export function FullThemeCard({
 
                   <div className="text-md mb-4 max-w-2xl text-left">
                     {themeData.description ? (
-                      <span className="whitespace-pre-line break-words">
+                      <span className="whitespace-pre-line wrap-break-word">
                         {themeData.description}
                       </span>
                     ) : (

@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { AccountData } from "../types";
 import { getMeDataOnInit } from "../apiHelpers";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify/unstyled";
 import { logInWithToken } from "apiHelpers/auth/logInWithToken";
 import { IoMdClose } from "react-icons/io";
 import { authContext, desktopModeContext } from "contexts";
@@ -86,9 +85,8 @@ export default function App({ Component, pageProps }: AppProps) {
                   autoClose={5000}
                   hideProgressBar={false}
                   newestOnTop
-                  closeButton={<IoMdClose />}
-                  toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark"
-                  bodyClassName="rounded-xl font-fancy text-black dark:text-white"
+                  closeButton={<IoMdClose className="ml-auto shrink-0 self-start text-(--toastify-text-color-light)" />}
+                  toastClassName="rounded-xl border-2 border-borders-base1-light bg-base-3-light font-fancy text-black transition hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark dark:text-white dark:hover:border-borders-base2-dark"
                   closeOnClick
                   pauseOnFocusLoss
                   draggable
@@ -96,11 +94,11 @@ export default function App({ Component, pageProps }: AppProps) {
                 />
                 <main
                   className={twMerge(
-                    "page-shadow mx-4 flex flex-col items-center rounded-3xl border-[1px]  border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark",
+                    "page-shadow mx-4 flex flex-col items-center rounded-3xl border  border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark dark:bg-base-2-dark",
                     router.pathname !== "/" && "py-12"
                     // desktopMode && "pt-0",
                     // !desktopMode &&
-                    //   "page-shadow mx-4 rounded-3xl border-[1px] border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
+                    //   "page-shadow mx-4 rounded-3xl border border-borders-base1-light bg-base-2-light dark:border-borders-base1-dark  dark:bg-base-2-dark"
                   )}
                 >
                   <Component {...pageProps} />

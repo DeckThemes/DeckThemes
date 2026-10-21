@@ -11,7 +11,7 @@ export function MiniSubmissionCard({ data }: { data: ThemeSubmissionInfo }) {
   return (
     <Link
       href={`/submissions/view?submissionId=${data.id}`}
-      className="flex flex-col items-center rounded-xl border-2 border-borders-base1-light bg-cardLight p-4 text-center transition hover:border-borders-base2-light hover:bg-borderLight dark:border-borders-base1-dark dark:bg-base-5-dark hover:dark:border-borders-base2-dark hover:dark:bg-borderDark"
+      className="flex flex-col items-center rounded-xl border-2 border-borders-base1-light bg-cardLight p-4 text-center transition hover:border-borders-base2-light hover:bg-borderLight dark:border-borders-base1-dark dark:bg-base-5-dark dark:hover:border-borders-base2-dark hover:dark:bg-borderDark"
     >
       <span className="mb-2 text-xl">
         {data.newTheme.type === "Audio"

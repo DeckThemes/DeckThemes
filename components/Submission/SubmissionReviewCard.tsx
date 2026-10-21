@@ -4,7 +4,7 @@ import { checkAndRefreshToken, genericFetch } from "apiHelpers";
 import { authContext } from "contexts";
 import { useContext, useState } from "react";
 import { BsCheckCircleFill, BsXCircleFill } from "react-icons/bs";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { LabelledTextArea, LoadingSpinner } from "..";
 import { ActionButton } from "./ActionButton";
 

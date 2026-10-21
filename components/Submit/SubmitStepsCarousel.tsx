@@ -97,7 +97,7 @@ export function SubmitStepsCarousel({
 
   return (
     <>
-      <div className="relative flex min-h-[52rem] w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl border-[1px] border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark">
+      <div className="relative flex min-h-208 w-full max-w-7xl flex-col items-center justify-center overflow-hidden rounded-3xl border border-borders-base1-light bg-base-3-light dark:border-borders-base1-dark dark:bg-base-2.5-dark">
         <SubmitCarouselProgressBar progress={progress} />
         {/* Step 1 */}
         <section className="flex w-full flex-col items-center justify-center gap-4 p-4 py-8">
@@ -164,7 +164,7 @@ export function SubmitStepsCarousel({
           <div className="flex flex-row gap-4 py-2">
             <button
               disabled={currentStep === 1}
-              className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+              className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark dark:hover:border-borders-base2-dark sm:mb-0"
               onClick={goToPreviousStep}
             >
               Back
@@ -175,7 +175,7 @@ export function SubmitStepsCarousel({
                   !readCopyrightInfo) ||
                 (currentStep === totalSteps && !checkIfReady())
               }
-              className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark hover:dark:border-borders-base2-dark sm:mb-0"
+              className="group mb-2 inline-flex w-fit items-center justify-center gap-2 rounded-full border-2 border-borders-base1-light bg-brandBlue py-2 px-4 text-sm font-semibold text-white no-underline transition hover:border-borders-base2-light hover:bg-fore-11-dark hover:text-fore-contrast-dark focus:outline-hidden focus-visible:outline-2 focus-visible:outline-offset-2 active:opacity-60 disabled:pointer-events-none disabled:opacity-50 dark:border-borders-base1-dark dark:hover:border-borders-base2-dark sm:mb-0"
               onClick={() =>
                 currentStep !== totalSteps ? goToNextStep() : formatDataForSubmission()
               }

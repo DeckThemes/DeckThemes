@@ -88,7 +88,7 @@ export function RadioDropdown({
         )}
         <div
           className={twMerge(
-            "flex h-12 w-full min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark hover:dark:border-borders-base2-dark",
+            "flex h-12 w-full min-w-[250px] items-center justify-center rounded-xl border-2 border-borders-base1-light bg-base-3-light px-4 transition-all hover:border-borders-base2-light dark:border-borders-base1-dark dark:bg-base-3-dark dark:hover:border-borders-base2-dark",
             triggerClass
           )}
         >
@@ -115,16 +115,16 @@ export function RadioDropdown({
             <DropdownMenu.Content
               avoidCollisions
               collisionPadding={16}
-              className="font-fancy radio-dropdown z-[9999] my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
+              className="font-fancy radio-dropdown z-9999 my-1 h-max w-[250px] cursor-default select-none overflow-hidden overflow-y-auto rounded-xl bg-base-3-light text-sm text-black transition-all dark:bg-base-3-dark dark:text-white"
             >
               <DropdownMenu.RadioGroup value={value} onValueChange={onValueChange}>
-                <div className="radio-dropdown-content-wrapper max-h-[var(--radix-popper-available-height)]">
+                <div className="radio-dropdown-content-wrapper max-h-(--radix-popper-available-height)">
                   {formattedOptions.map((e) => (
                     <DropdownMenu.RadioItem
                       disabled={e.disabled}
                       value={e.value}
                       key={e.value}
-                      className="relative m-1 flex items-center justify-center rounded-lg px-4 py-2 pl-8 outline-none hover:bg-brandBlue focus:bg-brandBlue dark:hover:bg-brandBlue dark:focus:bg-brandBlue"
+                      className="relative m-1 flex items-center justify-center rounded-lg px-4 py-2 pl-8 outline-hidden hover:bg-brandBlue focus:bg-brandBlue dark:hover:bg-brandBlue dark:focus:bg-brandBlue"
                     >
                       <DropdownMenu.ItemIndicator className="absolute -left-1 top-1/2 -translate-y-1/2">
                         <BsDot size={36} />

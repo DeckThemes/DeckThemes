@@ -20,14 +20,14 @@ export function MiniPfpDisplay({
   }, [accountInfo]);
   return (
     <div
-      className={`flex flex-shrink-0 ${
+      className={`flex shrink-0 ${
         dark ? "bg-cardLight dark:bg-cardDark" : "bg-bgLight dark:bg-bgDark"
       } w-fit rounded-full`}
       // className="flex items-center rounded-full"
     >
       <Link
         href={goToMe ? "/users/me" : `/users/view?userId=${accountInfo.id}`}
-        className="flex flex-shrink-0 items-center"
+        className="flex shrink-0 items-center"
       >
         {!hideName && <span className="ml-4 mr-2 hidden md:flex">{accountInfo.username}</span>}
         <Image
@@ -36,7 +36,7 @@ export function MiniPfpDisplay({
           width="36"
           height="36"
           onError={() => setImgSrc("/question_mark.png")}
-          className="min-w-9 min-h-9 flex flex-shrink-0 items-center justify-center rounded-full text-sm"
+          className="min-w-9 min-h-9 flex shrink-0 items-center justify-center rounded-full text-sm"
         />
       </Link>
     </div>

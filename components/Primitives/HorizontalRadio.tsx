@@ -31,7 +31,7 @@ export function HorizontalRadio({
               `m-1 h-10 w-32 ${
                 selected
                   ? `bg-brandBlue text-white`
-                  : `bg-base-4-light hover:bg-base-6-light  dark:bg-base-3-dark hover:dark:bg-base-4-dark`
+                  : `bg-base-4-light hover:bg-base-6-light  dark:bg-base-3-dark dark:hover:bg-base-4-dark`
               } font-fancy rounded-full font-bold transition-colors duration-200`,
               itemClass
             )}

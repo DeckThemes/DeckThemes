@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { BiEditAlt, BiTrash } from "react-icons/bi";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { genericFetch } from "../../apiHelpers";
 import { FullCSSThemeInfo, Permissions } from "../../types";
 

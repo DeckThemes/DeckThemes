@@ -5,7 +5,7 @@ import { authContext } from "contexts";
 import { LabelledInput, SquishyButton } from "@components/Primitives";
 import { SiMaildotru } from "react-icons/si";
 import * as Collapsible from "@radix-ui/react-collapsible";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify/unstyled";
 import { FaCaretDown } from "react-icons/fa";
 
 export function AddEmailForm({ userId }: { userId?: string | undefined }) {

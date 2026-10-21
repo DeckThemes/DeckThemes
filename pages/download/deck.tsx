@@ -15,7 +15,7 @@ export default function DeckDownload() {
         </h1>
 
         {/* Blurb */}
-        <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg">
+        <p className="font-fancy mx-auto mt-6 max-w-2xl text-center text-sm font-medium leading-6 text-fore-10-light dark:text-fore-10-dark sm:text-lg sm:leading-7">
           Steam Deck is supported through Decky Loader. You can also install CSS Loader on your{" "}
           <Link className="text-brandBlue hover:underline" href={"/download/windows"}>
             Windows PC
